@@ -1,4 +1,5 @@
 #coding=utf-8
+from csv import reader
 
 class ImportingManager():
 
@@ -32,4 +33,10 @@ class ImportingManager():
         pass
 
     def data_importer_of_municipality_novi_beograd(self):
+        #data = reader(open("myfile.csv", "r"), delimiter=",")
         pass
+
+    def build_mongo_docment_str(self):
+        json_doc = {}
+
+        return json_doc

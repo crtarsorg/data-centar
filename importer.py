@@ -9,34 +9,34 @@ def main_importer(municipalities):
 
     for mun in mun_list:
 
-        if mun == "all" or "pripolje":
+        if mun in ["all", "pripolje"]:
             importer.data_importer_of_municipality_pripolje()
 
-        if mun == "all" or "vranje":
+        if mun in ["all", "vranje"]:
             importer.data_importer_of_municipality_vranje()
 
-        if mun == "all" or "loznitsa":
+        if mun in ["all", "loznitsa"]:
             importer.data_importer_of_municipality_loznitsa()
 
-        if mun == "all" or "sombor":
+        if mun in ["all", "sombor"]:
             importer.data_importer_of_municipality_sombor()
 
-        if mun == "all" or "valjevo":
+        if mun in ["all", "valjevo"]:
             importer.data_importer_of_municipality_valjevo()
 
-        if mun == "all" or "indjija":
+        if mun in ["all", "indjija"]:
             importer.data_importer_of_municipality_indjija()
 
-        if mun == "all" or "cacak":
+        if mun in ["all", "cacak"]:
             importer.data_importer_of_municipality_cacak()
 
-        if mun == "all" or "krajlevo":
+        if mun in ["all", "krajlevo"]:
             importer.data_importer_of_municipality_krajlevo()
 
-        if mun == "all" or "zavezdara":
+        if mun in ["all", "zavezdara"]:
             importer.data_importer_of_municipality_zavezdara()
 
-        if mun == "all" or "novi_beograd":
+        if mun in ["all", "novi_beograd"]:
             importer.data_importer_of_municipality_novi_beograd()
 
 

@@ -5,5 +5,5 @@ if [ "$#" -ne 1 ]
 then
     echo "Invalid number of parameters."
 else
-    python importer.py
+    python importer.py --municipalities $1
 fi

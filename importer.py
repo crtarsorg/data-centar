@@ -1,18 +1,23 @@
 import argparse
+from importing_manager import ImportingManager
+
+importer = ImportingManager()
 
 def main_importer(municipalities):
+
     mun_list = municipalities.split(",")
 
     for mun in mun_list:
         if mun == "all":
-            pass
-    print "Data Centar on running"
+            importer.data_importer_of_municipality_cacak()
 
-# Run the app
 if __name__ == '__main__':
 
-    arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument("--municipality", help="Argument is used to specify which municipality data we want to import")
+    # Initialize arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--municipalities", help="The data source we want to import")
+    args = parser.parse_args()
 
-    municipalities = arg_parser.parse_args()
-    main_importer(municipalities)
+    # Read the arguments and run the function
+    municipalities_sr = args.municipalities
+    main_importer(municipalities_sr)

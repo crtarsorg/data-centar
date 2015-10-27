@@ -1,0 +1,10 @@
+#!/home/endrit/Desktop/dev/DataCentar/venv/bin/python
+# EASY-INSTALL-ENTRY-SCRIPT: 'coverage==4.0b1','console_scripts','coverage'
+__requires__ = 'coverage==4.0b1'
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.exit(
+        load_entry_point('coverage==4.0b1', 'console_scripts', 'coverage')()
+    )

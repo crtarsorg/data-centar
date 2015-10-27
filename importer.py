@@ -5,12 +5,14 @@ def main_importer(municipalities):
 
     for mun in mun_list:
         if mun == "all":
-
+            pass
     print "Data Centar on running"
 
 # Run the app
 if __name__ == '__main__':
 
     arg_parser = argparse.ArgumentParser()
-    municipalities = arg_parser.add_argument("--municipality")
+    arg_parser.add_argument("--municipality", help="Argument is used to specify which municipality data we want to import")
+
+    municipalities = arg_parser.parse_args()
     main_importer(municipalities)

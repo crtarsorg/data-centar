@@ -1,0 +1,8 @@
+Flask==0.10.1
+pymongo==2.8.0
+Flask-PyMongo==0.3.0
+Unidecode==0.04.17
+Flask-WTF==0.9.5
+Flask-Testing==0.4.2
+awesome-slugify==1.6.5
+coverage==4.0b1

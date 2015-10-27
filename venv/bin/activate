@@ -39,7 +39,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/endrit/Desktop/dev/DataCentar/venv"
+VIRTUAL_ENV="/Users/festina/Desktop/Development/DataCentar/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

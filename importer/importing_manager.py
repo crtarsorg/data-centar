@@ -42,6 +42,7 @@ class ImportingManager(object):
         pass
 
     def data_importer_of_municipality_novi_beograd(self):
+        db.opstine.remove({})
         data = reader(open("data/novi_beograd.csv", "r"), delimiter=",")
 
         parent_handler = ''
@@ -72,11 +73,19 @@ class ImportingManager(object):
                 "latin": cyrtranslit.to_latin(opis, "sr"),
                 "cyrilic": opis.strip()
             },
-            "prihodiVudzeta": prihodi_vudzeta,
-            "sopstveniPrihodi": sopstveni_prihodi,
-            "donacije": donacije,
-            "ostali": ostali,
-            "ukupno": ukupno
+            "prihodiBudzeta": self.convert_to_float(prihodi_vudzeta.replace(',', '')),
+            "sopstveniPrihodi": self.convert_to_float(sopstveni_prihodi.replace(',', '')),
+            "donacije": self.convert_to_float(donacije.replace(',', '')),
+            "ostali": self.convert_to_float(ostali.replace(',', '')),
+            "ukupno": self.convert_to_float(ukupno.replace(',', ''))
         }
 
         return json_doc
+
+    @staticmethod
+    def convert_to_float(value):
+        if value == " " or value == "":
+            value = 0
+            return value
+        else:
+            return float(value)

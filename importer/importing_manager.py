@@ -39,7 +39,20 @@ class ImportingManager(object):
         pass
 
     def data_importer_of_municipality_zavezdara(self):
-        pass
+        db.opstine.remove({})
+        data = reader(open("data/zvezdara.csv", "r"), delimiter=",")
+
+        parent_handler = ''
+        for index, row in enumerate(data):
+            if index > 0:
+                if len(row[1]) == 2:
+                    parent_handler = row[2]
+
+                if len(row[1]) > 2 and row[2] not in [""," "]:
+                    json_doc = self.build_mongo_document_structure("Звездара", parent_handler, row[1][0:2], row[1], row[2], row[3], row[4], row[5], row[6])
+                    db.opstine.insert(json_doc)
+                    print "Opstine: Звездара - Kategorija Roditelj: %s - Opis: %s" % (parent_handler, row[2])
+
 
     def data_importer_of_municipality_novi_beograd(self):
         db.opstine.remove({})

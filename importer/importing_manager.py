@@ -13,6 +13,7 @@ class ImportingManager(object):
 
     def __init__(self):
         pass
+
     def data_importer_of_municipality_pripolje(self):
         pass
 

@@ -1,5 +1,5 @@
 import argparse
-from importing_manager import ImportingManager
+from importer.importing_manager import ImportingManager
 
 importer = ImportingManager()
 

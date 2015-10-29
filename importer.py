@@ -2,6 +2,7 @@ import argparse
 from importer.importing_manager import ImportingManager
 
 importer = ImportingManager()
+importer.remove_mongo_database()
 
 def main_importer(municipalities):
 
@@ -9,14 +10,14 @@ def main_importer(municipalities):
 
     for mun in mun_list:
 
-        if mun in ["all", "pripolje"]:
-            importer.data_importer_of_municipality_pripolje()
+        if mun in ["all", "prijepolje"]:
+            importer.data_importer_of_municipality_prijepolje()
 
         if mun in ["all", "vranje"]:
             importer.data_importer_of_municipality_vranje()
 
-        if mun in ["all", "loznitsa"]:
-            importer.data_importer_of_municipality_loznitsa()
+        if mun in ["all", "loznica"]:
+            importer.data_importer_of_municipality_loznica()
 
         if mun in ["all", "sombor"]:
             importer.data_importer_of_municipality_sombor()
@@ -33,8 +34,8 @@ def main_importer(municipalities):
         if mun in ["all", "krajlevo"]:
             importer.data_importer_of_municipality_krajlevo()
 
-        if mun in ["all", "zavezdara"]:
-            importer.data_importer_of_municipality_zavezdara()
+        if mun in ["all", "zvezdara"]:
+            importer.data_importer_of_municipality_zvezdara()
 
         if mun in ["all", "novi_beograd"]:
             importer.data_importer_of_municipality_novi_beograd()

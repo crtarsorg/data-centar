@@ -10,6 +10,3 @@ class RashodiImportingTestCases(unittest.TestCase):
 
 class PrihodiImportingTestCases(unittest.TestCase):
     pass
-
-if __name__ == '__main__':
-    unittest.main()

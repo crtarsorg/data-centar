@@ -51,11 +51,12 @@ class ImportingManager(object):
         self.data_importer_of_municipalities_with_parent_handlers(csv_path, "Нови Београд")
 
     def data_importer_of_municipalities_without_parent_handlers(self, path, opstine):
+        db.opstine.remove({})
         data = reader(open(path, "r"), delimiter=',')
         for index, row in enumerate(data):
             if index > 0:
                 if row[1] not in ["", " "] and len(row[1]) >= 3:
-                    json_doc = self.build_mongo_document_structure(opstine, row[1], row[2], row[3], row[4], row[5], row[6])
+                    json_doc = self.build_mongo_document_structure(opstine, row[1], row[2], row[3], row[4], row[5], row[6], row[7])
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Klasifikacija Broj: %s - Opis: %s" % (opstine, row[1], row[2])
 
@@ -73,7 +74,7 @@ class ImportingManager(object):
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % (opstine, parent_handler, row[2])
 
-    def build_mongo_document_structure(self, municipality,  class_number, opis, prihodi_vudzeta, sopstveni_prihodi, donacije, ostali, kategorija_roditelj=None, roditelj_broj=None):
+    def build_mongo_document_structure(self, municipality,  class_number, opis, prihodi_vudzeta, sopstveni_prihodi, donacije, ostali, ukupno_k=None,  kategorija_roditelj=None, roditelj_broj=None):
 
         ukupno = prihodi_vudzeta + sopstveni_prihodi + donacije + ostali
         json_doc = {
@@ -86,11 +87,11 @@ class ImportingManager(object):
                 "latin": cyrtranslit.to_latin(opis, "sr"),
                 "cyrilic": opis.strip()
             },
-            "prihodiBudzeta": self.convert_to_float(prihodi_vudzeta.replace(',', '')),
-            "sopstveniPrihodi": self.convert_to_float(sopstveni_prihodi.replace(',', '')),
-            "donacije": self.convert_to_float(donacije.replace(',', '')),
-            "ostali": self.convert_to_float(ostali.replace(',', '')),
-            "ukupno": self.convert_to_float(ukupno.replace(',', ''))
+            "prihodiBudzeta": self.convert_to_float(prihodi_vudzeta.replace(',', '').replace('.', '')),
+            "sopstveniPrihodi": self.convert_to_float(sopstveni_prihodi.replace(',', '').replace('.', '')),
+            "donacije": self.convert_to_float(donacije.replace(',', '').replace('.', '')),
+            "ostali": self.convert_to_float(ostali.replace(',', '').replace('.', '')),
+            "ukupno": self.convert_to_float(ukupno.replace(',', '').replace('.', ''))
         }
 
         if municipality in ["Нови Београд", "Звездара"]:
@@ -99,11 +100,17 @@ class ImportingManager(object):
                 "broj": roditelj_broj
             }
 
+        elif municipality in ["Краљево"]:
+            json_doc["ukupno"] = self.convert_to_float(ukupno_k.replace(',', '').replace('.', ''))
+
         return json_doc
 
     @staticmethod
     def convert_to_float(value):
         if value == " " or value == "":
+            value = 0
+            return value
+        elif value == "000":
             value = 0
             return value
         else:

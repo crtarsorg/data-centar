@@ -33,7 +33,8 @@ class ImportingManager(object):
         pass
 
     def data_importer_of_municipality_indjija(self):
-        pass
+        csv_path = "data/indjija.csv"
+        self.data_importer_of_municipalities_with_parent_handlers(csv_path, "Инђија")
 
     def data_importer_of_municipality_cacak(self):
         csv_path = "data/cacak.csv"
@@ -97,11 +98,17 @@ class ImportingManager(object):
             "ukupno": self.convert_to_float(ukupno.replace(',', '').replace('.', ''))
         }
 
-        if municipality in ["Нови Београд", "Звездара"]:
+        if municipality in ["Нови Београд", "Звездара", "Инђија"]:
             json_doc["kategorijaRoditelj"] = {
                 "opis": kategorija_roditelj,
                 "broj": roditelj_broj
             }
+            json_doc["prihodiBudzeta"] = self.convert_to_float(prihodi_vudzeta.replace(',', ''))
+            json_doc["sopstveniPrihodi"] = self.convert_to_float(sopstveni_prihodi.replace(',', ''))
+            json_doc["donacije"] = self.convert_to_float(donacije.replace(',', ''))
+            json_doc["ostali"] = self.convert_to_float(ostali.replace(',', ''))
+            json_doc["ukupno"] = self.convert_to_float(ukupno.replace(',', ''))
+
 
         elif municipality in ["Краљево"]:
             json_doc["ukupno"] = self.convert_to_float(ukupno.replace(',', '').replace('.', '')[:-2])

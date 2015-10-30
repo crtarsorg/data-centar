@@ -13,10 +13,7 @@ class ImportingManager(object):
 
     def __init__(self):
         pass
-
-    def remove_mongo_database(self):
-        db.opstine.remove({})
-
+    
     def data_importer_of_municipality_prijepolje(self):
         pass
 
@@ -30,25 +27,30 @@ class ImportingManager(object):
         pass
 
     def data_importer_of_municipality_valjevo(self):
-        pass
+        db.opstine.remove({"opstina.latin": "Valjevo"})
+        csv_path ="data/valjevo.csv"
+        self.data_importer_of_municipalities_with_parent_handlers(csv_path, "Ваљево")
 
     def data_importer_of_municipality_indjija(self):
-        csv_path = "data/indjija.csv"
-        self.data_importer_of_municipalities_with_parent_handlers(csv_path, "Инђија")
+       pass
 
     def data_importer_of_municipality_cacak(self):
+        db.opstine.remove({"opstina.latin": "Čačak"})
         csv_path = "data/cacak.csv"
         self.data_importer_of_municipalities_without_parent_handlers(csv_path, "Чачак")
 
     def data_importer_of_municipality_krajlevo(self):
+        db.opstine.remove({"opstina.latin": "Kraljevo"})
         csv_path = "data/krajlevo.csv"
         self.data_importer_of_municipalities_without_parent_handlers(csv_path, "Краљево")
 
     def data_importer_of_municipality_zvezdara(self):
+        db.opstine.remove({"opstina.latin": "Zvezdara"})
         csv_path = "data/zvezdara.csv"
         self.data_importer_of_municipalities_with_parent_handlers(csv_path, "Звездара")
 
     def data_importer_of_municipality_novi_beograd(self):
+        db.opstine.remove({"opstina.latin": "Novi Beograd"})
         csv_path = "data/novi_beograd.csv"
         self.data_importer_of_municipalities_with_parent_handlers(csv_path, "Нови Београд")
 
@@ -72,10 +74,14 @@ class ImportingManager(object):
         parent_handler = ''
         for index, row in enumerate(data):
             if index > 0:
+                if opstine == "Ваљево":
+                    if row[1] != "" and row[1][2] == "0" and row[1][1] != "0":
+                        parent_handler = row[2]
+
                 if len(row[1]) == 2:
                     parent_handler = row[2]
 
-                if len(row[1]) > 2 and row[2] not in ["", " "]:
+                if len(row[1]) > 2 and row[2] not in ["", " "] and row[1] != row[1][0:2] + "0":
                     json_doc = self.build_mongo_document_structure(opstine, row[1], row[2], row[3], row[4], row[5], row[6], row[7], parent_handler, row[1][0:2])
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % (opstine, parent_handler, row[2])
@@ -98,7 +104,7 @@ class ImportingManager(object):
             "ukupno": self.convert_to_float(ukupno.replace(',', '').replace('.', ''))
         }
 
-        if municipality in ["Нови Београд", "Звездара", "Инђија"]:
+        if municipality in ["Нови Београд", "Звездара", "Инђија", "Ваљево"]:
             json_doc["kategorijaRoditelj"] = {
                 "opis": kategorija_roditelj,
                 "broj": roditelj_broj
@@ -108,7 +114,6 @@ class ImportingManager(object):
             json_doc["donacije"] = self.convert_to_float(donacije.replace(',', ''))
             json_doc["ostali"] = self.convert_to_float(ostali.replace(',', ''))
             json_doc["ukupno"] = self.convert_to_float(ukupno.replace(',', ''))
-
 
         elif municipality in ["Краљево"]:
             json_doc["ukupno"] = self.convert_to_float(ukupno.replace(',', '').replace('.', '')[:-2])
@@ -121,6 +126,9 @@ class ImportingManager(object):
             value = 0
             return value
         elif value == "000":
+            value = 0
+            return value
+        elif value == "-" or value == "  -     " or value == " -     " or value == "  -":
             value = 0
             return value
         else:

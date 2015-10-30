@@ -2,10 +2,8 @@ import argparse
 from importer.importing_manager import ImportingManager
 
 importer = ImportingManager()
-importer.remove_mongo_database()
 
 def main_importer(municipalities):
-
     mun_list = municipalities.split(",")
 
     for mun in mun_list:

@@ -36,7 +36,8 @@ class ImportingManager(object):
         pass
 
     def data_importer_of_municipality_cacak(self):
-        print "cacak"
+        csv_path = "data/cacak.csv"
+        self.data_importer_of_municipalities_without_parent_handlers(csv_path, "Чачак")
 
     def data_importer_of_municipality_krajlevo(self):
         csv_path = "data/krajlevo.csv"
@@ -51,12 +52,16 @@ class ImportingManager(object):
         self.data_importer_of_municipalities_with_parent_handlers(csv_path, "Нови Београд")
 
     def data_importer_of_municipalities_without_parent_handlers(self, path, opstine):
-        db.opstine.remove({})
         data = reader(open(path, "r"), delimiter=',')
         for index, row in enumerate(data):
             if index > 0:
-                if row[1] not in ["", " "] and len(row[1]) >= 3:
-                    json_doc = self.build_mongo_document_structure(opstine, row[1], row[2], row[3], row[4], row[5], row[6], row[7])
+                if row[1] not in ["", " "] and len(row[1]) >= 3 and row[1][1] != "+":
+                    json_doc = None
+                    if opstine == "Чачак":
+                        json_doc = self.build_mongo_document_structure(opstine, row[1], row[2], row[3][:-2], row[4][:-2], row[5][:-2], row[6][:-2], row[7][:-2])
+                    else:
+                        json_doc = self.build_mongo_document_structure(opstine, row[1], row[2], row[3], row[4], row[5], row[6], row[7])
+
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Klasifikacija Broj: %s - Opis: %s" % (opstine, row[1], row[2])
 
@@ -70,13 +75,11 @@ class ImportingManager(object):
                     parent_handler = row[2]
 
                 if len(row[1]) > 2 and row[2] not in ["", " "]:
-                    json_doc = self.build_mongo_document_structure(opstine, row[1], row[2], row[3], row[4], row[5], row[6], parent_handler, row[1][0:2])
+                    json_doc = self.build_mongo_document_structure(opstine, row[1], row[2], row[3], row[4], row[5], row[6], row[7], parent_handler, row[1][0:2])
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % (opstine, parent_handler, row[2])
 
-    def build_mongo_document_structure(self, municipality,  class_number, opis, prihodi_vudzeta, sopstveni_prihodi, donacije, ostali, ukupno_k=None,  kategorija_roditelj=None, roditelj_broj=None):
-
-        ukupno = prihodi_vudzeta + sopstveni_prihodi + donacije + ostali
+    def build_mongo_document_structure(self, municipality,  class_number, opis, prihodi_vudzeta, sopstveni_prihodi, donacije, ostali, ukupno,  kategorija_roditelj=None, roditelj_broj=None):
         json_doc = {
             "opstina": {
                 "cyrilic": municipality,
@@ -101,7 +104,7 @@ class ImportingManager(object):
             }
 
         elif municipality in ["Краљево"]:
-            json_doc["ukupno"] = self.convert_to_float(ukupno_k.replace(',', '').replace('.', ''))
+            json_doc["ukupno"] = self.convert_to_float(ukupno.replace(',', '').replace('.', '')[:-2])
 
         return json_doc
 

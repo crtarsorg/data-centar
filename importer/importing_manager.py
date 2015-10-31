@@ -13,7 +13,7 @@ class ImportingManager(object):
 
     def __init__(self):
         pass
-    
+
     def data_importer_of_municipality_prijepolje(self):
         pass
 
@@ -32,7 +32,9 @@ class ImportingManager(object):
         self.data_importer_of_municipalities_with_parent_handlers(csv_path, "Ваљево")
 
     def data_importer_of_municipality_indjija(self):
-       pass
+        db.opstine.remove({"opstina.latin": "Inđija"})
+        csv_path ="data/indjija.csv"
+        self.data_importer_of_municipalities_with_parent_handlers(csv_path, "Инђија")
 
     def data_importer_of_municipality_cacak(self):
         db.opstine.remove({"opstina.latin": "Čačak"})

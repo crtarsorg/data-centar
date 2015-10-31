@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d6434bc-d8c4-4dea-8583-f193f8b4e849" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/indjija.csv" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/importer.py" afterPath="$PROJECT_DIR$/importer.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/importer/importing_manager.py" afterPath="$PROJECT_DIR$/importer/importing_manager.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DataCentar.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,8 +43,8 @@
       <file leaf-file-name="importing_manager.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/importer/importing_manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.22813688">
-              <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
+            <state vertical-scroll-proportion="2.3973384">
+              <caret line="108" column="74" selection-start-line="108" selection-start-column="74" selection-end-line="108" selection-end-column="74" />
               <folding>
                 <element signature="e#14#36#0" expanded="true" />
               </folding>
@@ -82,7 +79,7 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="216" />
+    <option name="x" value="209" />
     <option name="y" value="23" />
     <option name="width" value="1174" />
     <option name="height" value="726" />
@@ -439,7 +436,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="216" y="23" width="1174" height="726" extended-state="0" />
+    <frame x="209" y="23" width="1174" height="726" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -447,7 +444,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24558304" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13074204" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2713816" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -698,8 +695,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/importer/importing_manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.22813688">
-          <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
+        <state vertical-scroll-proportion="2.3973384">
+          <caret line="108" column="74" selection-start-line="108" selection-start-column="74" selection-end-line="108" selection-end-column="74" />
           <folding>
             <element signature="e#14#36#0" expanded="true" />
           </folding>

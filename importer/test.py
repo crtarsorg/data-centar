@@ -37,7 +37,12 @@ class RashodiImportingTestCases(unittest.TestCase):
 
 
     def asserts_for_parent_categories_elements(self, municipality, parent_category, expected_value):
-
+        '''
+        :param municipality: The municipality we want to test
+        :param parent_category: The parent category of the elements we want to test
+        :param expected_value: The expected value of all the elements of the related parent category
+        :return:
+        '''
         result = mongo.datacentar.opstine.find(
             {
                 "opstina.latin": municipality,

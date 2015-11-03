@@ -33,8 +33,17 @@ class ImportingManager(object):
 
     def data_importer_of_municipality_indjija(self):
         db.opstine.remove({"opstina.latin": "Inđija"})
-        csv_path ="data/indjija.csv"
-        self.data_importer_of_municipalities_with_parent_handlers(csv_path, "Инђија")
+        data_handler = reader(open("data/indjija.csv", "r"), delimiter=",")
+        for index, row in enumerate(data_handler):
+            if index > 0:
+                if len(row[1]) == 2:
+                    parent_handler = row[2]
+                    parent_num = row[1]
+
+                if len(row[1]) > 2 and row[1] not in ["", " "]:
+                    json_doc = self.build_mongo_document_structure("Инђија", row[1], row[2], row[3], row[4], row[5], row[6], None, parent_handler, parent_num)
+                    db.opstine.insert(json_doc)
+                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Инђија", parent_handler, row[2])
 
     def data_importer_of_municipality_cacak(self):
         db.opstine.remove({"opstina.latin": "Čačak"})

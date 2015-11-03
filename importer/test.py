@@ -29,6 +29,13 @@ class RashodiImportingTestCases(unittest.TestCase):
         self.asserts_for_parent_categories_elements("Zvezdara", "ОТПЛАТА ГЛАВНИЦЕ", 1)
         self.asserts_for_parent_categories_elements("Zvezdara", "РЕЗЕРВА", 2)
 
+    def test_kraljevo_municipality(self):
+        self.asserts_for_parent_categories_elements("Kraljevo", "Скупштина општине", 37)
+
+    def test_cacak_municipality(self):
+        self.asserts_for_parent_categories_elements("Čačak", "Скупштина општине", 35)
+
+
     def asserts_for_parent_categories_elements(self, municipality, parent_category, expected_value):
 
         result = mongo.datacentar.opstine.find(

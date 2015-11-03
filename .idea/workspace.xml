@@ -31,8 +31,8 @@
       <file leaf-file-name="importer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/importer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.11111">
-              <caret line="34" column="35" selection-start-line="34" selection-start-column="27" selection-end-line="34" selection-end-column="35" />
+            <state vertical-scroll-proportion="-13.888889">
+              <caret line="31" column="31" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -43,8 +43,8 @@
       <file leaf-file-name="test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/importer/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.879017">
-              <caret line="33" column="47" selection-start-line="33" selection-start-column="47" selection-end-line="33" selection-end-column="47" />
+            <state vertical-scroll-proportion="0.7372401">
+              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
               <folding>
                 <element signature="e#14#29#0" expanded="true" />
               </folding>
@@ -56,7 +56,7 @@
         <entry file="file://$PROJECT_DIR$/importer/importing_manager.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-6.111111">
-              <caret line="59" column="53" selection-start-line="59" selection-start-column="45" selection-end-line="59" selection-end-column="53" />
+              <caret line="39" column="50" selection-start-line="39" selection-start-column="45" selection-end-line="39" selection-end-column="50" />
               <folding>
                 <element signature="e#14#36#0" expanded="true" />
               </folding>
@@ -92,8 +92,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="344" />
-    <option name="y" value="30" />
+    <option name="x" value="278" />
+    <option name="y" value="23" />
     <option name="width" value="895" />
     <option name="height" value="726" />
   </component>
@@ -579,7 +579,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="344" y="30" width="895" height="726" extended-state="0" />
+    <frame x="278" y="23" width="895" height="726" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -865,8 +865,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/importer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.11111">
-          <caret line="34" column="35" selection-start-line="34" selection-start-column="27" selection-end-line="34" selection-end-column="35" />
+        <state vertical-scroll-proportion="-13.888889">
+          <caret line="31" column="31" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
@@ -876,7 +876,7 @@
     <entry file="file://$PROJECT_DIR$/importer/importing_manager.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.111111">
-          <caret line="59" column="53" selection-start-line="59" selection-start-column="45" selection-end-line="59" selection-end-column="53" />
+          <caret line="39" column="50" selection-start-line="39" selection-start-column="45" selection-end-line="39" selection-end-column="50" />
           <folding>
             <element signature="e#14#36#0" expanded="true" />
           </folding>
@@ -885,8 +885,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/importer/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.879017">
-          <caret line="33" column="47" selection-start-line="33" selection-start-column="47" selection-end-line="33" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.7372401">
+          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
           <folding>
             <element signature="e#14#29#0" expanded="true" />
           </folding>

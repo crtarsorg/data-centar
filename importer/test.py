@@ -6,50 +6,67 @@ class RashodiImportingTestCases(unittest.TestCase):
 
     def setUp(self):
         pass
+    # Json container for each novi beograd parent category
+    novi_beograd_counts_of_parents = {
+        "Расходи за запослене": 7,
+        "Коришћење услуга и роба": 6,
+        "Донације дотације и трансфери": 2,
+        "Социјално осигурање и социјална заштита": 1,
+        "Остали расходи": 3,
+        "Средства резерве": 2,
+        "Основна средства": 3
+    }
 
-    def test_novi_beograd_municipality(self):
+    # Json container for each zvezdara parent category
+    zvezdara_counts_of_parents = {
+        "РАСХОДИ ЗА ЗАПОСЛЕНЕ": 6,
+        "КОРИШЋЕЊЕ РОБА И УСЛУГА": 6,
+        "ОТПЛАТА КАМАТА": 1,
+        "ДОНАЦИЈЕ ,ДОТАЦИЈЕ И ТРАНСФЕРИ": 2,
+        "ОСНОВНА СРЕДСТВА": 3,
+        "ПРАВА ИЗ СОЦИЈАЛНОГ ОСИГУРАЊА": 1,
+        "ОСТАЛИ РАСХОДИ": 1,
+        "Порези, таксе, казне наметнуте од власти": 3,
+        "ОТПЛАТА ГЛАВНИЦЕ": 1,
+        "РЕЗЕРВА": 2
+    }
 
-        self.asserts_for_parent_categories_elements("Novi Beograd", "Расходи за запослене", 7)
-        self.asserts_for_parent_categories_elements("Novi Beograd", "Коришћење услуга и роба", 6)
-        self.asserts_for_parent_categories_elements("Novi Beograd", "Донације дотације и трансфери", 2)
-        self.asserts_for_parent_categories_elements("Novi Beograd", "Социјално осигурање и социјална заштита", 1)
-        self.asserts_for_parent_categories_elements("Novi Beograd", "Остали расходи", 3)
-        self.asserts_for_parent_categories_elements("Novi Beograd", "Средства резерве", 2)
-        self.asserts_for_parent_categories_elements("Novi Beograd", "Основна средства", 3)
+    # Json container for each indjia parent category
+    idjia_counts_of_parents = {
+        "РАСХОДИ ЗА ЗАПОСЛЕНЕ": 6,
+        "КОРИШЋЕЊЕ УСЛУГА И РОБА": 6,
+        "АМОРТИЗАЦИЈА И УПОТРЕБА СРЕДСТАВА ЗА РАД": 1,
+        "ОТПЛАТА КАМАТА И ПРАТЕЋИ ТРОШКОВИ ЗАДУЖИВАЊА": 2,
+        "СУБВЕНЦИЈЕ": 2,
+        "ДОНАЦИЈЕ, ДОТАЦИЈЕ И ТРАНСФЕРИ": 3,
+        "СОЦИЈАЛНО ОСИГУРАЊЕ И СОЦИЈАЛНА ЗАШТИТА": 1,
+        "ОСТАЛИ РАСХОДИ": 4,
+        "АДМИНИСТРАТИВНИ ТРАНСФЕРИ ИЗ БУЏЕТА И СРЕДСТВА РЕЗЕРВЕ": 1,
+        "ОСНОВНА СРЕДСТВА": 4,
+        "ЗАЛИХЕ": 1,
+        "ПРИРОДНА ИМОВИНА": 1,
+        "ОТПЛАТА ГЛАВНИЦЕ": 1,
+        "НАБАВКА ФИНАНСИЈСКЕ ИМОВИНЕ": 1
+    }
 
-    def test_zvezdara_municipality(self):
-        self.asserts_for_parent_categories_elements("Zvezdara", "РАСХОДИ ЗА ЗАПОСЛЕНЕ", 6)
-        self.asserts_for_parent_categories_elements("Zvezdara", "КОРИШЋЕЊЕ РОБА И УСЛУГА", 6)
-        self.asserts_for_parent_categories_elements("Zvezdara", "ОТПЛАТА КАМАТА", 1)
-        self.asserts_for_parent_categories_elements("Zvezdara", "ДОНАЦИЈЕ ,ДОТАЦИЈЕ И ТРАНСФЕРИ", 2)
-        self.asserts_for_parent_categories_elements("Zvezdara", "ОСНОВНА СРЕДСТВА", 3)
-        self.asserts_for_parent_categories_elements("Zvezdara", "ПРАВА ИЗ СОЦИЈАЛНОГ ОСИГУРАЊА", 1)
-        self.asserts_for_parent_categories_elements("Zvezdara", "ОСТАЛИ РАСХОДИ", 1)
-        self.asserts_for_parent_categories_elements("Zvezdara", "Порези, таксе, казне наметнуте од власти", 3)
-        self.asserts_for_parent_categories_elements("Zvezdara", "ОТПЛАТА ГЛАВНИЦЕ", 1)
-        self.asserts_for_parent_categories_elements("Zvezdara", "РЕЗЕРВА", 2)
+    def test_counts_for_parent_categories(self):
+        # Test counts for municipality of Novi Beograd
+        for parent in self.novi_beograd_counts_of_parents:
+            self.asserts_for_parent_categories_elements("Novi Beograd", parent, self.novi_beograd_counts_of_parents[parent])
 
-    def test_kraljevo_municipality(self):
+        # Test counts for municipality of Zvezdara
+        for parent in self.zvezdara_counts_of_parents:
+            self.asserts_for_parent_categories_elements("Zvezdara", parent, self.zvezdara_counts_of_parents[parent])
+
+        # Test counts for municipality of Kraljevo
         self.asserts_for_parent_categories_elements("Kraljevo", "Скупштина општине", 37)
 
-    def test_cacak_municipality(self):
+        # Test counts for municipality of Čačak
         self.asserts_for_parent_categories_elements("Čačak", "Скупштина општине", 35)
 
-    def test_indjija_municipality(self):
-        self.asserts_for_parent_categories_elements("Inđija", "РАСХОДИ ЗА ЗАПОСЛЕНЕ", 6)
-        self.asserts_for_parent_categories_elements("Inđija", "КОРИШЋЕЊЕ УСЛУГА И РОБА", 6)
-        self.asserts_for_parent_categories_elements("Inđija", "АМОРТИЗАЦИЈА И УПОТРЕБА СРЕДСТАВА ЗА РАД", 1)
-        self.asserts_for_parent_categories_elements("Inđija", "ОТПЛАТА КАМАТА И ПРАТЕЋИ ТРОШКОВИ ЗАДУЖИВАЊА", 2)
-        self.asserts_for_parent_categories_elements("Inđija", "СУБВЕНЦИЈЕ", 2)
-        self.asserts_for_parent_categories_elements("Inđija", "ДОНАЦИЈЕ, ДОТАЦИЈЕ И ТРАНСФЕРИ", 3)
-        self.asserts_for_parent_categories_elements("Inđija", "СОЦИЈАЛНО ОСИГУРАЊЕ И СОЦИЈАЛНА ЗАШТИТА", 1)
-        self.asserts_for_parent_categories_elements("Inđija", "ОСТАЛИ РАСХОДИ", 4)
-        self.asserts_for_parent_categories_elements("Inđija", "АДМИНИСТРАТИВНИ ТРАНСФЕРИ ИЗ БУЏЕТА И СРЕДСТВА РЕЗЕРВЕ", 1)
-        self.asserts_for_parent_categories_elements("Inđija", "ОСНОВНА СРЕДСТВА", 4)
-        self.asserts_for_parent_categories_elements("Inđija", "ЗАЛИХЕ", 1)
-        self.asserts_for_parent_categories_elements("Inđija", "ПРИРОДНА ИМОВИНА", 1)
-        self.asserts_for_parent_categories_elements("Inđija", "ОТПЛАТА ГЛАВНИЦЕ", 1)
-        self.asserts_for_parent_categories_elements("Inđija", "НАБАВКА ФИНАНСИЈСКЕ ИМОВИНЕ", 1)
+        # Test counts for municipality of Inđija
+        for parent in self.idjia_counts_of_parents:
+            self.asserts_for_parent_categories_elements("Inđija", parent, self.idjia_counts_of_parents[parent])
 
     def asserts_for_parent_categories_elements(self, municipality, parent_category, expected_value):
         '''
@@ -66,7 +83,3 @@ class RashodiImportingTestCases(unittest.TestCase):
         ).count()
 
         self.assertEqual(result, expected_value)
-
-
-class PrihodiImportingTestCases(unittest.TestCase):
-    pass

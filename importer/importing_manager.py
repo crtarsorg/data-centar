@@ -28,8 +28,17 @@ class ImportingManager(object):
 
     def data_importer_of_municipality_valjevo(self):
         db.opstine.remove({"opstina.latin": "Valjevo"})
-        csv_path ="data/valjevo.csv"
-        self.data_importer_of_municipalities_with_parent_handlers(csv_path, "Ваљево")
+        data_handler = reader(open("data/valjevo.csv", "r"), delimiter=",")
+        for index, row in enumerate(data_handler):
+            if index > 0:
+                if row[1] != "" and row[1][2] == "0" and row[1][1] != "0":
+                    parent_handler = row[2]
+                    parent_num = row[1]
+
+                if row[1] not in ["", " ", "400", "500"] and row[1][2] != "0":
+                    json_doc = self.build_mongo_document_structure("Ваљево", row[1], row[2], row[3], row[4], row[5], row[6], None, parent_handler, parent_num)
+                    db.opstine.insert(json_doc)
+                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Ваљево", parent_handler, row[1])
 
     def data_importer_of_municipality_indjija(self):
         db.opstine.remove({"opstina.latin": "Inđija"})
@@ -43,7 +52,7 @@ class ImportingManager(object):
                 if len(row[1]) > 2 and row[1] not in ["", " "]:
                     json_doc = self.build_mongo_document_structure("Инђија", row[1], row[2], row[3], row[4], row[5], row[6], None, parent_handler, parent_num)
                     db.opstine.insert(json_doc)
-                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Инђија", parent_handler, row[2])
+                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Инђија", parent_handler, row[1])
 
     def data_importer_of_municipality_cacak(self):
         db.opstine.remove({"opstina.latin": "Čačak"})
@@ -158,7 +167,7 @@ class ImportingManager(object):
         elif value == "000":
             value = 0
             return value
-        elif value == "-" or value == "  -     " or value == " -     " or value == "  -":
+        elif value.strip() == "-":
             value = 0
             return value
         else:

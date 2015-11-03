@@ -35,6 +35,21 @@ class RashodiImportingTestCases(unittest.TestCase):
     def test_cacak_municipality(self):
         self.asserts_for_parent_categories_elements("Čačak", "Скупштина општине", 35)
 
+    def test_indjija_municipality(self):
+        self.asserts_for_parent_categories_elements("Inđija", "РАСХОДИ ЗА ЗАПОСЛЕНЕ", 6)
+        self.asserts_for_parent_categories_elements("Inđija", "КОРИШЋЕЊЕ УСЛУГА И РОБА", 6)
+        self.asserts_for_parent_categories_elements("Inđija", "АМОРТИЗАЦИЈА И УПОТРЕБА СРЕДСТАВА ЗА РАД", 1)
+        self.asserts_for_parent_categories_elements("Inđija", "ОТПЛАТА КАМАТА И ПРАТЕЋИ ТРОШКОВИ ЗАДУЖИВАЊА", 2)
+        self.asserts_for_parent_categories_elements("Inđija", "СУБВЕНЦИЈЕ", 2)
+        self.asserts_for_parent_categories_elements("Inđija", "ДОНАЦИЈЕ, ДОТАЦИЈЕ И ТРАНСФЕРИ", 3)
+        self.asserts_for_parent_categories_elements("Inđija", "СОЦИЈАЛНО ОСИГУРАЊЕ И СОЦИЈАЛНА ЗАШТИТА", 1)
+        self.asserts_for_parent_categories_elements("Inđija", "ОСТАЛИ РАСХОДИ", 4)
+        self.asserts_for_parent_categories_elements("Inđija", "АДМИНИСТРАТИВНИ ТРАНСФЕРИ ИЗ БУЏЕТА И СРЕДСТВА РЕЗЕРВЕ", 1)
+        self.asserts_for_parent_categories_elements("Inđija", "ОСНОВНА СРЕДСТВА", 4)
+        self.asserts_for_parent_categories_elements("Inđija", "ЗАЛИХЕ", 1)
+        self.asserts_for_parent_categories_elements("Inđija", "ПРИРОДНА ИМОВИНА", 1)
+        self.asserts_for_parent_categories_elements("Inđija", "ОТПЛАТА ГЛАВНИЦЕ", 1)
+        self.asserts_for_parent_categories_elements("Inđija", "НАБАВКА ФИНАНСИЈСКЕ ИМОВИНЕ", 1)
 
     def asserts_for_parent_categories_elements(self, municipality, parent_category, expected_value):
         '''

@@ -21,7 +21,13 @@ class ImportingManager(object):
         pass
 
     def data_importer_of_municipality_loznica(self):
-        pass
+        data_handler = reader(open("data/loznica.csv", "r"), delimiter=",")
+        for index, row in enumerate(data_handler):
+            if index > 0:
+                if row[1] not in ["", " "]:
+                    json_doc = self.build_mongo_document_structure("Лозница", row[1], row[2], row[3], row[4], row[5], row[6], None)
+                    db.opstine.insert(json_doc)
+                    print "Opstine: %s - Klasifikacija Broj: %s - Opis: %s" % ("Лозница", row[1], row[2])
 
     def data_importer_of_municipality_sombor(self):
         pass

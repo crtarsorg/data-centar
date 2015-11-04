@@ -50,7 +50,6 @@ class RashodiImportingTestCases(unittest.TestCase):
     }
 
     # Json container for each Valjevo parent category
-
     valjevo_counts_of_parents = {
         "РАСХОДИ ЗА ЗАПОСЛЕНЕ": 8,
         "КОРИШЋЕЊЕ УСЛУГА И РОБА": 6,

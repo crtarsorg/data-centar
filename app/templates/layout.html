@@ -40,7 +40,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">
+                <a class="navbar-brand page-scroll" href="{{ url_for('landing_page.index') }}">
                     <i class="fa fa-cubes"></i>  <span class="light">Data</span>Centar
                 </a>
             </div>
@@ -53,10 +53,10 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#">Mapa</a>
+                        <a class="page-scroll" href="{{ url_for('map.index') }}">Mapa</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#">API</a>
+                        <a class="page-scroll" href="{{ url_for('api.index') }}">API</a>
                     </li>
                 </ul>
             </div>

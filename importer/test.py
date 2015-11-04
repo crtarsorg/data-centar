@@ -91,6 +91,9 @@ class RashodiImportingTestCases(unittest.TestCase):
         for parent in self.valjevo_counts_of_parents:
             self.asserts_for_parent_categories_elements("Valjevo", parent, self.valjevo_counts_of_parents[parent])
 
+        # Test counts for municipality of Loznica
+        self.asserts_for_parent_categories_elements("Loznica", "Скупштина општине", 578)
+
     def asserts_for_parent_categories_elements(self, municipality, parent_category, expected_value):
         '''
         :param municipality: The municipality we want to test

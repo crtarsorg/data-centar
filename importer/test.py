@@ -49,6 +49,26 @@ class RashodiImportingTestCases(unittest.TestCase):
         "НАБАВКА ФИНАНСИЈСКЕ ИМОВИНЕ": 1
     }
 
+    # Json container for each Valjevo parent category
+
+    valjevo_counts_of_parents = {
+        "РАСХОДИ ЗА ЗАПОСЛЕНЕ": 8,
+        "КОРИШЋЕЊЕ УСЛУГА И РОБА": 6,
+        "УПОТРЕБА ОСНОВНИХ СРЕДСТАВА": 5,
+        "ОТПЛАТА КАМАТА": 4,
+        "СУБВЕНЦИЈЕ": 5,
+        "ДОНАЦИЈЕ И ТРАНСФЕРИ": 6,
+        "СОЦИЈАЛНА ПОМОЋ": 1,
+        "ОСТАЛИ РАСХОДИ": 6,
+        "АДМИНИСТРАТИВНИ ТРАНСФЕРИ БУЏЕТА": 6,
+        "ОСНОВНА СРЕДСТВА": 5,
+        "ЗАЛИХЕ": 4,
+        "ПРИРОДНА ИМОВИНА": 3,
+        "Неф. Имов. која се фин. из сред. за реализ. нип-а": 1,
+        "ОТПЛАТА ГЛАВНИЦЕ": 3,
+        "Набавка финансијске имовине": 1
+    }
+
     def test_counts_for_parent_categories(self):
         # Test counts for municipality of Novi Beograd
         for parent in self.novi_beograd_counts_of_parents:
@@ -67,6 +87,10 @@ class RashodiImportingTestCases(unittest.TestCase):
         # Test counts for municipality of Inđija
         for parent in self.idjia_counts_of_parents:
             self.asserts_for_parent_categories_elements("Inđija", parent, self.idjia_counts_of_parents[parent])
+
+        # Test counts for municipality of Valjevo
+        for parent in self.valjevo_counts_of_parents:
+            self.asserts_for_parent_categories_elements("Valjevo", parent, self.valjevo_counts_of_parents[parent])
 
     def asserts_for_parent_categories_elements(self, municipality, parent_category, expected_value):
         '''

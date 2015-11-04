@@ -52,7 +52,7 @@ class ImportingManager(object):
                 if len(row[1]) > 2 and row[1] not in ["", " "]:
                     json_doc = self.build_mongo_document_structure("Инђија", row[1], row[2], row[3], row[4], row[5], row[6], None, parent_handler, parent_num)
                     db.opstine.insert(json_doc)
-                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Инђија", parent_handler, row[1])
+                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Инђија", parent_handler, row[2])
 
     def data_importer_of_municipality_cacak(self):
         db.opstine.remove({"opstina.latin": "Čačak"})

@@ -24,6 +24,7 @@ class ImportingManager(object):
             pass
 
     def data_importer_of_municipality_vranje(self):
+        pass
 
         # init parent categories JSON
         parent_categories = utils.parent_categories_for_vranje()
@@ -101,7 +102,7 @@ class ImportingManager(object):
                     print "Opstine: %s - Klasifikacija Broj: %s - Opis: %s" % ("Лозница", row[1], row[2])
 
     def data_importer_of_municipality_sombor(self):
-        data_handler = ""
+        pass
 
     def data_importer_of_municipality_valjevo(self):
         db.opstine.remove({"opstina.latinica": "Valjevo"})

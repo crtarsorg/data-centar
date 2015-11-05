@@ -232,10 +232,12 @@ class ImportingManager(object):
                 "cirilica": municipality,
                 "latinica": cyrtranslit.to_latin(municipality, "sr")
             },
-            "klasifikacijaBroj": int(class_number),
-            "opis": {
-                "cirilica": opis.strip(),
-                "latinica": cyrtranslit.to_latin(opis, "sr")
+            "klasifikacija": {
+                "broj": int(class_number),
+                "opis": {
+                    "cirilica": opis.strip(),
+                    "latinica": cyrtranslit.to_latin(opis, "sr")
+                }
             },
             "prihodiBudzeta": prihodi_vudzeta,
             "sopstveniPrihodi": sopstveni_prihodi,

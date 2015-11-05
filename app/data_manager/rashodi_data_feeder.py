@@ -25,7 +25,7 @@ class RashodiDataFeed():
                 "_id": {
                     "opstina": "$opstina.latinica",
                     "godina": "$godina",
-                    "tipPodataka": "$tipPodataka"
+                    "tipPodataka": "$tipPodataka.vrednost"
                 },
                 "prihodiBudzeta": {"$sum": "$prihodiBudzeta"},
                 "sopstveniPrihodi": {"$sum": "$sopstveniPrihodi"},
@@ -73,7 +73,7 @@ class RashodiDataFeed():
          # Build match pipeline
         match = {
             "$match": {
-                "tipPodatakaslug": query_params['data']
+                "tipPodataka.slug": query_params['data']
             }
         }
 
@@ -87,9 +87,23 @@ class RashodiDataFeed():
         group = {
             "$group": {
                 "_id": {
-                    "opstina": "$opstina.latinica",
-                    "godina": "$godina",
-                    "tipPodataka": "$tipPodataka"
+                    "broj": "$kategorijaRoditelj.broj",
+                    "opis": "$kategorijaRoditelj.opis",
                 },
+                "klasifikacijaBroj": { "$push":  { "broj": "$klasifikacija.broj", "opis": "$klasifikacija.opis" } }
             }
         }
+
+        # Build project pipeline
+        project = {
+            "$project": {
+                "_id": 0,
+                "broj": "$_id.broj",
+                "opis": "$_id.opis",
+                "klasifikacijaBroj": "$klasifikacijaBroj"
+            }
+        }
+        # Execute mongo request
+        json_doc = mongo.db.opstine.aggregate([match, group, project])
+
+        return json_doc['result']

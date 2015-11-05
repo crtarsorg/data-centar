@@ -21,7 +21,38 @@ class RashodiDataImporter(object):
         pass
 
     def data_importer_of_municipality_prijepolje(self):
-        pass
+        db.opstine.remove({"opstina.latinica": "Prijepolje"})
+        # Read data from vranje csv file
+        data_handler = reader(open("data/rashodi/prijepolje.csv", "r"), delimiter=",")
+        program = ""
+        subprogram = ""
+        for index, row in enumerate(data_handler):
+            if index > 1:
+                if row[1] in ["", " "] and row[2] not in ["", " "] and row[2].strip() in utils.program_categories_for_prijepolje():
+                    program = row[2].strip()
+
+                if program != "" and row[2].strip() in utils.program_categories_for_prijepolje()[program]:
+                    subprogram = row[2].strip()
+
+                if row[1] not in ["", " "] and len(row[1]) > 2 and program not in ["", " "] and subprogram not in ["", " "]:
+                    json_doc = self.build_mongo_document_structure(
+                        "Пријепоље",
+                        row[1],
+                        row[2],
+                        row[3],
+                        row[4],
+                        row[5],
+                        row[6],
+                        None
+                    )
+                    json_doc["program"] = {}
+                    json_doc["program"]["cirilica"] = program.strip()
+                    json_doc["program"]["latinica"] = cyrtranslit.to_latin(program, "sr")
+                    json_doc["potProgram"] = {}
+                    json_doc["potProgram"]["cirilica"] = subprogram.strip()
+                    json_doc["potProgram"]["latinica"] = cyrtranslit.to_latin(subprogram, "sr")
+                    db.opstine.insert(json_doc)
+                    print "Opstine: %s - Program: %s %s" % ("Пријепоље", program, row[1])
 
     def data_importer_of_municipality_vranje(self):
         db.opstine.remove({"opstina.latinica": "Vranje"})

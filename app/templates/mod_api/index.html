@@ -42,9 +42,34 @@
                                 </p>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="sums-tryit">
-                                <p>
-                                    Try it: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </p>
+
+                                <form class="form-horizontal">
+                                    <div class="form-group">
+                                        {{ sum_req_form.data.label(class="control-label col-xs-2") }}
+                                        <div class="col-xs-6">
+                                            {{ sum_req_form.data(class="form-control") }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        {{ sum_req_form.years.label(class="control-label col-xs-2") }}
+                                        <div class="col-xs-6">
+                                            {{ sum_req_form.years(class="form-control") }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        {{ sum_req_form.municipalities.label(class="control-label col-xs-2") }}
+                                        <div class="col-xs-6">
+                                            {{ sum_req_form.municipalities(class="form-control") }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        {{ sum_req_form.classifications.label(class="control-label col-xs-2") }}
+                                        <div class="col-xs-6">
+                                            {{ sum_req_form.classifications(class="form-control") }}
+                                        </div>
+                                    </div>
+                                </form>
+
                                 <h5>Response:</h5>
                                 <pre><code class="language-javascript">{ "key": "value" }</code></pre>
                             </div>

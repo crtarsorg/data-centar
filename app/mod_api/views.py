@@ -2,6 +2,7 @@ from flask import Blueprint, Response, request, render_template
 import json
 from app import mongo
 from bson import json_util
+from requestforms import SumRequestForm, ClassificationsRequestForm
 
 mod_api = Blueprint('api', __name__, url_prefix='/api')
 
@@ -23,7 +24,8 @@ def index():
     Renders the API documentation page.
     :return:
     '''
-    return render_template('mod_api/index.html')
+    sum_req_form = SumRequestForm()
+    return render_template('mod_api/index.html', sum_req_form=sum_req_form)
 
 
 def request_mongo_json_response(query_params):

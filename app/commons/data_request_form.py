@@ -1,9 +1,19 @@
 # coding=utf-8
 from wtforms import Form, SelectField, SelectMultipleField
 
-class SumRequestForm(Form):
+class DataRequestForm(Form):
 
-    data = SelectField(u'Data',
+    #TODO: translate
+    parameter = SelectField(u'Parameter',
+        choices=[
+            ("ukupno", "Ukupno"),
+            ("sopstveniPrihodi", "Sopstveni prihodi"),
+            ("prihodiBudzeta", "Prihodi budzeta"),
+            ("donacije", "Donacije"),
+            ("ostali", "Ostali"),
+        ])
+
+    data_type = SelectField(u'Tip podataka',
         choices=[
             ('rashodi', 'Rashodi')
         ])

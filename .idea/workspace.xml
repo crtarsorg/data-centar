@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9d6434bc-d8c4-4dea-8583-f193f8b4e849" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/importer/importing_manager.py" afterPath="$PROJECT_DIR$/importer/importing_manager.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/mod_api/views.py" afterPath="$PROJECT_DIR$/app/mod_api/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="9d6434bc-d8c4-4dea-8583-f193f8b4e849" name="Default" comment="" />
     <ignored path="DataCentar.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -59,8 +55,8 @@
       <file leaf-file-name="importing_manager.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/importer/importing_manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44313148">
-              <caret line="239" column="17" selection-start-line="239" selection-start-column="17" selection-end-line="239" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.62038404">
+              <caret line="247" column="0" selection-start-line="247" selection-start-column="0" selection-end-line="247" selection-end-column="0" />
               <folding>
                 <element signature="e#14#36#0" expanded="true" />
               </folding>
@@ -904,8 +900,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/importer/importing_manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44313148">
-          <caret line="239" column="17" selection-start-line="239" selection-start-column="17" selection-end-line="239" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.62038404">
+          <caret line="247" column="0" selection-start-line="247" selection-start-column="0" selection-end-line="247" selection-end-column="0" />
           <folding>
             <element signature="e#14#36#0" expanded="true" />
           </folding>

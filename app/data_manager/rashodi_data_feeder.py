@@ -9,7 +9,7 @@ class RashodiDataFeed():
         # Build match pipeline
         match = {
             "$match": {
-                "tipPodataka": query_params['data']
+                "tipPodataka.slug": query_params['data']
             }
         }
 
@@ -73,7 +73,7 @@ class RashodiDataFeed():
          # Build match pipeline
         match = {
             "$match": {
-                "tipPodataka": query_params['data']
+                "tipPodatakaslug": query_params['data']
             }
         }
 

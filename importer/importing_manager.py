@@ -21,6 +21,8 @@ class ImportingManager(object):
         pass
 
     def data_importer_of_municipality_loznica(self):
+
+        db.opstine.remove({"opstina.latinica": "Loznica"})
         data_handler = reader(open("data/loznica.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
@@ -33,7 +35,7 @@ class ImportingManager(object):
         pass
 
     def data_importer_of_municipality_valjevo(self):
-        db.opstine.remove({"opstina.latin": "Valjevo"})
+        db.opstine.remove({"opstina.latinica": "Valjevo"})
         data_handler = reader(open("data/valjevo.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
@@ -47,7 +49,7 @@ class ImportingManager(object):
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Ваљево", parent_handler, row[1])
 
     def data_importer_of_municipality_indjija(self):
-        db.opstine.remove({"opstina.latin": "Inđija"})
+        db.opstine.remove({"opstina.latinica": "Inđija"})
         data_handler = reader(open("data/indjija.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
@@ -61,7 +63,7 @@ class ImportingManager(object):
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Инђија", parent_handler, row[2])
 
     def data_importer_of_municipality_cacak(self):
-        db.opstine.remove({"opstina.latin": "Čačak"})
+        db.opstine.remove({"opstina.latinica": "Čačak"})
         data_handler = reader(open("data/cacak.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
@@ -71,7 +73,7 @@ class ImportingManager(object):
                     print "Opstine: %s - Klasifikacija Broj: %s - Opis: %s" % ("Краљево", row[1], row[2])
 
     def data_importer_of_municipality_krajlevo(self):
-        db.opstine.remove({"opstina.latin": "Kraljevo"})
+        db.opstine.remove({"opstina.latinica": "Kraljevo"})
         data_handler = reader(open("data/krajlevo.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
@@ -81,7 +83,7 @@ class ImportingManager(object):
                     print "Opstine: %s - Klasifikacija Broj: %s - Opis: %s" % ("Краљево", row[1], row[2])
 
     def data_importer_of_municipality_zvezdara(self):
-        db.opstine.remove({"opstina.latin": "Zvezdara"})
+        db.opstine.remove({"opstina.latinica": "Zvezdara"})
         data_handler = reader(open("data/zvezdara.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
@@ -95,7 +97,7 @@ class ImportingManager(object):
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Звездара", parent_handler, row[2])
 
     def data_importer_of_municipality_novi_beograd(self):
-        db.opstine.remove({"opstina.latin": "Novi Beograd"})
+        db.opstine.remove({"opstina.latinica": "Novi Beograd"})
         data_handler = reader(open("data/novi_beograd.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
@@ -137,19 +139,19 @@ class ImportingManager(object):
         json_doc = {
              "kategorijaRoditelj": {
                 "opis": {
-                    "cyrilic": "Скупштина општине",
-                    "latin": "Skupština Opštine",
+                    "cirilica": "Скупштина општине",
+                    "latinica": "Skupština Opštine",
                 },
                  "broj": 0
             },
             "opstina": {
-                "cyrilic": municipality,
-                "latin": cyrtranslit.to_latin(municipality, "sr")
+                "cirilica": municipality,
+                "latinica": cyrtranslit.to_latin(municipality, "sr")
             },
             "klasifikacijaBroj": int(class_number),
             "opis": {
-                "latin": cyrtranslit.to_latin(opis, "sr"),
-                "cyrilic": opis.strip()
+                "cirilica": opis.strip(),
+                "latinica": cyrtranslit.to_latin(opis, "sr")
             },
             "prihodiBudzeta": prihodi_vudzeta,
             "sopstveniPrihodi": sopstveni_prihodi,
@@ -159,8 +161,8 @@ class ImportingManager(object):
         }
 
         if kategorija_roditelj is not None:
-            json_doc["kategorijaRoditelj"]["opis"]["cyrilic"] = kategorija_roditelj.strip()
-            json_doc["kategorijaRoditelj"]["opis"]["latin"] = cyrtranslit.to_latin(kategorija_roditelj, "sr")
+            json_doc["kategorijaRoditelj"]["opis"]["cirilica"] = kategorija_roditelj.strip()
+            json_doc["kategorijaRoditelj"]["opis"]["latinica"] = cyrtranslit.to_latin(kategorija_roditelj, "sr")
             json_doc["kategorijaRoditelj"]["broj"] = int(roditelj_broj)
 
         return json_doc

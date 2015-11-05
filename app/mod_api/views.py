@@ -3,7 +3,7 @@ import json
 from app.data_manager.rashodi_data_feeder import RashodiDataFeed
 
 from bson import json_util
-from requestforms import SumRequestForm, ClassificationsRequestForm
+from requestforms import SumRequestForm
 
 mod_api = Blueprint('api', __name__, url_prefix='/api')
 

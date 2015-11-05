@@ -47,6 +47,3 @@ class SumRequestForm(Form):
             (428, "428 - Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
             (429, "429 - Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
         ])
-
-class ClassificationsRequestForm(Form):
-    pass

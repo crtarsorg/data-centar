@@ -5,41 +5,68 @@
             $( "#btn-post-sum-req" ).click(function() {
                 post_sum_req();
             });
+            $( "#btn-post-activities-req" ).click(function() {
+                post_classifications_req();
+            });
 
-            function post_sum_req(){
-
-                var municipalities = [];
-                $('#municipalities :selected').each(function(i, selected){
-                  municipalities[i] = $(selected).val();
-                });
-
-                var classifications = [];
-                $('#classifications :selected').each(function(i, selected){
-                  classifications[i] = parseInt($(selected).val());
-                });
-
-                var data = {
-                    "data": $( '#data' ).val(),
-                    "godine": [parseInt($('#years').val())],
-                    "opstine": municipalities,
-                    "klasifikacijaBroj": classifications
-                };
-
-                $.ajax({
-                  type: "POST",
-                  url: '{{ url_for('api.sum') }}',
-                  contentType: 'application/json',
-                  data: JSON.stringify(data),
-                  success: function(rsp){
-                      $('#sum-req-body-box').text(JSON.stringify(data, null, 4));
-                      $('#sum-req-rsp-box').text(JSON.stringify(rsp, null, 4));
-                      Prism.highlightAll();
-                  },
-                });
-            }
         });
 
+    function post_sum_req(){
 
+        var municipalities = [];
+        $('#municipalities :selected').each(function(i, selected){
+          municipalities[i] = $(selected).val();
+        });
+
+        var classifications = [];
+        $('#classifications :selected').each(function(i, selected){
+          classifications[i] = parseInt($(selected).val());
+        });
+
+        var data = {
+            "data": $( '#data' ).val(),
+            "godine": [parseInt($('#years').val())],
+            "opstine": municipalities,
+            "klasifikacijaBroj": classifications
+        };
+
+        $.ajax({
+          type: "POST",
+          url: '{{ url_for('api.sum') }}',
+          contentType: 'application/json',
+          data: JSON.stringify(data),
+          success: function(rsp){
+              $('#sum-req-body-box').text(JSON.stringify(data, null, 4));
+              $('#sum-req-rsp-box').text(JSON.stringify(rsp, null, 4));
+              Prism.highlightAll();
+          }
+        });
+    }
+
+    function post_classifications_req(){
+        var municipalities = [];
+        $('#class_municipalities :selected').each(function(i, selected){
+          municipalities[i] = $(selected).val();
+        });
+
+        var data = {
+            "data": $( '#class_data' ).val(),
+            "godine": [parseInt($('#class_years').val())],
+            "opstine": municipalities
+        };
+
+        $.ajax({
+          type: "POST",
+          url: '{{ url_for('api.activities') }}',
+          contentType: 'application/json',
+          data: JSON.stringify(data),
+          success: function(rsp){
+              $('#activities-req-body-box').text(JSON.stringify(data, null, 4));
+              $('#activities-req-rsp-box').text(JSON.stringify(rsp, null, 4));
+              Prism.highlightAll();
+          }
+        });
+    }
     </script>
     <script src="{{ url_for('static', filename='prismjs/prism.js') }}"></script>
     <link href="{{ url_for('static', filename='prismjs/prism.css') }}" rel="stylesheet">
@@ -158,9 +185,37 @@
                                 </p>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="activities-tryit">
-                                <p>
-                                    Try it: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </p>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <form class="form-horizontal" id="sum-req-form">
+                                            <div class="form-group">
+                                                {{ sum_req_form.data.label(class="control-label col-xs-2") }}
+                                                <div class="col-xs-10">
+                                                    {{ sum_req_form.data(class="form-control", id="class_data") }}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                {{ sum_req_form.years.label(class="control-label col-xs-2") }}
+                                                <div class="col-xs-10">
+                                                    {{ sum_req_form.years(class="form-control", id="class_years") }}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                {{ sum_req_form.municipalities.label(class="control-label col-xs-2") }}
+                                                <div class="col-xs-10">
+                                                    {{ sum_req_form.municipalities(class="form-control", id="class_municipalities") }}
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <button class="btn btn-primary" id="btn-post-activities-req">POST</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong>Request Body:</strong>
+                                        <pre style="height:258px;">
+                                            <code class="language-javascript" id="activities-req-body-box"></code>
+                                        </pre>
+                                    </div>
+                                </div>
                                 <div style="padding-top:20px;" class="text-left">
                                     <strong>Response:</strong>
                                     <pre style="height:400px;">

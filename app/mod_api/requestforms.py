@@ -26,7 +26,7 @@ class SumRequestForm(Form):
             ("zvezdara", "Zvezdara")
         ])
 
-    classifications = SelectMultipleField(u'Klasifikacije',
+    classifications = SelectMultipleField(u'Ekonomska Klasifikacija',
         choices=[
             (411, "411 - Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
             (412, "412 - Lorem ipsum dolor sit amet, consectetur adipiscing elit."),

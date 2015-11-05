@@ -5,8 +5,7 @@ class SumRequestForm(Form):
 
     data = SelectField(u'Data',
         choices=[
-            ('rashodi', 'Rashodi'),
-            ('prihodi', 'Prihodi')
+            ('rashodi', 'Rashodi')
         ])
 
     years = SelectField(u'Godine',
@@ -16,8 +15,8 @@ class SumRequestForm(Form):
 
     municipalities = SelectMultipleField(u'Opštine',
         choices=[
-            #("cacak", "Čačak"),
-            ("indjija", "Indjija"),
+            ("cacak", u"Čačak"),
+            ("indjija", u"Inđjija"),
             ("kraljevo", "Kraljevo"),
             ("loznica", "Loznica"),
             ("novi-beograd", "Novi Beograd"),

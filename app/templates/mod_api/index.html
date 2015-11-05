@@ -2,7 +2,7 @@
 {% block body %}
     <script>
         $( document ).ready(function(){
-            $( "#btn-post-sum-req" ).click(function() {;
+            $( "#btn-post-sum-req" ).click(function() {
                 post_sum_req();
             });
 
@@ -25,15 +25,16 @@
                     "klasifikacijaBroj": classifications
                 };
 
-
-                $.post( '{{ url_for('api.sum') }}', data )
-                    .done(function( rsp ) {
-                        console.log(rsp)
-                    })
-                    .fail(function() {
-                        alert( "An unexpected error occurred." );
-                    })
-
+                $.ajax({
+                  type: "POST",
+                  url: '{{ url_for('api.sum') }}',
+                  contentType: 'application/json',
+                  data: JSON.stringify(data),
+                  success: function(rsp){
+                      $('#sum-req-rsp-box').text(JSON.stringify(rsp, null, 4));
+                      Prism.highlightAll();
+                  },
+                });
             }
         });
 
@@ -110,9 +111,11 @@
                                 </form>
                                 <button class="btn btn-primary" id="btn-post-sum-req">POST</button>
 
-                                <div style="padding-top:20px;">
-                                    <h5>Response:</h5>
-                                    <pre><code class="language-javascript">{}</code></pre>
+                                <div style="padding-top:20px;" class="text-left">
+                                    <strong>Response:</strong>
+                                    <pre style="height:400px;">
+                                        <code class="language-javascript" id="sum-req-rsp-box"></code>
+                                    </pre>
                                 </div>
                             </div>
                         </div>

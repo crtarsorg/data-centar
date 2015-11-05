@@ -19,9 +19,6 @@ class RashodiDataFeed():
         if query_params['opstine'] != []:
             match['$match']["opstina.latinica"] = {'$in': query_params['opstine']}
 
-        if query_params['klasifikacijaBroj'] != []:
-            match['$match']["klasifikacija.broj"] = {'$in': query_params['klasifikacijaBroj']}
-
         # Build group pipeline
         group = {
             "$group": {
@@ -52,6 +49,19 @@ class RashodiDataFeed():
                 "ukupno": "$ukupno",
             }
         }
+
+        if "klasifikacijaBroj" in query_params:
+            if query_params['klasifikacijaBroj'] != []:
+                match['$match']["klasifikacija.broj"] = {'$in': query_params['klasifikacijaBroj']}
+                group['$group']['_id']['klasifikacijaBroj'] = "$klasifikacija.broj"
+                project['$project']['klasifikacijaBroj'] = '$_id.klasifikacijaBroj'
+
+        elif "kategorijaRoditelj" in query_params:
+            if query_params['kategorijaRoditelj'] != []:
+                match['$match']["kategorijaRoditelj.broj"] = {'$in': query_params['kategorijaRoditelj']}
+                group['$group']['_id']['kategorijaRoditelj'] = "$kategorijaRoditelj.broj"
+                project['$project']['kategorijaRoditelj'] = '$_id.kategorijaRoditelj'
+
         # Execute mongo request
         json_doc = mongo.db.opstine.aggregate([match, group, project])
 

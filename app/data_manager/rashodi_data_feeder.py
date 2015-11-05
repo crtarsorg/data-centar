@@ -2,9 +2,9 @@
 from app import mongo
 
 
-class RashodiDataFeed:
+class RashodiDataFeed():
 
-    def request_mongo_json_response(self, query_params):
+    def calculate_sum_of_expenditure_types(self, query_params):
 
         # Build match pipeline
         match = {

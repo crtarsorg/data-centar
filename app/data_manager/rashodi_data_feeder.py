@@ -17,7 +17,7 @@ class RashodiDataFeed():
             match['$match']["godina"] = {'$in': query_params['godine']}
 
         if query_params['opstine'] != []:
-            match['$match']["opstina.latinica"] = {'$in': query_params['opstine']}
+            match['$match']["opstina.slug"] = {'$in': query_params['opstine']}
 
         # Build group pipeline
         group = {
@@ -81,7 +81,7 @@ class RashodiDataFeed():
             match['$match']["godina"] = {'$in': query_params['godine']}
 
         if query_params['opstine'] != []:
-            match['$match']["opstina.latinica"] = {'$in': query_params['opstine']}
+            match['$match']["opstina.slug"] = {'$in': query_params['opstine']}
 
         # Build group pipeline
         group = {

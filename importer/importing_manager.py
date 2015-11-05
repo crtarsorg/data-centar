@@ -19,9 +19,7 @@ class ImportingManager(object):
         pass
 
     def data_importer_of_municipality_prijepolje(self):
-        #data_handler = reader(open("data/******.csv", "r"), delimiter=",")
-        for index, row in enumrate(data_handler):
-            pass
+        pass
 
     def data_importer_of_municipality_vranje(self):
         pass

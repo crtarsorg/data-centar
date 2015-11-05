@@ -3,6 +3,7 @@ import json
 from app.data_manager.rashodi_data_feeder import RashodiDataFeed
 
 from bson import json_util
+from requestforms import SumRequestForm, ClassificationsRequestForm
 
 mod_api = Blueprint('api', __name__, url_prefix='/api')
 
@@ -22,4 +23,5 @@ def index():
     Renders the API documentation page.
     :return:
     '''
-    return render_template('mod_api/index.html')
+    sum_req_form = SumRequestForm()
+    return render_template('mod_api/index.html', sum_req_form=sum_req_form)

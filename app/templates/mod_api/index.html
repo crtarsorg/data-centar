@@ -3,7 +3,7 @@
     <script>
         $( document ).ready(function(){
             $( "#btn-post-sum-req" ).click(function() {
-                post_sum_req();
+                postSumRequest();
             });
             $( "#btn-post-activities-req" ).click(function() {
                 post_classifications_req();
@@ -11,24 +11,9 @@
 
         });
 
-    function post_sum_req(){
+    function postSumRequest(){
 
-        var municipalities = [];
-        $('#municipalities :selected').each(function(i, selected){
-          municipalities[i] = $(selected).val();
-        });
-
-        var classifications = [];
-        $('#classifications :selected').each(function(i, selected){
-          classifications[i] = parseInt($(selected).val());
-        });
-
-        var data = {
-            "tipPodataka": $( '#data_type' ).val(),
-            "godine": [parseInt($('#years').val())],
-            "opstine": municipalities,
-            "klasifikacijaBroj": classifications
-        };
+        var data = get_request_form_data('sum-req-form');
 
         $.ajax({
           type: "POST",

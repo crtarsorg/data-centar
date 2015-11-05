@@ -26,11 +26,23 @@ def index():
 
 
 def request_mongo_json_response(query_params):
+
     match = {
         "$match": {
-
+            "tipPodataka": query_params['data']
         }
     }
-    json_doc = {}
+
+    if query_params['godine'] != []:
+        match['$match']["godine"] = {'$in': query_params['godine']}
+
+    if query_params['opstine'] != []:
+        match['$match']["opstine"]['latinica'] = {'$in': query_params['opstine']}
+
+    if query_params['klasifikacijaBroj'] != []:
+        match['$match']["klasifikacijaBroj"] = {'$in': query_params['klasifikacijaBroj']}
+
+    # Execute mongo request
+    json_doc = mongo.db.datacentar.opstine.aggregate([match])
 
     return json_doc

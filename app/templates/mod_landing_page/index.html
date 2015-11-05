@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
+    <style>
+        .intro{
+            background: url({{ url_for('static', filename='img/intro-bg-%s.jpg'%bg_id) }}) no-repeat bottom center scroll;
+        }
+    </style>
     <!-- Intro Header -->
     <header class="intro">
         <div class="intro-body">

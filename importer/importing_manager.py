@@ -3,7 +3,7 @@ from csv import reader
 import cyrtranslit
 from flask_pymongo import MongoClient
 
-# Instantiate mongo database
+# Instantiate mongo client
 mongo = MongoClient()
 
 # Create mongo database
@@ -137,6 +137,8 @@ class ImportingManager(object):
 
         # Let's build mongo document structure
         json_doc = {
+            "tipPodataka": "Rashodi",
+            "godina": 2015,
              "kategorijaRoditelj": {
                 "opis": {
                     "cirilica": "Скупштина општине",

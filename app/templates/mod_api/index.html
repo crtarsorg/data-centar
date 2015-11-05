@@ -1,5 +1,44 @@
 {% extends "layout.html" %}
 {% block body %}
+    <script>
+        $( document ).ready(function(){
+            $( "#btn-post-sum-req" ).click(function() {;
+                post_sum_req();
+            });
+
+            function post_sum_req(){
+
+                var municipalities = [];
+                $('#municipalities :selected').each(function(i, selected){
+                  municipalities[i] = $(selected).val();
+                });
+
+                var classifications = [];
+                $('#classifications :selected').each(function(i, selected){
+                  classifications[i] = parseInt($(selected).val());
+                });
+
+                var data = {
+                    "data": $( '#data' ).val(),
+                    "godine": [parseInt($('#years').val())],
+                    "opstine": municipalities,
+                    "klasifikacijaBroj": classifications
+                };
+
+
+                $.post( '{{ url_for('api.sum') }}', data )
+                    .done(function( rsp ) {
+                        console.log(rsp)
+                    })
+                    .fail(function() {
+                        alert( "An unexpected error occurred." );
+                    })
+
+            }
+        });
+
+
+    </script>
     <script src="{{ url_for('static', filename='prismjs/prism.js') }}"></script>
     <link href="{{ url_for('static', filename='prismjs/prism.css') }}" rel="stylesheet">
     <style>
@@ -43,7 +82,7 @@
                             </div>
                             <div role="tabpanel" class="tab-pane" id="sums-tryit">
 
-                                <form class="form-horizontal">
+                                <form class="form-horizontal" id="sum-req-form">
                                     <div class="form-group">
                                         {{ sum_req_form.data.label(class="control-label col-xs-2") }}
                                         <div class="col-xs-6">
@@ -69,9 +108,12 @@
                                         </div>
                                     </div>
                                 </form>
+                                <button class="btn btn-primary" id="btn-post-sum-req">POST</button>
 
-                                <h5>Response:</h5>
-                                <pre><code class="language-javascript">{ "key": "value" }</code></pre>
+                                <div style="padding-top:20px;">
+                                    <h5>Response:</h5>
+                                    <pre><code class="language-javascript">{}</code></pre>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -106,7 +148,7 @@
                                     Try it: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                 </p>
                                 <h5>Response:</h5>
-                                <pre><code class="language-javascript">{ "key": "value" }</code></pre>
+                                <pre><code class="language-javascript">{}</code></pre>
                             </div>
                         </div>
                     </div>

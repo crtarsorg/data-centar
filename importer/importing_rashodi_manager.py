@@ -4,6 +4,7 @@ import cyrtranslit
 from flask_pymongo import MongoClient
 from utils import ImporterUtils
 from slugify import slugify
+from abstract_data_importer import AbstractDataImporter
 
 # Instantiate utils instance
 utils = ImporterUtils()
@@ -14,7 +15,7 @@ mongo = MongoClient()
 # Create mongo database instance
 db = mongo.datacentar
 
-class ImportingManager(object):
+class RashodiDataImporter(object):
 
     def __init__(self):
         pass
@@ -23,14 +24,13 @@ class ImportingManager(object):
         pass
 
     def data_importer_of_municipality_vranje(self):
-        pass
-
+        db.opstine.remove({"opstina.latinica": "Vranje"})
         # init parent categories JSON
         parent_categories = utils.parent_categories_for_vranje()
         program_categories = utils.program_categories_for_vranje()
 
         # Read data from vranje csv file
-        data_handler = reader(open("data/vranje.csv", "r"), delimiter=",")
+        data_handler = reader(open("data/rashodi/vranje.csv", "r"), delimiter=",")
         program = ""
         subprogram = ""
         for index, row in enumerate(data_handler):
@@ -85,14 +85,9 @@ class ImportingManager(object):
                         db.opstine.insert(json_doc)
                         print "Opstine: %s - Program: %s %s" % ("Врање", program, row[1])
 
-
-
-
-
     def data_importer_of_municipality_loznica(self):
-
         db.opstine.remove({"opstina.latinica": "Loznica"})
-        data_handler = reader(open("data/loznica.csv", "r"), delimiter=",")
+        data_handler = reader(open("data/rashodi/loznica.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
                 if row[1] not in ["", " "]:
@@ -105,7 +100,7 @@ class ImportingManager(object):
 
     def data_importer_of_municipality_valjevo(self):
         db.opstine.remove({"opstina.latinica": "Valjevo"})
-        data_handler = reader(open("data/valjevo.csv", "r"), delimiter=",")
+        data_handler = reader(open("data/rashodi/valjevo.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
                 if row[1] != "" and row[1][2] == "0" and row[1][1] != "0":
@@ -119,7 +114,7 @@ class ImportingManager(object):
 
     def data_importer_of_municipality_indjija(self):
         db.opstine.remove({"opstina.latinica": "Inđija"})
-        data_handler = reader(open("data/indjija.csv", "r"), delimiter=",")
+        data_handler = reader(open("data/rashodi/indjija.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
                 if len(row[1]) == 2:
@@ -133,7 +128,7 @@ class ImportingManager(object):
 
     def data_importer_of_municipality_cacak(self):
         db.opstine.remove({"opstina.latinica": "Čačak"})
-        data_handler = reader(open("data/cacak.csv", "r"), delimiter=",")
+        data_handler = reader(open("data/rashodi/cacak.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
                 if len(row[1]) > 2 and row[1] not in ["", " "] and row[1] != "4+5":
@@ -143,7 +138,7 @@ class ImportingManager(object):
 
     def data_importer_of_municipality_krajlevo(self):
         db.opstine.remove({"opstina.latinica": "Kraljevo"})
-        data_handler = reader(open("data/krajlevo.csv", "r"), delimiter=",")
+        data_handler = reader(open("data/rashodi/krajlevo.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
                 if row[1] not in ["", " "]:
@@ -153,7 +148,7 @@ class ImportingManager(object):
 
     def data_importer_of_municipality_zvezdara(self):
         db.opstine.remove({"opstina.latinica": "Zvezdara"})
-        data_handler = reader(open("data/zvezdara.csv", "r"), delimiter=",")
+        data_handler = reader(open("data/rashodi/zvezdara.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
                 if len(row[1]) == 2 or row[1] == "482":
@@ -167,7 +162,7 @@ class ImportingManager(object):
 
     def data_importer_of_municipality_novi_beograd(self):
         db.opstine.remove({"opstina.latinica": "Novi Beograd"})
-        data_handler = reader(open("data/novi_beograd.csv", "r"), delimiter=",")
+        data_handler = reader(open("data/rashodi/novi_beograd.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
                 if row[1] == "499" or len(row[1]) == 2:
@@ -274,3 +269,6 @@ class ImportingManager(object):
 
         else:
             return float(value)
+
+
+AbstractDataImporter.register(RashodiDataImporter)

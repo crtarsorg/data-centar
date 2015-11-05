@@ -1,7 +1,7 @@
 import argparse
-from importer.importing_manager import ImportingManager
+from importer.importing_rashodi_manager import RashodiDataImporter
 
-importer = ImportingManager()
+importer = RashodiDataImporter()
 
 def main_importer(municipalities):
     mun_list = municipalities.split(",")

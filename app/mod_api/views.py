@@ -16,9 +16,12 @@ def sum():
     json_response = RashodiDataFeed().calculate_sum_of_expenditure_types(json.loads(query_params))
     return Response(response=json_util.dumps(json_response), status=200, mimetype='application/json')
 
-@mod_api.route("/activities", methods=['POST'])
+@mod_api.route("/ekonomska-klasifikacija", methods=['POST'])
 def activities():
-    return Response(response=json.dumps({}), status=200, mimetype='application/json')
+
+    query_params = request.data
+    json_response = RashodiDataFeed().build_json_response_for_parent_categories(json.loads(query_params))
+    return Response(response=json.dumps(json_response), status=200, mimetype='application/json')
 
 @mod_api.route("/", methods=['GET'])
 def index():

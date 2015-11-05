@@ -1,5 +1,15 @@
 {% extends "layout.html" %}
 {% block body %}
+    <style>
+        #map-container{
+            width: 100%;
+            height: 463px;
+            background-color: #333334;
+            background-image: url("{{ url_for('static', filename='img/compass.png') }}");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
     <script src="https://code.highcharts.com/maps/highmaps.js"></script>
     <script src="https://code.highcharts.com/maps/modules/data.js"></script>
     <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
@@ -125,9 +135,11 @@
                     </div>
                 </form>
                 <button class="btn btn-primary" id="btn-post-req">Mapa</button>
+                <br><br>
             </div>
             <div class="col-md-7">
-                <div id="map-container" style="width:100%;height:463px;background-color:#333334"></div>
+                <div id="map-container">
+                </div>
             </div>
         </div>
 

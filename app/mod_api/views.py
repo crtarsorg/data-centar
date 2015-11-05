@@ -3,6 +3,7 @@ import json
 from app.data_manager.rashodi_data_feeder import RashodiDataFeed
 
 from bson import json_util
+from requestforms import SumRequestForm, ClassificationsRequestForm
 
 mod_api = Blueprint('api', __name__, url_prefix='/api')
 
@@ -25,3 +26,30 @@ def index():
     :return:
     '''
     return render_template('mod_api/index.html')
+    sum_req_form = SumRequestForm()
+    return render_template('mod_api/index.html', sum_req_form=sum_req_form)
+
+
+def request_mongo_json_response(query_params):
+
+    match = {
+        "$match": {
+            "tipPodataka": query_params['data']
+        }
+    }
+
+    if query_params['godine'] != []:
+        match['$match']["godina"] = {'$in': query_params['godine']}
+
+    if query_params['opstine'] != []:
+        match['$match']["opstina.latinica"] = {'$in': query_params['opstine']}
+
+    if query_params['klasifikacijaBroj'] != []:
+        match['$match']["klasifikacijaBroj"] = {'$in': query_params['klasifikacijaBroj']}
+
+
+    print match
+    # Execute mongo request
+    json_doc = mongo.db.opstine.aggregate([match])
+    print json_doc
+    return json_doc['result']

@@ -3,6 +3,7 @@ from csv import reader
 import cyrtranslit
 from flask_pymongo import MongoClient
 from utils import ImporterUtils
+from slugify import slugify
 
 # Instantiate utils instance
 utils = ImporterUtils()
@@ -219,7 +220,10 @@ class ImportingManager(object):
 
         # Let's build mongo document structure
         json_doc = {
-            "tipPodataka": "Rashodi",
+            "tipPodataka": {
+                "vrednost": "Rashodi",
+                "slug": "rashodi",
+            },
             "godina": 2015,
              "kategorijaRoditelj": {
                 "opis": {
@@ -230,7 +234,8 @@ class ImportingManager(object):
             },
             "opstina": {
                 "cirilica": municipality,
-                "latinica": cyrtranslit.to_latin(municipality, "sr")
+                "latinica": cyrtranslit.to_latin(municipality, "sr"),
+                "slug": slugify(municipality, to_lower=True)
             },
             "klasifikacija": {
                 "broj": int(class_number),

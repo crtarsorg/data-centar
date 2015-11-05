@@ -66,3 +66,30 @@ class RashodiDataFeed():
         json_doc = mongo.db.opstine.aggregate([match, group, project])
 
         return json_doc['result']
+
+
+    def build_json_response_for_parent_categories(self, query_params):
+
+         # Build match pipeline
+        match = {
+            "$match": {
+                "tipPodataka": query_params['data']
+            }
+        }
+
+        if query_params['godine'] != []:
+            match['$match']["godina"] = {'$in': query_params['godine']}
+
+        if query_params['opstine'] != []:
+            match['$match']["opstina.latinica"] = {'$in': query_params['opstine']}
+
+        # Build group pipeline
+        group = {
+            "$group": {
+                "_id": {
+                    "opstina": "$opstina.latinica",
+                    "godina": "$godina",
+                    "tipPodataka": "$tipPodataka"
+                },
+            }
+        }

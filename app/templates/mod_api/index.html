@@ -24,7 +24,7 @@
         });
 
         var data = {
-            "data": $( '#data' ).val(),
+            "tipPodataka": $( '#data_type' ).val(),
             "godine": [parseInt($('#years').val())],
             "opstine": municipalities,
             "klasifikacijaBroj": classifications
@@ -50,7 +50,7 @@
         });
 
         var data = {
-            "data": $( '#class_data' ).val(),
+            "tipPodataka": $( '#class_data_type' ).val(),
             "godine": [parseInt($('#class_years').val())],
             "opstine": municipalities
         };
@@ -79,7 +79,7 @@
         }
     </style>
     <!-- Contact Section -->
-    <section id="title" class="container text-center" style="padding-top:150px">
+    <section id="title" class="container text-center" style="padding-top:100px">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <h2><i class="fa fa-flask"></i> API</h2>
@@ -131,7 +131,7 @@
                                     <tbody>
                                         <tr>
                                             <th>
-                                                data
+                                                Tip podataka
                                             </th>
                                             <td>
                                                 Stringova
@@ -183,9 +183,9 @@
                                     <div class="col-md-8">
                                         <form class="form-horizontal" id="sum-req-form">
                                             <div class="form-group">
-                                                {{ sum_req_form.data.label(class="control-label col-xs-2") }}
+                                                {{ sum_req_form.data_type.label(class="control-label col-xs-2") }}
                                                 <div class="col-xs-10">
-                                                    {{ sum_req_form.data(class="form-control") }}
+                                                    {{ sum_req_form.data_type(class="form-control") }}
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -274,7 +274,7 @@
                                     <tbody>
                                         <tr>
                                             <th>
-                                                data
+                                                Tip podataka
                                             </th>
                                             <td>
                                                 Stringova
@@ -314,9 +314,9 @@
                                     <div class="col-md-8">
                                         <form class="form-horizontal" id="sum-req-form">
                                             <div class="form-group">
-                                                {{ sum_req_form.data.label(class="control-label col-xs-2") }}
+                                                {{ sum_req_form.data_type.label(class="control-label col-xs-2") }}
                                                 <div class="col-xs-10">
-                                                    {{ sum_req_form.data(class="form-control", id="class_data") }}
+                                                    {{ sum_req_form.data_type(class="form-control", id="class_data_type") }}
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -341,7 +341,7 @@
                                         </pre>
                                     </div>
                                 </div>
-                                <div style="padding-top:20px;" class="text-left">
+                                <div style="padding-top:20px;">
                                     <strong>Response:</strong>
                                     <pre style="height:400px;">
                                         <code class="language-javascript" id="activities-req-rsp-box"></code>

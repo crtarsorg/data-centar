@@ -1,13 +1,151 @@
 {% extends "layout.html" %}
 {% block body %}
+    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+    <script src="http://www.highcharts.com/js/themes/dark-unica.js"></script>
 
-    <!-- Contact Section -->
-    <section id="contact" class="container text-center" style="padding-top:150px">
+    <script>
+        var MAP_GEOJSON_URL = "{{ url_for('static', filename='geojson/SRB_adm2_KOS_adm0.json') }}";
+
+        $( document).ready(function(){
+
+            $( "#btn-post-req" ).click(function() {
+                renderMap();
+            });
+
+            function renderMap(){
+
+                // Build message body for POST request.
+                var municipalities = [];
+                $('#municipalities :selected').each(function(i, selected){
+                    municipalities[i] = $(selected).val();
+                });
+
+                var classifications = [];
+                $('#classifications :selected').each(function(i, selected){
+                    classifications[i] = parseInt($(selected).val());
+                });
+
+                var data = {
+                    "tipPodataka": $( '#data_type' ).val(),
+                    "godine": [parseInt($('#years').val())],
+                    "opstine": municipalities,
+                    "klasifikacijaBroj": classifications
+                };
+
+                // Retrieve data. Make POST request.
+                $.ajax({
+                    type: "POST",
+                    url: '{{ url_for('api.sum') }}',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function(rsp){
+
+                        var data = [];
+
+                        // Create value keys for the parameter value we want to visualize
+                        $(rsp).each(function(i, selected){
+                            if(rsp[i][$( '#parameter' ).val()] > 0){
+                                var obj = {};
+                                obj['opstina'] = rsp[i]['opstina'];
+                                obj['value'] = rsp[i][$( '#parameter' ).val()];
+
+                                data.push(obj);
+                            }
+                        });
+
+                        // Get data and render map
+                        $.getJSON(MAP_GEOJSON_URL, function (geojson) {
+                            var options = {
+                                title: {
+                                    text: ''
+                                },
+                                mapNavigation: {
+                                    enabled: false
+                                },
+                                colorAxis: {
+                                    type: 'logarithmic'
+                                },
+                                series: [{
+                                    data: data,
+                                    mapData: geojson,
+                                    joinBy: ['NAME_2', 'opstina'],
+                                    name: $( '#parameter :selected' ).text(),
+                                    states: {
+                                        hover: {
+                                            color: '#BADA55'
+                                        }
+                                    },
+                                    dataLabels: {
+                                        enabled: false,
+                                        format: ''
+                                    },
+                                    tooltip: {
+                                        pointFormat: '{point.NAME_2}: {point.value:,.2f}<br/>'
+                                    }
+                                }]
+                            };
+
+                            // Initiate the chart
+                            $('#map-container').empty();
+                            $('#map-container').highcharts('Map',options);
+                        });
+                    }
+                })
+
+            }
+        });
+    </script>
+
+
+    <section class="container text-center" style="padding-top:100px">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <h2><i class="fa fa-map-marker"></i> Mapa</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-5">
+                <form class="form-horizontal" id="sum-req-form">
+                    <div class="form-group">
+                        {{ form.parameter.label(class="control-label col-xs-3") }}
+                        <div class="col-xs-9">
+                            {{ form.parameter(class="form-control") }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form.data_type.label(class="control-label col-xs-3") }}
+                        <div class="col-xs-9">
+                            {{ form.data_type(class="form-control") }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form.years.label(class="control-label col-xs-3") }}
+                        <div class="col-xs-9">
+                            {{ form.years(class="form-control") }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form.municipalities.label(class="control-label col-xs-3") }}
+                        <div class="col-xs-9">
+                            {{ form.municipalities(class="form-control", style="height:150px;") }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form.classifications.label(class="control-label col-xs-3") }}
+                        <div class="col-xs-9">
+                            {{ form.classifications(class="form-control", style="height:150px;") }}
+                        </div>
+                    </div>
+                </form>
+                <button class="btn btn-primary" id="btn-post-req">Mapa</button>
+            </div>
+            <div class="col-md-7">
+                <div id="map-container" style="width:100%;height:463px;background-color:#333334"></div>
+            </div>
+        </div>
+
     </section>
 {% endblock %}

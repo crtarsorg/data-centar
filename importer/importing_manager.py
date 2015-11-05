@@ -2,11 +2,15 @@
 from csv import reader
 import cyrtranslit
 from flask_pymongo import MongoClient
+from utils import ImporterUtils
+
+# Instantiate utils instance
+utils = ImporterUtils()
 
 # Instantiate mongo client
 mongo = MongoClient()
 
-# Create mongo database
+# Create mongo database instance
 db = mongo.datacentar
 
 class ImportingManager(object):
@@ -15,10 +19,75 @@ class ImportingManager(object):
         pass
 
     def data_importer_of_municipality_prijepolje(self):
-        pass
+        #data_handler = reader(open("data/******.csv", "r"), delimiter=",")
+        for index, row in enumrate(data_handler):
+            pass
 
     def data_importer_of_municipality_vranje(self):
-        pass
+
+        # init parent categories JSON
+        parent_categories = utils.parent_categories_for_vranje()
+        program_categories = utils.program_categories_for_vranje()
+
+        # Read data from vranje csv file
+        data_handler = reader(open("data/vranje.csv", "r"), delimiter=",")
+        program = ""
+        subprogram = ""
+        for index, row in enumerate(data_handler):
+            if index > 0:
+                if index < 48 and len(row[1]) > 2:
+                    if row[1] != "541":
+                        parent_handler = parent_categories[row[1][0:2]]
+                    else:
+                        parent_handler = parent_categories["51"]
+                    json_doc = self.build_mongo_document_structure(
+                        "Врање",
+                        row[1],
+                        row[2],
+                        row[3],
+                        row[4],
+                        row[5],
+                        row[6],
+                        None,
+                        parent_handler,
+                        row[1][0:2]
+                    )
+                    db.opstine.insert(json_doc)
+                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Врање", parent_handler, row[1])
+
+                elif index > 48:
+                    # init program
+                    if row[2] not in ["", " "]:
+                        if row[2].strip() in program_categories:
+                            program = row[2].strip()
+
+                        if program != "" and row[2].strip() in program_categories[program]:
+                            subprogram = row[2].strip()
+
+                    if row[1] not in ["", " "] and program not in ["", " "] and subprogram not in ["", " "]:
+                        json_doc = self.build_mongo_document_structure(
+                            "Врање",
+                            row[1],
+                            row[2],
+                            row[3],
+                            row[4],
+                            row[5],
+                            row[6],
+                            None
+                        )
+
+                        json_doc["program"] = {}
+                        json_doc["program"]["cirilica"] = program.strip()
+                        json_doc["program"]["latinica"] = cyrtranslit.to_latin(program, "sr")
+                        json_doc["potProgram"] = {}
+                        json_doc["potProgram"]["cirilica"] = subprogram.strip()
+                        json_doc["potProgram"]["latinica"] = cyrtranslit.to_latin(subprogram, "sr")
+                        db.opstine.insert(json_doc)
+                        print "Opstine: %s - Program: %s %s" % ("Врање", program, row[1])
+
+
+
+
 
     def data_importer_of_municipality_loznica(self):
 
@@ -32,7 +101,7 @@ class ImportingManager(object):
                     print "Opstine: %s - Klasifikacija Broj: %s - Opis: %s" % ("Лозница", row[1], row[2])
 
     def data_importer_of_municipality_sombor(self):
-        pass
+        data_handler = ""
 
     def data_importer_of_municipality_valjevo(self):
         db.opstine.remove({"opstina.latinica": "Valjevo"})
@@ -111,6 +180,20 @@ class ImportingManager(object):
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Нови Београд", parent_handler, row[2])
 
     def build_mongo_document_structure(self, municipality, class_number, opis, prihodi_vudzeta, sopstveni_prihodi, donacije, ostali, ukupno,  kategorija_roditelj=None, roditelj_broj=None):
+        """
+
+        :param municipality:
+        :param class_number:
+        :param opis:
+        :param prihodi_vudzeta:
+        :param sopstveni_prihodi:
+        :param donacije:
+        :param ostali:
+        :param ukupno:
+        :param kategorija_roditelj:
+        :param roditelj_broj:
+        :return:
+        """
 
         if municipality in ["Нови Београд", "Звездара", "Инђија", "Ваљево"]:
             prihodi_vudzeta = self.convert_to_float(prihodi_vudzeta.replace(',', ''))
@@ -172,13 +255,16 @@ class ImportingManager(object):
     @staticmethod
     def convert_to_float(value):
         if value == " " or value == "":
-            value = 0
-            return value
+            return 0
+
         elif value == "000":
-            value = 0
-            return value
+            return 0
+
         elif value.strip() == "-":
-            value = 0
-            return value
+            return 0
+
+        elif value.strip() == "#REF!":
+            return 0
+
         else:
             return float(value)

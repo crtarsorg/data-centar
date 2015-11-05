@@ -103,8 +103,8 @@ class RashodiImportingTestCases(unittest.TestCase):
         '''
         result = mongo.datacentar.opstine.find(
             {
-                "opstina.latin": municipality,
-                "kategorijaRoditelj.opis.cyrilic": parent_category
+                "opstina.latinica": municipality,
+                "kategorijaRoditelj.opis.cirilica": parent_category
             }
         ).count()
 

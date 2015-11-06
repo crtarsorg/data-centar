@@ -25,10 +25,10 @@ class DataRequestForm(Form):
 
     municipalities = SelectMultipleField(u'Opštine',
         choices=[
-            ("cacak", u"Čačak"),
+            ("chachak", u"Čačak"),
             ("indjija", u"Inđjija"),
             ("kraljevo", "Kraljevo"),
-            ("loznica", "Loznica"),
+            ("loznitsa", "Loznitsa"),
             ("novi-beograd", "Novi Beograd"),
             ("pripolje", "Pripolje"),
             ("valjevo", "Valjevo"),

@@ -1,5 +1,5 @@
 import argparse
-from importer.importing_rashodi_manager import RashodiDataImporter
+from importer.rashodi_manager import RashodiDataImporter
 
 importer = RashodiDataImporter()
 
@@ -37,7 +37,6 @@ def main_importer(municipalities):
 
         if mun in ["all", "novi_beograd"]:
             importer.data_importer_of_municipality_novi_beograd()
-
 
 if __name__ == '__main__':
 

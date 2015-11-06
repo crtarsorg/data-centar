@@ -6,7 +6,7 @@ from utils import ImporterUtils
 from slugify import slugify
 from abstract_data_importer import AbstractDataImporter
 
-# Instantiate utils instance
+# Instantiate utils object
 utils = ImporterUtils()
 
 # Instantiate mongo client

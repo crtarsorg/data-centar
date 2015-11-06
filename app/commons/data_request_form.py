@@ -30,7 +30,7 @@ class DataRequestForm(Form):
             ("kraljevo", "Kraljevo"),
             ("loznitsa", "Loznitsa"),
             ("novi-beograd", "Novi Beograd"),
-            ("pripolje", "Pripolje"),
+            ("prijepolje", "Pripolje"),
             ("valjevo", "Valjevo"),
             ("vranje", "Vranje"),
             ("zvezdara", "Zvezdara")

@@ -62,6 +62,9 @@
         .tab-content{
             padding-top:15px;
         }
+    h5{
+        margin: 0;
+    }
     </style>
     <!-- Contact Section -->
     <section id="title" class="container text-center" style="padding-top:100px">
@@ -78,7 +81,7 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading text-center">
-                        <h3 class="panel-title">Sums</h3>
+                        <h3 class="panel-title">Zbir</h3>
                     </div>
                     <div class="panel-body">
                         <!-- Nav tabs -->
@@ -90,15 +93,19 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="sums-how">
-                                <h4>OPIS:</h4>
-                                    Koristite ovaj POST zahtev za preuzimanje podataka.
+                                <br>
+                                <div class="form-group">
+                                    <h5>OPIS:</h5>
+                                    <span>Koristite ovaj POST zahtev za preuzimanje podataka.</span>
+                                </div>
 
-                                <br><br>
-
-                                <h4>URL POST ZAHTEVA:</h4>
-                                    http://0.0.0.0:5001/api/zbir
-                                <br><br>
-                                <h4>PARAMETRI UPITA:</h4>
+                                <div>
+                                    <h5>URL POST ZAHTEVA:</h5>
+                                    <span>http://datacentar.io/api/zbir</span>
+                                </div>
+                                <br>
+                                <div>
+                                <h5>PARAMETRI UPITA:</h5>
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -161,6 +168,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="sums-tryit">
 
@@ -186,17 +194,19 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                {{ sum_req_form.classifications.label(class="control-label col-xs-2") }}
+                                                {{ sum_req_form.classifications.label(class="control-label col-xs-2", style="padding:5px;") }}
                                                 <div class="col-xs-10">
                                                     {{ sum_req_form.classifications(class="form-control") }}
                                                 </div>
                                             </div>
                                         </form>
-                                        <button class="btn btn-primary" id="btn-post-sum-req">POST</button>
+                                        <div class="row col-md-offset-6">
+                                            <button class="btn btn-primary" id="btn-post-sum-req">POST</button>
+                                        </div>
                                     </div>
                                     <div class="col-md-4">
                                         <strong>Request Body:</strong>
-                                        <pre style="height:258px;">
+                                        <pre style="height:270px;">
                                             <code class="language-javascript" id="sum-req-body-box"></code>
                                         </pre>
                                     </div>
@@ -221,7 +231,7 @@
             <div class="col-lg-8 col-lg-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading  text-center">
-                        <h3 class="panel-title">Activities</h3>
+                        <h3 class="panel-title">Ekonomskih Klasifikacija</h3>
                     </div>
                     <div class="panel-body">
                         <!-- Nav tabs -->
@@ -233,15 +243,18 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="activities-how">
-                                <h4>OPIS:</h4>
-                                    Koristite ovaj POST zahtev za preuzimanje podataka.
+                                <div class="form-group">
+                                    <h5>OPIS:</h5>
+                                    <span>Koristite ovaj POST zahtev za preuzimanje podataka.</span>
+                                </div>
 
-                                <br><br>
-
-                                <h4>URL POST ZAHTEVA:</h4>
-                                    http://0.0.0.0:5001/api/ekonomska-klasifikacija
-                                <br><br>
-                                <h4>PARAMETRI UPITA:</h4>
+                                <div>
+                                    <h5>URL POST ZAHTEVA:</h5>
+                                    <span>http://datacentar.io/api/ekonomska-klasifikacija</span>
+                                </div>
+                                <br>
+                                <div>
+                                <h5>PARAMETRI UPITA:</h5>
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -293,6 +306,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="activities-tryit">
                                 <div class="row">
@@ -313,11 +327,13 @@
                                             <div class="form-group">
                                                 {{ sum_req_form.municipalities.label(class="control-label col-xs-2") }}
                                                 <div class="col-xs-10">
-                                                    {{ sum_req_form.municipalities(class="form-control", id="class_municipalities") }}
+                                                    {{ sum_req_form.municipalities(class="form-control", id="class_municipalities", rows="100", style="height:177px;") }}
                                                 </div>
                                             </div>
                                         </form>
-                                        <button class="btn btn-primary" id="btn-post-activities-req">POST</button>
+                                        <div class="row col-md-offset-6">
+                                            <button class="btn btn-primary" id="btn-post-activities-req">POST</button>
+                                        </div>
                                     </div>
                                     <div class="col-md-4">
                                         <strong>Request Body:</strong>

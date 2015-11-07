@@ -54,6 +54,13 @@ class RashodiDataImporter(object):
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Program: %s %s" % ("Пријепоље", program, row[1])
 
+    def data_importer_of_municipality_sombor(self):
+        db.opstine.remove({"opstina.latinica": "Sombor"})
+        data_handler = reader(open("data/rashodi/sombor.csv", "r"), delimiter=",")
+        for index, row in enumerate(data_handler):
+            if index > 0:
+                pass
+
     def data_importer_of_municipality_vranje(self):
         db.opstine.remove({"opstina.latinica": "Vranje"})
         # init parent categories JSON
@@ -125,9 +132,6 @@ class RashodiDataImporter(object):
                     json_doc = self.build_mongo_document_structure("Лозница", row[1], row[2], row[3], row[4], row[5], row[6], None)
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Klasifikacija Broj: %s - Opis: %s" % ("Лозница", row[1], row[2])
-
-    def data_importer_of_municipality_sombor(self):
-        pass
 
     def data_importer_of_municipality_valjevo(self):
         db.opstine.remove({"opstina.latinica": "Valjevo"})
@@ -267,7 +271,7 @@ class RashodiDataImporter(object):
                 "broj": int(class_number),
                 "opis": {
                     "cirilica": opis.strip(),
-                    "latinica": cyrtranslit.to_latin(opis, "sr")
+                    "latinica": cyrtranslit.to_latin(opis.strip(), "sr")
                 }
             },
             "prihodiBudzeta": prihodi_vudzeta,

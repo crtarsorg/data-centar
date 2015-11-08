@@ -36,7 +36,7 @@ class DataRequestForm(Form):
             ("zvezdara", "Zvezdara")
         ])
 
-    classifications = SelectMultipleField(u'Ekonomskih Klasifikacija',
+    classifications = SelectMultipleField(u'Ekonomskih klasifikacija',
         choices=[
             (411, u"411 - Plate, dodaci i naknade zaposlenih (zarade)"),
             (412, u"412 - Socijalni doprinosi na teret poslodavca"),

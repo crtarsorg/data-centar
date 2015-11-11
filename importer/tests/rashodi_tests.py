@@ -1,6 +1,6 @@
 #coding=utf-8
 import unittest
-from importing_rashodi_manager import mongo
+from importer.rashodi_manager import mongo
 
 class RashodiImportingTestCases(unittest.TestCase):
 
@@ -228,40 +228,40 @@ class RashodiImportingTestCases(unittest.TestCase):
     def test_counts_for_parent_categories(self):
         # Test parent counts for municipality of Vranje
         for parent in self.vranje_counts_of_parents:
-            self.asserts_for_parent_categories_elements("Vranje", parent, self.vranje_counts_of_parents[parent])
+            self.asserts_for_parent_categories_elements("Vranje", parent, self.vranje_counts_of_parents[parent], "rashodi")
 
         # Test counts for municipality of Novi Beograd
         for parent in self.novi_beograd_counts_of_parents:
-            self.asserts_for_parent_categories_elements("Novi Beograd", parent, self.novi_beograd_counts_of_parents[parent])
+            self.asserts_for_parent_categories_elements("Novi Beograd", parent, self.novi_beograd_counts_of_parents[parent], "rashodi")
 
         # Test counts for municipality of Zvezdara
         for parent in self.zvezdara_counts_of_parents:
-            self.asserts_for_parent_categories_elements("Zvezdara", parent, self.zvezdara_counts_of_parents[parent])
+            self.asserts_for_parent_categories_elements("Zvezdara", parent, self.zvezdara_counts_of_parents[parent], "rashodi")
 
         # Test counts for municipality of Kraljevo
-        self.asserts_for_parent_categories_elements("Kraljevo", "Скупштина општине", 37)
+        self.asserts_for_parent_categories_elements("Kraljevo", "Скупштина општине", 37, "rashodi")
 
         # Test counts for municipality of Čačak
-        self.asserts_for_parent_categories_elements("Čačak", "Скупштина општине", 35)
+        self.asserts_for_parent_categories_elements("Čačak", "Скупштина општине", 35, "rashodi")
 
         # Test counts for municipality of Inđija
         for parent in self.idjia_counts_of_parents:
-            self.asserts_for_parent_categories_elements("Inđija", parent, self.idjia_counts_of_parents[parent])
+            self.asserts_for_parent_categories_elements("Inđija", parent, self.idjia_counts_of_parents[parent], "rashodi")
 
         # Test counts for municipality of Valjevo
         for parent in self.valjevo_counts_of_parents:
-            self.asserts_for_parent_categories_elements("Valjevo", parent, self.valjevo_counts_of_parents[parent])
+            self.asserts_for_parent_categories_elements("Valjevo", parent, self.valjevo_counts_of_parents[parent], "rashodi")
 
         # Test counts for municipality of Loznica
-        self.asserts_for_parent_categories_elements("Loznica", "Скупштина општине", 578)
+        self.asserts_for_parent_categories_elements("Loznica", "Скупштина општине", 578, "rashodi")
 
         # Test program counts for municipality of Vranje
 
-        for program in self.vranje_programs:
-            for index, sub_program in enumerate(self.vranje_programs[program]):
-                self.asserts_for_sub_programs_elements("Врање", program, sub_program[0], sub_program[1])
+        # for program in self.vranje_programs:
+        #     for index, sub_program in enumerate(self.vranje_programs[program]):
+        #         self.asserts_for_sub_programs_elements("Врање", program, sub_program[0], sub_program[1])
 
-    def asserts_for_parent_categories_elements(self, municipality, parent_category, expected_value):
+    def asserts_for_parent_categories_elements(self, municipality, parent_category, expected_value, data_source):
         '''
         :param municipality: The municipality we want to test
         :param parent_category: The parent category of the elements we want to test
@@ -271,7 +271,8 @@ class RashodiImportingTestCases(unittest.TestCase):
         result = mongo.datacentar.opstine.find(
             {
                 "opstina.latinica": municipality,
-                "kategorijaRoditelj.opis.cirilica": parent_category
+                "kategorijaRoditelj.opis.cirilica": parent_category,
+                "tipPodataka.slug": data_source
             }
         ).count()
 

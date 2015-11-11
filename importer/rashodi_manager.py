@@ -21,7 +21,7 @@ class RashodiDataImporter(object):
         pass
 
     def data_importer_of_municipality_prijepolje(self):
-        db.opstine.remove({"opstina.latinica": "Prijepolje"})
+        db.opstine.remove({"opstina.latinica": "Prijepolje", "tipPodataka.slug": "rashodi"})
         # Read data from vranje csv file
         data_handler = reader(open("data/rashodi/prijepolje.csv", "r"), delimiter=",")
         program = ""
@@ -57,7 +57,7 @@ class RashodiDataImporter(object):
     def data_importer_of_municipality_sombor(self):
 
         # Remove previous records in database, if there is any for this municipality
-        db.opstine.remove({"opstina.latinica": "Sombor"})
+        db.opstine.remove({"opstina.latinica": "Sombor", "tipPodataka.slug": "rashodi"})
 
         # Read data from CSV file and assign those data to a data handler object
         data_handler = reader(open("data/rashodi/sombor.csv", "r"), delimiter=",")
@@ -100,7 +100,7 @@ class RashodiDataImporter(object):
                     print "Opstine: %s - Program: %s %s" % ("Сомбор", program, row[1])
 
     def data_importer_of_municipality_vranje(self):
-        db.opstine.remove({"opstina.latinica": "Vranje"})
+        db.opstine.remove({"opstina.latinica": "Vranje", "tipPodataka.slug": "rashodi"})
         # init parent categories JSON
         parent_categories = utils.parent_categories_for_vranje()
         program_categories = utils.program_categories_for_vranje()
@@ -162,7 +162,7 @@ class RashodiDataImporter(object):
                         print "Opstine: %s - Program: %s %s" % ("Врање", program, row[1])
 
     def data_importer_of_municipality_loznica(self):
-        db.opstine.remove({"opstina.latinica": "Loznica"})
+        db.opstine.remove({"opstina.latinica": "Loznica", "tipPodataka.slug": "rashodi"})
         data_handler = reader(open("data/rashodi/loznica.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
@@ -172,7 +172,7 @@ class RashodiDataImporter(object):
                     print "Opstine: %s - Klasifikacija Broj: %s - Opis: %s" % ("Лозница", row[1], row[2])
 
     def data_importer_of_municipality_valjevo(self):
-        db.opstine.remove({"opstina.latinica": "Valjevo"})
+        db.opstine.remove({"opstina.latinica": "Valjevo", "tipPodataka.slug": "rashodi"})
         data_handler = reader(open("data/rashodi/valjevo.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
@@ -186,7 +186,7 @@ class RashodiDataImporter(object):
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Ваљево", parent_handler, row[1])
 
     def data_importer_of_municipality_indjija(self):
-        db.opstine.remove({"opstina.latinica": "Inđija"})
+        db.opstine.remove({"opstina.latinica": "Inđija", "tipPodataka.slug": "rashodi"})
         data_handler = reader(open("data/rashodi/indjija.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
@@ -200,7 +200,7 @@ class RashodiDataImporter(object):
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Инђија", parent_handler, row[2])
 
     def data_importer_of_municipality_cacak(self):
-        db.opstine.remove({"opstina.latinica": "Čačak"})
+        db.opstine.remove({"opstina.latinica": "Čačak", "tipPodataka.slug": "rashodi"})
         data_handler = reader(open("data/rashodi/cacak.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
@@ -210,7 +210,7 @@ class RashodiDataImporter(object):
                     print "Opstine: %s - Klasifikacija Broj: %s - Opis: %s" % ("Краљево", row[1], row[2])
 
     def data_importer_of_municipality_krajlevo(self):
-        db.opstine.remove({"opstina.latinica": "Kraljevo"})
+        db.opstine.remove({"opstina.latinica": "Kraljevo", "tipPodataka.slug": "rashodi"})
         data_handler = reader(open("data/rashodi/krajlevo.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
@@ -220,7 +220,7 @@ class RashodiDataImporter(object):
                     print "Opstine: %s - Klasifikacija Broj: %s - Opis: %s" % ("Краљево", row[1], row[2])
 
     def data_importer_of_municipality_zvezdara(self):
-        db.opstine.remove({"opstina.latinica": "Zvezdara"})
+        db.opstine.remove({"opstina.latinica": "Zvezdara", "tipPodataka.slug": "rashodi"})
         data_handler = reader(open("data/rashodi/zvezdara.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:
@@ -234,7 +234,7 @@ class RashodiDataImporter(object):
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Звездара", parent_handler, row[2])
 
     def data_importer_of_municipality_novi_beograd(self):
-        db.opstine.remove({"opstina.latinica": "Novi Beograd"})
+        db.opstine.remove({"opstina.latinica": "Novi Beograd", "tipPodataka.slug": "rashodi"})
         data_handler = reader(open("data/rashodi/novi_beograd.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):
             if index > 0:

@@ -17,7 +17,7 @@ class PrihodiDataImporter(object):
         pass
 
     def data_importer_of_municipality_prijepolje(self):
-        db.opstine.remove({"opstina.latinica": "Prijepolje"})
+        db.opstine.remove({"opstina.latinica": "Prijepolje", "tipPodataka.slug": "prihodi"})
         # Read data from vranje csv file
         data_handler = reader(open("data/prihodi/prijepolje.csv", "r"), delimiter=",")
         for index, row in enumerate(data_handler):

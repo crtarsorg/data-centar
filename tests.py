@@ -3,7 +3,10 @@ from coverage import coverage
 import unittest
 import os
 
-from importer.test import RashodiImportingTestCases
+from importer.tests.rashodi_tests import RashodiImportingTestCases
+from importer.tests.prihodi_tests import PrihodiImportingTestCases
+
+
 
 # configure code coverage options, omit what you want to exclude from coverage
 cov = coverage(branch=True, source=["DataCentar/*"], omit=['venv/*', 'importer/*', '*/tests.py', '*/test.py'])
@@ -22,6 +25,7 @@ if __name__ == '__main__':
         suites = []
         # Importer test suites.
         suites.append(unittest.TestLoader().loadTestsFromTestCase(RashodiImportingTestCases))
+        suites.append(unittest.TestLoader().loadTestsFromTestCase(PrihodiImportingTestCases))
 
         # run test cases
         test_cases = unittest.TestSuite(suites)

@@ -226,6 +226,7 @@ class RashodiImportingTestCases(unittest.TestCase):
     }
 
     def test_counts_for_parent_categories(self):
+
         # Test parent counts for municipality of Vranje
         for parent in self.vranje_counts_of_parents:
             self.asserts_for_parent_categories_elements("Vranje", parent, self.vranje_counts_of_parents[parent], "rashodi")

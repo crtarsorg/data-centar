@@ -1,50 +1,94 @@
 import argparse
 from importer.rashodi_manager import RashodiDataImporter
+from importer.prihodi_manager import PrihodiDataImporter
 
-importer = RashodiDataImporter()
+rashodi_importer = RashodiDataImporter()
+prihodi_importer = PrihodiDataImporter()
 
-def main_importer(municipalities):
+def main_importer(data, municipalities):
     mun_list = municipalities.split(",")
+    data_source = data.split(",")
 
     for mun in mun_list:
 
         if mun in ["all", "prijepolje"]:
-            importer.data_importer_of_municipality_prijepolje()
-
+            for data in data_source:
+                if data == "prihodi":
+                    prihodi_importer.data_importer_of_municipality_prijepolje()
+                elif data == "rashodi":
+                    rashodi_importer.data_importer_of_municipality_prijepolje()
         if mun in ["all", "vranje"]:
-            importer.data_importer_of_municipality_vranje()
+            for data in data_source:
+                if data == "prihodi":
+                    prihodi_importer.data_importer_of_municipality_vranje()
+                elif data == "rashodi":
+                    rashodi_importer.data_importer_of_municipality_vranje()
 
         if mun in ["all", "loznica"]:
-            importer.data_importer_of_municipality_loznica()
+            for data in data_source:
+                if data == "prihodi":
+                    prihodi_importer.data_importer_of_municipality_loznica()
+                elif data == "rashodi":
+                    rashodi_importer.data_importer_of_municipality_loznica()
 
         if mun in ["all", "sombor"]:
-            importer.data_importer_of_municipality_sombor()
+            for data in data_source:
+                if data == "prihodi":
+                    prihodi_importer.data_importer_of_municipality_sombor()
+                elif data == "rashodi":
+                    rashodi_importer.data_importer_of_municipality_sombor()
 
         if mun in ["all", "valjevo"]:
-            importer.data_importer_of_municipality_valjevo()
+            for data in data_source:
+                if data == "prihodi":
+                    prihodi_importer.data_importer_of_municipality_valjevo()
+                elif data == "rashodi":
+                    rashodi_importer.data_importer_of_municipality_valjevo()
 
         if mun in ["all", "indjija"]:
-            importer.data_importer_of_municipality_indjija()
+            for data in data_source:
+                if data == "prihodi":
+                    prihodi_importer.data_importer_of_municipality_indjija()
+                elif data == "rashodi":
+                    rashodi_importer.data_importer_of_municipality_indjija()
 
         if mun in ["all", "cacak"]:
-            importer.data_importer_of_municipality_cacak()
+            for data in data_source:
+                if data == "prihodi":
+                    prihodi_importer.data_importer_of_municipality_cacak()
+                elif data == "rashodi":
+                    rashodi_importer.data_importer_of_municipality_cacak()
 
         if mun in ["all", "krajlevo"]:
-            importer.data_importer_of_municipality_krajlevo()
+            for data in data_source:
+                if data == "prihodi":
+                    prihodi_importer.data_importer_of_municipality_krajlevo()
+                elif data == "rashodi":
+                    rashodi_importer.data_importer_of_municipality_krajlevo()
 
         if mun in ["all", "zvezdara"]:
-            importer.data_importer_of_municipality_zvezdara()
+            for data in data_source:
+                if data == "prihodi":
+                    prihodi_importer.data_importer_of_municipality_zvezdara()
+                elif data == "rashodi":
+                    rashodi_importer.data_importer_of_municipality_zvezdara()
 
         if mun in ["all", "novi_beograd"]:
-            importer.data_importer_of_municipality_novi_beograd()
+            for data in data_source:
+                if data == "prihodi":
+                    prihodi_importer.data_importer_of_municipality_novi_beograd()
+                elif data == "rashodi":
+                    rashodi_importer.data_importer_of_municipality_novi_beograd()
 
 if __name__ == '__main__':
 
     # Initialize arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("--municipalities", help="The data source we want to import")
+    parser.add_argument("--municipalities", help="The data source we want to import for municipality")
+    parser.add_argument("--data", help="The data source we want to import")
     args = parser.parse_args()
 
     # Read the arguments and run the function
     municipalities_sr = args.municipalities
-    main_importer(municipalities_sr)
+    data_sr = args.data
+    main_importer(data_sr, municipalities_sr)

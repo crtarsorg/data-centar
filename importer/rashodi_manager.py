@@ -55,11 +55,49 @@ class RashodiDataImporter(object):
                     print "Opstine: %s - Program: %s %s" % ("Пријепоље", program, row[1])
 
     def data_importer_of_municipality_sombor(self):
+
+        # Remove previous records in database, if there is any for this municipality
         db.opstine.remove({"opstina.latinica": "Sombor"})
+
+        # Read data from CSV file and assign those data to a data handler object
         data_handler = reader(open("data/rashodi/sombor.csv", "r"), delimiter=",")
+
+        program = ''
+        subprogram = ''
+        # use program categories for better data categorizing
+        program_categories = utils.sombor_programs()
+        # Iterate throughout every row in data handler
         for index, row in enumerate(data_handler):
-            if index > 0:
-                pass
+            if index > 6:
+                # init program
+                if row[2] not in ["", " "]:
+                    if row[2].strip() in program_categories:
+                        program = row[2].strip()
+
+                    if program != "" and row[2].strip() in program_categories[program]:
+                        subprogram = row[2].strip()
+
+                if row[1] not in ["", " "] and program not in ["", " "] and subprogram not in ["", " "] and len(row[1]) < 4:
+                    json_doc = self.build_mongo_document_structure(
+                        "Сомбор",
+                        row[1],
+                        row[2].replace("*", ""),
+                        row[3],
+                        row[4],
+                        row[5],
+                        row[6],
+                        None
+                    )
+
+                    # Add program and subprogram after building the main mongo document
+                    json_doc["program"] = {}
+                    json_doc["program"]["cirilica"] = program.strip()
+                    json_doc["program"]["latinica"] = cyrtranslit.to_latin(program, "sr")
+                    json_doc["potProgram"] = {}
+                    json_doc["potProgram"]["cirilica"] = subprogram.strip()
+                    json_doc["potProgram"]["latinica"] = cyrtranslit.to_latin(subprogram, "sr")
+                    db.opstine.insert(json_doc)
+                    print "Opstine: %s - Program: %s %s" % ("Сомбор", program, row[1])
 
     def data_importer_of_municipality_vranje(self):
         db.opstine.remove({"opstina.latinica": "Vranje"})
@@ -234,7 +272,7 @@ class RashodiDataImporter(object):
 
         elif municipality in ["Краљево"]:
             # In this municipality we have values only for column ukupno (total value)
-            # That's why we need to import, instead of manually calculating
+            # That's why we need to import, instead of manually calculating manually
             prihodi_vudzeta = 0
             sopstveni_prihodi = 0
             donacije = 0

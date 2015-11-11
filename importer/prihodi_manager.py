@@ -28,5 +28,4 @@ class PrihodiDataImporter(object):
         pass
 
 
-
 AbstractDataImporter.register(PrihodiDataImporter)

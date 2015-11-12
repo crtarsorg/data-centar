@@ -9,9 +9,9 @@ from importer.tests.prihodi_tests import PrihodiImportingTestCases
 
 
 # configure code coverage options, omit what you want to exclude from coverage
-cov = coverage(branch=True, source=["DataCentar/*"], omit=['venv/*', 'importer/*', '*/tests.py', '*/test.py'])
+cov = coverage(branch=True, omit=['venv/*', 'importer/*', '*/tests.py', '*/test.py'])
 
-#start coverage
+# Start coverage
 cov.start()
 
 if __name__ == '__main__':
@@ -37,7 +37,7 @@ if __name__ == '__main__':
     cov.stop()
     cov.save()
 
-    """
+
     if args.coverage:
 
         print("\n\nCode Coverage Report:\n")
@@ -51,4 +51,4 @@ if __name__ == '__main__':
         print("HTML version: " + os.path.join(app_dir, "coverage/index.html"))
         cov.html_report(directory='coverage')
         cov.erase()
-    """
+

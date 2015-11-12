@@ -17,6 +17,7 @@ def main_importer(data, municipalities):
                     prihodi_importer.data_importer_of_municipality_prijepolje()
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_prijepolje()
+
         if mun in ["all", "vranje"]:
             for data in data_source:
                 if data == "prihodi":

@@ -23,8 +23,6 @@ class PrihodiImportingTestCases(unittest.TestCase):
         "НОВЧАНЕ  КАЗНЕ ЗА  ПРИВРЕДНЕ ПРЕСТУ": (1,8170800),
         "МЕШОВИТИ  И  НЕОДРЕЂЕНИ ПРИХОДИ": (1, 52205859),
         "Меморандумске ставке": (1, 3600000)
-
-
     }
 
      # Json container for each prijepolje parent category
@@ -46,6 +44,24 @@ class PrihodiImportingTestCases(unittest.TestCase):
         "ДОНАЦИЈЕ ОД МЕЂУНАРОДНИХ ОРГАНИЗАЦИЈА": (1, 10000000)
     }
 
+    indjija_parent_counts = {
+        "ПОРЕЗИ НА ДОХОДАК, ДОБИТ И КАПИТАЛНЕ ДОБИТКЕ": (6, 892800000),
+        "ПОРЕЗ НА ИМОВИНУ": (4, 332100000),
+        "ПОРЕЗИ НА ДОБРА И УСЛУГЕ": (6, 58000000),
+        "ДРУГИ ПОРЕЗИ": (1, 60000000),
+        "ДОНАЦИЈЕ ОД МЕЂУНАРОДНИХ ОРГАНИЗАЦИЈА": (2, 1500000),
+        "ТРАНСФЕРИ ОД ДРУГИХ НИВОА ВЛАСТИ": (2, 983000000),
+        "ПРИХОДИ ОД ИМОВИНЕ": (3, 215000000),
+        "ПРИХОДИ ОД ПРОДАЈЕ ДОБАРА И УСЛУГА": (4, 217548000),
+        "НОВЧАНЕ КАЗНЕ И ОДУЗЕТА ИМОВИНСКА КОРИСТ": (2, 13000000),
+        "ДОБРОВОВОЉНИ ТРАНСФЕРИ ОД ФИЗИЧКИХ И ПРАВНИХ ЛИЦА": (1, 2300000),
+        "МЕШОВИТИ И НЕОДРЕЂЕНИ ПРИХОДИ": (1, 87520000),
+        "МЕМОРАНДУМСКЕ СТАВКЕ ЗА РЕФУНДАЦИЈУ РАСХОДА": (1, 8200000),
+        "ПРИМАЊА ОД ПРОДАЈЕ РОБЕ ЗА ДАЉУ ПРОДАЈУ": (1, 4450000),
+        "ПРИМАЊА ОД ПРОДАЈЕ ЗЕМЉИШТА": (1, 156000000),
+        "ПРИМАЊА ОД ПРОДАЈЕ ДОМАЋЕ ФИНАНСИЈСКЕ ИМОВИНЕ": (1, 100000)
+    }
+
     def test_counts_for_parent_categories(self):
         # Test the counts of a particular parent category for Prijepolje municipality
         for parent in self.prijepolje_counts_of_parents_and_total:
@@ -55,8 +71,13 @@ class PrihodiImportingTestCases(unittest.TestCase):
         for parent in self.sombor_counts_of_parents_and_total:
             self.asserts_for_parent_categories_elements("Sombor", parent, self.sombor_counts_of_parents_and_total[parent][0], "prihodi")
 
+        # Test the counts of a particular parent category for Inđija municipality
+        for parent in self.indjija_parent_counts:
+            self.asserts_for_parent_categories_elements("Inđija", parent, self.indjija_parent_counts[parent][0], "prihodi")
 
-    def test_total_for_parent_categories(self):
+
+
+    def test_total_sum_for_parent_categories(self):
         # Test how much is the total for every parent categories for Prijepolje municipality
         for parent in self.prijepolje_counts_of_parents_and_total:
             self.asserts_for_total_of_parent_categories("Prijepolje", parent, self.prijepolje_counts_of_parents_and_total[parent][1], "prihodi")
@@ -64,6 +85,10 @@ class PrihodiImportingTestCases(unittest.TestCase):
         # Test how much is the total for every parent categories for Sombor municipality
         for parent in self.sombor_counts_of_parents_and_total:
             self.asserts_for_total_of_parent_categories("Sombor", parent, self.sombor_counts_of_parents_and_total[parent][1], "prihodi")
+
+         # Test how much is the total for every parent categories for Inđija municipality
+        for parent in self.indjija_parent_counts:
+            self.asserts_for_total_of_parent_categories("Inđija", parent, self.indjija_parent_counts[parent][1], "prihodi")
 
 
 

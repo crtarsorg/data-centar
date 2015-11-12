@@ -42,7 +42,8 @@ def main_importer(data, municipalities):
         if mun in ["all", "valjevo"]:
             for data in data_source:
                 if data == "prihodi":
-                    prihodi_importer.data_importer_of_municipality_valjevo()
+                    pass
+                    # prihodi_importer.data_importer_of_municipality_valjevo()
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_valjevo()
 
@@ -56,28 +57,32 @@ def main_importer(data, municipalities):
         if mun in ["all", "cacak"]:
             for data in data_source:
                 if data == "prihodi":
-                    prihodi_importer.data_importer_of_municipality_cacak()
+                    pass
+                    # prihodi_importer.data_importer_of_municipality_cacak()
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_cacak()
 
         if mun in ["all", "krajlevo"]:
             for data in data_source:
                 if data == "prihodi":
-                    prihodi_importer.data_importer_of_municipality_krajlevo()
+                    pass
+                    # prihodi_importer.data_importer_of_municipality_krajlevo()
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_krajlevo()
 
         if mun in ["all", "zvezdara"]:
             for data in data_source:
                 if data == "prihodi":
-                    prihodi_importer.data_importer_of_municipality_zvezdara()
+                    pass
+                    #prihodi_importer.data_importer_of_municipality_zvezdara()
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_zvezdara()
 
         if mun in ["all", "novi_beograd"]:
             for data in data_source:
                 if data == "prihodi":
-                    prihodi_importer.data_importer_of_municipality_novi_beograd()
+                    pass
+                    #prihodi_importer.data_importer_of_municipality_novi_beograd()
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_novi_beograd()
 

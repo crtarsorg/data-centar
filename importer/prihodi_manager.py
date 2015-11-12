@@ -59,6 +59,33 @@ class PrihodiDataImporter(object):
 
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Врање", parent_handler, row[1])
 
+    def data_importer_of_municipality_sombor(self):
+
+        # Remove previous records in database, if there is any for this municipality
+        db.opstine.remove({"opstina.latinica": "Sombor", "tipPodataka.slug": "prihodi"})
+
+        # Read data from CSV file and assign those data to a data handler object
+        data_handler = reader(open("data/prihodi/sombor.csv", "r"), delimiter=",")
+
+        # Iterate throughout every row in data handler
+        for index, row in enumerate(data_handler):
+         if index > 1:
+             # Use this check to retrieve parent category from csv file rows
+             if row[1][-3:] == "000" and row[1] not in ["", " "]:
+                 parent_handler = row[2]
+                 parent_num = row[1]
+
+             if row[1][-3:] != "000" and row[1] not in ["", " "]:
+                 # Build mongo document
+                    json_doc = self.build_mongo_document_structure("Сомбор", row[1], row[2], row[3], row[4], row[5], row[6], None, parent_handler, parent_num)
+
+                    # Insert JSON document in mongo
+                    db.opstine.insert(json_doc)
+
+                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Сомбор", parent_handler, row[1])
+
+
+
     def build_mongo_document_structure(self, municipality, class_number, opis, prihodi_vudzeta, sopstveni_prihodi, donacije, ostali, ukupno,  kategorija_roditelj=None, roditelj_broj=None):
         """
 

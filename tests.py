@@ -3,8 +3,8 @@ from coverage import coverage
 import unittest
 import os
 
-from importer.tests.rashodi_tests import RashodiImportingTestCases
-from importer.tests.prihodi_tests import PrihodiImportingTestCases
+from importer.tests.rashodi import RashodiImportingTestCases
+from importer.tests.prihodi import PrihodiImportingTestCases
 
 
 

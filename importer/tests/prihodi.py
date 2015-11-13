@@ -10,7 +10,7 @@ class PrihodiImportingTestCases(unittest.TestCase):
     # Json container for each prijepolje parent category
     prijepolje_counts_of_parents_and_total = {
         #(count, total) -count is the number of parent categories, -total is the total of that parent category
-        "Пренети  вишак  прихода из претходне године": (1, 50996198),
+        "Пренети  вишак  прихода из претходне године": (1, 50000000),
         "ПОРЕЗ НА ДОХ. И КАПИТ.ДОБИТ": (4, 261000000),
         "ПОРЕЗ  НА  ФОНД  ЗАРАДА": (1,1000),
         "ПОРЕЗ  НА  ИМОВИНУ": (3, 45548618),
@@ -22,7 +22,7 @@ class PrihodiImportingTestCases(unittest.TestCase):
         "ПРОДАЈА  ДОБАРА И УСЛУГА": (2, 8400000),
         "НОВЧАНЕ  КАЗНЕ ЗА  ПРИВРЕДНЕ ПРЕСТУ": (1,8170800),
         "МЕШОВИТИ  И  НЕОДРЕЂЕНИ ПРИХОДИ": (1, 52205859),
-        "Меморандумске ставке": (1, 3600000)
+        "Меморандумске ставке": (1, 1800000)
     }
 
      # Json container for each prijepolje parent category

@@ -106,15 +106,42 @@ class PrihodiDataImporter(object):
 
                  if row[1][-3:] != "000" and row[1] not in ["", " "]:
                      # Build mongo document
-                        json_doc = self.build_mongo_document_structure("Сомбор", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
+                        json_doc = self.build_mongo_document_structure("Сомбор", row[1], row[2], row[3], row[4], row[5], row[6], parent_handler, parent_num)
 
                         # Insert JSON document in mongo
                         db.opstine.insert(json_doc)
 
                         print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Сомбор", parent_handler, row[1])
 
-    def data_importer_of_municipality_indjija(self):
+    def data_importer_of_municipality_valjevo(self):
+        # Remove previous records in database, if there is any for this municipality
+        db.opstine.remove({"opstina.latinica": "Valjevo", "tipPodataka.slug": "prihodi"})
 
+        # Read data from CSV file and assign those data to a data handler object
+        data_handler = reader(open("data/prihodi/valjevo.csv", "r"), delimiter=",")
+
+        # Iterate throughout every row in data handler
+        for index, row in enumerate(data_handler):
+            if index > 3:
+            # Use this check to retrieve parent category from csv file rows
+                if row[1][-3:] == "000" and row[1][-4:] != "0000" and row[1][-4:] != "00000" or row[1] in ["791110", "810000", "821000", "840000", "910000", "920000"] and row[2] not in ["Приходи од  продаје  индиректних корисника буџета", "Примања од продаје робних резерви"]:
+                    parent_handler = row[2]
+                    parent_num = row[1]
+
+                if row[1][-3:] != "000" and row[1][-4:] != "0000"  and row[1] not in ["", " ", "800000", "900000"] and row[2] != "ПРИХОДИ ОД ПРОДАЈЕ ДОБАРА И УСЛУГА" or row[1] == "742000":
+
+                    # Build mongo document
+                    json_doc = self.build_mongo_document_structure("Ваљево", row[1], row[2], row[3], row[4], row[5], row[6], None, parent_handler, parent_num)
+
+                    # Insert JSON document in mongo
+                    db.opstine.insert(json_doc)
+
+                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Ваљево", parent_handler, row[1])
+
+
+
+
+    def data_importer_of_municipality_indjija(self):
         # Remove previous records in database, if there is any for this municipality
         db.opstine.remove({"opstina.latinica": "Inđija", "tipPodataka.slug": "prihodi"})
 
@@ -154,10 +181,20 @@ class PrihodiDataImporter(object):
         :param roditelj_broj:
         :return:
         """
-        prihodi_vudzeta = self.convert_to_float(prihodi_vudzeta.replace(',', ''))
-        sopstveni_prihodi = self.convert_to_float(sopstveni_prihodi.replace(',', ''))
-        ostali = self.convert_to_float(ostali.replace(',', ''))
-        ukupno = prihodi_vudzeta + sopstveni_prihodi + ostali
+        if municipality in ["Сомбор"]:
+            # In this municipality we have values only for column ukupno (total value)
+            # That's why we need to import, instead of manually calculating manually
+            prihodi_vudzeta = 0
+            sopstveni_prihodi = 0
+            ostali = 0
+            ukupno = self.convert_to_float(ukupno.replace(',', ''))
+
+        else:
+            prihodi_vudzeta = self.convert_to_float(prihodi_vudzeta.replace(',', ''))
+            sopstveni_prihodi = self.convert_to_float(sopstveni_prihodi.replace(',', ''))
+            ostali = self.convert_to_float(ostali.replace(',', ''))
+            ukupno = prihodi_vudzeta + sopstveni_prihodi + ostali
+
 
         # Let's build mongo document structure
         json_doc = {

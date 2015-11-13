@@ -212,10 +212,6 @@ class PrihodiDataImporter(object):
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Краљево", parent_handler, row[1].strip())
 
 
-
-
-
-
     def data_importer_of_municipality_cacak(self):
         '''
         # Remove previous records in database, if there is any for this municipality
@@ -247,7 +243,7 @@ class PrihodiDataImporter(object):
 
             if index > 0:
                 if row[1] == "":
-                    row[1] = 0
+                    row[1] = "0"
 
                 # Build mongo document
                 json_doc = self.build_mongo_document_structure("Звездара", row[1], row[2], row[3], row[4], row[5], row[6], None, None)
@@ -256,7 +252,6 @@ class PrihodiDataImporter(object):
                 db.opstine.insert(json_doc)
 
                 print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Звездара", parent_handler, row[1])
-
 
 
     def build_mongo_document_structure(self, municipality, class_number, opis, prihodi_vudzeta, sopstveni_prihodi, ostali, ukupno,  kategorija_roditelj=None, roditelj_broj=None):

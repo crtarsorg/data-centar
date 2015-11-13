@@ -174,7 +174,6 @@ class PrihodiImportingTestCases(unittest.TestCase):
             self.asserts_total_sum_of_classification_categories("Zvezdara", parent, self.zvezdara_counts_for_parents[parent][1], "prihodi")
 
 
-
     def asserts_for_parent_categories_elements(self, municipality, parent_category, expected_value, data_source):
         '''
         :param municipality: The municipality we want to test

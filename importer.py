@@ -61,11 +61,10 @@ def main_importer(data, municipalities):
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_cacak()
 
-        if mun in ["all", "krajlevo"]:
+        if mun in ["all", "kraljevo"]:
             for data in data_source:
                 if data == "prihodi":
-                    pass
-                    # prihodi_importer.data_importer_of_municipality_krajlevo()
+                    prihodi_importer.data_importer_of_municipality_krajlevo()
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_krajlevo()
 

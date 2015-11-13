@@ -6,6 +6,31 @@ class PrihodiImportingTestCases(unittest.TestCase):
 
     def setUp(self):
         pass
+    # Json container for each valjevo parent category
+    kraljevo_counts_of_parents_and_total = {
+        #(count, total) -count is the number of parent categories, -total is the total of that parent category
+        "Порез на доходак, добит и капиталне добитке": (6, ),
+        "Порез на имовину":(8,),
+        "Порез на добра и услуге": (6,),
+        "Други порези": (2,),
+        "Донације од иностраних држава": (4, ),
+        "Донације од међународних органзација": (4, ),
+        "Трансфери од других нивоа власти": (4, ),
+        "Приходи од имовине": (13, ),
+        "Приходи од продаје добара и услуга": (7, ),
+        "Новчане казне и одузета имовинска корист": (8, ),
+        "Добровољни трансфери од физичких и правних лица": (4, ),
+        "Мешовити и неодређени приходи": (2,),
+        "Меморандумске ставке за рефундацију расхода": (2,),
+        "Меморандумске ставке за рефундацију расхода из претходне године": (2,),
+        "Примања од продаје непокретности": (2, ),
+        "Примања од продаје покретне имовине": (2, ),
+        "Примања од продаје осталих основних средстава": (2, ),
+        "Примања од продаје земљишта": (2, ),
+        "Примања од домаћих задужења": (6, ),
+        "Примања од продаје домаће финансијске имовине": (4, )
+    }
+
 
     # Json container for each valjevo parent category
     valjevo_counts_of_parents_and_total = {
@@ -102,6 +127,10 @@ class PrihodiImportingTestCases(unittest.TestCase):
         # Test the counts of particular parent category for Valjevo municipality
         for parent in self.valjevo_counts_of_parents_and_total:
             self.asserts_for_parent_categories_elements("Valjevo", parent, self.valjevo_counts_of_parents_and_total[parent][0], "prihodi")
+
+        # Test the counts of particular parent category for Kraljevo municipality
+        for parent in self.kraljevo_counts_of_parents_and_total:
+            self.asserts_for_parent_categories_elements("Kraljevo", parent, self.kraljevo_counts_of_parents_and_total[parent][0], "prihodi")
 
 
 

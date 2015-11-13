@@ -184,6 +184,37 @@ class PrihodiDataImporter(object):
 
                         print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Инђија", parent_handler, row[1])
 
+    def data_importer_of_municipality_krajlevo(self):
+         # Remove previous records in database, if there is any for this municipality
+        db.opstine.remove({"opstina.latinica": "Kraljevo", "tipPodataka.slug": "prihodi"})
+
+        # Read data from CSV file and assign those data to a data handler object
+        data_handler = reader(open("data/prihodi/kraljevo.csv", "r"), delimiter=",")
+
+        parent_categories = utils.prihodi_parent_categories_for_kraljevo()
+
+        # Iterate throughout every row in data handler
+        for index, row in enumerate(data_handler):
+            if index > 2:
+                if row[1] not in ["", " "]:
+                    if row[1].strip() in parent_categories.keys():
+                        parent_num = row[1].strip()
+                        parent_handler = parent_categories[parent_num]
+
+                if row[1] not in ["", " ", parent_num] and row[1][-4:] != "0000":
+
+                    # Build mongo document
+                    json_doc = self.build_mongo_document_structure("Краљево", row[1], row[2], row[3], row[4], row[5], row[6], parent_handler, parent_num)
+
+                    # Insert JSON document in mongo
+                    db.opstine.insert(json_doc)
+
+                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Краљево", parent_handler, row[1].strip())
+
+
+
+
+
 
     def build_mongo_document_structure(self, municipality, class_number, opis, prihodi_vudzeta, sopstveni_prihodi, ostali, ukupno,  kategorija_roditelj=None, roditelj_broj=None):
         """
@@ -207,7 +238,13 @@ class PrihodiDataImporter(object):
             sopstveni_prihodi = 0
             ostali = 0
             ukupno = self.convert_to_float(ukupno.replace(',', ''))
-
+        elif municipality in ["Краљево"]:
+            # In this municipality we have values only for column ukupno (total value)
+            # That's why we need to import, instead of manually calculating manually
+            prihodi_vudzeta = 0
+            sopstveni_prihodi = 0
+            ostali = 0
+            ukupno = self.convert_to_float(ukupno.replace(',', '').replace('.', '')[:-2])
         else:
             prihodi_vudzeta = self.convert_to_float(prihodi_vudzeta.replace(',', ''))
             sopstveni_prihodi = self.convert_to_float(sopstveni_prihodi.replace(',', ''))

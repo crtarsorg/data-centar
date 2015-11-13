@@ -7,6 +7,30 @@ class PrihodiImportingTestCases(unittest.TestCase):
     def setUp(self):
         pass
 
+    # Json container for each valjevo parent category
+    valjevo_counts_of_parents_and_total = {
+        #(count, total) -count is the number of parent categories, -total is the total of that parent category
+        "ПОРЕЗ НА ДОХОДАК, ДОБИТ И КАПИТАЛНЕ ДОБИТКЕ": (12, 1084150000),
+        "ПОРЕЗ НА ИМОВИНУ": (8, 333000000),
+        "ПОРЕЗ НА ДОБРА И УСЛУГЕ": (7, 75300000),
+        "ДРУГИ ПОРЕЗИ": (1, 35000000),
+        "ДОНАЦИЈЕ ОД МЕЂ. ОРГАНИЗАЦИЈА": (1, 7000000),
+        "ТРАНСФЕРИ ОД ДРУГИХ НИВОА ВЛАСТИ": (3, 391340000),
+        "ПРИХОДИ ОД ИМОВИНЕ": (11, 85500000),
+        "ПРИХОДИ ОД ПРОДАЈЕ ДОБАРА И УСЛУГА": (7, 191406000),
+        "НОВЧАНЕ КАЗНЕ И ОДУЗЕТА ИМОВИНСКА КОРИСТ": (2, 22000000),
+        "ДОБРОВОЉНИ ТРАНСФЕРИ ОД ФИЗИЧКИХ И ПРАВНИХ ЛИЦА": (2, 6100000),
+        "МЕШОВИТИ И НЕОДРЕЂЕНИ ПРИХОДИ": (3, 18000000),
+        "МЕМОРАНДУМСКЕ СТАВКЕ ЗА РЕФУНДАЦИЈУ РАСХОДА": (1, 10666000),
+        "ПРИХОДИ ИЗ БУЏЕТА": (1, 30000000),
+        "ПРИМАЊА ОД ПРОДАЈЕ ОСНОВНИХ СРЕДСТАВА": (2, 0),
+        "ПРИМАЊА ОД ПРОДАЈЕ РОБНИХ РЕЗЕРВИ": (2, 3500000),
+        "ПРИМАЊА ОД ПРОДАЈЕ ПРИРОДНЕ ИМОВИНЕ": (1, 101500000),
+        "ПРИМАЊА ОД ЗАДУЖИВАЊА": (2, 0),
+        "ПРИМАЊА ОД ПРОДАЈЕ ФИН. ИМОВИНЕ":(1, 5000000)
+    }
+
+
     # Json container for each prijepolje parent category
     prijepolje_counts_of_parents_and_total = {
         #(count, total) -count is the number of parent categories, -total is the total of that parent category
@@ -75,6 +99,10 @@ class PrihodiImportingTestCases(unittest.TestCase):
         for parent in self.indjija_parent_counts:
             self.asserts_for_parent_categories_elements("Inđija", parent, self.indjija_parent_counts[parent][0], "prihodi")
 
+        # Test the counts of particular parent category for Valjevo municipality
+        for parent in self.valjevo_counts_of_parents_and_total:
+            self.asserts_for_parent_categories_elements("Valjevo", parent, self.valjevo_counts_of_parents_and_total[parent][0], "prihodi")
+
 
 
     def test_total_sum_for_parent_categories(self):
@@ -89,6 +117,10 @@ class PrihodiImportingTestCases(unittest.TestCase):
          # Test how much is the total for every parent categories for Inđija municipality
         for parent in self.indjija_parent_counts:
             self.asserts_for_total_of_parent_categories("Inđija", parent, self.indjija_parent_counts[parent][1], "prihodi")
+
+         # Test how much is the total for every parent categories for Inđija municipality
+        for parent in self.valjevo_counts_of_parents_and_total:
+            self.asserts_for_total_of_parent_categories("Valjevo", parent, self.valjevo_counts_of_parents_and_total[parent][1], "prihodi")
 
 
 

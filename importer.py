@@ -42,8 +42,7 @@ def main_importer(data, municipalities):
         if mun in ["all", "valjevo"]:
             for data in data_source:
                 if data == "prihodi":
-                    pass
-                    # prihodi_importer.data_importer_of_municipality_valjevo()
+                    prihodi_importer.data_importer_of_municipality_valjevo()
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_valjevo()
 

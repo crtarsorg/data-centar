@@ -4,6 +4,10 @@ import cyrtranslit
 from flask_pymongo import MongoClient
 from slugify import slugify
 from abstract_data_importer import AbstractDataImporter
+from utils import ImporterUtils
+
+# Instantiate utils object
+utils = ImporterUtils()
 
 # Instantiate mongo client
 mongo = MongoClient()
@@ -120,24 +124,39 @@ class PrihodiDataImporter(object):
         # Read data from CSV file and assign those data to a data handler object
         data_handler = reader(open("data/prihodi/valjevo.csv", "r"), delimiter=",")
 
+        parent_categories = utils.prihodi_parent_categories_for_valjevo()
         # Iterate throughout every row in data handler
         for index, row in enumerate(data_handler):
-            if index > 3:
-            # Use this check to retrieve parent category from csv file rows
-                if row[1][-3:] == "000" and row[1][-4:] != "0000" and row[1][-4:] != "00000" or row[1] in ["791110", "810000", "821000", "840000", "910000", "920000"] and row[2] not in ["Приходи од  продаје  индиректних корисника буџета", "Примања од продаје робних резерви"]:
+            if index > 3 and index < 79:
+                # Use this check to retrieve parent category from csv file rows
+                if row[1][-3:] == "000" and row[1][-4:] != "0000" and row[2] not in ["Приходи од  продаје  индиректних корисника буџета"]:
                     parent_handler = row[2]
                     parent_num = row[1]
 
-                if row[1][-3:] != "000" and row[1][-4:] != "0000"  and row[1] not in ["", " ", "800000", "900000"] and row[2] != "ПРИХОДИ ОД ПРОДАЈЕ ДОБАРА И УСЛУГА" or row[1] == "742000":
+                if row[1][-3:] != "000" and row[1] not in ["", " "] or row[2] in ["Приходи од  продаје  индиректних корисника буџета"]:
 
                     # Build mongo document
-                    json_doc = self.build_mongo_document_structure("Ваљево", row[1], row[2], row[3], row[4], row[5], row[6], None, parent_handler, parent_num)
+                    json_doc = self.build_mongo_document_structure("Ваљево", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
 
                     # Insert JSON document in mongo
                     db.opstine.insert(json_doc)
 
-                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Ваљево", parent_handler, row[1])
+                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Ваљево", parent_handler, row[1].strip())
+            elif index > 78 and index:
+                if row[1] not in ["", " "]:
+                    if row[1].strip() in parent_categories.keys():
+                        parent_num = row[1].strip()
+                        parent_handler = parent_categories[parent_num]
 
+                if row[1] not in ["", " ", "800000", parent_num, "900000"] or row[2] in ["ПРИМАЊА ОД ПРОДАЈЕ РОБНИХ РЕЗЕРВИ"]:
+
+                    # Build mongo document
+                    json_doc = self.build_mongo_document_structure("Ваљево", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
+
+                    # Insert JSON document in mongo
+                    db.opstine.insert(json_doc)
+
+                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Ваљево", parent_handler, row[1].strip())
 
 
 
@@ -216,7 +235,7 @@ class PrihodiDataImporter(object):
                 "slug": slugify(municipality, to_lower=True)
             },
             "klasifikacija": {
-                "broj": int(class_number),
+                "broj": int(class_number.strip()),
                 "opis": {
                     "cirilica": opis.strip(),
                     "latinica": cyrtranslit.to_latin(opis.strip(), "sr")

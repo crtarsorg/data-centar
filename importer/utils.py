@@ -370,3 +370,16 @@ class ImporterUtils():
             ]
         }
         return descriptions
+
+    @staticmethod
+    def prihodi_parent_categories_for_valjevo():
+        valjevo_parents = {
+            "791110": "ПРИХОДИ ИЗ БУЏЕТА",
+            "810000": "ПРИМАЊА ОД ПРОДАЈЕ ОСНОВНИХ СРЕДСТАВА",
+            "821000": "ПРИМАЊА ОД ПРОДАЈЕ РОБНИХ РЕЗЕРВИ",
+            "840000": "ПРИМАЊА ОД ПРОДАЈЕ ПРИРОДНЕ ИМОВИНЕ",
+            "910000": "ПРИМАЊА ОД ЗАДУЖИВАЊА ",
+            "920000": "ПРИМАЊА ОД ПРОДАЈЕ ФИН. ИМОВИНЕ"
+        }
+
+        return valjevo_parents

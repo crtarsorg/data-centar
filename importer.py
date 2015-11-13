@@ -77,8 +77,7 @@ def main_importer(data, municipalities):
         if mun in ["all", "novi_beograd"]:
             for data in data_source:
                 if data == "prihodi":
-                    pass
-                    #prihodi_importer.data_importer_of_municipality_novi_beograd()
+                    prihodi_importer.data_importer_of_municipality_novi_beograd()
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_novi_beograd()
 

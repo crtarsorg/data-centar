@@ -6,6 +6,14 @@ class PrihodiImportingTestCases(unittest.TestCase):
 
     def setUp(self):
         pass
+
+    # Json container for each valjevo parent category
+    novi_beograd_counts_of_parents_and_total = {
+        #(count, total) -count is the number of parent categories, -total is the total of that parent category
+        "ТЕКУЋИ ПРИХОДИ": (6, 499264973),
+        "ДРУГИ ПРИХОДИ": (8, 132364859)
+    }
+
     # Json container for each valjevo parent category
     kraljevo_counts_of_parents_and_total = {
         #(count, total) -count is the number of parent categories, -total is the total of that parent category
@@ -149,6 +157,9 @@ class PrihodiImportingTestCases(unittest.TestCase):
         for parent in self.kraljevo_counts_of_parents_and_total:
             self.asserts_for_parent_categories_elements("Kraljevo", parent, self.kraljevo_counts_of_parents_and_total[parent][0], "prihodi")
 
+        # Test the counts of particular parent category for Kraljevo municipality
+        for parent in self.novi_beograd_counts_of_parents_and_total:
+            self.asserts_for_parent_categories_elements("Novi Beograd", parent, self.novi_beograd_counts_of_parents_and_total[parent][0], "prihodi")
 
 
 
@@ -168,6 +179,10 @@ class PrihodiImportingTestCases(unittest.TestCase):
          # Test how much is the total for every parent categories for Inđija municipality
         for parent in self.valjevo_counts_of_parents_and_total:
             self.asserts_for_total_of_parent_categories("Valjevo", parent, self.valjevo_counts_of_parents_and_total[parent][1], "prihodi")
+
+        # Test how much is the total for every parent categories for Inđija municipality
+        for parent in self.novi_beograd_counts_of_parents_and_total:
+            self.asserts_for_total_of_parent_categories("Novi Beograd", parent, self.novi_beograd_counts_of_parents_and_total[parent][1], "prihodi")
 
          # Test how much is the total for every parent categories for Zvezdara municipality
         for parent in self.zvezdara_counts_for_parents:

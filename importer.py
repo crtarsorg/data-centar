@@ -56,8 +56,7 @@ def main_importer(data, municipalities):
         if mun in ["all", "cacak"]:
             for data in data_source:
                 if data == "prihodi":
-                    pass
-                    # prihodi_importer.data_importer_of_municipality_cacak()
+                    prihodi_importer.data_importer_of_municipality_cacak()
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_cacak()
 
@@ -71,8 +70,7 @@ def main_importer(data, municipalities):
         if mun in ["all", "zvezdara"]:
             for data in data_source:
                 if data == "prihodi":
-                    pass
-                    #prihodi_importer.data_importer_of_municipality_zvezdara()
+                    prihodi_importer.data_importer_of_municipality_zvezdara()
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_zvezdara()
 

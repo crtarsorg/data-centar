@@ -111,6 +111,20 @@ class PrihodiImportingTestCases(unittest.TestCase):
         "ПРИМАЊА ОД ПРОДАЈЕ ДОМАЋЕ ФИНАНСИЈСКЕ ИМОВИНЕ": (1, 100000)
     }
 
+    zvezdara_counts_for_parents = {
+        "711000": (1, 249153253),
+        "321000": (1, 24203249),
+        "713000": (1, 179884638),
+        "741000": (1, 0),
+        "742000": (4, 2955929),
+        "743000": (1, 350000),
+        "745000": (1, 0),
+        "0": (1, 536454470),
+        "733000": (1, 0),
+        "732000": (1, 0),
+        "771000": (1, 3500000)
+    }
+
     def test_counts_for_parent_categories(self):
         # Test the counts of a particular parent category for Prijepolje municipality
         for parent in self.prijepolje_counts_of_parents_and_total:
@@ -127,10 +141,14 @@ class PrihodiImportingTestCases(unittest.TestCase):
         # Test the counts of particular parent category for Valjevo municipality
         for parent in self.valjevo_counts_of_parents_and_total:
             self.asserts_for_parent_categories_elements("Valjevo", parent, self.valjevo_counts_of_parents_and_total[parent][0], "prihodi")
+        # Test the counts of a particular parent category for Zvezdara municipality
+        for parent in self.zvezdara_counts_for_parents:
+            self.asserts_for_classification_categories_elements("Zvezdara", parent, self.zvezdara_counts_for_parents[parent][0], "prihodi")
 
         # Test the counts of particular parent category for Kraljevo municipality
         for parent in self.kraljevo_counts_of_parents_and_total:
             self.asserts_for_parent_categories_elements("Kraljevo", parent, self.kraljevo_counts_of_parents_and_total[parent][0], "prihodi")
+
 
 
 
@@ -150,6 +168,10 @@ class PrihodiImportingTestCases(unittest.TestCase):
          # Test how much is the total for every parent categories for Inđija municipality
         for parent in self.valjevo_counts_of_parents_and_total:
             self.asserts_for_total_of_parent_categories("Valjevo", parent, self.valjevo_counts_of_parents_and_total[parent][1], "prihodi")
+
+         # Test how much is the total for every parent categories for Zvezdara municipality
+        for parent in self.zvezdara_counts_for_parents:
+            self.asserts_total_sum_of_classification_categories("Zvezdara", parent, self.zvezdara_counts_for_parents[parent][1], "prihodi")
 
 
 
@@ -195,6 +217,57 @@ class PrihodiImportingTestCases(unittest.TestCase):
                         "municipality": "$opstina.latinica",
                         "data": "$tipPodataka.slug",
                         "category": "$kategorijaRoditelj.opis.cirilica"
+                    },
+                    "sum": {
+                        "$sum": "$ukupno"
+                    }
+                }
+            }
+        ])
+        self.assertEqual(result['result'][0]["sum"], expected_value)
+
+
+    def asserts_for_classification_categories_elements(self, municipality, parent_category, expected_value, data_source):
+        '''
+        :param municipality: The municipality we want to test
+        :param parent_category: The parent category for the municipality we want to test
+        :param expected_value: The expected value of the number of all elements for that parent category
+        :param data_source: The data source, if we want to test for revenues or expenditures
+        :return:
+        '''
+        result = mongo.datacentar.opstine.find(
+            {
+                "opstina.latinica": municipality,
+                "klasifikacija.broj": int(parent_category),
+                "tipPodataka.slug": data_source
+            }
+        ).count()
+
+        self.assertEqual(result, expected_value)
+
+    def asserts_total_sum_of_classification_categories(self, municipality, parent_category, expected_value, data_source):
+        """
+
+        :param municipality: The municipality we want to test
+        :param parent_category: The parent category for the municipality we want to test
+        :param expected_value: The expected value of the total for that parent category
+        :param data_source: The data source, if we want to test for revenues or expenditures
+        :return:
+        """
+        result = mongo.datacentar.opstine.aggregate([
+            {
+                "$match": {
+                    "opstina.latinica": municipality,
+                    "tipPodataka.slug": data_source,
+                    "klasifikacija.broj": int(parent_category)
+                }
+            },
+            {
+                "$group": {
+                    "_id": {
+                        "municipality": "$opstina.latinica",
+                        "data": "$tipPodataka.slug",
+                        "category": "$klasifikacija.broj"
                     },
                     "sum": {
                         "$sum": "$ukupno"

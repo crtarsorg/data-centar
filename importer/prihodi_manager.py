@@ -176,13 +176,13 @@ class PrihodiDataImporter(object):
                      parent_num = 0
 
                  elif row[1] != "":
-                     # Build mongo document
-                        json_doc = self.build_mongo_document_structure("Инђија", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
+                    # Build mongo document
+                    json_doc = self.build_mongo_document_structure("Инђија", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
 
-                        # Insert JSON document in mongo
-                        db.opstine.insert(json_doc)
+                    # Insert JSON document in mongo
+                    db.opstine.insert(json_doc)
 
-                        print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Инђија", parent_handler, row[1])
+                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Инђија", parent_handler, row[1])
 
     def data_importer_of_municipality_krajlevo(self):
          # Remove previous records in database, if there is any for this municipality
@@ -216,6 +216,49 @@ class PrihodiDataImporter(object):
 
 
 
+    def data_importer_of_municipality_cacak(self):
+        '''
+        # Remove previous records in database, if there is any for this municipality
+        db.opstine.remove({"opstina.latinica": "Čačak", "tipPodataka.slug": "rashodi"})
+
+        # Read data from CSV file and assign those data to a data handler object
+        data_handler = reader(open("data/prihodi/cacak.csv", "r"), delimiter=",")
+
+        # Iterate throughout every row in data handler
+        for index, row in enumerate(data_handler):
+            if index > 0:
+                if row[1][-3:] == "000" and row[1][-4:] != "0000":
+                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Чачак", parent_handler, row[1])
+
+        '''
+        pass
+
+    def data_importer_of_municipality_zvezdara(self):
+
+        # Remove previous records in database, if there is any for this municipality
+        db.opstine.remove({"opstina.latinica": "Zvezdara", "tipPodataka.slug": "prihodi"})
+
+        # Read data from CSV file and assign those data to a data handler object
+        data_handler = reader(open("data/prihodi/zvezdara.csv", "r"), delimiter=",")
+
+        parent_handler = ""
+        parent_num = ""
+        for index, row in enumerate(data_handler):
+
+            if index > 0:
+                if row[1] == "":
+                    row[1] = 0
+
+                # Build mongo document
+                json_doc = self.build_mongo_document_structure("Звездара", row[1], row[2], row[3], row[4], row[5], row[6], None, None)
+
+                # Insert JSON document in mongo
+                db.opstine.insert(json_doc)
+
+                print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Звездара", parent_handler, row[1])
+
+
+
     def build_mongo_document_structure(self, municipality, class_number, opis, prihodi_vudzeta, sopstveni_prihodi, ostali, ukupno,  kategorija_roditelj=None, roditelj_broj=None):
         """
 
@@ -231,7 +274,7 @@ class PrihodiDataImporter(object):
         :param roditelj_broj:
         :return:
         """
-        if municipality in ["Сомбор"]:
+        if municipality in ["Сомбор", "Звездара"]:
             # In this municipality we have values only for column ukupno (total value)
             # That's why we need to import, instead of manually calculating manually
             prihodi_vudzeta = 0

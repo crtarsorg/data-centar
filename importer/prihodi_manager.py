@@ -219,11 +219,21 @@ class PrihodiDataImporter(object):
 
         # Read data from CSV file and assign those data to a data handler object
         data_handler = reader(open("data/prihodi/cacak.csv", "r"), delimiter=",")
-
+        parent_categories = utils.cacak_parent_catecories()
         # Iterate throughout every row in data handler
         for index, row in enumerate(data_handler):
-            if index > 0:
-                if row[1][-3:] == "000" and row[1][-4:] != "0000":
+            if index > 1:
+                if row[1] == "" and row[2] in parent_categories[row[1]]:
+                    parent_num = row[1].strip()
+                    parent_handler = row[2].strip()
+
+                if row[1] not in ["", " "]:
+                    if row[1].strip() in parent_categories.keys():
+                        parent_num = row[1].strip()
+                        parent_handler = parent_categories[parent_num]
+
+
+                if row[1] not in ["", parent_categories.keys(), "2", "Економска класификација"]:
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Чачак", parent_handler, row[1])
 
 
@@ -340,7 +350,6 @@ class PrihodiDataImporter(object):
                 "slug": slugify(municipality, to_lower=True)
             },
             "klasifikacija": {
-                "broj": int(class_number.strip()),
                 "opis": {
                     "cirilica": opis.strip(),
                     "latinica": cyrtranslit.to_latin(opis.strip(), "sr")
@@ -356,6 +365,11 @@ class PrihodiDataImporter(object):
             json_doc["kategorijaRoditelj"]["opis"]["cirilica"] = kategorija_roditelj.strip()
             json_doc["kategorijaRoditelj"]["opis"]["latinica"] = cyrtranslit.to_latin(kategorija_roditelj, "sr")
             json_doc["kategorijaRoditelj"]["broj"] = int(roditelj_broj)
+
+        if class_number != "48+49":
+            json_doc["klasifikacija"]["broj"] = int(class_number.strip())
+        else:
+            json_doc["klasifikacija"]["broj"] = class_number.strip()
 
         return json_doc
 

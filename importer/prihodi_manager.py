@@ -213,7 +213,7 @@ class PrihodiDataImporter(object):
 
 
     def data_importer_of_municipality_cacak(self):
-        '''
+
         # Remove previous records in database, if there is any for this municipality
         db.opstine.remove({"opstina.latinica": "Čačak", "tipPodataka.slug": "rashodi"})
 
@@ -226,8 +226,6 @@ class PrihodiDataImporter(object):
                 if row[1][-3:] == "000" and row[1][-4:] != "0000":
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Чачак", parent_handler, row[1])
 
-        '''
-        pass
 
     def data_importer_of_municipality_zvezdara(self):
 

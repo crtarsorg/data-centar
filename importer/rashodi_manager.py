@@ -4,7 +4,7 @@ import cyrtranslit
 from flask_pymongo import MongoClient
 from utils import ImporterUtils
 from slugify import slugify
-from abstract_data_importer import AbstractDataImporter
+from abstract_data_importer import DataImporterBase
 
 # Instantiate utils object
 utils = ImporterUtils()
@@ -343,5 +343,3 @@ class RashodiDataImporter(object):
         else:
             return float(value)
 
-
-AbstractDataImporter.register(RashodiDataImporter)

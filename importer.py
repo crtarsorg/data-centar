@@ -21,63 +21,63 @@ def main_importer(data, municipalities):
         if mun in ["all", "vranje"]:
             for data in data_source:
                 if data == "prihodi":
-                    prihodi_importer.data_importer_of_municipality_vranje()
+                    prihodi_importer.data_importer_of_municipality_vranje("vranje", "prihodi")
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_vranje()
 
         if mun in ["all", "loznica"]:
             for data in data_source:
                 if data == "prihodi":
-                    prihodi_importer.data_importer_of_municipality_loznica()
+                    prihodi_importer.data_importer_of_municipality_loznica("loznitsa", "prihodi")
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_loznica()
 
         if mun in ["all", "sombor"]:
             for data in data_source:
                 if data == "prihodi":
-                    prihodi_importer.data_importer_of_municipality_sombor()
+                    prihodi_importer.data_importer_of_municipality_sombor("sombor", "prihodi")
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_sombor()
 
         if mun in ["all", "valjevo"]:
             for data in data_source:
                 if data == "prihodi":
-                    prihodi_importer.data_importer_of_municipality_valjevo()
+                    prihodi_importer.data_importer_of_municipality_valjevo("valjevo", "prihodi")
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_valjevo()
 
         if mun in ["all", "indjija"]:
             for data in data_source:
                 if data == "prihodi":
-                    prihodi_importer.data_importer_of_municipality_indjija()
+                    prihodi_importer.data_importer_of_municipality_indjija("indjija", "prihodi")
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_indjija()
 
         if mun in ["all", "cacak"]:
             for data in data_source:
                 if data == "prihodi":
-                    prihodi_importer.data_importer_of_municipality_cacak()
+                    prihodi_importer.data_importer_of_municipality_cacak("chachak", "prihodi")
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_cacak()
 
         if mun in ["all", "kraljevo"]:
             for data in data_source:
                 if data == "prihodi":
-                    prihodi_importer.data_importer_of_municipality_krajlevo()
+                    prihodi_importer.data_importer_of_municipality_krajlevo("kraljevo", "prihodi")
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_krajlevo()
 
         if mun in ["all", "zvezdara"]:
             for data in data_source:
                 if data == "prihodi":
-                    prihodi_importer.data_importer_of_municipality_zvezdara()
+                    prihodi_importer.data_importer_of_municipality_zvezdara("zvezdara", "prihodi")
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_zvezdara()
 
         if mun in ["all", "novi_beograd"]:
             for data in data_source:
                 if data == "prihodi":
-                    prihodi_importer.data_importer_of_municipality_novi_beograd()
+                    prihodi_importer.data_importer_of_municipality_novi_beograd("novi-beograd", "prihodi")
                 elif data == "rashodi":
                     rashodi_importer.data_importer_of_municipality_novi_beograd()
 

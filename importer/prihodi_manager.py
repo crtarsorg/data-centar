@@ -30,16 +30,12 @@ class PrihodiDataImporter(DataImporterBase):
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Пријепоље", parent_handler, row[1])
 
-    def data_importer_of_municipality_vranje(self):
+    def data_importer_of_municipality_vranje(self, municipality, data_type):
 
-        # Remove previous records in database, if there is any for this municipality
-        db.opstine.remove({"opstina.latinica": "Vranje", "tipPodataka.slug": "prihodi"})
-
-        # Read data from CSV file and assign those data to a data handler object
-        data_handler = reader(open("data/prihodi/vranje.csv", "r"), delimiter=",")
+        rows = self.retrieve_rows_from_csv_file(municipality, data_type)
 
         # Iterate throughout every row in data handler
-        for index, row in enumerate(data_handler):
+        for index, row in enumerate(rows):
             if index > 1:
 
                 # Use this check to retrieve parent category from csv file rows
@@ -57,18 +53,14 @@ class PrihodiDataImporter(DataImporterBase):
 
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Врање", parent_handler, row[1])
 
-    def data_importer_of_municipality_loznica(self):
+    def data_importer_of_municipality_loznica(self, municipality, data_type):
 
-        # Remove previous records in database, if there is any for this municipality
-        db.opstine.remove({"opstina.latinica": "Loznica", "tipPodataka.slug": "prihodi"})
-
-        # Read data from CSV file and assign those data to a data handler object
-        data_handler = reader(open("data/prihodi/loznitsa.csv", "r"), delimiter=",")
+        rows = self.retrieve_rows_from_csv_file(municipality, data_type)
 
         parent_handler = ""
         parent_num = ""
         # Iterate throughout every row in data handler
-        for index, row in enumerate(data_handler):
+        for index, row in enumerate(rows):
 
             if index > 1:
                 # Use this check to retrieve parent category from csv file rows
@@ -86,16 +78,12 @@ class PrihodiDataImporter(DataImporterBase):
 
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Лозница", parent_handler, row[1])
 
-    def data_importer_of_municipality_sombor(self):
+    def data_importer_of_municipality_sombor(self, municipality, data_type):
 
-        # Remove previous records in database, if there is any for this municipality
-        db.opstine.remove({"opstina.latinica": "Sombor", "tipPodataka.slug": "prihodi"})
-
-        # Read data from CSV file and assign those data to a data handler object
-        data_handler = reader(open("data/prihodi/sombor.csv", "r"), delimiter=",")
+        rows = self.retrieve_rows_from_csv_file(municipality, data_type)
 
         # Iterate throughout every row in data handler
-        for index, row in enumerate(data_handler):
+        for index, row in enumerate(rows):
             if index > 0:
                  # Use this check to retrieve parent category from csv file rows
                  if row[1][-3:] == "000" and row[1] not in ["", " "]:
@@ -111,16 +99,13 @@ class PrihodiDataImporter(DataImporterBase):
 
                         print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Сомбор", parent_handler, row[1])
 
-    def data_importer_of_municipality_valjevo(self):
-        # Remove previous records in database, if there is any for this municipality
-        db.opstine.remove({"opstina.latinica": "Valjevo", "tipPodataka.slug": "prihodi"})
+    def data_importer_of_municipality_valjevo(self, municipality, data_type):
 
-        # Read data from CSV file and assign those data to a data handler object
-        data_handler = reader(open("data/prihodi/valjevo.csv", "r"), delimiter=",")
+        rows = self.retrieve_rows_from_csv_file(municipality, data_type)
 
         parent_categories = utils.prihodi_parent_categories_for_valjevo()
         # Iterate throughout every row in data handler
-        for index, row in enumerate(data_handler):
+        for index, row in enumerate(rows):
             if index > 3 and index < 79:
                 # Use this check to retrieve parent category from csv file rows
                 if row[1][-3:] == "000" and row[1][-4:] != "0000" and row[2] not in ["Приходи од  продаје  индиректних корисника буџета"]:
@@ -154,15 +139,12 @@ class PrihodiDataImporter(DataImporterBase):
 
 
 
-    def data_importer_of_municipality_indjija(self):
-        # Remove previous records in database, if there is any for this municipality
-        db.opstine.remove({"opstina.latinica": "Inđija", "tipPodataka.slug": "prihodi"})
+    def data_importer_of_municipality_indjija(self, municipality, data_type):
 
-        # Read data from CSV file and assign those data to a data handler object
-        data_handler = reader(open("data/prihodi/indija.csv", "r"), delimiter=",")
+        rows = self.retrieve_rows_from_csv_file(municipality, data_type)
 
         # Iterate throughout every row in data handler
-        for index, row in enumerate(data_handler):
+        for index, row in enumerate(rows):
             if index > 0:
                  # Use this check to retrieve parent category from csv file rows
                  if row[1] in ["", " "] and row[2] not in ["", "УКУПНИ ПРИХОДИ И ПРИМАЊА БУЏЕТА"]:
@@ -178,17 +160,14 @@ class PrihodiDataImporter(DataImporterBase):
 
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Инђија", parent_handler, row[1])
 
-    def data_importer_of_municipality_krajlevo(self):
-         # Remove previous records in database, if there is any for this municipality
-        db.opstine.remove({"opstina.latinica": "Kraljevo", "tipPodataka.slug": "prihodi"})
+    def data_importer_of_municipality_krajlevo(self, municipality, data_type):
 
-        # Read data from CSV file and assign those data to a data handler object
-        data_handler = reader(open("data/prihodi/kraljevo.csv", "r"), delimiter=",")
+        rows = self.retrieve_rows_from_csv_file(municipality, data_type)
 
         parent_categories = utils.prihodi_parent_categories_for_kraljevo()
 
         # Iterate throughout every row in data handler
-        for index, row in enumerate(data_handler):
+        for index, row in enumerate(rows):
             if index > 2:
                 if row[1] not in ["", " "]:
                     if row[1].strip() in parent_categories.keys():
@@ -206,16 +185,12 @@ class PrihodiDataImporter(DataImporterBase):
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Краљево", parent_handler, row[1].strip())
 
 
-    def data_importer_of_municipality_cacak(self):
+    def data_importer_of_municipality_cacak(self, municipality, data_type):
 
-        # Remove previous records in database, if there is any for this municipality
-        db.opstine.remove({"opstina.latinica": "Čačak", "tipPodataka.slug": "prihodi"})
-
-        # Read data from CSV file and assign those data to a data handler object
-        data_handler = reader(open("data/prihodi/cacak.csv", "r"), delimiter=",")
+        rows = self.retrieve_rows_from_csv_file(municipality, data_type)
         parent_categories = utils.cacak_parent_catecories()
         # Iterate throughout every row in data handler
-        for index, row in enumerate(data_handler):
+        for index, row in enumerate(rows):
             if index > 1:
                 if row[1] == "" and row[2] in parent_categories[row[1]]:
                     parent_num = row[1].strip()
@@ -246,17 +221,13 @@ class PrihodiDataImporter(DataImporterBase):
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Чачак", parent_handler, row[1])
 
 
-    def data_importer_of_municipality_zvezdara(self):
+    def data_importer_of_municipality_zvezdara(self, municipality, data_type):
 
-        # Remove previous records in database, if there is any for this municipality
-        db.opstine.remove({"opstina.latinica": "Zvezdara", "tipPodataka.slug": "prihodi"})
-
-        # Read data from CSV file and assign those data to a data handler object
-        data_handler = reader(open("data/prihodi/zvezdara.csv", "r"), delimiter=",")
+        rows = self.retrieve_rows_from_csv_file(municipality, data_type)
 
         parent_handler = ""
         parent_num = ""
-        for index, row in enumerate(data_handler):
+        for index, row in enumerate(rows):
 
             if index > 0:
                 if row[1] == "":
@@ -270,15 +241,12 @@ class PrihodiDataImporter(DataImporterBase):
 
                 print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Звездара", parent_handler, row[1])
 
-    def data_importer_of_municipality_novi_beograd(self):
-         # Remove previous records in database, if there is any for this municipality
-        db.opstine.remove({"opstina.latinica": "Novi Beograd", "tipPodataka.slug": "prihodi"})
+    def data_importer_of_municipality_novi_beograd(self, municipality, data_type):
 
-        # Read data from CSV file and assign those data to a data handler object
-        data_handler = reader(open("data/prihodi/novi_beograd.csv", "r"), delimiter=",")
+        rows = self.retrieve_rows_from_csv_file(municipality, data_type)
 
         # Iterate throughout every row in data handler
-        for index, row in enumerate(data_handler):
+        for index, row in enumerate(rows):
             if index > 0:
                 if len(row[1]) == 2 and row[1] not in ["", " "]:
                     parent_num = row[1].strip()

@@ -1,7 +1,6 @@
 import argparse
 
 from app import create_app
-import sys
 
 # Create the flask app.
 app = create_app()

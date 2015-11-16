@@ -209,7 +209,7 @@ class PrihodiDataImporter(DataImporterBase):
     def data_importer_of_municipality_cacak(self):
 
         # Remove previous records in database, if there is any for this municipality
-        db.opstine.remove({"opstina.latinica": "Čačak", "tipPodataka.slug": "rashodi"})
+        db.opstine.remove({"opstina.latinica": "Čačak", "tipPodataka.slug": "prihodi"})
 
         # Read data from CSV file and assign those data to a data handler object
         data_handler = reader(open("data/prihodi/cacak.csv", "r"), delimiter=",")
@@ -228,6 +228,21 @@ class PrihodiDataImporter(DataImporterBase):
 
 
                 if row[1] not in ["", parent_categories.keys(), "2", "Економска класификација"]:
+                    row[3] = row[3].replace(',00', '').replace('.', '')
+                    row[4] = row[4].replace(',00', '').replace('.', '')
+                    row[5] = row[5].replace(',00', '').replace('.', '')
+                    # Build and insert JSON document in mongo
+                    json_doc = self.build_mongo_document_structure(
+                        "Чачак", row[1],
+                        row[2],
+                        row[3],
+                        row[4],
+                        row[5],
+                        None,
+                        None,
+                        None
+                    )
+                    db.opstine.insert(json_doc)
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Чачак", parent_handler, row[1])
 
 

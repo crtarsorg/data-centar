@@ -15,7 +15,8 @@ class DataRequestForm(Form):
 
     data_type = SelectField(u'Tip podataka',
         choices=[
-            ('rashodi', 'Rashodi')
+            ('rashodi', 'Rashodi'),
+            ('prihodi', 'Prihodi')
         ])
 
     years = SelectField(u'Godine',

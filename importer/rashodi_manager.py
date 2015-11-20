@@ -306,7 +306,7 @@ class RashodiDataImporter(object):
                 "slug": slugify(municipality, to_lower=True)
             },
             "klasifikacija": {
-                "broj": int(class_number),
+                "broj": class_number,
                 "opis": {
                     "cirilica": opis.strip(),
                     "latinica": cyrtranslit.to_latin(opis.strip(), "sr")

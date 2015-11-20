@@ -119,10 +119,8 @@ class DataImporterBase(object):
             json_doc["kategorijaRoditelj"]["opis"]["latinica"] = cyrtranslit.to_latin(kategorija_roditelj, "sr")
             json_doc["kategorijaRoditelj"]["broj"] = int(roditelj_broj)
 
-        if class_number not in ["48+49", "731+732"]:
-            json_doc["klasifikacija"]["broj"] = int(class_number.strip())
-        else:
-            json_doc["klasifikacija"]["broj"] = class_number.strip()
+
+        json_doc["klasifikacija"]["broj"] = class_number.strip()
 
         return json_doc
 

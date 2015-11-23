@@ -15,40 +15,41 @@ class RashodiDataFeed():
             }
         }
 
-        if "ranges" in query_params:
+        if "filteri" in query_params:
+
             ### Let's set the values rage for ukupno ###
-            if "ukupno" in query_params["ranges"]:
+            if "ukupno" in query_params["filteri"]:
                 match['$match']["ukupno"] = {
-                    "$gte": int(query_params["ranges"]["ukupno"]["greaterThanEqual"]),
-                    "$lte": int(query_params["ranges"]["ukupno"]["lesserThanEqual"])
+                    "$gte": int(query_params["filteri"]["ukupno"]["veceIliJednako"]),
+                    "$lte": int(query_params["filteri"]["ukupno"]["manjeIliJednako"])
                 }
 
             ### Let's set the values rage for sopstveniPrihodi ###
-            if "sopstveniPrihodi" in query_params["ranges"]:
+            if "sopstveniPrihodi" in query_params["filteri"]:
                 match['$match']["sopstveniPrihodi"] = {
-                    "$gte": query_params["ranges"]["sopstveniPrihodi"]["greaterThanEqual"],
-                    "$lte": query_params["ranges"]["sopstveniPrihodi"]["lesserThanEqual"]
+                    "$gte": query_params["filteri"]["sopstveniPrihodi"]["veceIliJednako"],
+                    "$lte": query_params["filteri"]["sopstveniPrihodi"]["manjeIliJednako"]
                 }
 
             ### Let's set the values rage for prihodiBudzeta ###
-            if "prihodiBudzeta" in query_params["ranges"]:
+            if "prihodiBudzeta" in query_params["filteri"]:
                 match['$match']["prihodiBudzeta"] = {
-                    "$gte": query_params["ranges"]["prihodiBudzeta"]["greaterThanEqual"],
-                    "$lte": query_params["ranges"]["prihodiBudzeta"]["lesserThanEqual"]
+                    "$gte": query_params["filteri"]["prihodiBudzeta"]["veceIliJednako"],
+                    "$lte": query_params["filteri"]["prihodiBudzeta"]["manjeIliJednako"]
                 }
 
             ### Let's set the values rage for donacije ###
-            if "donacije" in query_params["ranges"]:
+            if "donacije" in query_params["filteri"]:
                 match['$match']["donacije"] = {
-                    "$gte": query_params["ranges"]["donacije"]["greaterThanEqual"],
-                    "$lte": query_params["ranges"]["donacije"]["lesserThanEqual"]
+                    "$gte": query_params["filteri"]["donacije"]["veceIliJednako"],
+                    "$lte": query_params["filteri"]["donacije"]["manjeIliJednako"]
                 }
 
             ### Let's set the values rage for ostali ###
-            if "ostali" in query_params["ranges"]:
+            if "ostali" in query_params["filteri"]:
                 match['$match']["ostali"] = {
-                    "$gte": query_params["ranges"]["ostali"]["greaterThanEqual"],
-                    "$lte": query_params["ranges"]["ostali"]["lesserThanEqual"]
+                    "$gte": query_params["filteri"]["ostali"]["veceIliJednako"],
+                    "$lte": query_params["filteri"]["ostali"]["manjeIliJednako"]
                 }
 
         # Add other filters
@@ -89,11 +90,45 @@ class RashodiDataFeed():
             }
         }
 
-        if "klasifikacijaBroj" in query_params:
-            if query_params['klasifikacijaBroj'] != []:
-                match['$match']["klasifikacija.broj"] = {'$in': query_params['klasifikacijaBroj']}
+        if "klasifikacija" in query_params:
+
+            if query_params['klasifikacija']['broj'] != []:
+
+                if 'regex' in query_params['klasifikacija']:
+
+                    # Let's filter based on class options we picked and regex class number
+                    match['$match']['$or'] = []
+                    match_class_number = {"klasifikacija.broj": {'$in': query_params['klasifikacija']['broj']}}
+                    match['$match']['$or'].append(match_class_number)
+
+
+                    # Since Pymongo driver works with python regex logic, our pattern should be adopted in a way that python
+                    # regex compiler understands, then convert it to a BSON Regex instance,
+                    # read more: http://api.mongodb.org/python/current/api/bson/regex.html
+                    pattern = re.compile("^%s" % query_params['klasifikacija']['regex'])
+                    regex = Regex.from_native(pattern)
+                    regex.flags ^= re.UNICODE
+
+                    # Build match pipeline
+                    match_regex =  {
+                        "klasifikacija.broj": regex
+                    }
+
+                    match['$match']['$or'].append(match_regex)
+                else:
+                    match['$match']["klasifikacija.broj"] = {'$in': query_params['klasifikacija']['broj']}
+
+            else:
+                pattern = re.compile("^%s" % query_params['klasifikacija']['regex'])
+                regex = Regex.from_native(pattern)
+                regex.flags ^= re.UNICODE
+                # Build match pipeline
+                match['$match']["klasifikacija.broj"] = regex
+
+            # Add this to param to group and project stages
             group['$group']['_id']['klasifikacijaBroj'] = "$klasifikacija.broj"
             project['$project']['klasifikacijaBroj'] = '$_id.klasifikacijaBroj'
+
 
         elif "kategorijaRoditelj" in query_params:
             if query_params['kategorijaRoditelj'] != []:
@@ -144,31 +179,6 @@ class RashodiDataFeed():
         }
         # Execute mongo request
         json_doc = mongo.db.opstine.aggregate([match, group, project])
-
-        return json_doc['result']
-
-
-    def retrieve_data_for_given_classification_number(self, query_params):
-
-        print query_params
-
-        # Since Pymongo driver works with python regex logic, our pattern should be adopted in a way that python
-        # regex compiler understands, then convert it to a BSON Regex instance,
-        # read more: http://api.mongodb.org/python/current/api/bson/regex.html
-        pattern = re.compile("^%s" % query_params['klasifikacijaBroj'])
-        regex = Regex.from_native(pattern)
-        regex.flags ^= re.UNICODE
-        # Build match pipeline
-        match = {
-            "$match": {
-                "klasifikacija.broj": regex
-            }
-        }
-        if query_params['opstina'] != "sve":
-            match['$match']["opstina.slug"] = query_params['opstina']
-
-        # Execute mongo request
-        json_doc = mongo.db.opstine.aggregate([match])
 
         return json_doc['result']
 

@@ -5,18 +5,124 @@
     background: url({{ url_for('static', filename='img/intro-bg-%s.jpg'%bg_id)}}) no-repeat bottom center scroll;
 } */
 
-section{
-    height: 100vh;
-    }
+section{ height: 100vh; }
+.intro{padding-top:100px;}
+
+.btn-white-border,.btn-white-border:hover,.btn-white-border:active{    
+    border-color: white;
+    border-radius: 10px;
+}
+#searchWithParams{
+    font-size: 18px;
+}    
+/* http://embedresponsively.com/ */
+.embed-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    max-width: 80%;        
+    margin: auto;
+}
+
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.margin-10{  margin: 10px 0;}
+
 </style>
+
+
+<script>
+  
+//https://developers.google.com/youtube/player_parameters?hl=en
+    
+  var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/player_api";
+
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+
+  function onYouTubePlayerAPIReady() {
+    player = new YT.Player('ytplayerLanding', {
+     /* height: '390',
+      width: '640',*/
+      videoId: 'k7uuLp5FpJA',
+      playerVars: { 
+         'showinfo': 0,
+         /*'controls': 1,*/
+         'autohide':1
+        }
+      
+    });
+  }
+
+
+ function favouriteQueries () {
+      var data = [
+          {"url":"./api?data=1","text":"Show me data about MUNICIPAL BUDGETS in BELGRADE in 1999 related to EDUCATION"},
+          {"url":"./api?data=2","text":"Show me data about MUNICIPAL DONATIONS in NIS in 2010 related to PUBLIC TRANSPORTATIONS"},
+          {"url":"./api?data=3","text":"Show me data about MUNICIPAL BUDGETS in NOVI SAD in 2010 related to PUBLIC HEALTH"},
+          {"url":"./api?data=4","text":"Show me data about MUNICIPAL EXPANDITURES in PRIJEPOLJE in 2015 related to PROCUREMENT"},
+          {"url":"./api?data=5","text":"Show me data about REGIONAL INCOMES in CENTRALNA SRBIJA in 2013 "}
+      ];
+      var indx = Math.floor(Math.random()*4); 
+
+      return data[indx];
+
+  } 
+
+$(function () {
+
+  $("#anotherFavQuery").click(function () {
+          
+        var datum = favouriteQueries(); 
+        $("#searchWithParams").html(datum.text);
+        $("#searchWithParams").parent().attr("href",datum.url);
+    })
+  
+
+})
+
+
+</script>
+
 <!-- Intro Header; Welcome section -->
 <header class="intro">
     <div class="intro-body">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <h1 class="brand-heading">Welcome section</h1>
+                    <h3>Welcome section</h3>
+                     <p class="text-center lead">
+                        See this astonishing site. Look at those fabulous data. <em>bibendum diam velit et dui.</em>
+                    </p>
                     
+                    <div class='embed-container'>
+                        <div id="ytplayerLanding"></div>
+                    </div>
+                    <div class="margin-10"><a href="./api/"><span id="searchWithParams">Show me data about MUNICIPAL BUDGETS in BELGRADE in 1999 related to EDUCATION</span></a></div>
+
+                    <div class="row">
+                        <div class="col-md-6 margin-10">
+                            <button type="button" class="btn btn-block btn-lg  btn-link btn-white-border">
+                                Just take me to search
+                            </button>
+                        </div>
+                        <div class="col-md-6 margin-10">
+                            <button id="anotherFavQuery" type="button" class="btn btn-block btn-lg btn-link btn-white-border">
+                                Meh, what else you got?
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

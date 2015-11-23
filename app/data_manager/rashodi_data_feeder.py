@@ -15,40 +15,41 @@ class RashodiDataFeed():
             }
         }
 
-        ### Let's set the values rage for ukupno ###
-        if "ukupno" in query_params["ranges"]:
-            match['$match']["ukupno"] = {
-                "$gte": int(query_params["ranges"]["ukupno"]["greaterThanEqual"]),
-                "$lte": int(query_params["ranges"]["ukupno"]["lesserThanEqual"])
-            }
+        if "ranges" in query_params:
+            ### Let's set the values rage for ukupno ###
+            if "ukupno" in query_params["ranges"]:
+                match['$match']["ukupno"] = {
+                    "$gte": int(query_params["ranges"]["ukupno"]["greaterThanEqual"]),
+                    "$lte": int(query_params["ranges"]["ukupno"]["lesserThanEqual"])
+                }
 
-        ### Let's set the values rage for sopstveniPrihodi ###
-        if "sopstveniPrihodi" in query_params["ranges"]:
-            match['$match']["sopstveniPrihodi"] = {
-                "$gte": query_params["ranges"]["sopstveniPrihodi"]["greaterThanEqual"],
-                "$lte": query_params["ranges"]["sopstveniPrihodi"]["lesserThanEqual"]
-            }
+            ### Let's set the values rage for sopstveniPrihodi ###
+            if "sopstveniPrihodi" in query_params["ranges"]:
+                match['$match']["sopstveniPrihodi"] = {
+                    "$gte": query_params["ranges"]["sopstveniPrihodi"]["greaterThanEqual"],
+                    "$lte": query_params["ranges"]["sopstveniPrihodi"]["lesserThanEqual"]
+                }
 
-        ### Let's set the values rage for prihodiBudzeta ###
-        if "prihodiBudzeta" in query_params["ranges"]:
-            match['$match']["prihodiBudzeta"] = {
-                "$gte": query_params["ranges"]["prihodiBudzeta"]["greaterThanEqual"],
-                "$lte": query_params["ranges"]["prihodiBudzeta"]["lesserThanEqual"]
-            }
+            ### Let's set the values rage for prihodiBudzeta ###
+            if "prihodiBudzeta" in query_params["ranges"]:
+                match['$match']["prihodiBudzeta"] = {
+                    "$gte": query_params["ranges"]["prihodiBudzeta"]["greaterThanEqual"],
+                    "$lte": query_params["ranges"]["prihodiBudzeta"]["lesserThanEqual"]
+                }
 
-        ### Let's set the values rage for donacije ###
-        if "donacije" in query_params["ranges"]:
-            match['$match']["donacije"] = {
-                "$gte": query_params["ranges"]["donacije"]["greaterThanEqual"],
-                "$lte": query_params["ranges"]["donacije"]["lesserThanEqual"]
-            }
+            ### Let's set the values rage for donacije ###
+            if "donacije" in query_params["ranges"]:
+                match['$match']["donacije"] = {
+                    "$gte": query_params["ranges"]["donacije"]["greaterThanEqual"],
+                    "$lte": query_params["ranges"]["donacije"]["lesserThanEqual"]
+                }
 
-        ### Let's set the values rage for ostali ###
-        if "ostali" in query_params["ranges"]:
-            match['$match']["ostali"] = {
-                "$gte": query_params["ranges"]["ostali"]["greaterThanEqual"],
-                "$lte": query_params["ranges"]["ostali"]["lesserThanEqual"]
-            }
+            ### Let's set the values rage for ostali ###
+            if "ostali" in query_params["ranges"]:
+                match['$match']["ostali"] = {
+                    "$gte": query_params["ranges"]["ostali"]["greaterThanEqual"],
+                    "$lte": query_params["ranges"]["ostali"]["lesserThanEqual"]
+                }
 
         # Add other filters
         if query_params['godine'] != []:
@@ -147,12 +148,14 @@ class RashodiDataFeed():
         return json_doc['result']
 
 
-    def retrieve_data_for_given_classification_number(self, municipality, number):
+    def retrieve_data_for_given_classification_number(self, query_params):
+
+        print query_params
 
         # Since Pymongo driver works with python regex logic, our pattern should be adopted in a way that python
         # regex compiler understands, then convert it to a BSON Regex instance,
         # read more: http://api.mongodb.org/python/current/api/bson/regex.html
-        pattern = re.compile("^%s" % number)
+        pattern = re.compile("^%s" % query_params['klasifikacijaBroj'])
         regex = Regex.from_native(pattern)
         regex.flags ^= re.UNICODE
         # Build match pipeline
@@ -161,9 +164,8 @@ class RashodiDataFeed():
                 "klasifikacija.broj": regex
             }
         }
-        if municipality != "sve":
-            match['$match']["opstina.slug"] = municipality
-
+        if query_params['opstina'] != "sve":
+            match['$match']["opstina.slug"] = query_params['opstina']
 
         # Execute mongo request
         json_doc = mongo.db.opstine.aggregate([match])

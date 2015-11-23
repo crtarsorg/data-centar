@@ -14,33 +14,34 @@ class PrihodiDataFeed():
             }
         }
 
-        ### Let's set the values rage for ukupno ###
-        if "ukupno" in query_params["ranges"]:
-            match['$match']["ukupno"] = {
-                "$gte": int(query_params["ranges"]["ukupno"]["greaterThanEqual"]),
-                "$lte": int(query_params["ranges"]["ukupno"]["lesserThanEqual"])
-            }
+        if "ranges" in query_params:
+            ### Let's set the values rage for ukupno ###
+            if "ukupno" in query_params["ranges"]:
+                match['$match']["ukupno"] = {
+                    "$gte": int(query_params["ranges"]["ukupno"]["greaterThanEqual"]),
+                    "$lte": int(query_params["ranges"]["ukupno"]["lesserThanEqual"])
+                }
 
-        ### Let's set the values rage for sopstveniPrihodi ###
-        if "sopstveniPrihodi" in query_params["ranges"]:
-            match['$match']["sopstveniPrihodi"] = {
-                "$gte": query_params["ranges"]["sopstveniPrihodi"]["greaterThanEqual"],
-                "$lte": query_params["ranges"]["sopstveniPrihodi"]["lesserThanEqual"]
-            }
+            ### Let's set the values rage for sopstveniPrihodi ###
+            if "sopstveniPrihodi" in query_params["ranges"]:
+                match['$match']["sopstveniPrihodi"] = {
+                    "$gte": query_params["ranges"]["sopstveniPrihodi"]["greaterThanEqual"],
+                    "$lte": query_params["ranges"]["sopstveniPrihodi"]["lesserThanEqual"]
+                }
 
-        ### Let's set the values rage for prihodiBudzeta ###
-        if "prihodiBudzeta" in query_params["ranges"]:
-            match['$match']["prihodiBudzeta"] = {
-                "$gte": query_params["ranges"]["prihodiBudzeta"]["greaterThanEqual"],
-                "$lte": query_params["ranges"]["prihodiBudzeta"]["lesserThanEqual"]
-            }
+            ### Let's set the values rage for prihodiBudzeta ###
+            if "prihodiBudzeta" in query_params["ranges"]:
+                match['$match']["prihodiBudzeta"] = {
+                    "$gte": query_params["ranges"]["prihodiBudzeta"]["greaterThanEqual"],
+                    "$lte": query_params["ranges"]["prihodiBudzeta"]["lesserThanEqual"]
+                }
 
-        ### Let's set the values rage for ostali ###
-        if "ostali" in query_params["ranges"]:
-            match['$match']["ostali"] = {
-                "$gte": query_params["ranges"]["ostali"]["greaterThanEqual"],
-                "$lte": query_params["ranges"]["ostali"]["lesserThanEqual"]
-            }
+            ### Let's set the values rage for ostali ###
+            if "ostali" in query_params["ranges"]:
+                match['$match']["ostali"] = {
+                    "$gte": query_params["ranges"]["ostali"]["greaterThanEqual"],
+                    "$lte": query_params["ranges"]["ostali"]["lesserThanEqual"]
+                }
 
         if query_params['godine'] != []:
             match['$match']["godina"] = {'$in': query_params['godine']}

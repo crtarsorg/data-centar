@@ -36,9 +36,10 @@ def activities():
     return Response(response=json.dumps(json_response), status=200, mimetype='application/json')
 
 
-@mod_api.route('/klasifikacija-broj/<string:municipality>/<string:number>', methods=['GET'])
-def classification_number(municipality, number):
-    json_resp = RashodiDataFeed().retrieve_data_for_given_classification_number(municipality, number)
+@mod_api.route('/klasifikacija-info-za-opstina', methods=['POST'])
+def classification_number():
+    print json.loads(request.data)
+    json_resp = RashodiDataFeed().retrieve_data_for_given_classification_number(json.loads(request.data))
     return Response(response=json_util.dumps(json_resp), status=200, mimetype="application/json")
 
 

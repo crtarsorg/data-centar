@@ -94,7 +94,7 @@ class RashodiDataFeed():
 
             if query_params['klasifikacija']['broj'] != []:
 
-                if 'regex' in query_params['klasifikacija']:
+                if 'pocinjeSa' in query_params['klasifikacija']:
 
                     # Let's filter based on class options we picked and regex class number
                     match['$match']['$or'] = []
@@ -105,7 +105,7 @@ class RashodiDataFeed():
                     # Since Pymongo driver works with python regex logic, our pattern should be adopted in a way that python
                     # regex compiler understands, then convert it to a BSON Regex instance,
                     # read more: http://api.mongodb.org/python/current/api/bson/regex.html
-                    pattern = re.compile("^%s" % query_params['klasifikacija']['regex'])
+                    pattern = re.compile("^%s" % query_params['klasifikacija']['pocinjeSa'])
                     regex = Regex.from_native(pattern)
                     regex.flags ^= re.UNICODE
 
@@ -119,7 +119,7 @@ class RashodiDataFeed():
                     match['$match']["klasifikacija.broj"] = {'$in': query_params['klasifikacija']['broj']}
 
             else:
-                pattern = re.compile("^%s" % query_params['klasifikacija']['regex'])
+                pattern = re.compile("^%s" % query_params['klasifikacija']['pocinjeSa'])
                 regex = Regex.from_native(pattern)
                 regex.flags ^= re.UNICODE
                 # Build match pipeline

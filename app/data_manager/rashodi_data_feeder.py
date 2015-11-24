@@ -196,6 +196,7 @@ class RashodiDataFeed():
             match['$match']["godina"] = {'$in': query_params['godine']}
 
         if query_params['klasifikacijaBroj'] != []:
+            query_params['klasifikacijaBroj'] = [str(i) for i in query_params['klasifikacijaBroj']]
             match['$match']["klasifikacija.broj"] = {'$in': query_params['klasifikacijaBroj']}
 
         # Build group pipeline
@@ -255,6 +256,7 @@ class RashodiDataFeed():
             }
         }
         if query_params['klasifikacijaBroj'] != []:
+            query_params['klasifikacijaBroj'] = [str(i) for i in query_params['klasifikacijaBroj']]
             match['$match']["klasifikacija.broj"] = {'$in': query_params['klasifikacijaBroj']}
 
         # Build group pipeline

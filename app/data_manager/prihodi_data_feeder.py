@@ -1,7 +1,8 @@
 # coding=utf-8
 from app import mongo
 from rashodi_data_feeder import RashodiDataFeed
-
+import re
+from bson.regex import Regex
 
 class PrihodiDataFeed():
 
@@ -78,9 +79,42 @@ class PrihodiDataFeed():
             }
         }
 
-        if "klasifikacijaBroj" in query_params:
-            if query_params['klasifikacijaBroj'] != []:
-                match['$match']["klasifikacija.broj"] = {'$in': query_params['klasifikacijaBroj']}
+        if "klasifikacija" in query_params:
+
+            if query_params['klasifikacija']['broj'] != []:
+
+                if 'pocinjeSa' in query_params['klasifikacija']:
+
+                    # Let's filter based on class options we picked and regex class number
+                    match['$match']['$or'] = []
+                    match_class_number = {"klasifikacija.broj": {'$in': query_params['klasifikacija']['broj']}}
+                    match['$match']['$or'].append(match_class_number)
+
+
+                    # Since Pymongo driver works with python regex logic, our pattern should be adopted in a way that python
+                    # regex compiler understands, then convert it to a BSON Regex instance,
+                    # read more: http://api.mongodb.org/python/current/api/bson/regex.html
+                    pattern = re.compile("^%s" % query_params['klasifikacija']['pocinjeSa'])
+                    regex = Regex.from_native(pattern)
+                    regex.flags ^= re.UNICODE
+
+                    # Build match pipeline
+                    match_regex =  {
+                        "klasifikacija.broj": regex
+                    }
+
+                    match['$match']['$or'].append(match_regex)
+                else:
+                    match['$match']["klasifikacija.broj"] = {'$in': query_params['klasifikacija']['broj']}
+
+            else:
+                pattern = re.compile("^%s" % query_params['klasifikacija']['pocinjeSa'])
+                regex = Regex.from_native(pattern)
+                regex.flags ^= re.UNICODE
+                # Build match pipeline
+                match['$match']["klasifikacija.broj"] = regex
+
+            # Add this to param to group and project stages
             group['$group']['_id']['klasifikacijaBroj'] = "$klasifikacija.broj"
             project['$project']['klasifikacijaBroj'] = '$_id.klasifikacijaBroj'
 

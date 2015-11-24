@@ -5,8 +5,17 @@
             $( "#btn-post-sum-req" ).click(function() {
                 postSumRequest();
             });
+
             $( "#btn-post-activities-req" ).click(function() {
-                post_classifications_req();
+                postClassificationsReq();
+            });
+
+            $( "#btn-post-municipalities-req" ).click(function() {
+                postRequestForMunicipalities();
+            });
+
+            $( "#btn-post-list-mun-req" ).click(function() {
+                postRequestListMunicipalities();
             });
 
         });
@@ -14,21 +23,23 @@
     function postSumRequest(){
 
         var data = get_request_form_data('sum-req-form');
+        executePost(data, '{{ url_for('api.sum') }}', "sum-req-rsp-box", "sum-req-body-box");
 
-        $.ajax({
-          type: "POST",
-          url: '{{ url_for('api.sum') }}',
-          contentType: 'application/json',
-          data: JSON.stringify(data),
-          success: function(rsp){
-              $('#sum-req-body-box').text(JSON.stringify(data, null, 4));
-              $('#sum-req-rsp-box').text(JSON.stringify(rsp, null, 4));
-              Prism.highlightAll();
-          }
-        });
     }
 
-    function post_classifications_req(){
+    function postRequestForMunicipalities(){
+
+        var data = getFormData('municipalities-req-form');
+        executePost(data, '{{ url_for('api.aggregated_classifications') }}', "municipalities-req-rsp-box", "municipalities-req-body-box");
+    }
+
+    function postRequestListMunicipalities(){
+        var data = getFormData('list-mun-req-form');
+        executePost(data, '{{ url_for('api.list_of_municipalities') }}', "list-mun-req-rsp-box", "list-mun-req-body-box");
+
+    }
+
+    function postClassificationsReq(){
         var municipalities = [];
         $('#class_municipalities :selected').each(function(i, selected){
           municipalities[i] = $(selected).val();
@@ -39,18 +50,7 @@
             "godine": [parseInt($('#class_years').val())],
             "opstine": municipalities
         };
-
-        $.ajax({
-          type: "POST",
-          url: '{{ url_for('api.activities') }}',
-          contentType: 'application/json',
-          data: JSON.stringify(data),
-          success: function(rsp){
-              $('#activities-req-body-box').text(JSON.stringify(data, null, 4));
-              $('#activities-req-rsp-box').text(JSON.stringify(rsp, null, 4));
-              Prism.highlightAll();
-          }
-        });
+        executePost(data, '{{ url_for('api.activities') }}', "activities-req-rsp-box", "activities-req-body-box");
     }
     </script>
     <script src="{{ url_for('static', filename='prismjs/prism.js') }}"></script>
@@ -346,6 +346,265 @@
                                     <strong>Response:</strong>
                                     <pre style="height:400px;">
                                         <code class="language-javascript" id="activities-req-rsp-box"></code>
+                                    </pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="api-municipalities" class="container" style="padding-top:50px">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading  text-center">
+                        <h3 class="panel-title">Ekonomskih Klasifikacija Info za Opstine</h3>
+                    </div>
+                    <div class="panel-body">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#municipalities-how" aria-controls="municipalities-how" role="tab" data-toggle="tab">Kako?</a></li>
+                            <li role="presentation"><a href="#municipalities-tryit" aria-controls="municipalities-tryit" role="tab" data-toggle="tab">Probaj!</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="municipalities-how">
+                                <div class="form-group">
+                                    <h5>OPIS:</h5>
+                                    <span>Koristite ovaj POST zahtev za preuzimanje podataka.</span>
+                                </div>
+
+                                <div>
+                                    <h5>URL POST ZAHTEVA:</h5>
+                                    <span>http://datacentar.io/api/sakupiti-klasifikacija-za-opstine</span>
+                                </div>
+                                <br>
+                                <div>
+                                <h5>PARAMETRI UPITA:</h5>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Parameter
+                                            </th>
+                                            <th>
+                                                Vrsta
+                                            </th>
+                                            <th>
+                                                Opis
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>
+                                                tipPodataka
+                                            </th>
+                                            <td>
+                                                Stringova.
+                                            </td>
+                                            <td>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                godine
+                                            </th>
+                                            <td>
+                                                Lista celih brojeva.
+                                            </td>
+                                            <td>
+                                                Godine za koje želimo da preuzmemo podatke.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                klasifikacijaBroj
+                                            </th>
+                                            <td>
+                                                Lista celih brojeva.
+                                            </td>
+                                            <td>
+                                                Ekonomskih klasifikacija.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="municipalities-tryit">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <form class="form-horizontal" id="municipalities-req-form">
+                                            <div class="form-group">
+                                                {{ sum_req_form.data_type.label(class="control-label col-xs-2") }}
+                                                <div class="col-xs-10">
+                                                    {{ sum_req_form.data_type(class="form-control") }}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                {{ sum_req_form.years.label(class="control-label col-xs-2") }}
+                                                <div class="col-xs-10">
+                                                    {{ sum_req_form.years(class="form-control") }}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                {{ sum_req_form.classifications.label(class="control-label col-xs-2", style="padding:5px;") }}
+                                                <div class="col-xs-10">
+                                                    {{ sum_req_form.classifications(class="form-control") }}
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="row col-md-offset-6">
+                                            <button class="btn btn-primary" id="btn-post-municipalities-req">POST</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong>Request Body:</strong>
+                                        <pre style="height:258px;">
+                                            <code class="language-javascript" id="municipalities-req-body-box"></code>
+                                        </pre>
+                                    </div>
+                                </div>
+                                <div style="padding-top:20px;">
+                                    <strong>Response:</strong>
+                                    <pre style="height:400px;">
+                                        <code class="language-javascript" id="municipalities-req-rsp-box"></code>
+                                    </pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="api-list-mun" class="container" style="padding-top:50px">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading  text-center">
+                        <h3 class="panel-title">Spisak Opština za Klasifikacija Broj</h3>
+                    </div>
+                    <div class="panel-body">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#list-mun-how" aria-controls="list-mun-how" role="tab" data-toggle="tab">Kako?</a></li>
+                            <li role="presentation"><a href="#list-mun-tryit" aria-controls="list-mun-tryit" role="tab" data-toggle="tab">Probaj!</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="list-mun-how">
+                                <div class="form-group">
+                                    <h5>OPIS:</h5>
+                                    <span>Koristite ovaj POST zahtev za preuzimanje podataka.</span>
+                                </div>
+
+                                <div>
+                                    <h5>URL POST ZAHTEVA:</h5>
+                                    <span>http://datacentar.io/api/spisak-opstina-za-klasifikacija-broj</span>
+                                </div>
+                                <br>
+                                <div>
+                                <h5>PARAMETRI UPITA:</h5>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Parameter
+                                            </th>
+                                            <th>
+                                                Vrsta
+                                            </th>
+                                            <th>
+                                                Opis
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>
+                                                tipPodataka
+                                            </th>
+                                            <td>
+                                                Stringova.
+                                            </td>
+                                            <td>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                godine
+                                            </th>
+                                            <td>
+                                                Lista celih brojeva.
+                                            </td>
+                                            <td>
+                                                Godine za koje želimo da preuzmemo podatke.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                klasifikacijaBroj
+                                            </th>
+                                            <td>
+                                                Lista celih brojeva.
+                                            </td>
+                                            <td>
+                                                Ekonomskih klasifikacija.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="list-mun-tryit">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <form class="form-horizontal" id="list-mun-req-form">
+                                            <div class="form-group">
+                                                {{ sum_req_form.data_type.label(class="control-label col-xs-2") }}
+                                                <div class="col-xs-10">
+                                                    {{ sum_req_form.data_type(class="form-control") }}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                {{ sum_req_form.years.label(class="control-label col-xs-2") }}
+                                                <div class="col-xs-10">
+                                                    {{ sum_req_form.years(class="form-control") }}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                {{ sum_req_form.classifications.label(class="control-label col-xs-2", style="padding:5px;") }}
+                                                <div class="col-xs-10">
+                                                    {{ sum_req_form.classifications(class="form-control") }}
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="row col-md-offset-6">
+                                            <button class="btn btn-primary" id="btn-post-list-mun-req">POST</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong>Request Body:</strong>
+                                        <pre style="height:258px;">
+                                            <code class="language-javascript" id="list-mun-req-body-box"></code>
+                                        </pre>
+                                    </div>
+                                </div>
+                                <div style="padding-top:20px;">
+                                    <strong>Response:</strong>
+                                    <pre style="height:400px;">
+                                        <code class="language-javascript" id="list-mun-req-rsp-box"></code>
                                     </pre>
                                 </div>
                             </div>

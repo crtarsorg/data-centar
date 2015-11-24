@@ -51,6 +51,14 @@
         .brand-heading,.page-scroll{
             text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
         }
+        
+        #mailModal *  {
+            background-color: gray;
+
+            -webkit-border-radius: 10px !important;
+            -moz-border-radius: 10px !important;
+            border-radius: 10px !important; 
+        }
     </style>
 
 </head>
@@ -97,7 +105,32 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <h2>Open data request Section</h2>
-                
+                <form id="newDataForm" class="form-horizontal" action="//formspree.io/mihajlo.andjelic@crta.rs" method="POST">
+               <!--  <input type="hidden" name="_next" value="#thx"/> -->
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend>WHICH DATA SET SHOULD CENTAR OPEN NEXT?</legend>
+                    <!-- Text input-->
+                    <div class=" margin-10">
+                        <input id="mail" name="email" type="email" placeholder="email@adress.com"  class="form-control input-md" oninvalid="this.setCustomValidity('Unesite validnu e-mail adresu')">
+                    </div>
+                    <!-- Closed dataset dropdown -->
+                    <div class=" margin-10 ">
+                        <select id="datasetSel" name="datasetSel" class="form-control">
+                            <option value="1">Option one</option>
+                            <option value="2">Option two</option>
+                        </select>
+                    </div>
+                    <!-- Usage of information -->
+                    <div class=" margin-10 ">
+                        <textarea class="form-control" id="textarea" name="infoTA" rows="6" placeholder="How would you use this information?"></textarea>
+                    </div>
+                    <!-- Button -->
+                    <div class="  ">
+                        <button id="sendBtn" name="sendBtn"  class="btn btn-primary btn-lg">Send</button>
+                    </div>
+                </fieldset>
+        </form>
             </div>
         </div>
     </section>
@@ -139,6 +172,58 @@
         </div>
     </footer>
 
+
+     <!-- Modal -->
+  <div class="modal fade col-lg-8 col-lg-offset-2 " id="mailModal" role="dialog">
+    <div class="modal-dialog img-rounded">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 id="titleMailModal" class="modal-title">Thank you</h4>
+        </div>
+        <div class="modal-body">
+          <p id="bodyMailModal">Add any other information here about how votes information?
+            will count + that data centar is a work in progress.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+<script>
+
+    $("#sendBtn").click(function(ev){
+        ev.preventDefault();
+
+        var path = $("#newDataForm").attr( 'action' );
+        var dataForm = $("#newDataForm").serialize();
+
+        var request = $.ajax({
+          url: path,
+          method: "POST",
+          data: dataForm,
+          dataType:"json"
+        });
+         
+        request.done(function( msg ) {
+            
+            /*$('#mailModal').find("#titleMailModal").html("Success");
+            $('#mailModal').find("#bodyMailModal").html("Somethnig else");*/
+            $('#mailModal').modal('show');
+        });
+         
+        request.fail(function( jqXHR, textStatus ) {
+          console.log(jqXHR);
+          console.log( "Request failed: " + textStatus );
+        });
+
+    })
+</script>
 </body>
 
 </html>

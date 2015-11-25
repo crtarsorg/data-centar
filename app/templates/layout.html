@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}"/>
 
     <title>DataCentar</title>
 
@@ -60,6 +61,12 @@
             border-radius: 10px !important; 
         }
         .margin-10{  margin: 10px 0;}
+        #logoSvg{
+            height: 60px; 
+            margin-top: -20px;
+
+        }
+        
     </style>
 
 </head>
@@ -74,7 +81,13 @@
                     <i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand page-scroll" href="{{ url_for('landing_page.index') }}">
-                    <i class="fa fa-cubes"></i>  <span class="light">Data</span>Centar
+                    
+
+                    
+                    <object id="logoSvg" type="image/svg+xml" data="{{ url_for('static', filename='img/logo-vector-fit.svg') }}" class="logo" >
+                      DataCentar Logo <!-- fallback image in CSS -->
+                    </object>
+                 <!-- <span class="light">Data</span>Centar -->
                 </a>
             </div>
 

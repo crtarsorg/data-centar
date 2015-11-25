@@ -12,6 +12,7 @@ def create_app():
     # Here we  create flask instance
     app = Flask(__name__)
 
+    # Allow cross-domain access to API.
     cors = CORS(app, resources={r"/api/*": {"origins": "http://datacentar.io"}})
 
     # Load application configurations

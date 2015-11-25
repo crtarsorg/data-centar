@@ -3,6 +3,7 @@ import os
 import ConfigParser
 from logging.handlers import RotatingFileHandler
 from flask.ext.pymongo import PyMongo
+from flask.ext.cors import CORS
 
 # Create MongoDB database object.
 mongo = PyMongo()
@@ -10,6 +11,8 @@ mongo = PyMongo()
 def create_app():
     # Here we  create flask instance
     app = Flask(__name__)
+
+    cors = CORS(app, resources={r"/api/*": {"origins": "http://datacentar.io"}})
 
     # Load application configurations
     load_config(app)

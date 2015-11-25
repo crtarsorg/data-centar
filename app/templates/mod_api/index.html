@@ -1,77 +1,83 @@
 {% extends "layout.html" %}
 {% block body %}
     <script>
-        $( document ).ready(function(){
-            $( "#btn-post-sum-req" ).click(function() {
+        $(document).ready(function () {
+            $("#btn-post-sum-req").click(function () {
                 postSumRequest();
             });
 
-            $( "#btn-post-activities-req" ).click(function() {
+            $("#btn-post-activities-req").click(function () {
                 postClassificationsReq();
             });
 
-            $( "#btn-post-municipalities-req" ).click(function() {
+            $("#btn-post-municipalities-req").click(function () {
                 postRequestForMunicipalities();
             });
 
-            $( "#btn-post-list-mun-req" ).click(function() {
+            $("#btn-post-list-mun-req").click(function () {
                 postRequestListMunicipalities();
             });
 
+            initFiltersDisplay();
+
         });
 
-    function postSumRequest(){
+        function postSumRequest() {
 
-        var data = get_request_form_data('sum-req-form');
-        executePost(data, '{{ url_for('api.sum') }}', "sum-req-rsp-box", "sum-req-body-box");
+            var data = get_request_form_data('sum-req-form');
+            executePost(data, '{{ url_for('api.sum') }}', "sum-req-rsp-box", "sum-req-body-box");
 
-    }
+        }
 
-    function postRequestForMunicipalities(){
+        function postRequestForMunicipalities() {
 
-        var data = getFormData('municipalities-req-form');
-        executePost(data, '{{ url_for('api.aggregated_classifications') }}', "municipalities-req-rsp-box", "municipalities-req-body-box");
-    }
+            var data = getFormData('municipalities-req-form');
+            executePost(data, '{{ url_for('api.aggregated_classifications') }}', "municipalities-req-rsp-box", "municipalities-req-body-box");
+        }
 
-    function postRequestListMunicipalities(){
-        var data = getFormData('list-mun-req-form');
-        executePost(data, '{{ url_for('api.list_of_municipalities') }}', "list-mun-req-rsp-box", "list-mun-req-body-box");
+        function postRequestListMunicipalities() {
+            var data = getFormData('list-mun-req-form');
+            executePost(data, '{{ url_for('api.list_of_municipalities') }}', "list-mun-req-rsp-box", "list-mun-req-body-box");
 
-    }
+        }
 
-    function postClassificationsReq(){
-        var municipalities = [];
-        $('#class_municipalities :selected').each(function(i, selected){
-          municipalities[i] = $(selected).val();
-        });
+        function postClassificationsReq() {
+            var municipalities = [];
+            $('#class_municipalities :selected').each(function (i, selected) {
+                municipalities[i] = $(selected).val();
+            });
 
-        var data = {
-            "tipPodataka": $( '#class_data_type' ).val(),
-            "godine": [parseInt($('#class_years').val())],
-            "opstine": municipalities
-        };
-        executePost(data, '{{ url_for('api.activities') }}', "activities-req-rsp-box", "activities-req-body-box");
-    }
+            var data = {
+                "tipPodataka": $('#class_data_type').val(),
+                "godine": [parseInt($('#class_years').val())],
+                "opstine": municipalities
+            };
+            executePost(data, '{{ url_for('api.activities') }}', "activities-req-rsp-box", "activities-req-body-box");
+        }
     </script>
     <script src="{{ url_for('static', filename='prismjs/prism.js') }}"></script>
     <link href="{{ url_for('static', filename='prismjs/prism.css') }}" rel="stylesheet">
     <style>
-        .panel-body{
-            color:#333;
+        .panel-body {
+            color: #333;
         }
-        .tab-content{
-            padding-top:15px;
+
+        .tab-content {
+            padding-top: 15px;
         }
-    h5{
-        margin: 0;
-    }
+
+        h5 {
+            margin: 0;
+        }
     </style>
     <!-- Contact Section -->
     <section id="title" class="container text-center" style="padding-top:100px">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <h2><i class="fa fa-flask"></i> API</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua.</p>
             </div>
         </div>
     </section>
@@ -86,14 +92,17 @@
                     <div class="panel-body">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#sums-how" aria-controls="sums-how" role="tab" data-toggle="tab">Kako?</a></li>
-                            <li role="presentation"><a href="#sums-tryit" aria-controls="sums-tryit" role="tab" data-toggle="tab">Probaj!</a></li>
+                            <li role="presentation" class="active"><a href="#sums-how" aria-controls="sums-how"
+                                                                      role="tab" data-toggle="tab">Kako?</a></li>
+                            <li role="presentation"><a href="#sums-tryit" aria-controls="sums-tryit" role="tab"
+                                                       data-toggle="tab">Probaj!</a></li>
                         </ul>
 
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="sums-how">
                                 <br>
+
                                 <div class="form-group">
                                     <h5>OPIS:</h5>
                                     <span>Koristite ovaj POST zahtev za preuzimanje podataka.</span>
@@ -104,10 +113,11 @@
                                     <span>http://datacentar.io/api/zbir</span>
                                 </div>
                                 <br>
+
                                 <div>
-                                <h5>PARAMETRI UPITA:</h5>
-                                <table class="table table-striped">
-                                    <thead>
+                                    <h5>PARAMETRI UPITA:</h5>
+                                    <table class="table table-striped">
+                                        <thead>
                                         <tr>
                                             <th>
                                                 Parameter
@@ -119,8 +129,8 @@
                                                 Opis
                                             </th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
+                                        </thead>
+                                        <tbody>
                                         <tr>
                                             <th>
                                                 tipPodataka
@@ -166,14 +176,36 @@
                                                 Ekonomskih klasifikacija.
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
+                                        <tr>
+                                            <th>
+                                                pocinjeSa
+                                            </th>
+                                            <td>
+                                                Stringova.
+                                            </td>
+                                            <td>
+                                                Use this parameter to filter based on what economic classification number starts with.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Filteri
+                                            </th>
+                                            <td>
+                                                Filteri consists of multiple parameters, such as: <strong>ukupno, sopstveniPrihodi, prihodiBudzeta, donacije, ostali</strong>. User can filter based on every parameter's value range.
+                                            </td>
+                                            <td>
+                                                Pick a ranges for any economic parameter you want
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="sums-tryit">
 
                                 <div class="row">
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                         <form class="form-horizontal" id="sum-req-form">
                                             <div class="form-group">
                                                 {{ sum_req_form.data_type.label(class="control-label col-xs-2") }}
@@ -199,19 +231,90 @@
                                                     {{ sum_req_form.classifications(class="form-control") }}
                                                 </div>
                                             </div>
-                                        </form>
-                                        <div class="row col-md-offset-6">
+
+                                            <div class="col-xs-8">
+                                                <strong>Filteri:</strong>
+                                                <hr>
+                                                <div class="form-group">
+                                                    <div class="col-xs-2">
+                                                        {{ sum_req_form.ukupno() }}
+                                                        {{ sum_req_form.ukupno.label() }}
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        {{ sum_req_form.ukupno_gte(class="form-control", placeholder=">=", disabled="disabled") }}
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        {{ sum_req_form.ukupno_lte(class="form-control", placeholder="<=", disabled="disabled") }}
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        {{ sum_req_form.sopstveni_prihodi() }}
+                                                         {{ sum_req_form.sopstveni_prihodi.label() }}
+                                                    </div>
+                                                     <div class="col-xs-2">
+                                                        {{ sum_req_form.sopstveni_prihodi_gte(class="form-control", placeholder=">=", disabled="disabled") }}
+                                                    </div>
+                                                     <div class="col-xs-2">
+                                                        {{ sum_req_form.sopstveni_prihodi_lte(class="form-control", placeholder="<=", disabled="disabled") }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-xs-2">
+                                                        {{ sum_req_form.prihodi_budzeta() }}
+                                                        {{ sum_req_form.prihodi_budzeta.label() }}
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        {{ sum_req_form.prihodi_budzeta_gte(class="form-control", placeholder=">=", disabled="disabled") }}
+                                                    </div>
+                                                     <div class="col-xs-2">
+                                                        {{ sum_req_form.prihodi_budzeta_lte(class="form-control", placeholder="<=", disabled="disabled") }}
+                                                    </div>
+                                                     <div class="col-xs-2">
+                                                         {{ sum_req_form.donacije() }}
+                                                         {{ sum_req_form.donacije.label() }}
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        {{ sum_req_form.donacije_gte(class="form-control", placeholder=">=", disabled="disabled") }}
+                                                    </div>
+                                                     <div class="col-xs-2">
+                                                        {{ sum_req_form.donacije_lte(class="form-control", placeholder="<=", disabled="disabled") }}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-xs-2">
+                                                        {{ sum_req_form.ostali() }}
+                                                        {{ sum_req_form.ostali.label() }}
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        {{ sum_req_form.ostali_gte(class="form-control", placeholder=">=", disabled="disabled") }}
+                                                    </div>
+                                                     <div class="col-xs-2">
+                                                        {{ sum_req_form.ostali_lte(class="form-control", placeholder="<=", disabled="disabled") }}
+                                                    </div>
+
+                                                </div><hr>
+                                                <div class="form-group">
+                                                    <div class="row col-xs-6">
+                                                        {{ sum_req_form.pocinje_sa.label() }}
+                                                    </div>
+                                                    <div class="row col-xs-6">
+                                                        {{ sum_req_form.pocinje_sa(class="form-control") }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <strong>Request Body:</strong>
+                                                <pre style="height:325px;">
+                                                    <code class="language-javascript" id="sum-req-body-box"></code>
+                                                </pre>
+                                            </div>
+
+                                         </form>
+                                        <div class="col-xs-12 col-xs-offset-4">
                                             <button class="btn btn-primary" id="btn-post-sum-req">POST</button>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <strong>Request Body:</strong>
-                                        <pre style="height:270px;">
-                                            <code class="language-javascript" id="sum-req-body-box"></code>
-                                        </pre>
-                                    </div>
                                 </div>
-
                                 <div style="padding-top:20px;">
                                     <strong>Response:</strong>
                                     <pre style="height:250px;">
@@ -236,8 +339,11 @@
                     <div class="panel-body">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#activities-how" aria-controls="activities-how" role="tab" data-toggle="tab">Kako?</a></li>
-                            <li role="presentation"><a href="#activities-tryit" aria-controls="activities-tryit" role="tab" data-toggle="tab">Probaj!</a></li>
+                            <li role="presentation" class="active"><a href="#activities-how"
+                                                                      aria-controls="activities-how" role="tab"
+                                                                      data-toggle="tab">Kako?</a></li>
+                            <li role="presentation"><a href="#activities-tryit" aria-controls="activities-tryit"
+                                                       role="tab" data-toggle="tab">Probaj!</a></li>
                         </ul>
 
                         <!-- Tab panes -->
@@ -253,10 +359,11 @@
                                     <span>http://datacentar.io/api/ekonomska-klasifikacija</span>
                                 </div>
                                 <br>
+
                                 <div>
-                                <h5>PARAMETRI UPITA:</h5>
-                                <table class="table table-striped">
-                                    <thead>
+                                    <h5>PARAMETRI UPITA:</h5>
+                                    <table class="table table-striped">
+                                        <thead>
                                         <tr>
                                             <th>
                                                 Parameter
@@ -268,8 +375,8 @@
                                                 Opis
                                             </th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
+                                        </thead>
+                                        <tbody>
                                         <tr>
                                             <th>
                                                 tipPodataka
@@ -304,8 +411,8 @@
                                                 Opštine.
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="activities-tryit">
@@ -366,8 +473,11 @@
                     <div class="panel-body">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#municipalities-how" aria-controls="municipalities-how" role="tab" data-toggle="tab">Kako?</a></li>
-                            <li role="presentation"><a href="#municipalities-tryit" aria-controls="municipalities-tryit" role="tab" data-toggle="tab">Probaj!</a></li>
+                            <li role="presentation" class="active"><a href="#municipalities-how"
+                                                                      aria-controls="municipalities-how" role="tab"
+                                                                      data-toggle="tab">Kako?</a></li>
+                            <li role="presentation"><a href="#municipalities-tryit" aria-controls="municipalities-tryit"
+                                                       role="tab" data-toggle="tab">Probaj!</a></li>
                         </ul>
 
                         <!-- Tab panes -->
@@ -383,10 +493,11 @@
                                     <span>http://datacentar.io/api/sakupiti-klasifikacija-za-opstine</span>
                                 </div>
                                 <br>
+
                                 <div>
-                                <h5>PARAMETRI UPITA:</h5>
-                                <table class="table table-striped">
-                                    <thead>
+                                    <h5>PARAMETRI UPITA:</h5>
+                                    <table class="table table-striped">
+                                        <thead>
                                         <tr>
                                             <th>
                                                 Parameter
@@ -398,8 +509,8 @@
                                                 Opis
                                             </th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
+                                        </thead>
+                                        <tbody>
                                         <tr>
                                             <th>
                                                 tipPodataka
@@ -433,8 +544,8 @@
                                                 Ekonomskih klasifikacija.
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="municipalities-tryit">
@@ -461,7 +572,8 @@
                                             </div>
                                         </form>
                                         <div class="row col-md-offset-6">
-                                            <button class="btn btn-primary" id="btn-post-municipalities-req">POST</button>
+                                            <button class="btn btn-primary" id="btn-post-municipalities-req">POST
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -496,8 +608,10 @@
                     <div class="panel-body">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#list-mun-how" aria-controls="list-mun-how" role="tab" data-toggle="tab">Kako?</a></li>
-                            <li role="presentation"><a href="#list-mun-tryit" aria-controls="list-mun-tryit" role="tab" data-toggle="tab">Probaj!</a></li>
+                            <li role="presentation" class="active"><a href="#list-mun-how" aria-controls="list-mun-how"
+                                                                      role="tab" data-toggle="tab">Kako?</a></li>
+                            <li role="presentation"><a href="#list-mun-tryit" aria-controls="list-mun-tryit" role="tab"
+                                                       data-toggle="tab">Probaj!</a></li>
                         </ul>
 
                         <!-- Tab panes -->
@@ -513,10 +627,11 @@
                                     <span>http://datacentar.io/api/spisak-opstina-za-klasifikacija-broj</span>
                                 </div>
                                 <br>
+
                                 <div>
-                                <h5>PARAMETRI UPITA:</h5>
-                                <table class="table table-striped">
-                                    <thead>
+                                    <h5>PARAMETRI UPITA:</h5>
+                                    <table class="table table-striped">
+                                        <thead>
                                         <tr>
                                             <th>
                                                 Parameter
@@ -528,8 +643,8 @@
                                                 Opis
                                             </th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
+                                        </thead>
+                                        <tbody>
                                         <tr>
                                             <th>
                                                 tipPodataka
@@ -563,8 +678,8 @@
                                                 Ekonomskih klasifikacija.
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="list-mun-tryit">

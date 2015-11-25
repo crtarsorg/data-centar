@@ -15,35 +15,62 @@ class PrihodiDataFeed():
             }
         }
 
-        if "ranges" in query_params:
-            ### Let's set the values rage for ukupno ###
-            if "ukupno" in query_params["ranges"]:
-                match['$match']["ukupno"] = {
-                    "$gte": int(query_params["ranges"]["ukupno"]["greaterThanEqual"]),
-                    "$lte": int(query_params["ranges"]["ukupno"]["lesserThanEqual"])
-                }
+        ### Let's set the values rage for ukupno ###
+        if "ukupno" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['ukupno']:
+            if 'ukupno' not in match['$match']:
+                match['$match']["ukupno"] = {}
+            match['$match']["ukupno"]["$gte"] = query_params["filteri"]["ukupno"]["veceIliJednako"],
 
-            ### Let's set the values rage for sopstveniPrihodi ###
-            if "sopstveniPrihodi" in query_params["ranges"]:
-                match['$match']["sopstveniPrihodi"] = {
-                    "$gte": query_params["ranges"]["sopstveniPrihodi"]["greaterThanEqual"],
-                    "$lte": query_params["ranges"]["sopstveniPrihodi"]["lesserThanEqual"]
-                }
+        if "ukupno" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['ukupno']:
+            if 'ukupno' not in match['$match']:
+                match['$match']["ukupno"] = {}
+            match['$match']["ukupno"]["$lte"] = query_params["filteri"]["ukupno"]["manjeIliJednako"]
 
-            ### Let's set the values rage for prihodiBudzeta ###
-            if "prihodiBudzeta" in query_params["ranges"]:
-                match['$match']["prihodiBudzeta"] = {
-                    "$gte": query_params["ranges"]["prihodiBudzeta"]["greaterThanEqual"],
-                    "$lte": query_params["ranges"]["prihodiBudzeta"]["lesserThanEqual"]
-                }
+        ### Let's set the values rage for sopstveniPrihodi ###
+        if "sopstveniPrihodi" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['sopstveniPrihodi']:
+            if 'sopstveniPrihodi' not in match['$match']:
+                match['$match']["sopstveniPrihodi"] = {}
+            match['$match']["sopstveniPrihodi"]["$gte"] = query_params["filteri"]["sopstveniPrihodi"]["veceIliJednako"],
 
-            ### Let's set the values rage for ostali ###
-            if "ostali" in query_params["ranges"]:
-                match['$match']["ostali"] = {
-                    "$gte": query_params["ranges"]["ostali"]["greaterThanEqual"],
-                    "$lte": query_params["ranges"]["ostali"]["lesserThanEqual"]
-                }
+        if "sopstveniPrihodi" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['sopstveniPrihodi']:
+            if 'sopstveniPrihodi' not in match['$match']:
+                match['$match']["sopstveniPrihodi"] = {}
+            match['$match']["sopstveniPrihodi"]["$lte"] = query_params["filteri"]["sopstveniPrihodi"]["manjeIliJednako"]
 
+        ### Let's set the values rage for prihodiBudzeta ###
+        if "prihodiBudzeta" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['prihodiBudzeta']:
+            if 'prihodiBudzeta' not in match['$match']:
+                match['$match']["prihodiBudzeta"] = {}
+            match['$match']["prihodiBudzeta"]["$gte"] = query_params["filteri"]["prihodiBudzeta"]["veceIliJednako"],
+
+        if "prihodiBudzeta" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['prihodiBudzeta']:
+            if 'prihodiBudzeta' not in match['$match']:
+                match['$match']["prihodiBudzeta"] = {}
+            match['$match']["prihodiBudzeta"]["$lte"] = query_params["filteri"]["prihodiBudzeta"]["manjeIliJednako"]
+
+        ### Let's set the values rage for donacije ###
+        if "donacije" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['donacije']:
+            if 'donacije' not in match['$match']:
+                match['$match']["donacije"] = {}
+            match['$match']["donacije"]["$gte"] = query_params["filteri"]["donacije"]["veceIliJednako"],
+
+        if "donacije" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['donacije']:
+            if 'donacije' not in match['$match']:
+                match['$match']["donacije"] = {}
+            match['$match']["donacije"]["$lte"] = query_params["filteri"]["donacije"]["manjeIliJednako"]
+
+        ### Let's set the values rage for ostali ###
+        if "ostali" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['ostali']:
+            if 'ostali' not in match['$match']:
+                match['$match']["ostali"] = {}
+            match['$match']["ostali"]["$gte"] = query_params["filteri"]["ostali"]["veceIliJednako"],
+
+        if "ostali" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['ostali']:
+            if 'ostali' not in match['$match']:
+                match['$match']["ostali"] = {}
+            match['$match']["ostali"]["$lte"] = query_params["filteri"]["ostali"]["manjeIliJednako"]
+
+        # Add other filters
         if query_params['godine'] != []:
             match['$match']["godina"] = {'$in': query_params['godine']}
 
@@ -60,6 +87,7 @@ class PrihodiDataFeed():
                 },
                 "prihodiBudzeta": {"$sum": "$prihodiBudzeta"},
                 "sopstveniPrihodi": {"$sum": "$sopstveniPrihodi"},
+                "donacije": {"$sum": "$donacije"},
                 "ostali": {"$sum": "$ostali"},
                 "ukupno": {"$sum": "$ukupno"}
             }
@@ -74,6 +102,7 @@ class PrihodiDataFeed():
                 "tipPodataka": "$_id.tipPodataka",
                 "prihodiBudzeta": "$prihodiBudzeta",
                 "sopstveniPrihodi": "$sopstveniPrihodi",
+                "donacije": "$donacije",
                 "ostali": "$ostali",
                 "ukupno": "$ukupno",
             }
@@ -83,7 +112,7 @@ class PrihodiDataFeed():
 
             if query_params['klasifikacija']['broj'] != []:
 
-                if 'pocinjeSa' in query_params['klasifikacija']:
+                if 'pocinjeSa' in query_params['klasifikacija'] and query_params['klasifikacija']['pocinjeSa'] != '':
 
                     # Let's filter based on class options we picked and regex class number
                     match['$match']['$or'] = []
@@ -108,15 +137,17 @@ class PrihodiDataFeed():
                     match['$match']["klasifikacija.broj"] = {'$in': query_params['klasifikacija']['broj']}
 
             else:
-                pattern = re.compile("^%s" % query_params['klasifikacija']['pocinjeSa'])
-                regex = Regex.from_native(pattern)
-                regex.flags ^= re.UNICODE
-                # Build match pipeline
-                match['$match']["klasifikacija.broj"] = regex
+                if query_params['klasifikacija']['pocinjeSa'] != '':
+                    pattern = re.compile("^%s" % query_params['klasifikacija']['pocinjeSa'])
+                    regex = Regex.from_native(pattern)
+                    regex.flags ^= re.UNICODE
+                    # Build match pipeline
+                    match['$match']["klasifikacija.broj"] = regex
 
             # Add this to param to group and project stages
             group['$group']['_id']['klasifikacijaBroj'] = "$klasifikacija.broj"
             project['$project']['klasifikacijaBroj'] = '$_id.klasifikacijaBroj'
+
 
         elif "kategorijaRoditelj" in query_params:
             if query_params['kategorijaRoditelj'] != []:

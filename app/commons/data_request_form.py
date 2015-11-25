@@ -1,5 +1,5 @@
 # coding=utf-8
-from wtforms import Form, SelectField, SelectMultipleField
+from wtforms import Form, SelectField, SelectMultipleField, BooleanField, TextField
 
 class DataRequestForm(Form):
 
@@ -18,6 +18,25 @@ class DataRequestForm(Form):
             ('rashodi', 'Rashodi'),
             ('prihodi', 'Prihodi')
         ])
+
+    ukupno_gte = TextField('Ukupno')
+    ukupno_lte = TextField('Ukupno')
+    sopstveni_prihodi_gte = TextField('Sopstveni Prihodi')
+    sopstveni_prihodi_lte = TextField('Sopstveni Prihodi')
+    prihodi_budzeta_gte = TextField('Prihodi Budzeta')
+    prihodi_budzeta_lte = TextField('Prihodi Budzeta')
+    donacije_gte = TextField('Donacije')
+    donacije_lte = TextField('Donacije')
+    ostali_gte = TextField('Ostali')
+    ostali_lte = TextField('Ostali')
+
+    ukupno = BooleanField('Ukupno')
+    sopstveni_prihodi = BooleanField('Sopstveni Prihodi')
+    prihodi_budzeta = BooleanField('Prihodi Budzeta')
+    donacije = BooleanField('Donacije')
+    ostali = BooleanField('Ostali')
+    pocinje_sa = TextField("Klasifikacija broj pocinje sa:")
+
 
     years = SelectField(u'Godine',
         choices=[

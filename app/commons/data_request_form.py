@@ -1,5 +1,5 @@
 # coding=utf-8
-from wtforms import Form, SelectField, SelectMultipleField, BooleanField, TextField
+from wtforms import Form, SelectField, SelectMultipleField, BooleanField, TextField, IntegerField
 
 class DataRequestForm(Form):
 
@@ -19,16 +19,16 @@ class DataRequestForm(Form):
             ('prihodi', 'Prihodi')
         ])
 
-    ukupno_gte = TextField('Ukupno')
-    ukupno_lte = TextField('Ukupno')
-    sopstveni_prihodi_gte = TextField('Sopstveni Prihodi')
-    sopstveni_prihodi_lte = TextField('Sopstveni Prihodi')
-    prihodi_budzeta_gte = TextField('Prihodi Budzeta')
-    prihodi_budzeta_lte = TextField('Prihodi Budzeta')
-    donacije_gte = TextField('Donacije')
-    donacije_lte = TextField('Donacije')
-    ostali_gte = TextField('Ostali')
-    ostali_lte = TextField('Ostali')
+    ukupno_gte = IntegerField('Ukupno')
+    ukupno_lte = IntegerField('Ukupno')
+    sopstveni_prihodi_gte = IntegerField('Sopstveni Prihodi')
+    sopstveni_prihodi_lte = IntegerField('Sopstveni Prihodi')
+    prihodi_budzeta_gte = IntegerField('Prihodi Budzeta')
+    prihodi_budzeta_lte = IntegerField('Prihodi Budzeta')
+    donacije_gte = IntegerField('Donacije')
+    donacije_lte = IntegerField('Donacije')
+    ostali_gte = IntegerField('Ostali')
+    ostali_lte = IntegerField('Ostali')
 
     ukupno = BooleanField('Ukupno')
     sopstveni_prihodi = BooleanField('Sopstveni Prihodi')

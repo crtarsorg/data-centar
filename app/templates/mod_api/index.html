@@ -284,60 +284,74 @@
                                                 <strong>Filteri:</strong>
                                                 <hr>
                                                 <div class="form-group">
-                                                    <div class="col-xs-2">
+                                                    <div class="col-xs-1">
                                                         {{ sum_req_form.ukupno() }}
-                                                        {{ sum_req_form.ukupno.label() }}
                                                     </div>
-                                                    <div class="col-xs-2">
-                                                        {{ sum_req_form.ukupno_gte(class="form-control", placeholder=">=", disabled="disabled") }}
+                                                    <div class="col-xs-4">
+                                                        {{ sum_req_form.ukupno.label(class="pull-left") }}
                                                     </div>
-                                                    <div class="col-xs-2">
-                                                        {{ sum_req_form.ukupno_lte(class="form-control", placeholder="<=", disabled="disabled") }}
+                                                    <div class="col-xs-3">
+                                                        {{ sum_req_form.ukupno_gte(type="number", class="form-control", placeholder=">=", disabled="disabled") }}
                                                     </div>
-                                                    <div class="col-xs-2">
+                                                    <div class="col-xs-3">
+                                                        {{ sum_req_form.ukupno_lte(type="number", class="form-control", placeholder="<=", disabled="disabled") }}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-xs-1">
                                                         {{ sum_req_form.sopstveni_prihodi() }}
-                                                         {{ sum_req_form.sopstveni_prihodi.label() }}
                                                     </div>
-                                                     <div class="col-xs-2">
-                                                        {{ sum_req_form.sopstveni_prihodi_gte(class="form-control", placeholder=">=", disabled="disabled") }}
+                                                    <div class="col-xs-4">
+                                                        {{ sum_req_form.sopstveni_prihodi.label(class="pull-left") }}
                                                     </div>
-                                                     <div class="col-xs-2">
-                                                        {{ sum_req_form.sopstveni_prihodi_lte(class="form-control", placeholder="<=", disabled="disabled") }}
+                                                     <div class="col-xs-3">
+                                                        {{ sum_req_form.sopstveni_prihodi_gte(type="number", class="form-control", placeholder=">=", disabled="disabled") }}
+                                                    </div>
+                                                     <div class="col-xs-3">
+                                                        {{ sum_req_form.sopstveni_prihodi_lte(type="number", class="form-control", placeholder="<=", disabled="disabled") }}
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <div class="col-xs-2">
+                                                    <div class="col-xs-1">
                                                         {{ sum_req_form.prihodi_budzeta() }}
+                                                    </div>
+                                                     <div class="col-xs-4">
                                                         {{ sum_req_form.prihodi_budzeta.label() }}
                                                     </div>
-                                                    <div class="col-xs-2">
-                                                        {{ sum_req_form.prihodi_budzeta_gte(class="form-control", placeholder=">=", disabled="disabled") }}
+                                                    <div class="col-xs-3">
+                                                        {{ sum_req_form.prihodi_budzeta_gte(type="number", class="form-control", placeholder=">=", disabled="disabled") }}
                                                     </div>
-                                                     <div class="col-xs-2">
-                                                        {{ sum_req_form.prihodi_budzeta_lte(class="form-control", placeholder="<=", disabled="disabled") }}
-                                                    </div>
-                                                     <div class="col-xs-2">
-                                                         {{ sum_req_form.donacije() }}
-                                                         {{ sum_req_form.donacije.label() }}
-                                                    </div>
-                                                    <div class="col-xs-2">
-                                                        {{ sum_req_form.donacije_gte(class="form-control", placeholder=">=", disabled="disabled") }}
-                                                    </div>
-                                                     <div class="col-xs-2">
-                                                        {{ sum_req_form.donacije_lte(class="form-control", placeholder="<=", disabled="disabled") }}
+                                                     <div class="col-xs-3">
+                                                        {{ sum_req_form.prihodi_budzeta_lte(type="number", class="form-control", placeholder="<=", disabled="disabled") }}
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="col-xs-2">
+                                                     <div class="col-xs-1">
+                                                         {{ sum_req_form.donacije() }}
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                        {{ sum_req_form.donacije.label() }}
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        {{ sum_req_form.donacije_gte(type="number", class="form-control", placeholder=">=", disabled="disabled") }}
+                                                    </div>
+                                                     <div class="col-xs-3">
+                                                        {{ sum_req_form.donacije_lte(type="number", class="form-control", placeholder="<=", disabled="disabled") }}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-xs-1">
                                                         {{ sum_req_form.ostali() }}
+                                                    </div>
+                                                    <div class="col-xs-4">
                                                         {{ sum_req_form.ostali.label() }}
                                                     </div>
-                                                    <div class="col-xs-2">
-                                                        {{ sum_req_form.ostali_gte(class="form-control", placeholder=">=", disabled="disabled") }}
+                                                    <div class="col-xs-3">
+                                                        {{ sum_req_form.ostali_gte(type="number", class="form-control", placeholder=">=", disabled="disabled") }}
                                                     </div>
-                                                     <div class="col-xs-2">
-                                                        {{ sum_req_form.ostali_lte(class="form-control", placeholder="<=", disabled="disabled") }}
+                                                     <div class="col-xs-3">
+                                                        {{ sum_req_form.ostali_lte(type="number", class="form-control", placeholder="<=", disabled="disabled") }}
                                                     </div>
 
                                                 </div><hr>
@@ -352,7 +366,7 @@
                                             </div>
                                             <div class="col-xs-4">
                                                 <strong>Request Body:</strong>
-                                                <pre style="height:325px;">
+                                                <pre style="height:340px;">
                                                     <code class="language-javascript" id="sum-req-body-box"></code>
                                                 </pre>
                                             </div>

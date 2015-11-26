@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="06173ca0-eafc-47f4-adbd-764203e519bd" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/mod_api/index.html" afterPath="$PROJECT_DIR$/app/templates/mod_api/index.html" />
     </list>
     <ignored path="data-centar.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -16,7 +17,7 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/data-centar$data_centar.coverage" NAME="data-centar Coverage Results" MODIFIED="1448531176132" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/data-centar$data_centar.coverage" NAME="data-centar Coverage Results" MODIFIED="1448535048628" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -64,8 +65,8 @@
       <file leaf-file-name="data_request_form.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/commons/data_request_form.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="44" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
+            <state vertical-scroll-proportion="-8.181818">
+              <caret line="30" column="29" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -98,9 +99,25 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/templates/mod_api/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5595855">
-              <caret line="234" column="71" selection-start-line="234" selection-start-column="71" selection-end-line="234" selection-end-column="71" />
-              <folding />
+            <state vertical-scroll-proportion="0.4818653">
+              <caret line="286" column="74" selection-start-line="286" selection-start-column="74" selection-end-line="286" selection-end-column="74" />
+              <folding>
+                <element signature="e#20737#20758#0#HTML" expanded="true" />
+                <element signature="e#21390#21415#0#HTML" expanded="true" />
+                <element signature="e#21521#21542#0#HTML" expanded="true" />
+                <element signature="e#21946#21970#0#HTML" expanded="true" />
+                <element signature="e#28813#28834#0#HTML" expanded="true" />
+                <element signature="e#29117#29142#0#HTML" expanded="true" />
+                <element signature="e#29248#29269#0#HTML" expanded="true" />
+                <element signature="e#29684#29708#0#HTML" expanded="true" />
+                <element signature="e#36613#36634#0#HTML" expanded="true" />
+                <element signature="e#36921#36946#0#HTML" expanded="true" />
+                <element signature="e#37052#37073#0#HTML" expanded="true" />
+                <element signature="e#37487#37511#0#HTML" expanded="true" />
+                <element signature="e#44252#44273#0#HTML" expanded="true" />
+                <element signature="e#44554#44579#0#HTML" expanded="true" />
+                <element signature="e#44685#44706#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -596,7 +613,13 @@
       <option name="project" value="LOCAL" />
       <updated>1448533036802</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="API: Documentation: One table row for each filteri parameter.">
+      <created>1448533045092</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1448533045092</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -709,14 +732,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/commons/data_request_form.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="44" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/mod_api/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -724,14 +739,6 @@
           <folding>
             <element signature="e#0#63#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/data_manager/rashodi_data_feeder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="155" column="59" selection-start-line="155" selection-start-column="59" selection-end-line="155" selection-end-column="59" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -745,11 +752,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/data_manager/rashodi_data_feeder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="155" column="59" selection-start-line="155" selection-start-column="59" selection-end-line="155" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/commons/data_request_form.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.181818">
+          <caret line="30" column="29" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/mod_api/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5595855">
-          <caret line="234" column="71" selection-start-line="234" selection-start-column="71" selection-end-line="234" selection-end-column="71" />
-          <folding />
+        <state vertical-scroll-proportion="0.4818653">
+          <caret line="286" column="74" selection-start-line="286" selection-start-column="74" selection-end-line="286" selection-end-column="74" />
+          <folding>
+            <element signature="e#20737#20758#0#HTML" expanded="true" />
+            <element signature="e#21390#21415#0#HTML" expanded="true" />
+            <element signature="e#21521#21542#0#HTML" expanded="true" />
+            <element signature="e#21946#21970#0#HTML" expanded="true" />
+            <element signature="e#28813#28834#0#HTML" expanded="true" />
+            <element signature="e#29117#29142#0#HTML" expanded="true" />
+            <element signature="e#29248#29269#0#HTML" expanded="true" />
+            <element signature="e#29684#29708#0#HTML" expanded="true" />
+            <element signature="e#36613#36634#0#HTML" expanded="true" />
+            <element signature="e#36921#36946#0#HTML" expanded="true" />
+            <element signature="e#37052#37073#0#HTML" expanded="true" />
+            <element signature="e#37487#37511#0#HTML" expanded="true" />
+            <element signature="e#44252#44273#0#HTML" expanded="true" />
+            <element signature="e#44554#44579#0#HTML" expanded="true" />
+            <element signature="e#44685#44706#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

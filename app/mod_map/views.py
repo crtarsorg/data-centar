@@ -6,5 +6,5 @@ mod_map = Blueprint('map', __name__, url_prefix='/mapa')
 @mod_map.route('/', methods=['GET'])
 def index():
     form = DataRequestForm()
-    return render_template('mod_map/index.html', form=form);
+    return render_template('mod_map/index.html', form=form)
 

@@ -20,7 +20,43 @@
 
             initFiltersDisplay();
 
+            $("#data_type").change(function(){
+
+            });
+            var prihodiJson = null;
+            var rashodiJson = null;
+            var prihodiParam = false;
+            var rashodiParam = false;
+
+            if(prihodiParam == false){
+                prihodiJson = $.getJSON('{{ url_for('api.activities') }}', {'dataType': "prihodi"});
+                prihodiParam = true;
+
+            }
+            if(rashodiParam == false){
+                rashodiJson = $.getJSON('{{ url_for('api.activities') }}', {'dataType': "rashodi"});
+                rashodiParam = true;
+            }
+
+            $('#data_type').change(function(){
+
+                $("#classifications option").remove();
+
+                if ($('#data_type').val() == "prihodi"){
+                    $.each(prihodiJson['responseJSON'], function () {
+                        $("#classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+                    });
+                }
+
+                if ($('#data_type').val() == "rashodi"){
+                    $.each(rashodiJson['responseJSON'], function () {
+                        $("#classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+                    });
+                }
+
+            });
         });
+
 
         function postSumRequest() {
 
@@ -279,7 +315,6 @@
                                                     {{ sum_req_form.classifications(class="form-control") }}
                                                 </div>
                                             </div>
-
                                             <div class="col-xs-8">
                                                 <strong>Filteri:</strong>
                                                 <hr>
@@ -311,7 +346,6 @@
                                                         {{ sum_req_form.sopstveni_prihodi_lte(type="number", class="form-control", placeholder="<=", disabled="disabled") }}
                                                     </div>
                                                 </div>
-
                                                 <div class="form-group">
                                                     <div class="col-xs-1">
                                                         {{ sum_req_form.prihodi_budzeta() }}
@@ -353,7 +387,6 @@
                                                      <div class="col-xs-3">
                                                         {{ sum_req_form.ostali_lte(type="number", class="form-control", placeholder="<=", disabled="disabled") }}
                                                     </div>
-
                                                 </div><hr>
                                                 <div class="form-group">
                                                     <div class="row col-xs-6">

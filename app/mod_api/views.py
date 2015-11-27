@@ -51,6 +51,7 @@ def aggregated_classifications():
 
 @mod_api.route('/spisak-opstina-za-klasifikacija-broj', methods=['POST']) # List of municipalities for given class. number
 def list_of_municipalities():
+
     query_params = json.loads(request.data)
 
     if query_params['tipPodataka'] == 'rashodi':

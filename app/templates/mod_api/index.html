@@ -51,6 +51,7 @@
                 if ($('#data_type').val() == "rashodi"){
                     $.each(rashodiJson['responseJSON'], function () {
                         $("#classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+
                     });
                 }
 

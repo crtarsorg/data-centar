@@ -52,10 +52,9 @@ function get_request_form_data(parentDivId) {
         if ($('#prihodi_budzeta_gte').val() != ""){
             data.filteri.prihodiBudzeta.veceIliJednako = parseInt($('#prihodi_budzeta_gte').val());
         }
-        if ($('#prihodi_budzeta_lte').val() != ""){
+        if($('#prihodi_budzeta_lte').val() != ""){
             data.filteri.prihodiBudzeta.manjeIliJednako = parseInt($('#prihodi_budzeta_lte').val());
         }
-
     }
 
     if ($('#donacije').is(":checked")){
@@ -72,10 +71,10 @@ function get_request_form_data(parentDivId) {
     if ($('#ostali').is(":checked")){
         data.filteri.ostali = {};
         if ($('#ostali_gte').val() != ""){
-            data.filteri.ostali.veceIliJednako = $('#ostali_gte').val();
+            data.filteri.ostali.veceIliJednako =  parseInt($('#ostali_gte').val());
         }
         if ($('#ostali_lte').val() != ""){
-            data.filteri.ostali.manjeIliJednako = $('#ostali_lte').val();
+            data.filteri.ostali.manjeIliJednako =  parseInt($('#ostali_lte').val());
         }
 
     }

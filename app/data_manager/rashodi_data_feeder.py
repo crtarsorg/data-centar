@@ -15,6 +15,10 @@ class RashodiDataFeed():
             }
         }
 
+        for item in query_params['klasifikacija']['broj']:
+            query_params['klasifikacija']['broj'].remove(item)
+            query_params['klasifikacija']['broj'].append(str(item))
+
         ### Let's set the values rage for ukupno ###
         if "ukupno" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['ukupno']:
             if 'ukupno' not in match['$match']:

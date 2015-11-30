@@ -1,42 +1,5 @@
 {% extends "layout.html" %} 
 {% block body %}
-<style>
-/* .intro {
-    background: url({{ url_for('static', filename='img/intro-bg-%s.jpg'%bg_id)}}) no-repeat bottom center scroll;
-} */
-
-section{ height: 100vh; }
-.intro{padding-top:100px;}
-
-.btn-white-border,.btn-white-border:hover,.btn-white-border:active{    
-    border-color: white;
-    border-radius: 10px;
-}
-#searchWithParams{
-    font-size: 18px;
-}    
-/* http://embedresponsively.com/ */
-.embed-container {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-    max-width: 80%;        
-    margin: auto;
-}
-
-.embed-container iframe,
-.embed-container object,
-.embed-container embed {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-
-</style>
 
 
 <script>
@@ -96,15 +59,20 @@ $(function () {
 </script>
 
 <!-- Intro Header; Welcome section -->
-<header class="intro">
+<header class="intro section-height">
     <div class="intro-body">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <h3>Welcome section</h3>
+        <div>
+          <div class="row height-110 white-content primary-color">
+           <div class="col-md-8 col-md-offset-2 height-110">
+            <h3 class="text-center">Welcome</h3>
                      <p class="text-center lead">
                         See this astonishing site. Look at those fabulous data. <em>bibendum diam velit et dui.</em>
                     </p>
+                    </div>
+          </div>
+            <div class="row overlay-video">
+                <div class="col-md-6 col-md-offset-3 negative-margin-5">
+                    
                     
                     <div class='embed-container'>
                         <div id="ytplayerLanding"></div>
@@ -115,13 +83,13 @@ $(function () {
                         <div class="col-md-6 margin-10">
 
                         <a href="./api">   
-                            <button type="button" class="btn btn-block btn-lg  btn-link btn-white-border " >
+                            <button type="button" class="btn btn-block btn-lg  btn-link btn-white-border primary-color white-content " >
                                 Just take me to search
                             </button>
                         </a>
                         </div>
                         <div class="col-md-6 margin-10">
-                            <button id="anotherFavQuery" type="button" class="btn btn-block btn-lg btn-link btn-white-border">
+                            <button id="anotherFavQuery" type="button" class="btn btn-block btn-lg btn-link btn-white-border primary-color white-content">
                                 Meh, what else you got?
                             </button>
                         </div>
@@ -133,11 +101,11 @@ $(function () {
 </header>
 
 <!-- What's avalible Section -->
-<section id="avalibleS" class="container content-section text-center">
+<section id="avalibleS" class="section-height secondary-color content-section text-center white-content">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
             <h2>What's avalible Section</h2>
-            
+            <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=800%C3%97400&w=800&h=400" alt="">
         </div>
     </div>
 </section>

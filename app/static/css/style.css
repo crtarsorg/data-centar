@@ -1,3 +1,13 @@
+/*==================================
+=            Whole page            =
+==================================*/
+
+body{font-size: 16px;}
+
+/*=====  End of Whole page  ======*/
+
+
+
 /*====================================
 =            Landing page            =
 ====================================*/
@@ -6,12 +16,14 @@
 /* .intro {
     background: url({{ url_for('static', filename='img/intro-bg-%s.jpg'%bg_id)}}) no-repeat bottom center scroll;
 } */
+nav{height: 70px;padding: 10px;}
+
 .padding-10{padding: 10px 0;}
 .section-height{ min-height: 100vh; }
-.intro{padding-top:100px;}
+.intro{padding-top: 70px;}
 
 .btn-white-border,.btn-white-border:hover,.btn-white-border:active{
-    background-color: #008F9B; /* prim-col */
+    background-color: #0794A0; /* prim-col */
     border-color: white;
     border-radius: 10px;
 }
@@ -26,6 +38,7 @@
     overflow: hidden;
     /* max-width: 80%; */
     margin: auto;
+    border: 3px solid #7DC1D1;
 }
 
 .embed-container iframe,
@@ -43,14 +56,14 @@
 }
 
 .primary-color{
-    background-color: #008F9B;
+    background-color: #0794A0;/* #008F9B; */
 }
 .secondary-color{
-    background-color: #7EC2D1;
+    background-color: #7DC1D1;/* #7EC2D1; */
 }
 
 .primary-content-color{
-	color: #008F9B;
+	color: #0794A0;
 }
 .white-content{
 	color: white;
@@ -65,7 +78,7 @@
     height: 270px;
 }
 .negative-margin-5{
-	margin-top: -5%;
+	margin-top: -3%;
 }
 
 select.primary-content-color{
@@ -73,7 +86,7 @@ select.primary-content-color{
 	-moz-appearance:none ;
 	appearance:none ;
 
-	background-color: #008F9B;
+	background-color: #0794A0;
 
 }
 
@@ -90,3 +103,17 @@ select.primary-content-color{
     align-items: center;
 }
 /*=====  End of Landing page  ======*/
+
+/*==================================
+=            about page            =
+==================================*/
+
+.margin-top-10vh{
+	margin-top: 15vh;
+}
+
+.funder-img{
+	border-radius: 10px;
+	border: 2px solid #0794A0;
+}
+/*=====  End of about page  ======*/

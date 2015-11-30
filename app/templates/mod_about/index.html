@@ -1,7 +1,7 @@
 {% extends "layout.html" %} 
 {% block body %}
 <style>
-.intro{padding-top:100px;}
+/* 
 .embed-container {
     position: relative;
     padding-bottom: 56.25%;
@@ -22,172 +22,173 @@
 }
 .padding-10{ padding:10px;}
 .explore-icon{width: 180px;}
+ */
 
-#descHowToUse{
-	columns: 2;
-  -webkit-columns: 2;
-  -moz-columns: 2;
-}
-li{
-	max-width: 80%;
+#descHowToUse {
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
 }
 
-#timelineImg{ 
-	max-width: 100%;
-	min-height: 50%;
+li {
+    max-width: 80%;
 }
-#fundersList{
-	columns: 4;
-  -webkit-columns: 4;
-  -moz-columns: 4;
+
+#timelineImg {
+    max-width: 100%;
+    min-height: 50%;
 }
-.funder-img{ width: 150px;}
+
+#fundersList {
+    columns: 4;
+    -webkit-columns: 4;
+    -moz-columns: 4;
+}
+
+.funder-img {
+    width: 150px;
+}
 </style>
 <script>
-  
 //https://developers.google.com/youtube/player_parameters?hl=en
-    
-  var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/player_api";
 
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/player_api";
 
-  var player;
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-  function onYouTubePlayerAPIReady() {
+var player;
+
+function onYouTubePlayerAPIReady() {
     player = new YT.Player('ytPlayerAbout', {
-     /* height: '390',
-      width: '640',*/
-      videoId: 'XZmGGAbHqa0',
-      playerVars: { 
-         'showinfo': 0,
-         /*'controls': 1,*/
-         'autohide':1
+        /* height: '390',
+         width: '640',*/
+        videoId: 'XZmGGAbHqa0',
+        playerVars: {
+            'showinfo': 0,
+            /*'controls': 1,*/
+            'autohide': 1
         }
-      
+
     });
-  }
+}
 
-  $(function(){
-  	$(".explore-icon").hover(function(){
-  		//if active, don't change
-  		//change ul content
-  		var random = function() {return Math.floor(Math.random() * 10);} 
+$(function() {
+    $(".explore-icon").hover(function() {
+        //if active, don't change
+        //change ul content
+        var random = function() {
+            return Math.floor(Math.random() * 10);
+        }
 
 
-  		$("#descHowToUse").html("");
-  		$("#descHowToUse").append($("<li>").append("<p>Some Text." + random() + "</p>"));
-  		$("#descHowToUse").append($("<li>").append("<p>Some Text." + random() + "</p>"));
-  		$("#descHowToUse").append($("<li>").append("<p>Some Text." + random() + "</p>"));
-  		$("#descHowToUse").append($("<li>").append("<p>Some Text." + random() + "</p>"));
-  	})	
-  })
-  </script>
-
-<header class="intro">
+        $("#descHowToUse").html("");
+        $("#descHowToUse").append($("<li>").append("<p>Some Text.<br/>Nesto nesto" + random() + "</p>"));
+        $("#descHowToUse").append($("<li>").append("<p>Some Text.<br/>Nesto nesto" + random() + "</p>"));
+        $("#descHowToUse").append($("<li>").append("<p>Some Text.<br/>Nesto nesto" + random() + "</p>"));
+        $("#descHowToUse").append($("<li>").append("<p>Some Text.<br/>Nesto nesto" + random() + "</p>"));
+    })
+})
+</script>
+<header class="intro section-height">
     <div class="intro-body">
-        <div class="container">
-            <div class="row">
+        <div class="" >
+            <div class=" white-content primary-color height-110 ">
                 <div class="col-md-8 col-md-offset-2">
-                    <h3>About</h3>
+                    <h3 class="text-center">About</h3>
                     <p class="text-center lead">
-                        Chia tousled listicle irony meggings kickstarter jean shorts. Tattooed bicycle rights sustainable, street art master cleanse aesthetic VHS single-origin coffee asymmetrical polaroid hammock</em>
+                        Chia tousled listicle irony meggings kickstarter jean shorts. Tattooed bicycle rights sustainable, street art master cleanse aesthetic VHS single-origin coffee asymmetrical polaroid hammock
                     </p>
+                </div>
+            </div>
+            <div class="row overlay-video">
+                <div class="col-md-6 col-md-offset-3 negative-margin-5">
                     <div class="embed-container">
-                    	<div id="ytPlayerAbout"></div>
+                        <div id="ytPlayerAbout"></div>
                     </div>
-                    
-
-                    <img src="" alt="">
                 </div>
             </div>
         </div>
     </div>
 </header>
-
 <!-- Ways to Use the Site Section -->
-<section id="howToUseS" class="container content-section text-center">
+<section id="howToUseS" class="container-fluid section-height content-section text-center secondary-color white-content ">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
             <h2>Ways to Use the Site Section</h2>
             <div class="row text-center ">
-            	<div class="col-md-3 col-xs-6 padding-10">
-            		<img class="explore-icon" src="http://placehold.it/200x200" alt=""></div>
-            	<div class="col-md-3 col-xs-6 padding-10">
-            		<img class="explore-icon" src="http://placehold.it/200x200" alt=""></div>
-            	<div class="col-md-3 col-xs-6 padding-10">
-            		<img class="explore-icon" src="http://placehold.it/200x200" alt=""></div>
-            	<div class="col-md-3 col-xs-6 padding-10">
-            		<img class="explore-icon" src="http://placehold.it/200x200" alt=""></div>
+                <div class="col-md-3 col-xs-6 padding-10">
+                    <img class="explore-icon" src="http://placehold.it/200x200" alt=""></div>
+                <div class="col-md-3 col-xs-6 padding-10">
+                    <img class="explore-icon" src="http://placehold.it/200x200" alt=""></div>
+                <div class="col-md-3 col-xs-6 padding-10">
+                    <img class="explore-icon" src="http://placehold.it/200x200" alt=""></div>
+                <div class="col-md-3 col-xs-6 padding-10">
+                    <img class="explore-icon" src="http://placehold.it/200x200" alt=""></div>
             </div>
             <div class="row">
-            	<ul id="descHowToUse">
-            		<li>
-            			<p><b>Description</b> nausgaard small batch hammock umami first</p>
-        			</li>
-            		<li>
-            			<p><b>Description</b> nausgaard small batch hammock umami second</p>
-        			</li>
-            		<li>
-            			<p><b>Description</b> nausgaard small batch hammock umami third</p>
-        			</li>
-            		<li>
-            			<p><b>Description</b> nausgaard small batch hammock umami fourth</p>
-        			</li>
-            	</ul>
+                <ul id="descHowToUse">
+                    <li>
+                        <p><b>Description</b> nausgaard small batch hammock umami first</p>
+                    </li>
+                    <li>
+                        <p><b>Description</b> nausgaard small batch hammock umami second</p>
+                    </li>
+                    <li>
+                        <p><b>Description</b> nausgaard small batch hammock umami third</p>
+                    </li>
+                    <li>
+                        <p><b>Description</b> nausgaard small batch hammock umami fourth</p>
+                    </li>
+                </ul>
             </div>
-
         </div>
     </div>
 </section>
-
 <!-- Timeline Section -->
-<section id="timelineS" class="container content-section text-center">
+<section id="timelineS" class="container-fluid  section-height content-section text-center primary-content-color">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
             <h2>Timeline</h2>
             <img id="timelineImg" src="https://www.trust-i.net/images/timeline.png" alt="">
-			
-			
-            <p>The Future Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo facilis molestias, repudiandae omnis! Voluptate minima minus atque asperiores sint harum omnis molestiae pariatur animi, corporis quam alias, fuga consectetur culpa?</p>
+              
+            <p class="margin-top-10vh">The Future Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo facilis molestias, repudiandae omnis! Voluptate minima minus atque asperiores sint harum omnis molestiae pariatur animi, corporis quam alias, fuga consectetur culpa?</p>
         </div>
     </div>
 </section>
-
 <!-- Funders Section -->
-<section id="fundersS" class="container content-section text-center">
+<section id="fundersS" class="container-fluid content-section text-center primary-content-color">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
             <h2>Funders Section</h2>
-           	<div class="row text-center">
-           		<div class="col-md-3 col-xs-6 padding-10">
-           			<img src="http://placehold.it/200x100" alt="" class="funder-img">
-       			</div>
-           		<div class="col-md-3 col-xs-6 padding-10">
-           			<img src="http://placehold.it/200x100" alt="" class="funder-img">
-       			</div>
-           		<div class="col-md-3 col-xs-6 padding-10">
-           			<img src="http://placehold.it/200x100" alt="" class="funder-img">
-       			</div>
-           		<div class="col-md-3 col-xs-6 padding-10">
-           			<img src="http://placehold.it/200x100" alt="" class="funder-img">
-       			</div>
-           		<div class="col-md-3 col-xs-6 padding-10">
-           			<img src="http://placehold.it/200x100" alt="" class="funder-img">
-       			</div>
-           		<div class="col-md-3 col-xs-6 padding-10">
-           			<img src="http://placehold.it/200x100" alt="" class="funder-img">
-       			</div>
-           		<div class="col-md-3 col-xs-6 padding-10">
-           			<img src="http://placehold.it/200x100" alt="" class="funder-img">
-       			</div>
-           		<div class="col-md-3 col-xs-6 padding-10">
-           			<img src="http://placehold.it/200x100" alt="" class="funder-img">
-       			</div>
-           	</div>
+            <div class="row text-center">
+                <div class="col-md-3 col-xs-6 padding-10 funder-img-frame">
+                    <img src="http://placehold.it/150x130" alt="" class="funder-img">
+                </div>
+                <div class="col-md-3 col-xs-6 padding-10 funder-img-frame">
+                    <img src="http://placehold.it/150x130" alt="" class="funder-img">
+                </div>
+                <div class="col-md-3 col-xs-6 padding-10 funder-img-frame">
+                    <img src="http://placehold.it/150x130" alt="" class="funder-img">
+                </div>
+                <div class="col-md-3 col-xs-6 padding-10 funder-img-frame">
+                    <img src="http://placehold.it/150x130" alt="" class="funder-img">
+                </div>
+                <div class="col-md-3 col-xs-6 padding-10 funder-img-frame">
+                    <img src="http://placehold.it/150x130" alt="" class="funder-img">
+                </div>
+                <div class="col-md-3 col-xs-6 padding-10 funder-img-frame">
+                    <img src="http://placehold.it/150x130" alt="" class="funder-img">
+                </div>
+                <div class="col-md-3 col-xs-6 padding-10 funder-img-frame">
+                    <img src="http://placehold.it/150x130" alt="" class="funder-img">
+                </div>
+                <div class="col-md-3 col-xs-6 padding-10 funder-img-frame">
+                    <img src="http://placehold.it/150x130" alt="" class="funder-img">
+                </div>
+            </div>
         </div>
     </div>
 </section>
-
 {% endblock %}

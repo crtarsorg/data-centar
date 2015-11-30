@@ -62,7 +62,7 @@
         }
         .margin-10{  margin: 10px 0;}
         #logoSvg{
-            height: 60px; 
+            height: 50px; 
             margin-top: -20px;
 
         }
@@ -82,7 +82,7 @@
                 </button>
                 <a class="navbar-brand page-scroll" href="{{ url_for('landing_page.index') }}">
                     
-                    <img src="{{ url_for('static', filename='img/logo-vector-fit.svg') }}" alt="" id="logoSvg">
+                    <img class="img-responsive" src="{{ url_for('static', filename='img/logo-vector-fit.svg') }}" alt="Datacentar logo" id="logoSvg">
                     
                     <!-- <object id="logoSvg" type="image/svg+xml" data="{{ url_for('static', filename='img/logo-vector-fit.svg') }}" class="logo" >
                       DataCentar Logo 

@@ -3,6 +3,7 @@
 ==================================*/
 
 body{font-size: 16px;}
+.margin-auto{margin:auto;}
 
 /*=====  End of Whole page  ======*/
 
@@ -20,7 +21,9 @@ nav{height: 70px;padding: 10px;}
 
 .padding-10{padding: 10px 0;}
 .section-height{ min-height: 100vh; }
-.intro{padding-top: 70px;}
+.intro{padding-top: 70px;margin-bottom: 70px;height: 120vh;}
+
+header.container-fluid.section-height.intro.section-height {}
 
 .btn-white-border,.btn-white-border:hover,.btn-white-border:active{
     background-color: #0794A0; /* prim-col */
@@ -36,7 +39,7 @@ nav{height: 70px;padding: 10px;}
     padding-bottom: 56.25%;
     height: 0;
     overflow: hidden;
-    /* max-width: 80%; */
+    max-width: 100%;
     margin: auto;
     border: 3px solid #7DC1D1;
 }
@@ -130,3 +133,14 @@ select.primary-content-color{
 	border: 2px solid #0794A0;
 }
 /*=====  End of about page  ======*/
+
+/*===================================
+=            Search page            =
+===================================*/
+
+.content-dataset{
+	width: 35%;
+	margin: auto;
+}
+
+/*=====  End of Search page  ======*/

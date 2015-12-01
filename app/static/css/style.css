@@ -5,6 +5,7 @@
 body {
     margin: 0 auto;
     font-size: 16px;
+    font-family: 'Ubuntu Mono';
 }
 .margin-auto {
     margin: auto;
@@ -64,9 +65,13 @@ nav{height: 70px;padding: 10px;}
 }
 
 .main-content {
-    padding: 40px;
+    padding: 60px;
 }   
 
+#searchParamsS .col-xs-12, #searchParamsS .col-sm-3, #searchParamsS .col-sm-2, #searchParamsS .col-sm-1, #searchParamsS .col-xs-1 {
+    padding-right: 2px;
+    padding-left: 2px;
+}
 /* http://embedresponsively.com/ */
 .embed-container {
     position: relative;
@@ -136,22 +141,49 @@ select.primary-content-color{
 }
 
 .vertical-align{
-	 display: flex;
+	display: flex;
     align-items: center;
 }
 
-.border-primary{
+/*.border-primary { /*preimenovati
 	border: 2px solid #0794A0;
+    border-radius: 10px;
+    color: #0794A0;
+}*/
+.ui-widget {
+    font-size: inherit;
+    font-weight: normal;
+    font-family: 'Ubuntu Mono';
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background: #fff;
+    border: 2px solid #0794A0;
+    border-radius: 10px;
+    color: #0794A0;
+    width: 100% !important;
+}
 
+.ui-selectmenu-button span.ui-selectmenu-text {
+    padding: 5px;
+    padding-right: 30px;
+}
+
+.ui-state-default:focus {
+    border-radius: 10px;
 }
 
 .border-secondary{
     border: 2px solid #7DC1D1;
-
 }
 .border-white{
  border: 2px solid white;   
  border-radius: 10px;
+}
+.button-full {
+    background: #0794A0;
+    color: #fff;
+    border: 2px solid #7DC1D1;
+    border-radius: 10px;
 }
 
 .modal-body{height: 150px;}
@@ -194,6 +226,12 @@ select.primary-content-color{
     line-height: 3;
     text-decoration: underline;
 }
+.advanced {
+    border-bottom: 1px solid #0794A0;
+    text-align: left;
+    margin-bottom: 10px;
+    color: #0794A0;
+}
 /*=====  End of Search page  ======*/
 
 
@@ -201,6 +239,11 @@ select.primary-content-color{
 .container {
     padding-right: 0px;
     padding-left: 0px;
+}
+@media (max-width: 992px) {
+    .container {
+        width: 100% !important;
+    }
 }
 .navbar {
     margin-bottom: 0px;

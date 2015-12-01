@@ -59,7 +59,7 @@ $(function () {
 </script>
 
 <!-- Intro Header; Welcome section -->
-<header class="intro section-height">
+<header class="container-fluid section-height intro section-height">
     <div class="intro-body">
         <div>
           <div class="height-110 white-content primary-color">
@@ -77,12 +77,12 @@ $(function () {
                     <div class='embed-container'>
                         <div id="ytplayerLanding"></div>
                     </div>
-                    <div class="margin-10"><a href="./api/"><span id="searchWithParams">Show me data about MUNICIPAL BUDGETS in BELGRADE in 1999 related to EDUCATION</span></a></div>
+                    <div class="margin-10"><a href="{{ url_for('api.index') }}"><span id="searchWithParams">Show me data about MUNICIPAL BUDGETS in BELGRADE in 1999 related to EDUCATION</span></a></div>
 
                     <div class="row">
                         <div class="col-md-6 margin-10">
 
-                        <a href="./api">   
+                        <a href="{{ url_for('api.index') }}">   
                             <button type="button" class="btn btn-block btn-lg  btn-link btn-white-border primary-color white-content " >
                                 Just take me to search
                             </button>
@@ -101,11 +101,11 @@ $(function () {
 </header>
 
 <!-- What's avalible Section -->
-<section id="avalibleS" class="section-height secondary-color content-section text-center white-content">
+<section id="avalibleS" class="container-fluid section-height secondary-color content-section text-center white-content">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
             <h2>What's avalible Section</h2>
-            <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=800%C3%97400&w=800&h=400" alt="">
+            <img class="img-responsive text-center margin-auto" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=800%C3%97400&w=800&h=400" alt="">
         </div>
     </div>
 </section>

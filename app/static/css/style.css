@@ -2,8 +2,13 @@
 =            Whole page            =
 ==================================*/
 
-body{font-size: 16px;}
-.margin-auto{margin:auto;}
+body {
+    margin: 0 auto;
+    font-size: 16px;
+}
+.margin-auto {
+    margin: auto;
+}
 
 /*=====  End of Whole page  ======*/
 
@@ -21,7 +26,13 @@ nav{height: 70px;padding: 10px;}
 
 .padding-10{padding: 10px 0;}
 .section-height{ min-height: 100vh; }
-.intro{padding-top: 70px;margin-bottom: 70px;}
+
+.intro {
+    height: 300px;
+    padding-top: 70px;
+    /*margin-bottom: 70px;*/
+}
+
 .intro.landing{height: 120vh;}
 
 @media screen and (min-width:650px) and (max-width:1000px) {
@@ -57,9 +68,9 @@ nav{height: 70px;padding: 10px;}
     height: 100%;
 }
 
-.height-110{
-  height: 200px;/* 110%; */
-}
+/*.height-110{
+  height: 200px;/* 110%; 
+}*/
 
 .primary-color{
     background-color: #0794A0;/* #008F9B; */
@@ -165,3 +176,31 @@ select.primary-content-color{
     text-decoration: underline;
 }
 /*=====  End of Search page  ======*/
+
+
+/*BOOTSTRAP EDITS*/
+.container {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+.navbar {
+    margin-bottom: 0px;
+}
+.navbar-default {
+    background: #fff;
+    border: 0px;
+}
+.navbar-default .navbar-nav>li>a {
+    text-transform: uppercase;
+    color: #0794A0;
+}
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border: 0px;
+}
+.navbar-collapse {
+    background: #fff;
+}
+.h1, .h2, .h3, h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+}

@@ -1,0 +1,25 @@
+{
+  "name": "data-centar",
+  "description": "",
+  "main": "",
+  "authors": [
+    "endrit@opendatakosovo.org"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/opendatakosovo/data-centar",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./app/static/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "jquery": "~1.11.1",
+    "fontawesome": "~4.2.0"
+  }
+}

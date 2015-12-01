@@ -8,10 +8,11 @@ class RashodiDataFeed():
 
     def calculate_sum_of_expenditure_types(self, query_params):
 
+        print(query_params)
         # Build match pipeline
         match = {
             "$match": {
-                "tipPodataka.slug": "rashodi",
+                "tipPodataka.slug": query_params['tipPodataka'],
             }
         }
 
@@ -23,7 +24,7 @@ class RashodiDataFeed():
         if "ukupno" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['ukupno']:
             if 'ukupno' not in match['$match']:
                 match['$match']["ukupno"] = {}
-            match['$match']["ukupno"]["$gte"] = query_params["filteri"]["ukupno"]["veceIliJednako"],
+            match['$match']["ukupno"]["$gte"] = query_params["filteri"]["ukupno"]["veceIliJednako"]
 
         if "ukupno" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['ukupno']:
             if 'ukupno' not in match['$match']:
@@ -34,7 +35,7 @@ class RashodiDataFeed():
         if "sopstveniPrihodi" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['sopstveniPrihodi']:
             if 'sopstveniPrihodi' not in match['$match']:
                 match['$match']["sopstveniPrihodi"] = {}
-            match['$match']["sopstveniPrihodi"]["$gte"] = query_params["filteri"]["sopstveniPrihodi"]["veceIliJednako"],
+            match['$match']["sopstveniPrihodi"]["$gte"] = query_params["filteri"]["sopstveniPrihodi"]["veceIliJednako"]
 
         if "sopstveniPrihodi" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['sopstveniPrihodi']:
             if 'sopstveniPrihodi' not in match['$match']:
@@ -45,7 +46,7 @@ class RashodiDataFeed():
         if "prihodiBudzeta" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['prihodiBudzeta']:
             if 'prihodiBudzeta' not in match['$match']:
                 match['$match']["prihodiBudzeta"] = {}
-            match['$match']["prihodiBudzeta"]["$gte"] = query_params["filteri"]["prihodiBudzeta"]["veceIliJednako"],
+            match['$match']["prihodiBudzeta"]["$gte"] = query_params["filteri"]["prihodiBudzeta"]["veceIliJednako"]
 
         if "prihodiBudzeta" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['prihodiBudzeta']:
             if 'prihodiBudzeta' not in match['$match']:
@@ -56,7 +57,7 @@ class RashodiDataFeed():
         if "donacije" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['donacije']:
             if 'donacije' not in match['$match']:
                 match['$match']["donacije"] = {}
-            match['$match']["donacije"]["$gte"] = query_params["filteri"]["donacije"]["veceIliJednako"],
+            match['$match']["donacije"]["$gte"] = query_params["filteri"]["donacije"]["veceIliJednako"]
 
         if "donacije" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['donacije']:
             if 'donacije' not in match['$match']:
@@ -67,7 +68,7 @@ class RashodiDataFeed():
         if "ostali" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['ostali']:
             if 'ostali' not in match['$match']:
                 match['$match']["ostali"] = {}
-            match['$match']["ostali"]["$gte"] = query_params["filteri"]["ostali"]["veceIliJednako"],
+            match['$match']["ostali"]["$gte"] = query_params["filteri"]["ostali"]["veceIliJednako"]
 
         if "ostali" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['ostali']:
             if 'ostali' not in match['$match']:

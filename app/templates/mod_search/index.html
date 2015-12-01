@@ -1,100 +1,129 @@
-{% extends "layout.html" %}
-{% block body %}
+{% extends "layout.html" %} {% block body %}
 <header class="intro ">
     <div class="intro-body">
         <div>
-          <div class="height-110 white-content primary-color">
-           <div class="col-md-8 col-md-offset-2 height-110">
-            <h3 class="text-center">Show me data about [...] in [...]</h3>
-                     <p class="text-center lead">
+            <div class="height-110 white-content primary-color">
+                <div class="col-md-8 col-md-offset-2 height-110">
+                    <h3 class="text-center">Show me data about [...] in [...]</h3>
+                    <p class="text-center lead">
                         See this astonishing site. Look at those fabulous data. <em>bibendum diam velit et dui.</em>
                     </p>
-                    </div>
-          </div>
-            
+                </div>
+            </div>
         </div>
     </div>
 </header>
-
 <!-- Search params Section -->
 <section id="searchParamsS" class="container-fluid  primary-content-color text-center">
-	<div class="row">
-		<div class="col-md-8">
-			<form action="" class="form-horizontal" role="form">
-				<div class="form-group">
-					<div class="col-xs-3">
-						<select class="form-control " name="" id="">
-							<option value="">Budget</option>
-						</select>
-					</div>
-					<div class="col-xs-3">
-						<select class="form-control" name="" id="">
-							<option value="">Belgrade</option>
-						</select>
-					</div>
-					<div class="col-xs-2">
-						<select class="form-control" name="" id="">
-							<option value="">2010</option>
-						</select>
-					</div>
-					<div class="col-xs-1">
-						<button class="form-control text-center" >&#x2713;</button>
-					</div>
-					<div class="col-xs-3">
-						<button class="form-control" >Advanced</button>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-xs-3">
-						<select class="form-control" name="" id="">
-								<option value="">Education</option>
-						</select>
-					</div>
-					<div class="col-xs-3">
-						<select class="form-control" name="" id="">
-							<option value="">Operator</option>
-						</select>
-					</div>
-					<div class="col-xs-2">
-						<select class="form-control" name="" id="">
-							<option value="">Function</option>
-						</select>
-					</div>
-					<div class="col-xs-1 text-center">
-						<button class="form-control" >&#x2713;</button>
-					</div>
-					<div class="col-xs-1 text-center">
-						<button class="form-control" >&#x2715;</button>
-					</div>
-					<div class="col-xs-2 text-center">
-						<button class="form-control" >Add</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-	
-</section>
-
-<!-- Data sets Section -->
-<section id="dataSetS" class="container-fluid section-height secondary-color content-section text-center white-content">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <h2>What's avalible Section</h2>
-            <div class="content-dataset col-lg-8 col-lg-offset-2">
-            	<ul>
-	            	<li>List item 0</li>
-	            	<li>List item 1</li>
-	            	<li>List item 2</li>
-	            	<li>List item 3</li>
-	            	<li>List item 4</li>
-	            	<li>List item 5</li>
-	            	<li>List item 6</li>
-	            </ul>	
-            </div>
-            
+        <div class="col-md-8 col-md-offset-2 ">
+            <form action="" class="form-horizontal" role="form">
+                <div class="form-group">
+                    <div class="col-xs-3">
+                        <select class="form-control border-primary " name="" id="">
+                            <option value="">Budget</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-3">
+                        <select class="form-control border-primary" name="" id="">
+                            <option value="">Belgrade</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2">
+                        <select class="form-control border-primary" name="" id="">
+                            <option value="">2010</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-1">
+                        <button class="form-control border-primary text-center">&#x2713;</button>
+                    </div>
+                    <div class="col-xs-3">
+                        <button class="form-control border-primary">Advanced</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-3">
+                        <select class="form-control border-primary" name="" id="">
+                            <option value="">Education</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-3">
+                        <select class="form-control border-primary" name="" id="">
+                            <option value="">Operator</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2">
+                        <select class="form-control border-primary" name="" id="">
+                            <option value="">Function</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-1 text-center">
+                        <button class="form-control border-primary">&#x2713;</button>
+                    </div>
+                    <div class="col-xs-1 text-center">
+                        <button class="form-control border-secondary">&#x2715;</button>
+                    </div>
+                    <div class="col-xs-2 text-center">
+                        <button class="form-control border-primary">Add</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </section>
-
+<!-- Data sets Section -->
+<section id="dataSetS" class="container-fluid section-height secondary-color content-section text-center white-content">
+    <div class="row">
+        <div class="col-md-6 ">
+           <div class="col-xs-8">
+           	 <h2>Results table name</h2>
+           </div>
+            <div class="col-xs-4 pull-down">
+                <select class="form-control border-primary" name="" id="">
+                    <option value="">Download table</option>
+                </select>
+            </div>
+            <div class="col-md-8 col-md-offset-3 border-white ">
+            	<img src="http://placehold.it/450x550" alt="" class="img-responsive margin-10">	
+            </div>
+            
+        </div>
+        <div class="col-md-6">
+            <h2>Visualizations</h2>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <img src="http://placehold.it/300x120" alt="" class="img-responsive margin-10">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <img src="http://placehold.it/300x120" alt="" class="img-responsive margin-10">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <img src="http://placehold.it/300x120" alt="" class="img-responsive margin-10">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="noParams" class="hidden">
+            <div class="col-md-6 col-md-offset-3">
+                <h2>BROWSABLE LIST OF DATASETS?</h2>
+                <div class="content-dataset col-lg-8 col-lg-offset-2">
+                    <ul>
+                        <li>List item 0</li>
+                        <li>List item 1</li>
+                        <li>List item 2</li>
+                        <li>List item 3</li>
+                        <li>List item 4</li>
+                        <li>List item 5</li>
+                        <li>List item 6</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

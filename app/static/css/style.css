@@ -102,6 +102,19 @@ select.primary-content-color{
 	 display: flex;
     align-items: center;
 }
+
+.modal-body{height: 150px;}
+.modal-header{border-bottom: none;}
+.modal-header.close{
+	border: 2px solid #0794A0;
+    position: absolute;
+    top: 0px;
+    right: -1px;
+    width: 35px;
+    height: 35px;
+}
+.modal-backdrop{background-color: #fff;}
+.modal-dialog{border: 2px solid #0794A0;}
 /*=====  End of Landing page  ======*/
 
 /*==================================

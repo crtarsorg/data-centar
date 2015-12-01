@@ -28,11 +28,26 @@ nav{height: 70px;padding: 10px;}
 .section-height{ min-height: 100vh; }
 
 .intro {
+    position: relative;
+    overflow: hidden;
     height: 300px;
     padding-top: 70px;
     /*margin-bottom: 70px;*/
 }
-
+/*.intro-body {
+    position: relative;
+    overflow: hidden;
+    height: 300px;
+}*/
+.intro-content {
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    tranform: translate(-50%, -50%);
+    padding-top: 70px;
+}
 .intro.landing{height: 120vh;}
 
 @media screen and (min-width:650px) and (max-width:1000px) {
@@ -46,7 +61,12 @@ nav{height: 70px;padding: 10px;}
 }
 #searchWithParams{
     font-size: 18px;
-}    
+}
+
+.main-content {
+    padding: 40px;
+}   
+
 /* http://embedresponsively.com/ */
 .embed-container {
     position: relative;
@@ -170,7 +190,6 @@ select.primary-content-color{
 	width: 35%;
 	margin: auto;
 }
-
 .content-dataset ul{
     line-height: 3;
     text-decoration: underline;
@@ -189,6 +208,13 @@ select.primary-content-color{
 .navbar-default {
     background: #fff;
     border: 0px;
+}
+.nav>li>a {
+    border-bottom: 1px solid #0794A0;
+    padding: 0;
+    padding-top: 15px;
+    margin-right: 20px;
+    height: 40px;
 }
 .navbar-default .navbar-nav>li>a {
     text-transform: uppercase;

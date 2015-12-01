@@ -105,7 +105,7 @@ select.primary-content-color{
 
 .modal-body{height: 150px;}
 .modal-header{border-bottom: none;}
-.modal-header.close{
+.modal-header>.close{
 	border: 2px solid #0794A0;
     position: absolute;
     top: 0px;

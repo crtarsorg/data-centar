@@ -1,6 +1,6 @@
 #coding=utf-8
 import unittest
-from importer.prihodi_manager import mongo
+from importer.rashodi_manager import mongo
 
 class PrihodiImportingTestCases(unittest.TestCase):
 
@@ -123,7 +123,6 @@ class PrihodiImportingTestCases(unittest.TestCase):
         "711000": (1, 249153253),
         "321000": (1, 24203249),
         "713000": (1, 179884638),
-        "741000": (1, 0),
         "742000": (4, 2955929),
         "743000": (1, 350000),
         "745000": (1, 0),

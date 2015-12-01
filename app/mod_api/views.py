@@ -30,7 +30,6 @@ def sum():
 
 @mod_api.route("/ekonomska-klasifikacija", methods=['GET', 'POST'])
 def activities():
-
     if request.method == 'POST':
         query_params = json.loads(request.data)
         if query_params['tipPodataka'] == "rashodi":

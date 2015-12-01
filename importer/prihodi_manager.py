@@ -233,13 +233,14 @@ class PrihodiDataImporter(DataImporterBase):
                 if row[1] == "":
                     row[1] = "0"
 
-                # Build mongo document
-                json_doc = self.build_mongo_document_structure("Звездара", row[1], row[2], row[3], row[4], row[5], row[6], None, None)
+                if row[1] != "741000":
+                    # Build mongo document
+                    json_doc = self.build_mongo_document_structure("Звездара", row[1], row[2], row[3], row[4], row[5], row[6], None, None)
 
-                # Insert JSON document in mongo
-                db.opstine.insert(json_doc)
+                    # Insert JSON document in mongo
+                    db.opstine.insert(json_doc)
 
-                print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Звездара", parent_handler, row[1])
+                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Звездара", parent_handler, row[1])
 
     def data_importer_of_municipality_novi_beograd(self, municipality, data_type):
 

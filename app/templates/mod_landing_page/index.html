@@ -17,6 +17,9 @@
     stroke-width:2px;
   }
 
+  .label{
+    fill: white;
+  }
   polyline{
     opacity: .3;
     stroke: black;
@@ -86,6 +89,11 @@ $(function(){
 
   /*http://bl.ocks.org/dbuezas/9306799*/
 
+  donutDiagram(180,180, 300, 300);
+
+  function donutDiagram (wid, heig, posX, posY) {
+    // body...
+
   var svg = d3.select(".vis")
     .append("svg")
     .append("g")
@@ -97,8 +105,8 @@ $(function(){
   svg.append("g")
     .attr("class", "lines");
 
-  var width = 960,
-      height = 450,
+  var width = wid,
+      height = heig,
     radius = Math.min(width, height) / 2;
 
   var pie = d3.layout.pie()
@@ -115,7 +123,7 @@ $(function(){
     .innerRadius(radius * 0.9)
     .outerRadius(radius * 0.9);
 
-  svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+  svg.attr("transform", "translate(" + posX  + "," + posY + ")");
 
   var key = function(d){ return d.data.label; };
 
@@ -124,13 +132,15 @@ $(function(){
 
   Rashodi za zaposlene (410000), troskovi putovanja (422000), donacije, dotacije i transferi (460000), subvencije (450000).*/
 
+  var data = [{"conto":710000,"opis":"Prihodi","vrednost":100000},{"conto":712000,"opis":"Porez na zarade","vrednost":65000}, {"conto":713000,"opis":"Porez na imovinu","vrednost":650000},{"conto":730000,"opis":"Donacije i transferi","vrednost":65000},{"conto":733000,"opis":"Transferi od drugih nivoa vlasti","vrednost":720000},{"conto":410000,"opis":"Rashodi za zaposlene", "vrednost":72000},{"conto":422000,"opis":"Troskovi putovanja", "vrednost":2000},{"conto":460000,"opis":"Donacije, dotacije i transferi", "vrednost":2000},{"conto":450000,"opis":"Subvencije", "vrednost":25000}]
+
   var color = d3.scale.ordinal()
     .domain(["Porez na zarade", "Porez na imovinu", "Donacije i transferi", "Transferi od drugih novoa vlasti", "Troskovi putovanja", "Donacije, dotacije i transferi", "Subvencije"])
     .range(["#feedde","#fdbe85","#fd8d3c","#d94701",  "#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 
 
-
+/*legend*/
 var svg1 = d3.select("svg");
 
 svg1.append("g")
@@ -138,27 +148,27 @@ svg1.append("g")
   .attr("transform", "translate(20,20)");
 
 var legendOrdinal = d3.legend.color()
-  .shape("path", d3.svg.symbol().type("circle").size(150)())
+  .shape("circle")  
   .shapePadding(10)
   .scale(color);
 
+
+//.attr("la","ble")
 svg1.select(".legendOrdinal")
   .call(legendOrdinal);
+
+
+
 
 function randomData (){
     var labels = color.domain();
     return labels.map(function(label){
-      return { label: label, value: Math.random() }
+      return { label: label, value: data.find(function(la){return la.opis = label})["vrednost"] }
     });
   }
 
   change(randomData());
 
-  /*d3.select(".randomize")
-    .on("click", function(){
-      change(randomData());
-    });
-  */
 
   function change(data) {
 
@@ -185,73 +195,9 @@ function randomData (){
     slice.exit()
       .remove();
 
-    /* ------- TEXT LABELS -------*/
-
-  /*  var text = svg.select(".labels").selectAll("text")
-      .data(pie(data), key);
-
-    text.enter()
-      .append("text")
-      .attr("dy", ".35em")
-      .text(function(d) {
-        return d.data.label;
-      });
-    
-    function midAngle(d){
-      return d.startAngle + (d.endAngle - d.startAngle)/2;
-    }
-
-    text.transition().duration(1000)
-      .attrTween("transform", function(d) {
-        this._current = this._current || d;
-        var interpolate = d3.interpolate(this._current, d);
-        this._current = interpolate(0);
-        return function(t) {
-          var d2 = interpolate(t);
-          var pos = outerArc.centroid(d2);
-          pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
-          return "translate("+ pos +")";
-        };
-      })
-      .styleTween("text-anchor", function(d){
-        this._current = this._current || d;
-        var interpolate = d3.interpolate(this._current, d);
-        this._current = interpolate(0);
-        return function(t) {
-          var d2 = interpolate(t);
-          return midAngle(d2) < Math.PI ? "start":"end";
-        };
-      });
-
-    text.exit()
-      .remove();*/
-
-    /* ------- SLICE TO TEXT POLYLINES -------*/
-
-    /*var polyline = svg.select(".lines").selectAll("polyline")
-      .data(pie(data), key);
-    
-    polyline.enter()
-      .append("polyline");
-
-    polyline.transition().duration(1000)
-      .attrTween("points", function(d){
-        this._current = this._current || d;
-        var interpolate = d3.interpolate(this._current, d);
-        this._current = interpolate(0);
-        return function(t) {
-          var d2 = interpolate(t);
-          var pos = outerArc.centroid(d2);
-          pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
-          return [arc.centroid(d2), outerArc.centroid(d2), pos];
-        };      
-      });
-    
-    polyline.exit()
-      .remove();*/
   };
 
-
+    }
 
 })
 
@@ -309,7 +255,6 @@ function randomData (){
             <h2>What's avalible Section</h2>
             <!-- <img class="img-responsive text-center margin-auto" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=800%C3%97400&w=800&h=400" alt=""> -->
             <div class="vis margin-auto">
-              bla lba bla
             </div>
         </div>
     </div>

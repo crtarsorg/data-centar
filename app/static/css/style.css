@@ -278,6 +278,9 @@ select.primary-content-color{
 	border: 2px solid #0794A0;
     vertical-align: middle;
 }
+#descHowToUse li {
+    text-align: left;
+}
 /*=====  End of about page  ======*/
 
 /*===================================

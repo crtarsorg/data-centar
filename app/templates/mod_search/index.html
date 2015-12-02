@@ -11,57 +11,58 @@
 </header>
 <!-- Search params Section -->
 <div class="container">
-	<section id="searchParamsS" class="text-center main-content">
+	<section id="searchParamsS" class="main-content">
 	    <!-- <div class="row"> -->
 	        <div class="">
 	            <form action="" class="form-horizontal" role="form">
 	                <div class="form-group">
-	                    <div class="col-xs-3">
-	                        <select class="form-control border-primary " name="" id="">
+	                    <div class="col-xs-12 col-sm-3">
+	                        <select class="form-control border-primary search-control" name="">
 	                            <option value="">Budget</option>
 	                        </select>
 	                    </div>
-	                    <div class="col-xs-3">
-	                        <select class="form-control border-primary" name="" id="">
+	                    <div class="col-xs-12 col-sm-3">
+	                        <select class="form-control border-primary search-control" name="">
 	                            <option value="">Belgrade</option>
 	                        </select>
 	                    </div>
-	                    <div class="col-xs-2">
-	                        <select class="form-control border-primary" name="" id="">
+	                    <div class="col-xs-12 col-sm-3">
+	                        <select class="form-control border-primary search-control" name="">
 	                            <option value="">2010</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-1">
 	                        <button class="form-control border-primary text-center">&#x2713;</button>
 	                    </div>
-	                    <div class="col-xs-3">
-	                        <button class="form-control border-primary">Advanced</button>
+	                    <div class="col-xs-4 col-sm-2 pull-right">
+	                        <button class="form-control border-primary button-full">Advanced</button>
 	                    </div>
 	                </div>
+	                <div class="advanced">
+	                	<p>Advanced</p>
+	                </div>
 	                <div class="form-group">
-	                    <div class="col-xs-3">
-	                        <select class="form-control border-primary" name="" id="">
+	                    <div class="col-xs-12 col-sm-3">
+	                        <select class="form-control border-primary search-control" name="">
 	                            <option value="">Education</option>
 	                        </select>
 	                    </div>
-	                    <div class="col-xs-3">
-	                        <select class="form-control border-primary" name="" id="">
+	                    <div class="col-xs-12 col-sm-3">
+	                        <select class="form-control border-primary search-control" name="">
 	                            <option value="">Operator</option>
 	                        </select>
 	                    </div>
-	                    <div class="col-xs-2">
-	                        <select class="form-control border-primary" name="" id="">
+	                    <div class="col-xs-12 col-sm-3">
+	                        <select class="form-control border-primary search-control" name="">
 	                            <option value="">Function</option>
 	                        </select>
 	                    </div>
-	                    <div class="col-xs-1 text-center">
-	                        <button class="form-control border-primary">&#x2713;</button>
+	                    <div class="col-xs-2 col-sm-1 text-center">
+	                        <button class="form-control border-primary pull-left" style="width: 50%;">&#x2713;</button>
+	                        <button class="form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
 	                    </div>
-	                    <div class="col-xs-1 text-center">
-	                        <button class="form-control border-secondary">&#x2715;</button>
-	                    </div>
-	                    <div class="col-xs-2 text-center">
-	                        <button class="form-control border-primary">Add</button>
+	                    <div class="col-xs-4 col-sm-2 pull-right">
+	                        <button class="form-control border-primary button-full">Add</button>
 	                    </div>
 	                </div>
 	            </form>
@@ -69,6 +70,13 @@
 	    <!-- </div> -->
 	</section>
 </div>
+
+<script>
+	$(document).ready(function() {
+		$(".search-control").selectmenu();
+	});
+</script>
+
 <!-- Data sets Section -->
 <section id="dataSetS" class="container-fluid section-height secondary-color content-section text-center white-content">
     <div class="row">

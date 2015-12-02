@@ -29,8 +29,8 @@
 
 </style>
 
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.6.0/d3-legend.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 <script>
   
@@ -90,6 +90,53 @@ $(function () {
 
 
 
+
+ $(function () {
+
+
+
+  data.forEach(function(temp) {
+      temp.name = temp.opis;
+      temp.y = temp.vrednost;
+  })
+
+  var podaci =  data;
+
+
+    $('.vis').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie',
+            backgroundColor:"#7DC1D1"
+        },
+        title: {
+            text: ''
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.y}</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Iznos',
+            colorByPoint: true,
+            data: podaci
+        }]
+    });
+});
 
 
 </script>

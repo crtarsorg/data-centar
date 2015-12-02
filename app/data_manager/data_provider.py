@@ -4,21 +4,20 @@ import re
 from bson.regex import Regex
 
 
-class RashodiDataFeed():
+class DataProvider():
 
     def calculate_sum_of_expenditure_types(self, query_params):
 
-        print(query_params)
         # Build match pipeline
         match = {
-            "$match": {
-                "tipPodataka.slug": query_params['tipPodataka'],
-            }
+            "$match": {}
         }
 
-        for item in query_params['klasifikacija']['broj']:
-            query_params['klasifikacija']['broj'].remove(item)
-            query_params['klasifikacija']['broj'].append(str(item))
+        if query_params['tipPodataka'] != []:
+            match['$match']["tipPodataka.slug"] = {'$in': query_params['tipPodataka']}
+
+        if query_params['klasifikacija']['broj'] != []:
+            query_params['klasifikacija']['broj'] = [str(i) for i in query_params['klasifikacija']['broj']]
 
         ### Let's set the values rage for ukupno ###
         if "ukupno" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['ukupno']:
@@ -312,4 +311,40 @@ class RashodiDataFeed():
 
         # Execute mongo request
         json_doc = mongo.db.opstine.aggregate([match, group, project])
+        return json_doc['result']
+
+    def retrieve_average_data_for_classification_number(self, query_params):
+
+        match = {
+            "$match": {}
+        }
+
+        if query_params['tipPodataka'] != []:
+            match['$match']["tipPodataka.slug"] = {'$in': query_params['tipPodataka']}
+
+        if query_params['klasifikacijaBroj'] != []:
+            query_params['klasifikacijaBroj'] = [str(i) for i in query_params['klasifikacijaBroj']]
+            match['$match']["klasifikacija.broj"] = {'$in': query_params['klasifikacijaBroj']}
+
+        group = {
+            "$group": {
+                "_id": {
+                    "broj": "$klasifikacija.broj",
+                    "opis": "$klasifikacija.opis.latinica",
+                },
+                "ukupno": {"$avg": "$ukupno"}
+            }
+        }
+
+        project = {
+            "$project": {
+                "_id": 0,
+                "conto": "$_id.broj",
+                "opis": "$_id.opis",
+                "avg": "$ukupno"
+
+            }
+        }
+
+        json_doc = mongo.db.opstine.aggregate([group, project])
         return json_doc['result']

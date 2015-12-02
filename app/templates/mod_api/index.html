@@ -56,6 +56,33 @@
                 }
 
             });
+
+
+        $('#select_both_sources').change(function(){
+            if($('#select_both_sources').prop('checked')){
+                $('#data_type').prop("disabled", true);
+                $("#classifications option").remove();
+
+                $.each(rashodiJson['responseJSON'], function () {
+                    $("#classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+
+                });
+                $.each(prihodiJson['responseJSON'], function () {
+                    $("#classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+                });
+
+            }
+            else{
+                $("#classifications option").remove();
+                $('#data_type').prop("disabled", false);
+
+                $.each(rashodiJson['responseJSON'], function () {
+                    $("#classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+
+                });
+            }
+        });
+
         });
 
 
@@ -296,6 +323,9 @@
                                                 {{ sum_req_form.data_type.label(class="control-label col-xs-2") }}
                                                 <div class="col-xs-10">
                                                     {{ sum_req_form.data_type(class="form-control") }}
+                                                    <div class="col-xs-10 pull-right" align="right">
+                                                        {{ sum_req_form.select_both_sources }}{{ sum_req_form.select_both_sources.label(class="small") }}
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">

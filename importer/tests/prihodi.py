@@ -1,6 +1,6 @@
 #coding=utf-8
 import unittest
-from importer.prihodi_manager import mongo
+from importer.abstract_data_importer import mongo
 
 class PrihodiImportingTestCases(unittest.TestCase):
 
@@ -17,7 +17,7 @@ class PrihodiImportingTestCases(unittest.TestCase):
     # Json container for each valjevo parent category
     kraljevo_counts_of_parents_and_total = {
         #(count, total) -count is the number of parent categories, -total is the total of that parent category
-        "Порез на доходак, добит и капиталне добитке": (6, ),
+        "Порез на доходак, добит и капиталне добитке": (6, None),
         "Порез на имовину":(8,),
         "Порез на добра и услуге": (6,),
         "Други порези": (2,),
@@ -160,7 +160,6 @@ class PrihodiImportingTestCases(unittest.TestCase):
         # Test the counts of particular parent category for Kraljevo municipality
         for parent in self.novi_beograd_counts_of_parents_and_total:
             self.asserts_for_parent_categories_elements("Novi Beograd", parent, self.novi_beograd_counts_of_parents_and_total[parent][0], "prihodi")
-
 
 
     def test_total_sum_for_parent_categories(self):

@@ -31,7 +31,7 @@ nav{height: 70px;padding: 10px;}
 .intro {
     position: relative;
     overflow: hidden;
-    height: 300px;
+    height: 50vh;
     padding-top: 70px;
     /*margin-bottom: 70px;*/
 }
@@ -49,7 +49,7 @@ nav{height: 70px;padding: 10px;}
     tranform: translate(-50%, -50%);
     padding-top: 70px;
 }
-.intro.landing{height: 120vh;}
+/*.intro.landing{height: 120vh;}*/
 
 @media screen and (min-width:650px) and (max-width:1000px) {
    .intro.landing{height: 140vh;}

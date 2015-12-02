@@ -11,7 +11,7 @@ function get_request_form_data(parentDivId) {
     });
 
     var data = {
-        "tipPodataka": $('#data_type').val(),
+        "tipPodataka": [],
         "godine": [parseInt($('#years').val())],
         "opstine": municipalities,
         "klasifikacija": {
@@ -20,6 +20,12 @@ function get_request_form_data(parentDivId) {
         },
         "filteri":{}
     };
+
+    if ($('#select_both_sources').is(":checked")){
+        data['tipPodataka'] = ["rashodi", "prihodi"];
+    }else{
+        data['tipPodataka'] = [$('#data_type').val()];
+    }
 
     if($('#pocinje_sa').val() != ""){
         data['klasifikacija']['pocinjeSa'] = $('#pocinje_sa').val();

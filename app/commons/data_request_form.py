@@ -19,6 +19,12 @@ class DataRequestForm(Form):
             ('prihodi', u'Prihodi')
         ])
 
+    sum_data_type = SelectMultipleField(u'Tip podataka',
+        choices=[
+            ('rashodi', u'Rashodi'),
+            ('prihodi', u'Prihodi')
+        ])
+    select_both_sources = BooleanField("Select both data sources")
     ukupno_gte = IntegerField('Ukupno')
     ukupno_lte = IntegerField('Ukupno')
     sopstveni_prihodi_gte = IntegerField('Sopstveni Prihodi')

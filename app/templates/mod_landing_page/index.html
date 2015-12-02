@@ -85,26 +85,10 @@ $(function () {
 
 })
 
-
- var data = [{"conto":710000,"opis":"Prihodi","vrednost":100000},{"conto":712000,"opis":"Porez na zarade","vrednost":65000}, {"conto":713000,"opis":"Porez na imovinu","vrednost":650000},{"conto":730000,"opis":"Donacije i transferi","vrednost":65000},{"conto":733000,"opis":"Transferi od drugih nivoa vlasti","vrednost":720000},{"conto":410000,"opis":"Rashodi za zaposlene", "vrednost":72000},{"conto":422000,"opis":"Troskovi putovanja", "vrednost":2000},{"conto":460000,"opis":"Donacije, dotacije i transferi", "vrednost":2000},{"conto":450000,"opis":"Subvencije", "vrednost":25000}]
-
+$(function () {
 
 
-
- $(function () {
-
-
-
-  data.forEach(function(temp) {
-      temp.name = temp.opis;
-      temp.y = temp.vrednost;
-  })
-
-  var podaci =  data;
-
-
-
-  var colors = (function () {
+   var colors = (function () {
         var colors = [],
             base = Highcharts.getOptions().colors[0],
             i;
@@ -117,40 +101,116 @@ $(function () {
         return colors;
     }());
 
-  Highcharts.getOptions().plotOptions.pie.colors =  colors;
+  
+   var data = [{"conto":710000,"opis":"Prihodi","vrednost":100000},{"conto":712000,"opis":"Porez na zarade","vrednost":65000}, {"conto":713000,"opis":"Porez na imovinu","vrednost":650000},{"conto":730000,"opis":"Donacije i transferi","vrednost":65000},{"conto":733000,"opis":"Transferi od drugih nivoa vlasti","vrednost":720000},{"conto":410000,"opis":"Rashodi za zaposlene", "vrednost":72000},{"conto":422000,"opis":"Troskovi putovanja", "vrednost":2000},{"conto":460000,"opis":"Donacije, dotacije i transferi", "vrednost":2000},{"conto":450000,"opis":"Subvencije", "vrednost":25000}]
+  
+    var gradovi = [{"grad":"uzice", "vrednost":10000},{"grad":"cacak", "vrednost":10000},{"grad":"kosijeric", "vrednost":10000},{"grad":"beograd", "vrednost":10000}]
 
-    $('.vis').highcharts({
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
+    /// podaci sa kontima 
+
+
+    var niz = [];
+      
+    gradovi.forEach(function(lo){
+      var temp_el = {
+            type: 'column',
+            name: lo.grad,
+            data: [3000, 2000, 1000, 3000, 4000,5000, 8000,15000,18000]
+          }
+      niz.push(temp_el);
+    })
+      
+    data.forEach(function(temp) {
+        temp.name = temp.opis;
+        temp.y = temp.vrednost;
+    })
+
+    var podaci =  data;
+    var imena  = podaci.map(function(el){return el.name;})
+
+    niz.push({
+        type: 'spline',
+        name: 'Average',
+        data: [3000, 26000, 3000, 6300, 3300,5000,7000,8000,9000],
+        marker: {
+            lineWidth: 2,
+            lineColor: Highcharts.getOptions().colors[3],
+            fillColor: 'white'
+        }
+    });
+
+
+
+    niz.push({
             type: 'pie',
-            backgroundColor:"#7DC1D1"
-        },
-        title: {
-            text: ''
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.y} din</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
+            name: 'Iznos',
+            data: podaci,
+            center: [120, 80],
+            size: 180, // function dynamic value, depending on screen size
+            colors:colors,
+            showInLegend: false,
+            allowPointSelect: true,
+            dataLabels: {
+                    enabled: false,
                     format: '<b>{point.name}</b>: {point.percentage:.1f} %',
                     style: {"color": "white", "fontSize": "11px", "fontWeight": "bold", "textShadow": "none" }
                 }
-            }
+        });
+  
+  
+  
+    var chartMain = $('.vis').highcharts({
+      chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            backgroundColor:"#7DC1D1"
+
         },
-        series: [{
-            name: 'Iznos',
-            colorByPoint: true,
-            data: podaci
-        }]
+        title: {
+            text: 'Neki pokazatelji',
+            style:{
+                color:"white"
+              }
+        },
+        colors:colors,
+        xAxis: [ {
+            offset: 0,
+            width :1000,
+            left: 150,
+            categories: imena,
+            labels:{
+              style:{
+                color:"white",                
+                "fontSize":"14px"
+              }
+            }
+        }] ,
+       tooltip: {
+            pointFormat: ' {series.name}: <b>{point.y} din</b>'
+        },
+       
+      
+        labels: {
+          /*  items: [{
+                html: '',
+                style: {
+                    left: '250px',
+                    top: '18px',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'white'
+                }
+            }]*/
+        },
+        series: niz
     });
+
+    
+
+
+    ///end of script
 });
+
+
 
 
 </script>
@@ -204,6 +264,7 @@ $(function () {
             <!-- <img class="img-responsive text-center margin-auto" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=800%C3%97400&w=800&h=400" alt=""> -->
             <div class="vis margin-auto">
             </div>
+            <div id="vis1"></div>
         </div>
     </div>
 </section>

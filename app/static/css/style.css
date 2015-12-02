@@ -273,3 +273,13 @@ select.primary-content-color{
     margin: 0;
     padding: 0;
 }
+@media (max-width: 768px) {
+    .navbar-nav {
+        margin-bottom: 0px;
+    }
+    .nav>li>a {
+        padding: 10px;
+        margin-right: 0px;
+        height: inherit;
+    }
+}

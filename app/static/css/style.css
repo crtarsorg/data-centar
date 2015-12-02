@@ -274,8 +274,6 @@ select.primary-content-color{
 }
 
 .funder-img{
-    width: 150px;
-    height: 150px;
 	border-radius: 10px;
 	border: 2px solid #0794A0;
     vertical-align: middle;

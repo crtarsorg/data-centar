@@ -38,19 +38,19 @@
                 rashodiParam = true;
             }
 
-            $('#data_type').change(function(){
+            $('#sum-req-form #data_type').change(function(){
 
-                $("#classifications option").remove();
+                $("#sum-req-form #classifications option").remove();
 
-                if ($('#data_type').val() == "prihodi"){
+                if ($('#sum-req-form #data_type').val() == "prihodi"){
                     $.each(prihodiJson['responseJSON'], function () {
                         $("#classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
                     });
                 }
 
-                if ($('#data_type').val() == "rashodi"){
+                if ($('#sum-req-form #data_type').val() == "rashodi"){
                     $.each(rashodiJson['responseJSON'], function () {
-                        $("#classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+                        $("#sum-req-form #classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
 
                     });
                 }
@@ -58,26 +58,26 @@
             });
 
 
-        $('#select_both_sources').change(function(){
-            if($('#select_both_sources').prop('checked')){
-                $('#data_type').prop("disabled", true);
-                $("#classifications option").remove();
+        $('#sum-req-form #select_both_sources').change(function(){
+            if($('#sum-req-form #select_both_sources').prop('checked')){
+                $('#sum-req-form #data_type').prop("disabled", true);
+                $("#sum-req-form #classifications option").remove();
 
                 $.each(rashodiJson['responseJSON'], function () {
-                    $("#classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+                    $("#sum-req-form #classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
 
                 });
                 $.each(prihodiJson['responseJSON'], function () {
-                    $("#classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+                    $("#sum-req-form #classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
                 });
 
             }
             else{
-                $("#classifications option").remove();
-                $('#data_type').prop("disabled", false);
+                $("#sum-req-form #classifications option").remove();
+                $('#sum-req-form #data_type').prop("disabled", false);
 
                 $.each(rashodiJson['responseJSON'], function () {
-                    $("#classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+                    $("#sum-req-form #classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
 
                 });
             }

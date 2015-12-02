@@ -2,8 +2,14 @@
 =            Whole page            =
 ==================================*/
 
-body{font-size: 16px;}
-.margin-auto{margin:auto;}
+body {
+    margin: 0 auto;
+    font-size: 16px;
+    font-family: 'Ubuntu Mono';
+}
+.margin-auto {
+    margin: auto;
+}
 
 /*=====  End of Whole page  ======*/
 
@@ -21,10 +27,34 @@ nav{height: 70px;padding: 10px;}
 
 .padding-10{padding: 10px 0;}
 .section-height{ min-height: 100vh; }
-.intro{padding-top: 70px;margin-bottom: 70px;height: 120vh;}
 
-header.container-fluid.section-height.intro.section-height {}
+.intro {
+    position: relative;
+    overflow: hidden;
+    height: 50vh;
+    padding-top: 70px;
+    /*margin-bottom: 70px;*/
+}
+/*.intro-body {
+    position: relative;
+    overflow: hidden;
+    height: 300px;
+}*/
+.intro-content {
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    tranform: translate(-50%, -50%);
+    padding-top: 70px;
+}
+/*.intro.landing{height: 120vh;}*/
 
+@media screen and (min-width:650px) and (max-width:1000px) {
+   .intro.landing{height: 140vh;}
+ 
+}
 .btn-white-border,.btn-white-border:hover,.btn-white-border:active{
     background-color: #0794A0; /* prim-col */
     border-color: white;
@@ -32,7 +62,16 @@ header.container-fluid.section-height.intro.section-height {}
 }
 #searchWithParams{
     font-size: 18px;
-}    
+}
+
+.main-content {
+    padding: 60px;
+}   
+
+#searchParamsS .col-xs-12, #searchParamsS .col-sm-3, #searchParamsS .col-sm-2, #searchParamsS .col-sm-1, #searchParamsS .col-xs-1 {
+    padding-right: 2px;
+    padding-left: 2px;
+}
 /* http://embedresponsively.com/ */
 .embed-container {
     position: relative;
@@ -54,9 +93,9 @@ header.container-fluid.section-height.intro.section-height {}
     height: 100%;
 }
 
-.height-110{
-  height: 200px;/* 110%; */
-}
+/*.height-110{
+  height: 200px;/* 110%; 
+}*/
 
 .primary-color{
     background-color: #0794A0;/* #008F9B; */
@@ -102,8 +141,49 @@ select.primary-content-color{
 }
 
 .vertical-align{
-	 display: flex;
+	display: flex;
     align-items: center;
+}
+
+/*.border-primary { /*preimenovati
+	border: 2px solid #0794A0;
+    border-radius: 10px;
+    color: #0794A0;
+}*/
+.ui-widget {
+    font-size: inherit;
+    font-weight: normal;
+    font-family: 'Ubuntu Mono';
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background: #fff;
+    border: 2px solid #0794A0;
+    border-radius: 10px;
+    color: #0794A0;
+    width: 100% !important;
+}
+
+.ui-selectmenu-button span.ui-selectmenu-text {
+    padding: 5px;
+    padding-right: 30px;
+}
+
+.ui-state-default:focus {
+    border-radius: 10px;
+}
+
+.border-secondary{
+    border: 2px solid #7DC1D1;
+}
+.border-white{
+ border: 2px solid white;   
+ border-radius: 10px;
+}
+.button-full {
+    background: #0794A0;
+    color: #fff;
+    border: 2px solid #7DC1D1;
+    border-radius: 10px;
 }
 
 .modal-body{height: 150px;}
@@ -142,5 +222,64 @@ select.primary-content-color{
 	width: 35%;
 	margin: auto;
 }
-
+.content-dataset ul{
+    line-height: 3;
+    text-decoration: underline;
+}
+.advanced {
+    border-bottom: 1px solid #0794A0;
+    text-align: left;
+    margin-bottom: 10px;
+    color: #0794A0;
+}
 /*=====  End of Search page  ======*/
+
+
+/*BOOTSTRAP EDITS*/
+.container {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+@media (max-width: 992px) {
+    .container {
+        width: 100% !important;
+    }
+}
+.navbar {
+    margin-bottom: 0px;
+}
+.navbar-default {
+    background: #fff;
+    border: 0px;
+}
+.nav>li>a {
+    border-bottom: 1px solid #0794A0;
+    padding: 0;
+    padding-top: 15px;
+    margin-right: 20px;
+    height: 40px;
+}
+.navbar-default .navbar-nav>li>a {
+    text-transform: uppercase;
+    color: #0794A0;
+}
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border: 0px;
+}
+.navbar-collapse {
+    background: #fff;
+}
+.h1, .h2, .h3, h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+}
+@media (max-width: 768px) {
+    .navbar-nav {
+        margin-bottom: 0px;
+    }
+    .nav>li>a {
+        padding: 10px;
+        margin-right: 0px;
+        height: inherit;
+    }
+}

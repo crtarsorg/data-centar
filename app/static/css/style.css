@@ -46,8 +46,8 @@ nav{height: 70px;padding: 10px;}
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     tranform: translate(-50%, -50%);*/
-    padding-top: 70px;
-    padding-bottom: 70px;
+    padding-top: 100px;
+    padding-bottom: 100px;
 }
 /*.intro.landing{height: 120vh;}*/
 
@@ -236,8 +236,11 @@ select.primary-content-color{
 }
 
 .funder-img{
+    width: 150px;
+    height: 150px;
 	border-radius: 10px;
 	border: 2px solid #0794A0;
+    vertical-align: middle;
 }
 /*=====  End of about page  ======*/
 

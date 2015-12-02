@@ -111,34 +111,33 @@
     {% endblock %}
 
     <!-- Open data request Section -->
-    <section id="dataRequestS" class="container content-section text-center ">
-        <div class="">
+    <section id="dataRequestS" class="container content-section margin-4p">
+        <div class="datareq col-xs-12 col-sm-8">
             <h2 class="primary-content-color">WHICH DATA SET SHOULD CENTAR OPEN NEXT?</h2>
-            <div class="col-lg-8 col-lg-offset-2">
-               
+            <div class="margin-2p">               
                 <form id="newDataForm" class="form-horizontal" action="//formspree.io/data@datacentar.io" method="POST">
                <!--  <input type="hidden" name="_next" value="#thx"/> -->
                 <fieldset>
                     <!-- Form Name -->
-                    <legend></legend>
-                    <!-- Text input-->
-                    <div class="">
-                        <input id="mail" name="email" type="email" placeholder="email@adress.com"  class="form-control input-md" oninvalid="this.setCustomValidity('Unesite validnu e-mail adresu')">
-                    </div>
+                    <!-- <legend></legend> -->
                     <!-- Closed dataset dropdown -->
-                    <div class="">
+                    <div class="margin-2p">
                         <select id="datasetSel" name="datasetSel" class="form-control primary-color white-content">
                             <option value="1">Option one</option>
                             <option value="2">Option two</option>
                         </select>
                     </div>
                     <!-- Usage of information -->
-                    <div class="">
+                    <div class="margin-2p">
                         <textarea class="form-control primary-content-color" id="textarea" name="infoTA" rows="6" placeholder="How would you use this information?"></textarea>
                     </div>
+                    <!-- Text input-->
+                    <div class="margin-2p">
+                        <input id="mail" name="email" type="email" placeholder="email@address.com"  class="form-control input-md" oninvalid="this.setCustomValidity('Unesite validnu e-mail adresu')">
+                    </div>
                     <!-- Button -->
-                    <div class="  ">
-                        <button id="sendBtn" name="sendBtn"  class="btn primary-color white-content btn-lg">Send</button>
+                    <div class="margin-4p">
+                        <button id="sendBtn" name="sendBtn" class="button-full margin-auto">Send</button>
                     </div>
                 </fieldset>
         </form>
@@ -149,33 +148,32 @@
     
 
     <!-- Footer -->
-    <footer class="container-fluid content-section text-center primary-color white-content padding-10 margin-10">
-
-    
-        <h2>Kontaktirajte nas</h2>
-        <p><a class="white-content" href="mailto:office@crta.org"><b>Pišite nam</b></a> ako su vam potrebni posebni budžetski podaci ili vizualizacije.</p>
-        <ul class="list-inline banner-social-buttons">
-            <li>
-                <a href="http://www.crta.rs/" class=" btn-lg white-content font-lg-custom"><i class="fa fa-globe fa-fw"></i></a>
-            </li>
-            <li>
-                <a href="https://twitter.com/CRTArs" class=" btn-lg white-content font-lg-custom"><i class="fa fa-twitter fa-fw"></i></a>
-            </li>
-            <li>
-                <a href="https://www.linkedin.com/company/2779063" class=" btn-lg white-content font-lg-custom"><i class="fa fa-linkedin fa-fw"></i></a>
-            </li>
-            <li>
-                <a href="https://www.facebook.com/CRTA-Center-for-Research-Transparency-and-Accountability-246944101993258" class=" btn-lg white-content font-lg-custom"><i class="fa fa-facebook fa-fw"></i></a>
-            </li>
-            <li>
-                <a href="https://www.youtube.com/user/Istinomer" class=" btn-lg white-content font-lg-custom"><i class="fa fa-youtube fa-fw"></i></a>
-            </li>
-            <li>
-                <a href="https://github.com/crtarsorg" class=" btn-lg white-content font-lg-custom"><i class="fa fa-github fa-fw"></i></a>
-            </li>
-        </ul>
-        <p>DataCentar</p>
-        
+    <footer class="container-fluid content-section text-center primary-color white-content padding-10 margin-4p">
+        <div class="container">    
+            <h2 class="margin-2p">Kontaktirajte nas</h2>
+            <p class="margin-2p"><a class="white-content" href="mailto:office@crta.org"><b>Pišite nam</b></a> ako su vam potrebni posebni budžetski podaci ili vizualizacije.</p>
+            <ul class="list-inline banner-social-buttons margin-2p">
+                <li>
+                    <a href="http://www.crta.rs/" class=" btn-lg white-content font-lg-custom"><i class="fa fa-globe fa-fw"></i></a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/CRTArs" class=" btn-lg white-content font-lg-custom"><i class="fa fa-twitter fa-fw"></i></a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/company/2779063" class=" btn-lg white-content font-lg-custom"><i class="fa fa-linkedin fa-fw"></i></a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/CRTA-Center-for-Research-Transparency-and-Accountability-246944101993258" class=" btn-lg white-content font-lg-custom"><i class="fa fa-facebook fa-fw"></i></a>
+                </li>
+                <li>
+                    <a href="https://www.youtube.com/user/Istinomer" class=" btn-lg white-content font-lg-custom"><i class="fa fa-youtube fa-fw"></i></a>
+                </li>
+                <li>
+                    <a href="https://github.com/crtarsorg" class=" btn-lg white-content font-lg-custom"><i class="fa fa-github fa-fw"></i></a>
+                </li>
+            </ul>
+            <p class="margin-2p">DataCentar</p>
+        </div>        
     </footer>
 
 

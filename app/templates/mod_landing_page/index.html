@@ -216,57 +216,54 @@ $(function () {
 </script>
 
 <!-- Intro Header; Welcome section -->
-<section class="section-height">
+<section class="">
     <header class="landing">
         <div class="intro primary-color">
-            <div class="intro-content">
+            <div class="intro-content container">
                 <h3 class="text-center">Welcome</h3>
                     <p class="text-center lead">
                         Welcome to Data Center – an open platform that helps you find, liberate and make use of different public data!
                 </p>
             </div>
         </div>
-            <div class="overlay-video">
-                    <div class="col-md-6 col-md-offset-3 negative-margin-5">
-                        
-                        
-                        <div class='embed-container'>
-                            <div id="ytplayerLanding"></div>
-                        </div>
-                        <div class="margin-10"><a href="{{ url_for('api.index') }}"><span id="searchWithParams">Show me data about MUNICIPAL BUDGETS in BELGRADE in 1999 related to EDUCATION</span></a></div>
+        <div class="container">
+            <div class="overlay-video text-center">
+                <div class="welcome-video col-xs-12 col-sm-8">
+                    <div class='embed-container'>
+                        <div id="ytplayerLanding"></div>
+                    </div>
+                    <div class="welcome-text margin-9p"><a href="{{ url_for('api.index') }}"><span id="searchWithParams">Show me data about MUNICIPAL BUDGETS in BELGRADE in 1999 related to EDUCATION</span></a></div>
 
-                        <div class="row">
-                            <div class="col-md-6 margin-10">
-
+                    <div class="row welcome-buttons margin-9p">
+                        <div class="col-md-6">
                             <a href="{{ url_for('api.index') }}">   
-                                <button type="button" class="btn btn-block btn-lg  btn-link btn-white-border primary-color white-content " >
-                                    Just take me to search
+                                <button type="button" class="button-full"> <!--btn btn-block btn-lg  btn-link btn-white-border primary-color white-content-->
+                                Just take me to search
                                 </button>
                             </a>
-                            </div>
-                            <div class="col-md-6 margin-10">
-                                <button id="anotherFavQuery" type="button" class="btn btn-block btn-lg btn-link btn-white-border primary-color white-content">
-                                    Meh, what else you got?
-                                </button>
-                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <button id="anotherFavQuery" type="button" class="button-full">
+                                Meh, what else you got?
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-        <!-- </div> -->
+        </div>
     </header>
 </section>
 <!-- What's avalible Section -->
-<section id="avalibleS" class="container-fluid section-height secondary-color content-section text-center white-content">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2">
-            <h2>What's avalible Section</h2>
+<section id="avalibleS" class="container-fluid secondary-color content-section text-center white-content margin-4p">
+    <div class="container">
+        <div class="margin-2p"> <!--col-lg-8 col-lg-offset-2-->
+            <h2>What's available Section</h2>
             <!-- <img class="img-responsive text-center margin-auto" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=800%C3%97400&w=800&h=400" alt=""> -->
             <div class="vis margin-auto">
             </div>
             <div id="vis1"></div>
         </div>
-    </div>
+    <!-- </div> -->
 </section>
 
 

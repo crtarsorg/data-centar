@@ -22,7 +22,6 @@ class DataImporterBase(object):
             }
         )
 
-
     def retrieve_rows_from_csv_file(self,  municipality, data_type):
 
         # before getting new data from csv file let's remove current records for this entity in database

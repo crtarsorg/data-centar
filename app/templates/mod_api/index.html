@@ -228,7 +228,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <table class="table table-striped">
+                                    <table class="table table-striped margin-2p">
                                         <thead class="white-content">
                                             <tr>
                                                 <td class="secondary-color">
@@ -304,34 +304,34 @@
                                     <div class="col-md-12">
                                         <form class="form-horizontal" id="sum-req-form">
                                             <div class="form-group">
-                                                {{ sum_req_form.data_type.label(class="control-label col-xs-2") }}
-                                                <div class="col-xs-10">
+                                                {{ sum_req_form.data_type.label(class="control-label col-xs-12 col-sm-2") }}
+                                                <div class="col-xs-12 col-sm-10">
                                                     {{ sum_req_form.data_type(class="form-control") }}
-                                                    <div class="col-xs-10 pull-right" align="right">
+                                                    <div class="col-xs-12 col-sm-10 pull-right" align="right">
                                                         {{ sum_req_form.select_both_sources }}{{ sum_req_form.select_both_sources.label(class="small") }}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                {{ sum_req_form.years.label(class="control-label col-xs-2") }}
-                                                <div class="col-xs-10">
+                                                {{ sum_req_form.years.label(class="control-label col-xs-12 col-sm-2") }}
+                                                <div class="col-xs-12 col-sm-10">
                                                     {{ sum_req_form.years(class="form-control") }}
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                {{ sum_req_form.municipalities.label(class="control-label col-xs-2") }}
-                                                <div class="col-xs-10">
+                                                {{ sum_req_form.municipalities.label(class="control-label col-xs-12 col-sm-2") }}
+                                                <div class="col-xs-12 col-sm-10">
                                                     {{ sum_req_form.municipalities(class="form-control") }}
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                {{ sum_req_form.classifications.label(class="control-label col-xs-2", style="padding:5px;") }}
-                                                <div class="col-xs-10">
+                                                {{ sum_req_form.classifications.label(class="control-label col-xs-12 col-sm-2") }}
+                                                <div class="col-xs-12 col-sm-10">
                                                     {{ sum_req_form.classifications(class="form-control") }}
                                                 </div>
                                             </div>
-                                            <div class="col-xs-8">
-                                                <strong>Filteri:</strong>
+                                            <div class="col-xs-12 col-sm-8">
+                                                <p>Filteri:</p>
                                                 <hr>
                                                 <div class="form-group">
                                                     <div class="col-xs-1">
@@ -412,8 +412,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-4">
-                                                <strong>Request Body:</strong>
+                                            <div class="col-xs-12 col-sm-4">
+                                                <p>Request Body:</p>
                                                 <pre style="height:340px;">
                                                     <code class="language-javascript" id="sum-req-body-box"></code>
                                                 </pre>
@@ -459,21 +459,21 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="activities-how">
-                                <div class="form-group">
-                                    <h5>OPIS:</h5>
-                                    <span>Koristite ovaj POST zahtev za preuzimanje podataka.</span>
+                                <div class="form-group text-center">
+                                    <!--<h5>OPIS:</h5>-->
+                                    <span>OPIS: Koristite ovaj POST zahtev za preuzimanje podataka.</span>
                                 </div>
 
-                                <div>
-                                    <h5>URL POST ZAHTEVA:</h5>
-                                    <span>http://datacentar.io/api/ekonomska-klasifikacija</span>
+                                <div class="text-center">
+                                    <!--<h5>URL POST ZAHTEVA:</h5>-->
+                                    <span>URL POST ZAHTEVA: http://datacentar.io/api/ekonomska-klasifikacija</span>
                                 </div>
                                 <br>
 
                                 <div>
                                     <h5>PARAMETRI UPITA:</h5>
-                                    <table class="table table-striped">
-                                        <tdead bgcolor="#dddddd">
+                                    <table class="table table-striped margin-2p">
+                                        <thead class="secondary-color white-content">
                                         <tr>
                                             <td>
                                                 Parameter
@@ -593,21 +593,21 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="municipalities-how">
-                                <div class="form-group">
-                                    <h5>OPIS:</h5>
-                                    <span>Koristite ovaj POST zahtev za preuzimanje podataka.</span>
+                                <div class="form-group text-center">
+                                    <!--<h5>OPIS:</h5>-->
+                                    <span>OPIS: Koristite ovaj POST zahtev za preuzimanje podataka.</span>
                                 </div>
 
-                                <div>
-                                    <h5>URL POST ZAHTEVA:</h5>
-                                    <span>http://datacentar.io/api/sakupiti-klasifikacija-za-opstine</span>
+                                <div class="text-center">
+                                    <!--<h5>URL POST ZAHTEVA:</h5>-->
+                                    <span>URL POST ZAHTEVA: http://datacentar.io/api/sakupiti-klasifikacija-za-opstine</span>
                                 </div>
                                 <br>
 
                                 <div>
                                     <h5>PARAMETRI UPITA:</h5>
-                                    <table class="table table-striped">
-                                        <tdead bgcolor="#dddddd">
+                                    <table class="table table-striped margin-2p">
+                                        <thead class="secondary-color white-content">
                                         <tr>
                                             <td>
                                                 Parameter
@@ -675,7 +675,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                {{ sum_req_form.classifications.label(class="control-label col-xs-2", style="padding:5px;") }}
+                                                {{ sum_req_form.classifications.label(class="control-label col-xs-2") }}
                                                 <div class="col-xs-10">
                                                     {{ sum_req_form.classifications(class="form-control") }}
                                                 </div>
@@ -725,21 +725,21 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="list-mun-how">
-                                <div class="form-group">
-                                    <h5>OPIS:</h5>
-                                    <span>Koristite ovaj POST zahtev za preuzimanje podataka.</span>
+                                <div class="form-group text-center">
+                                    <!--<h5>OPIS:</h5>-->
+                                    <span>OPIS: Koristite ovaj POST zahtev za preuzimanje podataka.</span>
                                 </div>
 
-                                <div>
-                                    <h5>URL POST ZAHTEVA:</h5>
-                                    <span>http://datacentar.io/api/spisak-opstina-za-klasifikacija-broj</span>
+                                <div class="text-center">
+                                    <!--<h5>URL POST ZAHTEVA:</h5>-->
+                                    <span>URL POST ZAHTEVA: http://datacentar.io/api/spisak-opstina-za-klasifikacija-broj</span>
                                 </div>
                                 <br>
 
                                 <div>
                                     <h5>PARAMETRI UPITA:</h5>
-                                    <table class="table table-striped">
-                                        <tdead bgcolor="#dddddd">
+                                    <table class="table table-striped margin-2p">
+                                        <thead class="secondary-color white-content">
                                         <tr>
                                             <td>
                                                 Parameter
@@ -807,7 +807,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                {{ sum_req_form.classifications.label(class="control-label col-xs-2", style="padding:5px;") }}
+                                                {{ sum_req_form.classifications.label(class="control-label col-xs-2") }}
                                                 <div class="col-xs-10">
                                                     {{ sum_req_form.classifications(class="form-control") }}
                                                 </div>

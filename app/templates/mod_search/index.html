@@ -1,73 +1,4 @@
 {% extends "layout.html" %} {% block body %}
-
-<style>
-	#mainVis{
-		height: 550px;
-	}
-</style>
-<script>
-var params = 	
-{
-    "tipPodataka": "rashodi",
-    "godine": [
-        2015
-    ],
-    "opstine": [
-        "prijepolje",
-        "valjevo",
-        "vranje"
-    ],
-    "klasifikacija": {
-        "broj": [
-            413
-        ],
-        "pocinjeSa": ""
-    },
-    "filteri": {
-        "ukupno": {
-            "veceIliJednako": 50000,
-            "manjeIliJednako": 150000
-        }
-    }
-}
-
-	/*$.ajax({
-	  method: "POST",
-	  url: "../api/prosek",
-	  data: JSON.stringify (params),
-	  contentType:"application/json;charset=utf-8",
-	  dataType: "json"
-
-	})
-  .done(function( msg ) {
-    //console.log( msg );
-
-  });*/
-
-
-  $(function(){
-
-  	$(document).on('click', ".addCondition",function(ev){  		
-
-  		$(this).parents().filter(".optionalFieldSet").next().removeClass("hidden");
-  		
-  	})
-
-  	$(document).on('click', ".removeCondition",function(ev){  		
-
-  		$(this).parents().filter(".optionalFieldSet").addClass("hidden");
-		//reset to default
-		//if 
-  		
-  	})
-  	
-  })
-
- 
-
-</script>
-
-
 <header class="intro primary-color">
     <!-- <div class="intro-body container"> -->
         <div class="intro-content container padding-lg">
@@ -82,174 +13,57 @@ var params =
 	<section id="searchParamsS" class="main-content">
 	    <!-- <div class="row"> -->
 	        <div class="">
-	            <form action="" id="searchForm" class="form-horizontal" role="form">
+	            <form action="" class="form-horizontal" role="form">
 	                <div class="form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary select-control" name="">
 	                            <option value="">Budget</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary select-control" name="">
 	                            <option value="">Belgrade</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary select-control" name="">
 	                            <option value="">2010</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-1">
-	                        <button type="button"  class="form-control border-primary text-center">&#x2713;</button>
+	                        <button class="form-control border-primary text-center">&#x2713;</button>
 	                    </div>
 	                    <div class="col-xs-4 col-sm-2 pull-right">
-	                        <button type="button"  class=" addCondition form-control border-primary button-full">Advanced</button>
+	                        <button class="form-control border-primary button-full">Advanced</button>
 	                    </div>
 	                </div>
 	                <div class="advanced">
 	                	<p>Advanced</p>
 	                </div>
-	                <div class="optionalFieldSet form-group">
+	                <div class="form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary select-control" name="">
 	                            <option value="">Education</option>
-	                            <option value="">Social</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary select-control" name="">
 	                            <option value="">Operator</option>
-	                            <option value="">Operator2</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary select-control" name="">
 	                            <option value="">Function</option>
-	                            <option value="">Function2</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-2 col-sm-1 text-center">
-	                        <button type="button"  class="form-control border-primary pull-left" style="width: 50%;">&#x2713;</button>
-	                        <button type="button"  class="removeCondition form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
+	                        <button class="form-control border-primary pull-left" style="width: 50%;">&#x2713;</button>
+	                        <button class="form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
 	                    </div>
 	                    <div class="col-xs-4 col-sm-2 pull-right">
-	                        <button type="button"   class="addCondition form-control border-primary button-full">Add</button>
+	                        <button class="form-control border-primary button-full">Add</button>
 	                    </div>
 	                </div>
-
-	                <div class="optionalFieldSet form-group hidden">
-	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Education</option>
-	                            <option value="">Social</option>
-	                        </select>
-	                    </div>
-	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Operator</option>
-	                            <option value="">Operator2</option>
-	                        </select>
-	                    </div>
-	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Function</option>
-	                            <option value="">Function2</option>
-	                        </select>
-	                    </div>
-	                    <div class="col-xs-2 col-sm-1 text-center">
-	                        <button type="button"  class="form-control border-primary pull-left" style="width: 50%;">&#x2713;</button>
-	                        <button type="button"  class="removeCondition form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
-	                    </div>
-	                    <div class="col-xs-4 col-sm-2 pull-right">
-	                        <button type="button"   class="addCondition form-control border-primary button-full">Add</button>
-	                    </div>
-	                </div>
-
-	                <div class="optionalFieldSet form-group hidden">
-	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Education</option>
-	                            <option value="">Social</option>
-	                        </select>
-	                    </div>
-	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Operator</option>
-	                            <option value="">Operator2</option>
-	                        </select>
-	                    </div>
-	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Function</option>
-	                            <option value="">Function2</option>
-	                        </select>
-	                    </div>
-	                    <div class="col-xs-2 col-sm-1 text-center">
-	                        <button type="button"  class="form-control border-primary pull-left" style="width: 50%;">&#x2713;</button>
-	                        <button type="button"  class="removeCondition form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
-	                    </div>
-	                    <div class="col-xs-4 col-sm-2 pull-right">
-	                        <button type="button"   class="addCondition form-control border-primary button-full">Add</button>
-	                    </div>
-	                </div>
-
-	                <div class="optionalFieldSet form-group hidden">
-	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Education</option>
-	                            <option value="">Social</option>
-	                        </select>
-	                    </div>
-	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Operator</option>
-	                            <option value="">Operator2</option>
-	                        </select>
-	                    </div>
-	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Function</option>
-	                            <option value="">Function2</option>
-	                        </select>
-	                    </div>
-	                    <div class="col-xs-2 col-sm-1 text-center">
-	                        <button type="button"  class="form-control border-primary pull-left" style="width: 50%;">&#x2713;</button>
-	                        <button type="button"  class="removeCondition form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
-	                    </div>
-	                    <div class="col-xs-4 col-sm-2 pull-right">
-	                        <button type="button"   class="addCondition form-control border-primary button-full">Add</button>
-	                    </div>
-	                </div>
-
-	                <div class="optionalFieldSet form-group hidden">
-	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Education</option>
-	                            <option value="">Social</option>
-	                        </select>
-	                    </div>
-	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Operator</option>
-	                            <option value="">Operator2</option>
-	                        </select>
-	                    </div>
-	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Function</option>
-	                            <option value="">Function2</option>
-	                        </select>
-	                    </div>
-	                    <div class="col-xs-2 col-sm-1 text-center">
-	                        <button type="button"  class="form-control border-primary pull-left" style="width: 50%;">&#x2713;</button>
-	                        <button type="button"  class="removeCondition form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
-	                    </div>
-	                    <div class="col-xs-4 col-sm-2 pull-right">
-	                        <button type="button"   class="addCondition form-control border-primary button-full">Add</button>
-	                    </div>
-	                </div>
-
-
 	            </form>
 	        </div>
 	    <!-- </div> -->
@@ -257,67 +71,60 @@ var params =
 </div>
 
 <!-- Data sets Section -->
-
 <section id="dataSetS" class="container-fluid secondary-color white-content">
-    <div class="container padding-md">
-        <div class="col-xs-12 col-md-8">
-           <div class="col-xs-12 col-md-8 text-uppercase">
-           	 <h2>Results table name</h2>
-           </div>
-            <div class="ol-xs-12 col-sm-6 col-md-4 pull-down">
-                <select class="form-control border-primary download-control" name="" id="">
-                    <option value="">Download table</option>
-                </select>
-            </div>
-            <div class="clear border-white ">
-            	<div id="mainVis"></div>
-            </div>
-            
-        </div>
-        <div class="col-xs-12 col-md-4 margin-4p text-uppercase">
-            <h2>Visualizations</h2>
-            <div class="row">
-                <div class="">
-                   <div id="sideVisTop"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="">
-                   <div id="sideVisMiddle"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="">
-                   <div id="sideVisBottom"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-	<div class="row">
-	        <div id="noParams" class="hidden">
-	            <div class="col-md-6 col-md-offset-3">
-	                <h2>BROWSABLE LIST OF DATASETS?</h2>
-	                <div class="content-dataset col-lg-8 col-lg-offset-2">
-	                    <ul>
-	                        <li>List item 0</li>
-	                        <li>List item 1</li>
-	                        <li>List item 2</li>
-	                        <li>List item 3</li>
-	                        <li>List item 4</li>
-	                        <li>List item 5</li>
-	                        <li>List item 6</li>
-	                    </ul>
+    <!--<div class="row">-->
+        <div class="container padding-md">
+	        <div class="col-xs-12 col-md-8">
+	           <div class="col-xs-12 col-md-8 text-uppercase">
+	           	 <h2>Results table name</h2>
+	           </div>
+	            <div class="col-xs-12 col-sm-6 col-md-4 pull-down">
+	                <select class="form-control border-primary download-control" name="" id="">
+	                    <option value="">Download table</option>
+	                </select>
+	            </div>
+	            <div class="clear border-white">
+	            	<img src="http://placehold.it/450x550" alt="" class="img-responsive">	
+	            </div>
+	        </div>       
+	        <div class="col-xs-12 col-md-4 margin-4p text-uppercase">
+	            <h2>Visualizations</h2>
+	            <div class="row">
+	                <div class="">
+	                    <img src="http://placehold.it/300x120" alt="" class="margin-10">
+	                </div>
+	            </div>
+	            <div class="row">
+	                <div class="">
+	                    <img src="http://placehold.it/300x120" alt="" class="margin-10">
+	                </div>
+	            </div>
+	            <div class="row">
+	                <div class="">
+	                    <img src="http://placehold.it/300x120" alt="" class="margin-10">
 	                </div>
 	            </div>
 	        </div>
 	    </div>
-	</section>
-<script>
-	$(document).ready(function() {
-		$(".search-control").selectmenu();
-		$(".download-control").selectmenu();
-	});
-</script>
+    <!--</div>-->
+    <div class="row">
+        <div id="noParams" class="hidden">
+            <div class="col-md-6 col-md-offset-3">
+                <h2>BROWSABLE LIST OF DATASETS?</h2>
+                <div class="content-dataset col-lg-8 col-lg-offset-2">
+                    <ul>
+                        <li>List item 0</li>
+                        <li>List item 1</li>
+                        <li>List item 2</li>
+                        <li>List item 3</li>
+                        <li>List item 4</li>
+                        <li>List item 5</li>
+                        <li>List item 6</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}

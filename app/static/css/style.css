@@ -38,6 +38,30 @@ body {
 .img-responsive {
     width: 100%;
 }
+.ui-widget {
+    font-size: 14px;
+}
+.form-control {
+    border-radius: 7px;
+}
+textarea {
+    resize: none;
+}
+.primary-content-color::-webkit-input-placeholder {
+   color: #0794A0;
+}
+
+.primary-content-color:-moz-placeholder {
+   color: #0794A0;  
+}
+
+.primary-content-color::-moz-placeholder {
+   color: #0794A0;  
+}
+
+.primary-content-color:-ms-input-placeholder {  
+   color: #0794A0;  
+}
 /*=====  End of Whole page  ======*/
 
 
@@ -90,7 +114,7 @@ nav {
 .btn-white-border,.btn-white-border:hover,.btn-white-border:active{
     background-color: #0794A0; /* prim-col */
     border-color: white;
-    border-radius: 10px;
+    border-radius: 7px;
 }
 #searchWithParams{
     font-size: 18px;
@@ -146,6 +170,9 @@ nav {
 }
 .secondary-color{
     background-color: #7DC1D1;/* #7EC2D1; */
+}
+.third-color {
+    background-color: #d9edf1;
 }
 
 .primary-content-color{
@@ -207,45 +234,81 @@ select.primary-content-color{
     align-items: center;
 }
 
-/*.border-primary { /*preimenovati
+.border-primary {
 	border: 2px solid #0794A0;
-    border-radius: 10px;
+    border-radius: 7px;
     color: #0794A0;
-}*/
+}
 .ui-widget {
-    font-size: inherit;
     font-weight: normal;
     font-family: 'Ubuntu Mono';
 }
+.ui-widget-content {
+    color: #0794A0;
+}
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
     background: #fff;
-    border: 2px solid #0794A0;
-    border-radius: 10px;
+    border: 2px solid #7DC1D1;
+    border-radius: 7px;
     color: #0794A0;
     width: 100% !important;
+    z-index: 9999;
 }
-
 .ui-selectmenu-button span.ui-selectmenu-text {
-    padding: 5px;
-    padding-right: 30px;
+    padding: 5px 30px 5px 10px;
 }
-
-.ui-state-default:focus {
-    border-radius: 10px;
+.ui-selectmenu-button:focus, .ui-widget:focus .ui-state-default:focus, .ui-corner-top:focus {
+    outline: none;
 }
-
-.border-secondary{
+.ui-widget-content {
+    border: 2px solid #0794A0;
+    background: #fff;
+}
+.ui-widget-content .ui-state-focus {
+    background: #0794A0;
+    border: 1px solid #0794A0;
+    color: #fff;
+    font-weight: normal;   
+}
+.ui-selectmenu-menu .ui-menu {
+    border-radius: 7px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    margin-top: -10px;
+}
+.ui-menu li:first-child {
+    padding-top: 10px;
+}
+.ui-icon {
+    width: 13px;
+    height: 13px;
+}
+.ui-selectmenu-button span.ui-icon {
+    margin-top: -6px;
+}
+#datasetSel-button {
+    background: #0794A0;
+    color: #fff;
+}
+#datasetSel-button .ui-icon {
+    background-image: url("../images/select-arrow-white.png");
+}
+#datasetSel-button .ui-icon-triangle-1-s {
+    background-position: 0px;
+    background-size: 100%;
+}
+.border-secondary {
     border: 2px solid #7DC1D1;
 }
 .border-white{
  border: 2px solid white;   
- border-radius: 10px;
+ border-radius: 7px;
 }
 .button-full {
     background: #0794A0;
     color: #fff;
     border: 2px solid #7DC1D1;
-    border-radius: 10px;
+    border-radius: 7px;
 }
 .button-full:hover {
     background: #05656d;
@@ -274,7 +337,7 @@ select.primary-content-color{
 }
 
 .funder-img{
-	border-radius: 10px;
+	border-radius: 7px;
 	border: 2px solid #0794A0;
     vertical-align: middle;
 }
@@ -303,6 +366,24 @@ select.primary-content-color{
 }
 /*=====  End of Search page  ======*/
 
+/*API*/
+.float-none {
+    float: none;
+    margin: 0 auto;
+}
+table td:nth-child(2) {
+    width: 15%;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    border-top: 1px solid #0794A0;
+}
+@media screen and (max-width: 768px) {
+    .panel-body {
+        font-size: 13px;
+        word-wrap: break-word;
+        padding: 0px;
+    }
+}
 /*LAYOUT*/
 .datareq {
     float: none;
@@ -341,7 +422,7 @@ select.primary-content-color{
     background: #fff;
     border: 0px;
 }
-.nav>li>a {
+.navbar .nav>li>a {
     border-bottom: 1px solid #0794A0;
     padding: 0;
     padding-top: 15px;
@@ -350,6 +431,9 @@ select.primary-content-color{
 }
 .navbar-default .navbar-nav>li>a {
     text-transform: uppercase;
+    color: #0794A0;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
     color: #0794A0;
 }
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
@@ -378,4 +462,18 @@ select.primary-content-color{
 }
 button:focus, select:focus {
     outline: none;
+}
+.panel {
+    border-radius: 7px;
+}
+/*.panel-heading {
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}*/
+.panel-default>.panel-heading {
+    background: #0794A0;
+    border-color: #0794A0;
+}
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background: #fff;
 }

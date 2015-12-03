@@ -189,20 +189,15 @@ class PrihodiDataImporter(DataImporterBase):
 
         rows = self.retrieve_rows_from_csv_file(municipality, data_type)
         parent_categories = utils.cacak_parent_catecories()
+        parent_num = ""
         # Iterate throughout every row in data handler
         for index, row in enumerate(rows):
             if index > 1:
-                if row[1] == "" and row[2] in parent_categories[row[1]]:
+                if row[1] in parent_categories:
                     parent_num = row[1].strip()
                     parent_handler = row[2].strip()
 
-                if row[1] not in ["", " "]:
-                    if row[1].strip() in parent_categories.keys():
-                        parent_num = row[1].strip()
-                        parent_handler = row[2].strip()
-
-
-                if row[1] not in ["", "2", "Економска класификација", "711000", "610000", "611000"] and row[1] not in parent_categories.keys() or row[1].strip() in parent_categories and row[2] in parent_categories[row[1].strip()]:
+                if row[2].strip() in parent_categories[parent_num]:
                     row[3] = row[3].replace(',00', '').replace('.', '')
                     row[4] = row[4].replace(',00', '').replace('.', '')
                     row[5] = row[5].replace(',00', '').replace('.', '')

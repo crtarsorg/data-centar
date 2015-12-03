@@ -1,94 +1,97 @@
-{% extends "layout.html" %} 
-{% block body %}
-
-
+{% extends "layout.html" %} {% block body %}
 <style>
-  .vis{
+.vis {
     width: 100%;
     height: 500px;
-  }
+}
 
-  svg {
+svg {
     width: 100%;
     height: 100%;
-  }
+}
 
-  path.slice{
-    stroke-width:2px;
-  }
+path.slice {
+    stroke-width: 2px;
+}
 
-  .label{
+.label {
     fill: white;
-  }
-  polyline{
+}
+
+polyline {
     opacity: .3;
     stroke: black;
     stroke-width: 2px;
     fill: none;
-  }
-
+}
 </style>
-
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-
 <script>
-  
 //https://developers.google.com/youtube/player_parameters?hl=en
-    
-  var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/player_api";
 
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/player_api";
 
-  var player;
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-  function onYouTubePlayerAPIReady() {
+var player;
+
+function onYouTubePlayerAPIReady() {
     player = new YT.Player('ytplayerLanding', {
-     /* height: '390',
-      width: '640',*/
-      videoId: 'k7uuLp5FpJA',
-      playerVars: { 
-         'showinfo': 0,
-         /*'controls': 1,*/
-         'autohide':1
+        /* height: '390',
+         width: '640',*/
+        videoId: 'k7uuLp5FpJA',
+        playerVars: {
+            'showinfo': 0,
+            /*'controls': 1,*/
+            'autohide': 1
         }
-      
+
     });
-  }
+}
 
 
- function favouriteQueries () {
-      var data = [
-          {"url":"./api?data=1","text":"Show me data about MUNICIPAL BUDGETS in BELGRADE in 1999 related to EDUCATION"},
-          {"url":"./api?data=2","text":"Show me data about MUNICIPAL DONATIONS in NIS in 2010 related to PUBLIC TRANSPORTATIONS"},
-          {"url":"./api?data=3","text":"Show me data about MUNICIPAL BUDGETS in NOVI SAD in 2010 related to PUBLIC HEALTH"},
-          {"url":"./api?data=4","text":"Show me data about MUNICIPAL EXPANDITURES in PRIJEPOLJE in 2015 related to PROCUREMENT"},
-          {"url":"./api?data=5","text":"Show me data about REGIONAL INCOMES in CENTRALNA SRBIJA in 2013 "}
-      ];
-      var indx = Math.floor(Math.random()*4); 
+function favouriteQueries() {
+    var data = [{
+        "url": "./api?data=1",
+        "text": "Show me data about MUNICIPAL BUDGETS in BELGRADE in 1999 related to EDUCATION"
+    }, {
+        "url": "./api?data=2",
+        "text": "Show me data about MUNICIPAL DONATIONS in NIS in 2010 related to PUBLIC TRANSPORTATIONS"
+    }, {
+        "url": "./api?data=3",
+        "text": "Show me data about MUNICIPAL BUDGETS in NOVI SAD in 2010 related to PUBLIC HEALTH"
+    }, {
+        "url": "./api?data=4",
+        "text": "Show me data about MUNICIPAL EXPANDITURES in PRIJEPOLJE in 2015 related to PROCUREMENT"
+    }, {
+        "url": "./api?data=5",
+        "text": "Show me data about REGIONAL INCOMES in CENTRALNA SRBIJA in 2013 "
+    }];
+    var indx = Math.floor(Math.random() * 4);
 
-      return data[indx];
+    return data[indx];
 
-  } 
+}
 
-$(function () {
+$(function() {
 
-  $("#anotherFavQuery").click(function () {
-          
-        var datum = favouriteQueries(); 
+    $("#anotherFavQuery").click(function() {
+
+        var datum = favouriteQueries();
         $("#searchWithParams").html(datum.text);
-        $("#searchWithParams").parent().attr("href",datum.url);
+        $("#searchWithParams").parent().attr("href", datum.url);
     })
-  
+
 
 })
 
-$(function () {
+$(function() {
 
 
-   var colors = (function () {
+    var colors = (function() {
         var colors = [],
             base = Highcharts.getOptions().colors[0],
             i;
@@ -101,37 +104,264 @@ $(function () {
         return colors;
     }());
 
-  
-   var data = [{"conto":710000,"opis":"Prihodi","vrednost":100000},{"conto":712000,"opis":"Porez na zarade","vrednost":65000}, {"conto":713000,"opis":"Porez na imovinu","vrednost":650000},{"conto":730000,"opis":"Donacije i transferi","vrednost":65000},{"conto":733000,"opis":"Transferi od drugih nivoa vlasti","vrednost":720000},{"conto":410000,"opis":"Rashodi za zaposlene", "vrednost":72000},{"conto":422000,"opis":"Troskovi putovanja", "vrednost":2000},{"conto":460000,"opis":"Donacije, dotacije i transferi", "vrednost":2000},{"conto":450000,"opis":"Subvencije", "vrednost":25000}]
-  
-    var gradovi = [{"grad":"uzice", "vrednost":10000},{"grad":"cacak", "vrednost":10000},{"grad":"kosijeric", "vrednost":10000},{"grad":"beograd", "vrednost":10000}]
 
-    /// podaci sa kontima 
+   
 
+    var params = {
+        "tipPodataka": ["rashodi", "prihodi"],
+        "klasifikacijaBroj": [
+            710000,
+            712000,
+            713000,
+            730000,
+            733000,
+            410000,
+            422000,
+            460000,
+            450000
+
+        ],
+        opstine:[]
+    }
+
+    var params2 = {
+        "tipPodataka": [
+            "rashodi",
+            "prihodi"
+        ],
+        "godine": [
+            2015
+        ],
+        "opstine": [
+           
+        ],
+        "klasifikacija": {
+            "broj": [
+            ],
+            "pocinjeSa": ""
+        },
+        "filteri": {}
+    };
+
+
+    var result1, result2;
+    $.when(
+
+        $.ajax({
+            method: "POST",
+            url: "../api/prosek",
+            data: JSON.stringify(params),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function(returnhtml){                          
+                result1 = returnhtml;     
+            }      
+
+        })
+
+        ,
+        $.ajax({
+            method: "POST",
+            url: "../api/zbir",
+            data: JSON.stringify(params2),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function(returnhtml){                          
+                result2 = returnhtml;     
+            }   
+
+        })
+
+
+
+    ).then(function() {
+        
+
+        visu(result1, result2)
+    });
+
+    // if is it exact match - take that, other case, take all childes and sum it
+    function filterByConto (arrayCities, conto) {
+      
+      var tempValues = 0; 
+
+      arrayCities.forEach(function (datum) {
+        var rx = new RegExp("^"+conto+"0+");
+        var rx2 = new RegExp("^"+conto);
+          
+        if(rx.test( datum.klasifikacijaBroj ) )
+          return (datum.ukupno);  
+
+          else if(rx2.test( datum.klasifikacijaBroj ) )
+            tempValues+= datum.ukupno;
+      })
+      return tempValues;
+    }
+
+
+    function filterCitiesByContos (raw, cities, contos) {
+      
+
+      var gradovi  =[];
+
+        cities.forEach(function (city) {
+            var tempCity = {};
+
+            tempCity.muncipality = city;
+            tempCity.data = [];
+
+            var tempData = raw.filter(function (el) {
+              return el.opstina == city
+            })
+
+            contos.forEach(function (conto) {
+                var tempConto = {};
+                tempConto.conto = conto;
+                tempConto.value = filterByConto(tempData, conto)    
+                
+                tempCity.data.push( tempConto );
+            })
+            
+
+            gradovi.push(tempCity);
+
+        })
+
+      return gradovi; 
+    }
+    //http://stackoverflow.com/a/14438954
+  function onlyUnique(value, index, self) { 
+      return self.indexOf(value) === index;
+  }
+
+    function visu (arrayAvg, arrayCities) {
+      
+    // calculate
+
+    var data = [
+    {
+        "conto": 710000,
+        "opis": "Prihodi",
+        "vrednost": 1
+    }, {
+        "conto": 712000,
+        "opis": "Porez na zarade",
+        "vrednost": 1
+    }, {
+        "conto": 713000,
+        "opis": "Porez na imovinu",
+        "vrednost": 1
+    }, {
+        "conto": 730000,
+        "opis": "Donacije i transferi",
+        "vrednost": 1
+    }, {
+        "conto": 733000,
+        "opis": "Transferi od drugih nivoa vlasti",
+        "vrednost": 1
+    }, {
+        "conto": 410000,
+        "opis": "Rashodi za zaposlene",
+        "vrednost": 1
+    }, {
+        "conto": 422000,
+        "opis": "Troškovi putovanja",
+        "vrednost": 1
+    }, {
+        "conto": 460000,
+        "opis": "Donacije, dotacije i transferi",
+        "vrednost": 1
+    }, {
+        "conto": 450000,
+        "opis": "Subvencije",
+        "vrednost": 1
+    }]
+
+    var cities = arrayCities.map(function (la) {
+      return la.opstina;
+    })
+
+    cities = cities.filter(onlyUnique);
+
+    var contos = [71,712,713,73,733,41,422,46,45];
+
+    var res = filterCitiesByContos(arrayCities, cities, contos )
+    
+
+
+    var updatedData = [];
+
+    arrayAvg.forEach(function(el){
+
+      var temp = data.filter(function (el1) {
+        return +el1.conto == +el.conto;
+      })
+      
+      temp = temp[0]
+
+      if(temp != undefined)
+        {
+          temp.vrednost = el.avg;
+          updatedData.push(temp);
+        }
+    })
+
+    data.concat(updatedData)
+    
+    console.log(data);
+   
+    // filter muncipalities
+    var gradovi = []
+    
+    gradovi = res;
+   
 
     var niz = [];
-      
-    gradovi.forEach(function(lo){
+
+    gradovi.forEach(function(lo) {
+      var tempData = lo.data.map(function (a) {
+        return a.value
+      })
+
       var temp_el = {
-            type: 'column',
-            name: lo.grad,
-            data: [3000, 2000, 1000, 3000, 4000,5000, 8000,15000,18000]
-          }
-      niz.push(temp_el);
-    })
+          type: 'column',
+          name: lo.muncipality,
+          data: tempData /*[3000, 2000, 1000, 3000, 4000, 5000, 8000, 15000, 18000]*/
+      }
       
+      niz.push(temp_el);
+
+    })
+    var zaProseke = niz.map(function(la){ return la.data })
+    var prosek = [] ;
+
+    zaProseke.forEach(function (arg) {
+      for (var i = 0, len = arg.length; i < len ; i++) {
+        if(prosek[i] ==undefined) prosek[i]=1;
+        prosek[i] +=Math.round(arg[i]/len);
+      }
+    })
+
+    
+console.log(prosek);
+
+    /* for pie*/
     data.forEach(function(temp) {
         temp.name = temp.opis;
         temp.y = temp.vrednost;
     })
 
-    var podaci =  data;
-    var imena  = podaci.map(function(el){return el.name;})
+    var podaci = data;
+    var imena = podaci.map(function(el) {
+        return el.name;
+    })
+
+    /* for pie*/
 
     niz.push({
         type: 'spline',
         name: 'Average',
-        data: [3000, 26000, 3000, 6300, 3300,5000,7000,8000,9000],
+        data: prosek,
         marker: {
             lineWidth: 2,
             lineColor: Highcharts.getOptions().colors[3],
@@ -142,87 +372,91 @@ $(function () {
 
 
     niz.push({
-            type: 'pie',
-            name: 'Iznos',
-            data: podaci,
-            center: [120, 80],
-            size: 180, // function dynamic value, depending on screen size
-            colors:colors,
-            showInLegend: false,
-            allowPointSelect: true,
-            dataLabels: {
-                    enabled: false,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                    style: {"color": "white", "fontSize": "11px", "fontWeight": "bold", "textShadow": "none" }
-                }
-        });
-  
-  
-  
+        type: 'pie',
+        name: 'Iznos',
+        data: podaci,
+        center: [960, 80],
+        size: 150, // function dynamic value, depending on screen size
+        colors: colors,
+        showInLegend: false,
+        allowPointSelect: true,
+        dataLabels: {
+            enabled: false,
+            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+            style: {
+                "color": "white",
+                "fontSize": "11px",
+                "fontWeight": "bold",
+                "textShadow": "none"
+            }
+        }
+    });
+
+
+
     var chartMain = $('.vis').highcharts({
-      chart: {
+        chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
             plotShadow: false,
-            backgroundColor:"#7DC1D1"
+            backgroundColor: "#7DC1D1"
 
         },
         title: {
-            text: 'Neki pokazatelji',
-            style:{
-                color:"white"
-              }
-        },
-        colors:colors,
-        xAxis: [ {
-            offset: 0,
-            width :1000,
-            left: 150,
-            categories: imena,
-            labels:{
-              style:{
-                color:"white",                
-                "fontSize":"14px"
-              }
+            text: 'Data for 10 muncipalities',
+            style: {
+                color: "white"
             }
-        }] ,
-       tooltip: {
+        },
+        colors: ["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a"],//colors,
+         yAxis: {
+            type: 'logarithmic',
+            minorTickInterval: 0.35
+        },
+        xAxis: [{
+            offset: 0,
+            width: 900,
+            left: 100,
+            categories: imena,
+            labels: {
+                style: {
+                    color: "white",
+                    "fontSize": "14px"
+                }
+            }
+        }],
+        tooltip: {
             pointFormat: ' {series.name}: <b>{point.y} din</b>'
         },
-       
-      
+
+
         labels: {
-          /*  items: [{
-                html: '',
-                style: {
-                    left: '250px',
-                    top: '18px',
-                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'white'
-                }
-            }]*/
+              /*items: [{
+                  html: 'Data for 10 muncipalities',
+                  style: {
+                      left: '250px',
+                      top: '5px',
+                      color: (Highcharts.theme && Highcharts.theme.textColor) || 'white'
+                  }
+              }]*/
         },
         series: niz
     });
 
-    
 
+  }
 
     ///end of script
 });
-
-
-
-
 </script>
-
 <!-- Intro Header; Welcome section -->
 <section class="">
     <header class="landing">
         <div class="intro primary-color">
             <div class="white-content container padding-lg">
                 <h2 class="text-center">Welcome</h2>
-                    <p class="text-center lead margin-2p">
-                        Welcome to Data Center – an open platform that helps you find, liberate and make use of different public data!
+                <p class="text-center lead margin-2p">
+                    Welcome to Data Center – an open platform that helps you find, liberate and make use of different public data!
                 </p>
             </div>
         </div>
@@ -232,13 +466,13 @@ $(function () {
                     <div class='embed-container'>
                         <div id="ytplayerLanding"></div>
                     </div>
-                    <div class="welcome-text margin-9p text-underline"><a href="{{ url_for('api.index') }}"><span id="searchWithParams">Show me data about MUNICIPAL BUDGETS in BELGRADE in 1999 related to EDUCATION</span></a></div>
-
+                    <div class="welcome-text margin-9p text-underline"><a href="{{ url_for('api.index') }}"><span id="searchWithParams">Show me data about MUNICIPAL BUDGETS in BELGRADE in 2010 related to EDUCATION</span></a></div>
                     <div class="row welcome-buttons margin-9p">
                         <div class="col-xs-12 col-sm-6">
-                            <a href="{{ url_for('api.index') }}">   
-                                <button type="button" class="button-full"> <!--btn btn-block btn-lg  btn-link btn-white-border primary-color white-content-->
-                                Just take me to search
+                            <a href="{{ url_for('api.index') }}">
+                                <button type="button" class="button-full">
+                                    <!--btn btn-block btn-lg  btn-link btn-white-border primary-color white-content-->
+                                    Just take me to search
                                 </button>
                             </a>
                         </div>
@@ -256,15 +490,14 @@ $(function () {
 <!-- What's avalible Section -->
 <section id="avalibleS" class="container-fluid secondary-color content-section text-center white-content margin-4p">
     <div class="container">
-        <div class="margin-4p"> <!--col-lg-8 col-lg-offset-2-->
-            <h2>What's available Section</h2>
+        <div class="margin-4p">
+            <!--col-lg-8 col-lg-offset-2-->
+            <h2>What's available</h2>
             <!-- <img class="img-responsive text-center margin-auto" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=800%C3%97400&w=800&h=400" alt=""> -->
             <div class="vis margin-auto margin-2p">
             </div>
             <div id="vis1"></div>
         </div>
-    <!-- </div> -->
+        <!-- </div> -->
 </section>
-
-
 {% endblock %}

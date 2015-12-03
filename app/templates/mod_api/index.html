@@ -122,10 +122,6 @@
     <script src="{{ url_for('static', filename='prismjs/prism.js') }}"></script>
     <link href="{{ url_for('static', filename='prismjs/prism.css') }}" rel="stylesheet">
     <style>
-        .panel-body {
-            color: #333;
-        }
-
         .tab-content {
             padding-top: 15px;
         }
@@ -135,31 +131,25 @@
         }
     </style>
     <!-- Contact Section -->
-    <section id="title" class="container text-center" style="padding-top:100px">
+    <header class="intro primary-color">
+    <div class="intro-content container padding-lg text-center">
+        <h2>API</h2>
+        <p class="margin-2p">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+    </header>
+    <section id="api-sums" class="container margin-4p">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <h2><i class="fa fa-flask"></i> API</h2>
+            <div class="col-xs-12 col-md-8 float-none">
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua.</p>
-            </div>
-        </div>
-    </section>
-    <section id="api-sums" class="container" style="padding-top:50px">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-
-                <div class="panel panel-default">
+                <div class="panel panel-default border-primary">
                     <div class="panel-heading text-center">
-                        <h3 class="panel-title">Zbir</h3>
+                        <h3 class="panel-title white-content">Zbir</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body primary-content-color">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#sums-how" aria-controls="sums-how"
-                                                                      role="tab" data-toggle="tab">Kako?</a></li>
-                            <li role="presentation"><a href="#sums-tryit" aria-controls="sums-tryit" role="tab"
-                                                       data-toggle="tab">Probaj!</a></li>
+                            <li role="presentation" class="active"><a href="#sums-how" aria-controls="sums-how" role="tab" data-toggle="tab">Kako?</a></li>
+                            <li role="presentation"><a href="#sums-tryit" aria-controls="sums-tryit" role="tab" data-toggle="tab">Probaj!</a></li>
                         </ul>
 
                         <!-- Tab panes -->
@@ -167,149 +157,158 @@
                             <div role="tabpanel" class="tab-pane active" id="sums-how">
                                 <br>
 
-                                <div class="form-group">
-                                    <h5>OPIS:</h5>
-                                    <span>Koristite ovaj POST zahtev za preuzimanje podataka.</span>
+                                <div class="form-group text-center">
+                                    <!--<h5>OPIS:</h5>-->
+                                    <span>OPIS: Koristite ovaj POST zahtev za preuzimanje podataka.</span>
                                 </div>
 
-                                <div>
-                                    <h5>URL POST ZAHTEVA:</h5>
-                                    <span>http://datacentar.io/api/zbir</span>
+                                <div class="text-center">
+                                    <!--<h5>URL POST ZAHTEVA:</h5>-->
+                                    <span>URL POST ZAHTEVA: http://datacentar.io/api/zbir</span>
                                 </div>
                                 <br>
 
                                 <div>
                                     <h5>PARAMETRI UPITA:</h5>
-                                    <table class="table table-striped">
-                                        <thead bgcolor="#dddddd">
+                                    <table class="table table-striped margin-2p">
+                                        <thead class="secondary-color white-content">
                                         <tr>
-                                            <th  colspan="2">
+                                            <td >
                                                 Parameter
-                                            </th>
-                                            <th>
+                                            </td>
+                                            <td>
                                                 Vrsta
-                                            </th>
-                                            <th>
+                                            </td>
+                                            <td>
                                                 Opis
-                                            </th>
+                                            </td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <th colspan="2">
-                                                tipPodataka
-                                            </th>
-                                            <td>
-                                                Stringova.
-                                            </td>
-                                            <td>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th colspan="2">
-                                                godine
-                                            </th>
-                                            <td>
-                                                Lista celih brojeva.
-                                            </td>
-                                            <td>
-                                                Godine za koje želimo da preuzmemo podatke.
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td >
+                                                    tipPodataka
+                                                </td>
+                                                <td>
+                                                    Stringova.
+                                                </td>
+                                                <td>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    godine
+                                                </td>
+                                                <td>
+                                                    Lista celih brojeva.
+                                                </td>
+                                                <td>
+                                                    Godine za koje želimo da preuzmemo podatke.
+                                                </td>
+                                            </tr>
 
-                                        <tr>
-                                            <th colspan="2">
-                                                opstine
-                                            </th>
-                                            <td>
-                                                Lista stringova.
-                                            </td>
-                                            <td>
-                                                Opštine.
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th colspan="2">
-                                                klasifikacijaBroj
-                                            </th>
-                                            <td>
-                                                Lista celih brojeva.
-                                            </td>
-                                            <td>
-                                                Ekonomskih klasifikacija.
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th colspan="2">
-                                                pocinjeSa
-                                            </th>
-                                            <td>
-                                                Stringova.
-                                            </td>
-                                            <td>
-                                                Use this parameter to filter based on what economic classification number starts with.
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th rowspan=8 bgcolor="#dddddd">Filteri</th>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                ukupno
-                                            </th>
-                                            <td>
-                                                broj.
-                                            </td>
-                                            <td>
-                                                Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                sopstveniPrihodi
-                                            </th>
-                                            <td>
-                                                broj.
-                                            </td>
-                                            <td>
-                                                Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                prihodiBudzeta
-                                            </th>
-                                            <td>
-                                                broj.
-                                            </td>
-                                            <td>
-                                                Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                donacije
-                                            </th>
-                                            <td>
-                                                broj.
-                                            </td>
-                                            <td>
-                                                Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                ostali
-                                            </th>
-                                            <td>
-                                                broj.
-                                            </td>
-                                            <td>
-                                                Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td >
+                                                    opstine
+                                                </td>
+                                                <td>
+                                                    Lista stringova.
+                                                </td>
+                                                <td>
+                                                    Opštine.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    klasifikacijaBroj
+                                                </td>
+                                                <td>
+                                                    Lista celih brojeva.
+                                                </td>
+                                                <td>
+                                                    Ekonomskih klasifikacija.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    pocinjeSa
+                                                </td>
+                                                <td>
+                                                    Stringova.
+                                                </td>
+                                                <td>
+                                                    Use this parameter to filter based on what economic classification number starts with.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-striped">
+                                        <thead class="white-content">
+                                            <tr>
+                                                <td class="secondary-color">
+                                                    Filteri
+                                                </td>
+                                                <td class="third-color"></td>
+                                                <td class="third-color"></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    ukupno
+                                                </td>
+                                                <td>
+                                                    broj.
+                                                </td>
+                                                <td>
+                                                    Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    sopstveniPrihodi
+                                                </td>
+                                                <td>
+                                                    broj.
+                                                </td>
+                                                <td>
+                                                    Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    prihodiBudzeta
+                                                </td>
+                                                <td>
+                                                    broj.
+                                                </td>
+                                                <td>
+                                                    Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    donacije
+                                                </td>
+                                                <td>
+                                                    broj.
+                                                </td>
+                                                <td>
+                                                    Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    ostali
+                                                </td>
+                                                <td>
+                                                    broj.
+                                                </td>
+                                                <td>
+                                                    Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -455,14 +454,14 @@
         </div>
     </section>
 
-    <section id="api-activities" class="container" style="padding-top:50px">
+    <section id="api-activities" class="container margin-4p">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading  text-center">
-                        <h3 class="panel-title">Ekonomskih Klasifikacija</h3>
+            <div class="col-xs-12 col-md-8 float-none">
+                <div class="panel panel-default border-primary">
+                    <div class="panel-heading text-center">
+                        <h3 class="panel-title white-content">Ekonomskih Klasifikacija</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body primary-content-color">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#activities-how"
@@ -489,24 +488,24 @@
                                 <div>
                                     <h5>PARAMETRI UPITA:</h5>
                                     <table class="table table-striped">
-                                        <thead bgcolor="#dddddd">
+                                        <tdead bgcolor="#dddddd">
                                         <tr>
-                                            <th>
+                                            <td>
                                                 Parameter
-                                            </th>
-                                            <th>
+                                            </td>
+                                            <td>
                                                 Vrsta
-                                            </th>
-                                            <th>
+                                            </td>
+                                            <td>
                                                 Opis
-                                            </th>
+                                            </td>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <th>
+                                            <td>
                                                 tipPodataka
-                                            </th>
+                                            </td>
                                             <td>
                                                 Stringova.
                                             </td>
@@ -515,9 +514,9 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>
+                                            <td>
                                                 godine
-                                            </th>
+                                            </td>
                                             <td>
                                                 Lista celih brojeva.
                                             </td>
@@ -527,9 +526,9 @@
                                         </tr>
 
                                         <tr>
-                                            <th>
+                                            <td>
                                                 opstine
-                                            </th>
+                                            </td>
                                             <td>
                                                 Lista stringova.
                                             </td>
@@ -589,14 +588,14 @@
         </div>
     </section>
 
-    <section id="api-municipalities" class="container" style="padding-top:50px">
+    <section id="api-municipalities" class="container margin-4p">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading  text-center">
-                        <h3 class="panel-title">Ekonomskih Klasifikacija Info za Opstine</h3>
+            <div class="col-xs-12 col-md-8 float-none">
+                <div class="panel panel-default border-primary">
+                    <div class="panel-heading text-center">
+                        <h3 class="panel-title white-content">Ekonomskih Klasifikacija Info za Opstine</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body primary-content-color">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#municipalities-how"
@@ -623,24 +622,24 @@
                                 <div>
                                     <h5>PARAMETRI UPITA:</h5>
                                     <table class="table table-striped">
-                                        <thead bgcolor="#dddddd">
+                                        <tdead bgcolor="#dddddd">
                                         <tr>
-                                            <th>
+                                            <td>
                                                 Parameter
-                                            </th>
-                                            <th>
+                                            </td>
+                                            <td>
                                                 Vrsta
-                                            </th>
-                                            <th>
+                                            </td>
+                                            <td>
                                                 Opis
-                                            </th>
+                                            </td>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <th>
+                                            <td>
                                                 tipPodataka
-                                            </th>
+                                            </td>
                                             <td>
                                                 Stringova.
                                             </td>
@@ -649,9 +648,9 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>
+                                            <td>
                                                 godine
-                                            </th>
+                                            </td>
                                             <td>
                                                 Lista celih brojeva.
                                             </td>
@@ -660,9 +659,9 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>
+                                            <td>
                                                 klasifikacijaBroj
-                                            </th>
+                                            </td>
                                             <td>
                                                 Lista celih brojeva.
                                             </td>
@@ -722,16 +721,14 @@
             </div>
         </div>
     </section>
-
-
-    <section id="api-list-mun" class="container" style="padding-top:50px">
+    <section id="api-list-mun" class="container margin-4p">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading  text-center">
-                        <h3 class="panel-title">Spisak Opština za Klasifikacija Broj</h3>
+            <div class="col-xs-12 col-md-8 float-none">
+                <div class="panel panel-default border-primary">
+                    <div class="panel-heading text-center">
+                        <h3 class="panel-title white-content">Spisak Opština za Klasifikacija Broj</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body primary-content-color">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#list-mun-how" aria-controls="list-mun-how"
@@ -757,24 +754,24 @@
                                 <div>
                                     <h5>PARAMETRI UPITA:</h5>
                                     <table class="table table-striped">
-                                        <thead bgcolor="#dddddd">
+                                        <tdead bgcolor="#dddddd">
                                         <tr>
-                                            <th>
+                                            <td>
                                                 Parameter
-                                            </th>
-                                            <th>
+                                            </td>
+                                            <td>
                                                 Vrsta
-                                            </th>
-                                            <th>
+                                            </td>
+                                            <td>
                                                 Opis
-                                            </th>
+                                            </td>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <th>
+                                            <td>
                                                 tipPodataka
-                                            </th>
+                                            </td>
                                             <td>
                                                 Stringova.
                                             </td>
@@ -783,9 +780,9 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>
+                                            <td>
                                                 godine
-                                            </th>
+                                            </td>
                                             <td>
                                                 Lista celih brojeva.
                                             </td>
@@ -794,9 +791,9 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>
+                                            <td>
                                                 klasifikacijaBroj
-                                            </th>
+                                            </td>
                                             <td>
                                                 Lista celih brojeva.
                                             </td>

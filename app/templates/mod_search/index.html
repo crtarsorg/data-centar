@@ -1,12 +1,10 @@
 {% extends "layout.html" %} {% block body %}
 <header class="intro primary-color">
-    <!-- <div class="intro-body container"> -->
-        <div class="intro-content container padding-lg">
-            <p class="text-center lead text-underline">
-                Show me data about [...] in [...]. See this astonishing site. Look at those fabulous data. <em>bibendum diam velit et dui.</em>
-            </p>
-        </div>
-    <!-- </div> -->
+    <div class="intro-content container padding-lg">
+	    <p class="text-center lead text-underline">
+	   		Show me data about [...] in [...]. See this astonishing site. Look at those fabulous data. <em>bibendum diam velit et dui.</em>
+	    </p>
+    </div>
 </header>
 <!-- Search params Section -->
 <div class="container">
@@ -16,17 +14,17 @@
 	            <form action="" class="form-horizontal" role="form">
 	                <div class="form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary select-control" name="">
 	                            <option value="">Budget</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary select-control" name="">
 	                            <option value="">Belgrade</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary select-control" name="">
 	                            <option value="">2010</option>
 	                        </select>
 	                    </div>
@@ -42,17 +40,17 @@
 	                </div>
 	                <div class="form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary select-control" name="">
 	                            <option value="">Education</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary select-control" name="">
 	                            <option value="">Operator</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary select-control" name="">
 	                            <option value="">Function</option>
 	                        </select>
 	                    </div>
@@ -126,11 +124,5 @@
         </div>
     </div>
 </section>
-<script>
-	$(document).ready(function() {
-		$(".search-control").selectmenu();
-		$(".download-control").selectmenu();
-	});
-</script>
 
 {% endblock %}

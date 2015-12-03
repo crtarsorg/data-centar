@@ -6,6 +6,25 @@ class RashodiImportingTestCases(unittest.TestCase):
 
     def setUp(self):
         pass
+    # Json container for each sombor program category
+    sombor_counts_of_programs = {
+        "ПРОГРАМ 15 - ЛОКАЛНА САМОУПРАВА": 342,
+        "ПРОГРАМ 9 - ОСНОВНО ОБРАЗОВАЊЕ": 300,
+        "ПРОГРАМ 3- ЛОКАЛНИ ЕКОНОМСКИ РАЗВОЈ": 6,
+        "ПРОГРАМ 6 - ЗАШТИТА ЖИВОТНЕ СРЕДИНЕ": 3,
+        "ПРОГРАМ 2 - КОМУНАЛНА ДЕЛАТНОСТ": 41,
+        "ПРОГРАМ 7 - ПУТНА ИНФРАСТРУКТУРА": 2,
+        "ПРОГРАМ 1 - ЛОКАЛНИ РАЗВОЈ И ПРОСТОРНО ПЛАНИРАЊЕ": 1,
+        "ПРОГРАМ 11 - СОЦИЈАЛНА И ДЕЧИЈА ЗАШТИТА": 14,
+        "ПРОГРАМ 13 - РАЗВОЈ КУЛТУРЕ": 117,
+        "ПРОГРАМ 14 - РАЗВОЈ СПОРТА И ОМЛАДИНЕ": 42,
+        "ПРОГРАМ 8 - ПРЕДШКОЛСКО ОБРАЗОВАЊЕ": 18,
+        "ПРОГРАМ 10 - СРЕДЊЕ ОБРАЗОВАЊЕ": 102,
+        "ПРОГРАМ 12 - ПРИМАРНА ЗДРАВСТВЕНА ЗАШТИТА": 6,
+        "ПРОГРАМ 4 - РАЗВОЈ ТУРИЗМА": 15,
+        "ПРОГРАМ 5 - РАЗВОЈ ПОЉОПРИВРЕДЕ": 11,
+    }
+
     # Json container for each novi beograd parent category
     novi_beograd_counts_of_parents = {
         "Расходи за запослене": 7,
@@ -262,6 +281,12 @@ class RashodiImportingTestCases(unittest.TestCase):
         #     for index, sub_program in enumerate(self.vranje_programs[program]):
         #         self.asserts_for_sub_programs_elements("Врање", program, sub_program[0], sub_program[1])
 
+    def test_counts_for_program_categories(self):
+
+        for program in self.sombor_counts_of_programs:
+            self.asserts_for_program_categories_elements("Sombor", program, self.sombor_counts_of_programs[program], "rashodi")
+
+
     def asserts_for_parent_categories_elements(self, municipality, parent_category, expected_value, data_source):
         '''
         :param municipality: The municipality we want to test
@@ -274,6 +299,18 @@ class RashodiImportingTestCases(unittest.TestCase):
                 "opstina.latinica": municipality,
                 "kategorijaRoditelj.opis.cirilica": parent_category,
                 "tipPodataka.slug": data_source
+            }
+        ).count()
+
+        self.assertEqual(result, expected_value)
+
+    def asserts_for_program_categories_elements(self, municipality, program, expected_value, data_source):
+
+        result = mongo.datacentar.opstine.find(
+            {
+                "opstina.latinica": municipality,
+                "tipPodataka.slug": data_source,
+                "program.cirilica": program
             }
         ).count()
 

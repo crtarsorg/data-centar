@@ -31,7 +31,6 @@ def averages():
 
 @mod_api.route("/ekonomska-klasifikacija", methods=['GET', 'POST'])
 def activities():
-
     if request.method == 'POST':
         query_params = json.loads(request.data)
         json_response = DataProvider().calculate_sum_of_expenditure_types(query_params)

@@ -1,43 +1,36 @@
 {% extends "layout.html" %} 
 {% block body %}
+
+
 <style>
-/* .intro {
-    background: url({{ url_for('static', filename='img/intro-bg-%s.jpg'%bg_id)}}) no-repeat bottom center scroll;
-} */
+  .vis{
+    width: 100%;
+    height: 500px;
+  }
 
-section{ height: 100vh; }
-.intro{padding-top:100px;}
-
-.btn-white-border,.btn-white-border:hover,.btn-white-border:active{    
-    border-color: white;
-    border-radius: 10px;
-}
-#searchWithParams{
-    font-size: 18px;
-}    
-/* http://embedresponsively.com/ */
-.embed-container {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-    max-width: 80%;        
-    margin: auto;
-}
-
-.embed-container iframe,
-.embed-container object,
-.embed-container embed {
-    position: absolute;
-    top: 0;
-    left: 0;
+  svg {
     width: 100%;
     height: 100%;
-}
+  }
 
+  path.slice{
+    stroke-width:2px;
+  }
+
+  .label{
+    fill: white;
+  }
+  polyline{
+    opacity: .3;
+    stroke: black;
+    stroke-width: 2px;
+    fill: none;
+  }
 
 </style>
 
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 <script>
   
@@ -92,36 +85,165 @@ $(function () {
 
 })
 
+$(function () {
+
+
+   var colors = (function () {
+        var colors = [],
+            base = Highcharts.getOptions().colors[0],
+            i;
+
+        for (i = 0; i < 10; i += 1) {
+            // Start out with a darkened base color (negative brighten), and end
+            // up with a much brighter color
+            colors.push(Highcharts.Color(base).brighten((i - 3) / 7).get());
+        }
+        return colors;
+    }());
+
+  
+   var data = [{"conto":710000,"opis":"Prihodi","vrednost":100000},{"conto":712000,"opis":"Porez na zarade","vrednost":65000}, {"conto":713000,"opis":"Porez na imovinu","vrednost":650000},{"conto":730000,"opis":"Donacije i transferi","vrednost":65000},{"conto":733000,"opis":"Transferi od drugih nivoa vlasti","vrednost":720000},{"conto":410000,"opis":"Rashodi za zaposlene", "vrednost":72000},{"conto":422000,"opis":"Troskovi putovanja", "vrednost":2000},{"conto":460000,"opis":"Donacije, dotacije i transferi", "vrednost":2000},{"conto":450000,"opis":"Subvencije", "vrednost":25000}]
+  
+    var gradovi = [{"grad":"uzice", "vrednost":10000},{"grad":"cacak", "vrednost":10000},{"grad":"kosijeric", "vrednost":10000},{"grad":"beograd", "vrednost":10000}]
+
+    /// podaci sa kontima 
+
+
+    var niz = [];
+      
+    gradovi.forEach(function(lo){
+      var temp_el = {
+            type: 'column',
+            name: lo.grad,
+            data: [3000, 2000, 1000, 3000, 4000,5000, 8000,15000,18000]
+          }
+      niz.push(temp_el);
+    })
+      
+    data.forEach(function(temp) {
+        temp.name = temp.opis;
+        temp.y = temp.vrednost;
+    })
+
+    var podaci =  data;
+    var imena  = podaci.map(function(el){return el.name;})
+
+    niz.push({
+        type: 'spline',
+        name: 'Average',
+        data: [3000, 26000, 3000, 6300, 3300,5000,7000,8000,9000],
+        marker: {
+            lineWidth: 2,
+            lineColor: Highcharts.getOptions().colors[3],
+            fillColor: 'white'
+        }
+    });
+
+
+
+    niz.push({
+            type: 'pie',
+            name: 'Iznos',
+            data: podaci,
+            center: [120, 80],
+            size: 180, // function dynamic value, depending on screen size
+            colors:colors,
+            showInLegend: false,
+            allowPointSelect: true,
+            dataLabels: {
+                    enabled: false,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {"color": "white", "fontSize": "11px", "fontWeight": "bold", "textShadow": "none" }
+                }
+        });
+  
+  
+  
+    var chartMain = $('.vis').highcharts({
+      chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            backgroundColor:"#7DC1D1"
+
+        },
+        title: {
+            text: 'Neki pokazatelji',
+            style:{
+                color:"white"
+              }
+        },
+        colors:colors,
+        xAxis: [ {
+            offset: 0,
+            width :1000,
+            left: 150,
+            categories: imena,
+            labels:{
+              style:{
+                color:"white",                
+                "fontSize":"14px"
+              }
+            }
+        }] ,
+       tooltip: {
+            pointFormat: ' {series.name}: <b>{point.y} din</b>'
+        },
+       
+      
+        labels: {
+          /*  items: [{
+                html: '',
+                style: {
+                    left: '250px',
+                    top: '18px',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'white'
+                }
+            }]*/
+        },
+        series: niz
+    });
+
+    
+
+
+    ///end of script
+});
+
+
+
 
 </script>
 
 <!-- Intro Header; Welcome section -->
-<header class="intro">
-    <div class="intro-body">
+<section class="">
+    <header class="landing">
+        <div class="intro primary-color">
+            <div class="white-content container padding-lg">
+                <h2 class="text-center">Welcome</h2>
+                    <p class="text-center lead margin-2p">
+                        Welcome to Data Center – an open platform that helps you find, liberate and make use of different public data!
+                </p>
+            </div>
+        </div>
         <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <h3>Welcome section</h3>
-                     <p class="text-center lead">
-                        See this astonishing site. Look at those fabulous data. <em>bibendum diam velit et dui.</em>
-                    </p>
-                    
+            <div class="overlay-video text-center">
+                <div class="welcome-video col-xs-12 col-sm-8">
                     <div class='embed-container'>
                         <div id="ytplayerLanding"></div>
                     </div>
-                    <div class="margin-10"><a href="./api/"><span id="searchWithParams">Show me data about MUNICIPAL BUDGETS in BELGRADE in 1999 related to EDUCATION</span></a></div>
+                    <div class="welcome-text margin-9p text-underline"><a href="{{ url_for('api.index') }}"><span id="searchWithParams">Show me data about MUNICIPAL BUDGETS in BELGRADE in 1999 related to EDUCATION</span></a></div>
 
-                    <div class="row">
-                        <div class="col-md-6 margin-10">
-
-                        <a href="./api">   
-                            <button type="button" class="btn btn-block btn-lg  btn-link btn-white-border " >
+                    <div class="row welcome-buttons margin-9p">
+                        <div class="col-xs-12 col-sm-6">
+                            <a href="{{ url_for('api.index') }}">   
+                                <button type="button" class="button-full"> <!--btn btn-block btn-lg  btn-link btn-white-border primary-color white-content-->
                                 Just take me to search
-                            </button>
-                        </a>
+                                </button>
+                            </a>
                         </div>
-                        <div class="col-md-6 margin-10">
-                            <button id="anotherFavQuery" type="button" class="btn btn-block btn-lg btn-link btn-white-border">
+                        <div class="col-xs-12 col-sm-6">
+                            <button id="anotherFavQuery" type="button" class="button-full">
                                 Meh, what else you got?
                             </button>
                         </div>
@@ -129,17 +251,19 @@ $(function () {
                 </div>
             </div>
         </div>
-    </div>
-</header>
-
+    </header>
+</section>
 <!-- What's avalible Section -->
-<section id="avalibleS" class="container content-section text-center">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2">
-            <h2>What's avalible Section</h2>
-            
+<section id="avalibleS" class="container-fluid secondary-color content-section text-center white-content margin-4p">
+    <div class="container">
+        <div class="margin-4p"> <!--col-lg-8 col-lg-offset-2-->
+            <h2>What's available Section</h2>
+            <!-- <img class="img-responsive text-center margin-auto" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=800%C3%97400&w=800&h=400" alt=""> -->
+            <div class="vis margin-auto margin-2p">
+            </div>
+            <div id="vis1"></div>
         </div>
-    </div>
+    <!-- </div> -->
 </section>
 
 

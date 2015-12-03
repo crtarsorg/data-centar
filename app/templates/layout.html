@@ -15,11 +15,15 @@
     <!-- Bootstrap Core CSS -->
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 
+    <!--JQueryUI CSS-->
+    <link href="{{ url_for('static', filename='css/jquery-ui.css') }}" rel="stylesheet" >
     <!-- Custom CSS -->
-    <link href="{{ url_for('static', filename='css/grayscale.css') }}" rel="stylesheet">
+    <!-- <link href="{{ url_for('static', filename='css/grayscale.css') }}" rel="stylesheet"> -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet"> 
 
     <!-- Custom Fonts -->
     <link href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu+Mono&subset=latin-ext' rel='stylesheet' type='text/css'>
     <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 
@@ -36,6 +40,9 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 
+    <!--JQueryUI JavaScript-->
+    <script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
+
     <!-- Plugin JavaScript -->
     <script src="{{ url_for('static', filename='js/jquery.easing.min.js') }}"></script>
 
@@ -49,18 +56,14 @@
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
     <style>
-        .brand-heading,.page-scroll{
-            text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-        }
         
         #mailModal *  {
-            background-color: gray;
-
+            
             -webkit-border-radius: 10px !important;
             -moz-border-radius: 10px !important;
             border-radius: 10px !important; 
         }
-        .margin-10{  margin: 10px 0;}
+        /*.margin-10{  margin: 10px 0;}*/
         #logoSvg{
             height: 50px; 
             margin-top: -20px;
@@ -74,32 +77,24 @@
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                    <i class="fa fa-bars"></i>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#dc-navbar" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand page-scroll" href="{{ url_for('landing_page.index') }}">
-                    
-                    <img class="img-responsive" src="{{ url_for('static', filename='img/logo-vector-fit.svg') }}" alt="Datacentar logo" id="logoSvg">
-                    
-                    <!-- <object id="logoSvg" type="image/svg+xml" data="{{ url_for('static', filename='img/logo-vector-fit.svg') }}" class="logo" >
-                      DataCentar Logo 
-                    </object> -->
-                 <!-- <span class="light">Data</span>Centar -->
+                    <img src="{{ url_for('static', filename='images/logo-vector-fit.svg') }}" alt="Datacentar logo" id="logoSvg">
                 </a>
             </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-                <ul class="nav navbar-nav">
-                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
+            <div class="collapse navbar-collapse" id="dc-navbar">
+                <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="page-scroll" href="{{ url_for('map.index') }}">Mapa</a>
+                        <a class="page-scroll" href="{{ url_for('search.index') }}">Search</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="{{ url_for('api.index') }}">API</a>
@@ -108,43 +103,43 @@
                         <a class="page-scroll" href="{{ url_for('about.index') }}">About</a>
                     </li>
                 </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
     </nav>
 
     {% block body %}
     {% endblock %}
 
     <!-- Open data request Section -->
-    <section id="dataRequestS" class="container content-section text-center">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <h2>Open data request Section</h2>
+    <section id="dataRequestS" class="container content-section margin-4p">
+        <div class="datareq col-xs-12 col-sm-8">
+            <h2 class="primary-content-color">WHICH DATA SET SHOULD CENTAR OPEN NEXT?</h2>
+            <div class="margin-2p">               
                 <form id="newDataForm" class="form-horizontal" action="//formspree.io/data@datacentar.io" method="POST">
                <!--  <input type="hidden" name="_next" value="#thx"/> -->
                 <fieldset>
                     <!-- Form Name -->
-                    <legend>WHICH DATA SET SHOULD CENTAR OPEN NEXT?</legend>
-                    <!-- Text input-->
-                    <div class=" margin-10">
-                        <input id="mail" name="email" type="email" placeholder="email@adress.com"  class="form-control input-md" oninvalid="this.setCustomValidity('Unesite validnu e-mail adresu')">
-                    </div>
-                    <!-- Closed dataset dropdown -->
-                    <div class=" margin-10 ">
-                        <select id="datasetSel" name="datasetSel" class="form-control">
-                            <option value="1">Option one</option>
-                            <option value="2">Option two</option>
-                        </select>
+                    <!-- <legend></legend> -->
+                    <div class="row">
+                        <!-- Text input-->
+                        <div class="col-xs-12 col-sm-6 margin-2p">
+                            <input id="mail" name="email" type="email" placeholder="email@address.com"  class="form-control input-md" oninvalid="this.setCustomValidity('Unesite validnu e-mail adresu')">
+                        </div>
+                        <!-- Closed dataset dropdown -->
+                        <div class="col-xs-12 col-sm-6 margin-2p">
+                            <select id="datasetSel" name="datasetSel" class="form-control primary-color white-content">
+                                <option value="1">Closed dataset list</option>
+                                <option value="2">Option two</option>
+                            </select>
+                        </div>
                     </div>
                     <!-- Usage of information -->
-                    <div class=" margin-10 ">
-                        <textarea class="form-control" id="textarea" name="infoTA" rows="6" placeholder="How would you use this information?"></textarea>
+                    <div class="margin-2p">
+                        <textarea class="form-control primary-content-color" id="textarea" name="infoTA" rows="6" placeholder="How would you use this information?"></textarea>
                     </div>
                     <!-- Button -->
-                    <div class="  ">
-                        <button id="sendBtn" name="sendBtn"  class="btn btn-primary btn-lg">Send</button>
+                    <div class="margin-4p">
+                        <button id="sendBtn" name="sendBtn" class="button-full margin-auto">Send</button>
                     </div>
                 </fieldset>
         </form>
@@ -152,41 +147,36 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="container content-section text-center">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <h2>Kontaktirajte nas</h2>
-                <p><a href="mailto:office@crta.org">Pišite nam</a> ako su vam potrebni posebni budžetski podaci ili vizualizacije.</p>
-                <ul class="list-inline banner-social-buttons">
-                    <li>
-                        <a href="http://www.crta.rs/" class="btn btn-default btn-sm"><i class="fa fa-globe fa-fw"></i> <span class="network-name">Website</span></a>
-                    </li>
-                    <li>
-                        <a href="https://twitter.com/CRTArs" class="btn btn-default btn-sm"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
-                    </li>
-                    <li>
-                        <a href="https://www.linkedin.com/company/2779063" class="btn btn-default btn-sm"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">LinkedIn</span></a>
-                    </li>
-                    <li>
-                        <a href="https://www.facebook.com/CRTA-Center-for-Research-Transparency-and-Accountability-246944101993258" class="btn btn-default btn-sm"><i class="fa fa-facebook fa-fw"></i> <span class="network-name">Facebook</span></a>
-                    </li>
-                    <li>
-                        <a href="https://www.youtube.com/user/Istinomer" class="btn btn-default btn-sm"><i class="fa fa-youtube fa-fw"></i> <span class="network-name">YouTube</span></a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/crtarsorg" class="btn btn-default btn-sm"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
+    
 
     <!-- Footer -->
-    <footer>
-        <div class="container text-center">
-            <p>DataCentar</p>
-        </div>
+    <footer class="container-fluid content-section text-center primary-color white-content padding-md margin-4p">
+        <div class="container position-relative">    
+            <h2 class="margin-2p">Kontaktirajte nas</h2>
+            <p class="margin-2p"><a class="white-content" href="mailto:office@crta.org"><b>Pišite nam</b></a> ako su vam potrebni posebni budžetski podaci ili vizualizacije.</p>
+            <ul class="list-inline banner-social-buttons margin-2p">
+                <li>
+                    <a href="http://www.crta.rs/" class=" btn-lg white-content font-lg-custom"><i class="fa fa-globe fa-fw"></i></a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/CRTArs" class=" btn-lg white-content font-lg-custom"><i class="fa fa-twitter fa-fw"></i></a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/company/2779063" class=" btn-lg white-content font-lg-custom"><i class="fa fa-linkedin fa-fw"></i></a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/CRTA-Center-for-Research-Transparency-and-Accountability-246944101993258" class=" btn-lg white-content font-lg-custom"><i class="fa fa-facebook fa-fw"></i></a>
+                </li>
+                <li>
+                    <a href="https://www.youtube.com/user/Istinomer" class=" btn-lg white-content font-lg-custom"><i class="fa fa-youtube fa-fw"></i></a>
+                </li>
+                <li>
+                    <a href="https://github.com/crtarsorg" class=" btn-lg white-content font-lg-custom"><i class="fa fa-github fa-fw"></i></a>
+                </li>
+            </ul>
+            <p class="margin-2p">DataCentar</p>
+            <div class="creative-commons"></div>
+        </div>        
     </footer>
 
 
@@ -197,16 +187,14 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 id="titleMailModal" class="modal-title">Thank you</h4>
+          <button type="button" class="close primary-content-color" data-dismiss="modal">&times;</button>
+          <h2 id="titleMailModal" class="text-center primary-content-color ">Thank you</h2>
         </div>
-        <div class="modal-body">
-          <p id="bodyMailModal">Add any other information here about how votes information?
+        <div class="modal-body text-center primary-content-color">
+          <p id="bodyMailModal" class="">Add any other information here about how votes information?
             will count + that data centar is a work in progress.</p>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
+       
       </div>
       
     </div>

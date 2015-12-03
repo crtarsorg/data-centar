@@ -38,23 +38,51 @@
                 rashodiParam = true;
             }
 
-            $('#data_type').change(function(){
+            $('#sum-req-form #data_type').change(function(){
 
-                $("#classifications option").remove();
+                $("#sum-req-form #classifications option").remove();
 
-                if ($('#data_type').val() == "prihodi"){
+                if ($('#sum-req-form #data_type').val() == "prihodi"){
                     $.each(prihodiJson['responseJSON'], function () {
                         $("#classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
                     });
                 }
 
-                if ($('#data_type').val() == "rashodi"){
+                if ($('#sum-req-form #data_type').val() == "rashodi"){
                     $.each(rashodiJson['responseJSON'], function () {
-                        $("#classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+                        $("#sum-req-form #classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+
                     });
                 }
 
             });
+
+
+        $('#sum-req-form #select_both_sources').change(function(){
+            if($('#sum-req-form #select_both_sources').prop('checked')){
+                $('#sum-req-form #data_type').prop("disabled", true);
+                $("#sum-req-form #classifications option").remove();
+
+                $.each(rashodiJson['responseJSON'], function () {
+                    $("#sum-req-form #classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+
+                });
+                $.each(prihodiJson['responseJSON'], function () {
+                    $("#sum-req-form #classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+                });
+
+            }
+            else{
+                $("#sum-req-form #classifications option").remove();
+                $('#sum-req-form #data_type').prop("disabled", false);
+
+                $.each(rashodiJson['responseJSON'], function () {
+                    $("#sum-req-form #classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+
+                });
+            }
+        });
+
         });
 
 
@@ -235,7 +263,7 @@
                                                 broj.
                                             </td>
                                             <td>
-                                                Pick a range of values.
+                                                Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
                                             </td>
                                         </tr>
                                         <tr>
@@ -246,7 +274,7 @@
                                                 broj.
                                             </td>
                                             <td>
-                                                Pick a range of values.
+                                                Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
                                             </td>
                                         </tr>
                                         <tr>
@@ -257,7 +285,7 @@
                                                 broj.
                                             </td>
                                             <td>
-                                                Pick a range of values.
+                                                Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
                                             </td>
                                         </tr>
                                         <tr>
@@ -268,7 +296,7 @@
                                                 broj.
                                             </td>
                                             <td>
-                                                Pick a range of values.
+                                                Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
                                             </td>
                                         </tr>
                                         <tr>
@@ -279,29 +307,7 @@
                                                 broj.
                                             </td>
                                             <td>
-                                                Pick a range of values.
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                veceIliJednako
-                                            </th>
-                                            <td>
-                                                broj.
-                                            </td>
-                                            <td>
-                                                Set the minimal value of the range.
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                manjeIliJednako
-                                            </th>
-                                            <td>
-                                                broj.
-                                            </td>
-                                            <td>
-                                                 Set the maximal value of the range.
+                                                Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
                                             </td>
                                         </tr>
                                         </tbody>
@@ -317,6 +323,9 @@
                                                 {{ sum_req_form.data_type.label(class="control-label col-xs-2") }}
                                                 <div class="col-xs-10">
                                                     {{ sum_req_form.data_type(class="form-control") }}
+                                                    <div class="col-xs-10 pull-right" align="right">
+                                                        {{ sum_req_form.select_both_sources }}{{ sum_req_form.select_both_sources.label(class="small") }}
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">

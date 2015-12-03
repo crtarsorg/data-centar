@@ -1,4 +1,7 @@
+# coding=utf-8
 from app import mongo
+from bson import SON
+from csv import writer
 
 class MongoUtils():
 
@@ -27,6 +30,12 @@ class MongoUtils():
                     "klasifikacijaBroj": "$_id.klasifikacijaBroj",
                     "klasifikacijaOpis": "$_id.klasifikacijaOpis"
                 }
+            },
+            {
+                "$sort": SON([
+                    ("klasifikacijaBroj", 1),
+                    ("klasifikacijaOpis", 1)
+                ])
             }
         ])
 

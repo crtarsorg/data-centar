@@ -207,26 +207,22 @@ class PrihodiDataImporter(DataImporterBase):
 
         rows = self.retrieve_rows_from_csv_file(municipality, data_type)
         parent_categories = utils.cacak_parent_catecories()
+        parent_num = ""
         # Iterate throughout every row in data handler
         for index, row in enumerate(rows):
             if index > 1:
-                if row[1] == "" and row[2] in parent_categories[row[1]]:
+                if row[1] in parent_categories:
                     parent_num = row[1].strip()
                     parent_handler = row[2].strip()
 
-                if row[1] not in ["", " "]:
-                    if row[1].strip() in parent_categories.keys():
-                        parent_num = row[1].strip()
-                        parent_handler = parent_categories[parent_num]
-
-
-                if row[1] not in ["", parent_categories.keys(), "2", "Економска класификација"]:
+                if row[2].strip() in parent_categories[parent_num]:
                     row[3] = row[3].replace(',00', '').replace('.', '')
                     row[4] = row[4].replace(',00', '').replace('.', '')
                     row[5] = row[5].replace(',00', '').replace('.', '')
                     # Build and insert JSON document in mongo
                     json_doc = self.build_mongo_document_structure(
-                        "Чачак", row[1],
+                        "Чачак",
+                        row[1],
                         row[2],
                         row[3],
                         row[4],
@@ -236,7 +232,7 @@ class PrihodiDataImporter(DataImporterBase):
                         None
                     )
                     db.opstine.insert(json_doc)
-                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Чачак", parent_handler, row[1])
+                    print "Opstine: %s - Kategorija Roditelj: %s - Broj: %s - Opis: %s" % ("Čačak", parent_handler, row[1], row[2])
 
 
     def data_importer_of_municipality_zvezdara(self, municipality, data_type):

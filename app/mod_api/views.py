@@ -1,6 +1,5 @@
 from flask import Blueprint, Response, request, render_template
-from app.data_manager.prihodi_data_feeder import PrihodiDataFeed
-from app.data_manager.rashodi_data_feeder import RashodiDataFeed
+from app.data_manager.data_provider import DataProvider
 from app.commons.data_request_form import DataRequestForm
 from app.utils.mongo_utils import MongoUtils
 from bson import json_util
@@ -22,20 +21,19 @@ def index():
 @mod_api.route("/zbir", methods=['POST'])
 def sum():
     query_params = json.loads(request.data)
-    if query_params['tipPodataka'] == "rashodi":
-        json_response = RashodiDataFeed().calculate_sum_of_expenditure_types(query_params)
-    else:
-        json_response = PrihodiDataFeed().calculate_sum_of_expenditure_types(query_params)
+    json_response = DataProvider().calculate_sum_of_expenditure_types(query_params)
     return Response(response=json_util.dumps(json_response), status=200, mimetype='application/json')
+
+@mod_api.route('/prosek', methods=['POST'])
+def averages():
+    json_resp = DataProvider().retrieve_average_data_for_classification_number(json.loads(request.data))
+    return Response(response=json_util.dumps(json_resp), status=200, mimetype='application/json')
 
 @mod_api.route("/ekonomska-klasifikacija", methods=['GET', 'POST'])
 def activities():
     if request.method == 'POST':
         query_params = json.loads(request.data)
-        if query_params['tipPodataka'] == "rashodi":
-            json_response = RashodiDataFeed().build_json_response_for_parent_categories(query_params)
-        else:
-            json_response = PrihodiDataFeed().build_json_response_for_parent_categories(query_params)
+        json_response = DataProvider().calculate_sum_of_expenditure_types(query_params)
 
     elif request.method == 'GET':
         data_type = request.args.get('dataType')
@@ -45,17 +43,13 @@ def activities():
 
 @mod_api.route('/sakupiti-klasifikacija-za-opstine', methods=['POST'])
 def aggregated_classifications():
-    json_resp = RashodiDataFeed().retrieve_aggregated_classification_info_for_municipalities(json.loads(request.data))
+    json_resp = DataProvider().retrieve_aggregated_classification_info_for_municipalities(json.loads(request.data))
     return Response(response=json_util.dumps(json_resp), status=200, mimetype="application/json")
 
 @mod_api.route('/spisak-opstina-za-klasifikacija-broj', methods=['POST']) # List of municipalities for given class. number
 def list_of_municipalities():
-
     query_params = json.loads(request.data)
+    json_resp = DataProvider().calculate_sum_of_expenditure_types(query_params)
 
-    if query_params['tipPodataka'] == 'rashodi':
-        json_resp = RashodiDataFeed().retrieve_list_of_municipalities_for_given_class(query_params)
-    else:
-        json_resp = PrihodiDataFeed().retrieve_list_of_municipalities_for_given_class(query_params)
     return Response(response=json_util.dumps(json_resp), status=200, mimetype="application/json")
 

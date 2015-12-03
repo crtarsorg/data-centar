@@ -31,9 +31,9 @@ var params =
     }
 }
 
-	$.ajax({
+	/*$.ajax({
 	  method: "POST",
-	  url: "../api/zbir",
+	  url: "../api/prosek",
 	  data: JSON.stringify (params),
 	  contentType:"application/json;charset=utf-8",
 	  dataType: "json"
@@ -42,7 +42,7 @@ var params =
   .done(function( msg ) {
     //console.log( msg );
 
-  });
+  });*/
 
 
   $(function(){
@@ -52,6 +52,15 @@ var params =
   		$(this).parents().filter(".optionalFieldSet").next().removeClass("hidden");
   		
   	})
+
+  	$(document).on('click', ".removeCondition",function(ev){  		
+
+  		$(this).parents().filter(".optionalFieldSet").addClass("hidden");
+		//reset to default
+		//if 
+  		
+  	})
+  	
   })
 
  
@@ -95,7 +104,7 @@ var params =
 	                        <button type="button"  class="form-control border-primary text-center">&#x2713;</button>
 	                    </div>
 	                    <div class="col-xs-4 col-sm-2 pull-right">
-	                        <button type="button"  class="form-control border-primary button-full">Advanced</button>
+	                        <button type="button"  class=" addCondition form-control border-primary button-full">Advanced</button>
 	                    </div>
 	                </div>
 	                <div class="advanced">
@@ -122,7 +131,7 @@ var params =
 	                    </div>
 	                    <div class="col-xs-2 col-sm-1 text-center">
 	                        <button type="button"  class="form-control border-primary pull-left" style="width: 50%;">&#x2713;</button>
-	                        <button type="button"  class="form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
+	                        <button type="button"  class="removeCondition form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
 	                    </div>
 	                    <div class="col-xs-4 col-sm-2 pull-right">
 	                        <button type="button"   class="addCondition form-control border-primary button-full">Add</button>
@@ -150,7 +159,7 @@ var params =
 	                    </div>
 	                    <div class="col-xs-2 col-sm-1 text-center">
 	                        <button type="button"  class="form-control border-primary pull-left" style="width: 50%;">&#x2713;</button>
-	                        <button type="button"  class="form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
+	                        <button type="button"  class="removeCondition form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
 	                    </div>
 	                    <div class="col-xs-4 col-sm-2 pull-right">
 	                        <button type="button"   class="addCondition form-control border-primary button-full">Add</button>
@@ -178,7 +187,7 @@ var params =
 	                    </div>
 	                    <div class="col-xs-2 col-sm-1 text-center">
 	                        <button type="button"  class="form-control border-primary pull-left" style="width: 50%;">&#x2713;</button>
-	                        <button type="button"  class="form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
+	                        <button type="button"  class="removeCondition form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
 	                    </div>
 	                    <div class="col-xs-4 col-sm-2 pull-right">
 	                        <button type="button"   class="addCondition form-control border-primary button-full">Add</button>
@@ -206,7 +215,7 @@ var params =
 	                    </div>
 	                    <div class="col-xs-2 col-sm-1 text-center">
 	                        <button type="button"  class="form-control border-primary pull-left" style="width: 50%;">&#x2713;</button>
-	                        <button type="button"  class="form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
+	                        <button type="button"  class="removeCondition form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
 	                    </div>
 	                    <div class="col-xs-4 col-sm-2 pull-right">
 	                        <button type="button"   class="addCondition form-control border-primary button-full">Add</button>
@@ -234,7 +243,7 @@ var params =
 	                    </div>
 	                    <div class="col-xs-2 col-sm-1 text-center">
 	                        <button type="button"  class="form-control border-primary pull-left" style="width: 50%;">&#x2713;</button>
-	                        <button type="button"  class="form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
+	                        <button type="button"  class="removeCondition form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
 	                    </div>
 	                    <div class="col-xs-4 col-sm-2 pull-right">
 	                        <button type="button"   class="addCondition form-control border-primary button-full">Add</button>

@@ -481,11 +481,11 @@ label {
 .lead {
     margin-bottom: 0px !important;
 }
-@media (max-width: 768px) {
-    .navbar-nav {
+@media screen and (max-width: 768px) {
+    .navbar .navbar-nav {
         margin-bottom: 0px;
     }
-    .nav>li>a {
+    .navbar .nav>li>a {
         padding: 10px;
         padding-left: 20px;
         margin-right: 0px;

@@ -87,7 +87,7 @@
                 <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand page-scroll" href="{{ url_for('landing_page.index') }}">
-                    <img class="img-responsive" src="{{ url_for('static', filename='images/logo-vector-fit.svg') }}" alt="Datacentar logo" id="logoSvg">
+                    <img src="{{ url_for('static', filename='images/logo-vector-fit.svg') }}" alt="Datacentar logo" id="logoSvg">
                 </a>
             </div>
 
@@ -120,20 +120,22 @@
                 <fieldset>
                     <!-- Form Name -->
                     <!-- <legend></legend> -->
-                    <!-- Closed dataset dropdown -->
-                    <div class="margin-2p">
-                        <select id="datasetSel" name="datasetSel" class="form-control primary-color white-content">
-                            <option value="1">Option one</option>
-                            <option value="2">Option two</option>
-                        </select>
+                    <div class="row">
+                        <!-- Text input-->
+                        <div class="col-xs-12 col-sm-6 margin-2p">
+                            <input id="mail" name="email" type="email" placeholder="email@address.com"  class="form-control input-md" oninvalid="this.setCustomValidity('Unesite validnu e-mail adresu')">
+                        </div>
+                        <!-- Closed dataset dropdown -->
+                        <div class="col-xs-12 col-sm-6 margin-2p">
+                            <select id="datasetSel" name="datasetSel" class="form-control primary-color white-content">
+                                <option value="1">Closed dataset list</option>
+                                <option value="2">Option two</option>
+                            </select>
+                        </div>
                     </div>
                     <!-- Usage of information -->
                     <div class="margin-2p">
                         <textarea class="form-control primary-content-color" id="textarea" name="infoTA" rows="6" placeholder="How would you use this information?"></textarea>
-                    </div>
-                    <!-- Text input-->
-                    <div class="margin-2p">
-                        <input id="mail" name="email" type="email" placeholder="email@address.com"  class="form-control input-md" oninvalid="this.setCustomValidity('Unesite validnu e-mail adresu')">
                     </div>
                     <!-- Button -->
                     <div class="margin-4p">
@@ -148,8 +150,8 @@
     
 
     <!-- Footer -->
-    <footer class="container-fluid content-section text-center primary-color white-content padding-10 margin-4p">
-        <div class="container">    
+    <footer class="container-fluid content-section text-center primary-color white-content padding-md margin-4p">
+        <div class="container position-relative">    
             <h2 class="margin-2p">Kontaktirajte nas</h2>
             <p class="margin-2p"><a class="white-content" href="mailto:office@crta.org"><b>Pišite nam</b></a> ako su vam potrebni posebni budžetski podaci ili vizualizacije.</p>
             <ul class="list-inline banner-social-buttons margin-2p">
@@ -173,6 +175,7 @@
                 </li>
             </ul>
             <p class="margin-2p">DataCentar</p>
+            <div class="creative-commons"></div>
         </div>        
     </footer>
 

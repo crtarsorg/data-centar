@@ -70,10 +70,9 @@ var params =
 
 <header class="intro primary-color">
     <!-- <div class="intro-body container"> -->
-        <div class="intro-content">
-            <h3 class="text-center">Show me data about [...] in [...]</h3>
-            <p class="text-center lead">
-                See this astonishing site. Look at those fabulous data. <em>bibendum diam velit et dui.</em>
+        <div class="intro-content container padding-lg">
+            <p class="text-center lead text-underline">
+                Show me data about [...] in [...]. See this astonishing site. Look at those fabulous data. <em>bibendum diam velit et dui.</em>
             </p>
         </div>
     <!-- </div> -->
@@ -257,13 +256,8 @@ var params =
 	</section>
 </div>
 
-<script>
-	$(document).ready(function() {
-		$(".search-control").selectmenu();
-	});
-</script>
-
 <!-- Data sets Section -->
+<<<<<<< HEAD
 <section id="dataSetS" class="container-fluid section-height secondary-color content-section text-center white-content">
     <div class="row">
         <div class="col-md-6 ">
@@ -299,6 +293,44 @@ var params =
             </div>
         </div>
     </div>
+=======
+<section id="dataSetS" class="container-fluid secondary-color white-content">
+    <!--<div class="row">-->
+        <div class="container padding-md">
+	        <div class="col-xs-12 col-md-8">
+	           <div class="col-xs-12 col-md-8 text-uppercase">
+	           	 <h2>Results table name</h2>
+	           </div>
+	            <div class="col-xs-12 col-sm-6 col-md-4 pull-down">
+	                <select class="form-control border-primary download-control" name="" id="">
+	                    <option value="">Download table</option>
+	                </select>
+	            </div>
+	            <div class="clear border-white">
+	            	<img src="http://placehold.it/450x550" alt="" class="img-responsive">	
+	            </div>
+	        </div>       
+	        <div class="col-xs-12 col-md-4 margin-4p text-uppercase">
+	            <h2>Visualizations</h2>
+	            <div class="row">
+	                <div class="">
+	                    <img src="http://placehold.it/300x120" alt="" class="margin-10">
+	                </div>
+	            </div>
+	            <div class="row">
+	                <div class="">
+	                    <img src="http://placehold.it/300x120" alt="" class="margin-10">
+	                </div>
+	            </div>
+	            <div class="row">
+	                <div class="">
+	                    <img src="http://placehold.it/300x120" alt="" class="margin-10">
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    <!--</div>-->
+>>>>>>> 44be34e03b3791d1193f22999dacf57b15367c31
     <div class="row">
         <div id="noParams" class="hidden">
             <div class="col-md-6 col-md-offset-3">
@@ -318,4 +350,11 @@ var params =
         </div>
     </div>
 </section>
+<script>
+	$(document).ready(function() {
+		$(".search-control").selectmenu();
+		$(".download-control").selectmenu();
+	});
+</script>
+
 {% endblock %}

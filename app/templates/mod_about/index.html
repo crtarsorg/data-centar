@@ -24,16 +24,6 @@
 .explore-icon{width: 180px;}
  */
 
-#descHowToUse {
-    columns: 2;
-    -webkit-columns: 2;
-    -moz-columns: 2;
-}
-
-li {
-    max-width: 80%;
-}
-
 #timelineImg {
     max-width: 100%;
     min-height: 50%;
@@ -45,9 +35,6 @@ li {
     -moz-columns: 4;
 }
 
-.funder-img {
-    width: 150px;
-}
 </style>
 <script>
 //https://developers.google.com/youtube/player_parameters?hl=en
@@ -84,10 +71,10 @@ $(function() {
 
 
         $("#descHowToUse").html("");
-        $("#descHowToUse").append($("<li>").append("<p>Some Text.<br/>Nesto nesto" + random() + "</p>"));
-        $("#descHowToUse").append($("<li>").append("<p>Some Text.<br/>Nesto nesto" + random() + "</p>"));
-        $("#descHowToUse").append($("<li>").append("<p>Some Text.<br/>Nesto nesto" + random() + "</p>"));
-        $("#descHowToUse").append($("<li>").append("<p>Some Text.<br/>Nesto nesto" + random() + "</p>"));
+        $("#descHowToUse").append($("<li class='col-xs-6'>").append("<p>Some Text. Nesto nesto" + random() + "</p>"));
+        $("#descHowToUse").append($("<li class='col-xs-6'>").append("<p>Some Text. Nesto nesto" + random() + "</p>"));
+        $("#descHowToUse").append($("<li class='col-xs-6'>").append("<p>Some Text. Nesto nesto" + random() + "</p>"));
+        $("#descHowToUse").append($("<li class='col-xs-6'>").append("<p>Some Text. Nesto nesto" + random() + "</p>"));
     })
 })
 </script>
@@ -95,7 +82,7 @@ $(function() {
     <!-- <div class="intro-body"> -->
         <div class="container">
             <div class="white-content">
-                <div class="intro-content">
+                <div class="intro-content padding-lg">
                     <h2 class="text-center">About</h2>
                     <p class="text-justify margin-2p">
                        Data Center is an open online platform that provides easy access to datasets of various public information at the national and local level in Serbia. It was developed to help journalists, activists, researchers and public officials in search for valuable data to power their stories, campaigns, analyses or decision making. With the use of latest technologies, Data Center simplifies, integrates and prepares complex, disparate and disorganized datasets for easy and meaningful use by all interested stakeholders. By making good use of public data, Data Center and its users push for governments to offer useful and good quality data and provide the public what they need to participate in decision making as active and informed citizens.
@@ -115,11 +102,11 @@ $(function() {
     </div>
 </div>
 <!-- Ways to Use the Site Section -->
-<section id="howToUseS" class="container-fluid content-section text-center secondary-color white-content margin-4p">
+<section id="howToUseS" class="container-fluid content-section text-center secondary-color white-content margin-4p padding-sm">
     <div class="row">
-        <div class="col-lg-8 col-lg-offset-2">
-            <h2 class="margin-2p">Ways to Use the Site Section</h2>
-            <div class="row text-center ">
+        <div class="container">
+            <h2>Ways to Use the Site Section</h2>
+            <div class="row">
                 <div class="col-md-3 col-xs-6 padding-10">
                     <img class="explore-icon" src="http://placehold.it/200x200" alt=""></div>
                 <div class="col-md-3 col-xs-6 padding-10">
@@ -131,16 +118,16 @@ $(function() {
             </div>
             <div class="row">
                 <ul id="descHowToUse">
-                    <li>
+                    <li class="col-xs-6">
                         <p><b>Description</b> nausgaard small batch hammock umami first</p>
                     </li>
-                    <li>
+                    <li class="col-xs-6">
                         <p><b>Description</b> nausgaard small batch hammock umami second</p>
                     </li>
-                    <li>
+                    <li class="col-xs-6">
                         <p><b>Description</b> nausgaard small batch hammock umami third</p>
                     </li>
-                    <li>
+                    <li class="col-xs-6">
                         <p><b>Description</b> nausgaard small batch hammock umami fourth</p>
                     </li>
                 </ul>
@@ -149,33 +136,34 @@ $(function() {
     </div>
 </section>
 <!-- Timeline Section -->
-<section id="timelineS" class="container-fluid  section-height content-section text-center primary-content-color">
+<section id="timelineS" class="container-fluid content-section text-center primary-content-color">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
             <h2 class="margin-2p">Timeline</h2>
             <img id="timelineImg" src="https://www.trust-i.net/images/timeline.png" alt="">
-              
-            <p class="margin-top-10vh">The Future Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo facilis molestias, repudiandae omnis! Voluptate minima minus atque asperiores sint harum omnis molestiae pariatur animi, corporis quam alias, fuga consectetur culpa?</p>
+            
+            <h2 class="margin-top-10vh">The Future</h2>  
+            <p class="margin-2p">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo facilis molestias, repudiandae omnis! Voluptate minima minus atque asperiores sint harum omnis molestiae pariatur animi, corporis quam alias, fuga consectetur culpa?</p>
         </div>
     </div>
 </section>
 <!-- Funders Section -->
-<section id="fundersS" class="container content-section text-center primary-content-color">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2">
+<section id="fundersS" class="container-fluid text-center primary-color white-content margin-4p">
+    <div class="container">
+        <div class="padding-sm">
             <h2>Partners</h2>
             <div class="row text-center margin-4p">
-                <div class="col-md-3 col-xs-6 padding-10">
-                    <img src="http://placehold.it/150x130" alt="" class="funder-img">
+                <div class="col-xs-6 col-sm-3">
+                    <img src="http://placehold.it/150x130" alt="" class="funder-img img-responsive">
                 </div>
-                <div class="col-md-3 col-xs-6 padding-10">
-                    <img src="http://placehold.it/150x130" alt="" class="funder-img">
+                <div class="col-xs-6 col-sm-3">
+                    <img src="http://placehold.it/150x130" alt="" class="funder-img img-responsive">
                 </div>
-                <div class="col-md-3 col-xs-6 padding-10">
-                    <img src="http://placehold.it/150x130" alt="" class="funder-img">
+                <div class="col-xs-6 col-sm-3">
+                    <img src="http://placehold.it/150x130" alt="" class="funder-img img-responsive">
                 </div>
-                <div class="col-md-3 col-xs-6 padding-10">
-                    <img src="http://placehold.it/150x130" alt="" class="funder-img">
+                <div class="col-xs-6 col-sm-3">
+                    <img src="http://placehold.it/150x130" alt="" class="funder-img img-responsive">
                 </div>
             </div>
         </div>

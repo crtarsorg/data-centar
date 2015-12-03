@@ -152,6 +152,21 @@ class PrihodiImportingTestCases(unittest.TestCase):
         "771000": [1, 3500000]
     }
 
+    cacak_counts_and_values_for_parents = {
+        # "parent": [count, value]
+        "711000": [8, 4558960000],
+        "0": [5, 986786000],
+        "731+732": [1, 590000],
+        "733000": [1, 12480000],
+        "770000": [1, 381970506],
+        "41": [7, 2183248169],
+        "5": [1, 564962612],
+        "6200000": [1, 535089219],
+        "920000": [1, 0],
+        "910000": [1, 2180494],
+        "611000": [3, 49700000]
+    }
+
     def test_counts_for_parent_categories(self):
 
         # # Test the counts of a particular parent category for Prijepolje municipality
@@ -185,6 +200,10 @@ class PrihodiImportingTestCases(unittest.TestCase):
         # Test the counts of particular parent category for Vranje municipality
         for parent in self.vranje_counts_of_parents_and_total:
             self.asserts_for_parent_categories_elements("Vranje", parent, self.vranje_counts_of_parents_and_total[parent], "prihodi")
+
+        # Test the counts of particular parent category for Cacak municipality
+        for parent in self.cacak_counts_and_values_for_parents:
+            self.asserts_for_parent_categories_elements("Čačak", parent, self.cacak_counts_and_values_for_parents[parent], "prihodi")
 
 
     def test_total_sum_for_parent_categories(self):

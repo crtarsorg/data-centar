@@ -210,8 +210,8 @@ class PrihodiDataImporter(DataImporterBase):
         parent_num = ""
         # Iterate throughout every row in data handler
         for index, row in enumerate(rows):
-            if index > 1:
-                if row[1] in parent_categories:
+            if index > 0:
+                if row[1] in parent_categories.keys():
                     parent_num = row[1].strip()
                     parent_handler = row[2].strip()
 

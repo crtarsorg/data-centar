@@ -38,24 +38,9 @@
                 rashodiParam = true;
             }
 
-            $('#sum-req-form #data_type').change(function(){
-
-                $("#sum-req-form #classifications option").remove();
-
-                if ($('#sum-req-form #data_type').val() == "prihodi"){
-                    $.each(prihodiJson['responseJSON'], function () {
-                        $("#classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
-                    });
-                }
-
-                if ($('#sum-req-form #data_type').val() == "rashodi"){
-                    $.each(rashodiJson['responseJSON'], function () {
-                        $("#sum-req-form #classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
-
-                    });
-                }
-
-            });
+        displayClassificationNumbers("sum-req-form", prihodiJson, rashodiJson);
+        displayClassificationNumbers("municipalities-req-form", prihodiJson, rashodiJson);
+        displayClassificationNumbers("list-mun-req-form", prihodiJson, rashodiJson);
 
 
         $('#sum-req-form #select_both_sources').change(function(){

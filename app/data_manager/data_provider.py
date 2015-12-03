@@ -318,6 +318,7 @@ class DataProvider():
         match = {
             "$match": {}
         }
+
         if query_params['tipPodataka'] != []:
             match['$match']["tipPodataka.slug"] = {'$in': query_params['tipPodataka']}
 
@@ -344,6 +345,10 @@ class DataProvider():
 
             }
         }
+        if query_params['opstine'] != []:
+            match['$match']["opstina.slug"] = {'$in': query_params['opstine']}
+            group['$group']['_id']['opstina'] = "$opstina.latinica"
+            project['$project']['opstina'] = '$_id.opstina'
 
         json_doc = mongo.db.opstine.aggregate([match, group, project])
         return json_doc['result']

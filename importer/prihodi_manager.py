@@ -36,14 +36,32 @@ class PrihodiDataImporter(DataImporterBase):
 
         # Iterate throughout every row in data handler
         for index, row in enumerate(rows):
-            if index > 1:
+            if index > 1 and index < 83:
 
                 # Use this check to retrieve parent category from csv file rows
-                if len(row[1]) == 3 or row[1][-3:] == '000':
+                if len(row[1]) == 3 or row[1][-3:] == '000' or row[2] in ["ПОРЕЗ НА ДОБРА И УСЛУГЕ"]:
+                    if row[1] == "" and row[2] == "ПОРЕЗ НА ДОБРА И УСЛУГЕ":
+                        parent_num = 0
+                    else:
+                        parent_num = row[1]
+
                     parent_handler = row[2]
-                    parent_num = row[1]
 
                 if len(row[1]) > 3 and row[1][-3:] != '000' and row[1] not in ["7+8+9", "3+7+8+9", "", " "]:
+
+                    # Build mongo document
+                    json_doc = self.build_mongo_document_structure("Врање", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
+
+                    # Insert JSON document in mongo
+                    db.opstine.insert(json_doc)
+
+                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Врање", parent_handler, row[1])
+            elif index > 82:
+                if row[1] in ["810000", "840000", "910000", "920000"]:
+                    parent_num = row[1]
+                    parent_handler = row[2]
+
+                if row[1] not in ["810000", "840000", "910000", "920000", "900000", "7+8+9", "3+7+8+9", "", " ", "800000"]:
 
                     # Build mongo document
                     json_doc = self.build_mongo_document_structure("Врање", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
@@ -127,7 +145,7 @@ class PrihodiDataImporter(DataImporterBase):
                         parent_num = row[1].strip()
                         parent_handler = parent_categories[parent_num]
 
-                if row[1] not in ["", " ", "800000", parent_num, "900000"] or row[2] in ["ПРИМАЊА ОД ПРОДАЈЕ РОБНИХ РЕЗЕРВИ"]:
+                if row[1] not in ["", " ", "800000", parent_num, "900000", "821001"] or row[1] == "821000":
 
                     # Build mongo document
                     json_doc = self.build_mongo_document_structure("Ваљево", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
@@ -189,20 +207,17 @@ class PrihodiDataImporter(DataImporterBase):
 
         rows = self.retrieve_rows_from_csv_file(municipality, data_type)
         parent_categories = utils.cacak_parent_catecories()
+        parent_num = ""
         # Iterate throughout every row in data handler
         for index, row in enumerate(rows):
             if index > 1:
-                if row[1] == "" and row[2] in parent_categories[row[1]]:
+                if row[1] in parent_categories:
                     parent_num = row[1].strip()
                     parent_handler = row[2].strip()
 
-                if row[1] not in ["", " "]:
-                    if row[1].strip() in parent_categories.keys():
-                        parent_num = row[1].strip()
-                        parent_handler = row[2].strip()
-
-
-                if row[1] not in ["", "2", "Економска класификација", "711000", "610000", "611000"] and row[1] not in parent_categories.keys() or row[1].strip() in parent_categories and row[2] in parent_categories[row[1].strip()]:
+                if row[2].strip() in parent_categories[parent_num]:
+                    if row[1] == "":
+                        row[1] = "0"
                     row[3] = row[3].replace(',00', '').replace('.', '')
                     row[4] = row[4].replace(',00', '').replace('.', '')
                     row[5] = row[5].replace(',00', '').replace('.', '')
@@ -234,13 +249,14 @@ class PrihodiDataImporter(DataImporterBase):
                 if row[1] == "":
                     row[1] = "0"
 
-                # Build mongo document
-                json_doc = self.build_mongo_document_structure("Звездара", row[1], row[2], row[3], row[4], row[5], row[6], None, None)
+                if row[1] != "741000":
+                    # Build mongo document
+                    json_doc = self.build_mongo_document_structure("Звездара", row[1], row[2], row[3], row[4], row[5], row[6], None, None)
 
-                # Insert JSON document in mongo
-                db.opstine.insert(json_doc)
+                    # Insert JSON document in mongo
+                    db.opstine.insert(json_doc)
 
-                print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Звездара", parent_handler, row[1])
+                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Звездара", row[2], row[1])
 
     def data_importer_of_municipality_novi_beograd(self, municipality, data_type):
 

@@ -224,12 +224,14 @@ class PrihodiDataImporter(DataImporterBase):
         parent_num = ""
         # Iterate throughout every row in data handler
         for index, row in enumerate(rows):
-            if index > 1:
-                if row[1] in parent_categories:
+            if index > 0:
+                if row[1] in parent_categories.keys():
                     parent_num = row[1].strip()
                     parent_handler = row[2].strip()
 
                 if row[2].strip() in parent_categories[parent_num]:
+                    if row[1] == "":
+                        row[1] = "0"
                     row[3] = row[3].replace(',00', '').replace('.', '')
                     row[4] = row[4].replace(',00', '').replace('.', '')
                     row[5] = row[5].replace(',00', '').replace('.', '')

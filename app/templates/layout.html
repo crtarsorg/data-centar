@@ -123,11 +123,11 @@
                     <div class="row">
                         <!-- Text input-->
                         <div class="col-xs-12 col-sm-6 margin-2p">
-                            <input id="mail" name="email" type="email" placeholder="email@address.com"  class="form-control input-md" oninvalid="this.setCustomValidity('Unesite validnu e-mail adresu')">
+                            <input id="mail" name="email" type="email" placeholder="email@address.com"  class="form-control input-md border-primary primary-content-color" oninvalid="this.setCustomValidity('Unesite validnu e-mail adresu')">
                         </div>
                         <!-- Closed dataset dropdown -->
                         <div class="col-xs-12 col-sm-6 margin-2p">
-                            <select id="datasetSel" name="datasetSel" class="form-control primary-color white-content">
+                            <select id="datasetSel" name="datasetSel" class="form-control select-control-b">
                                 <option value="1">Closed dataset list</option>
                                 <option value="2">Option two</option>
                             </select>
@@ -135,7 +135,7 @@
                     </div>
                     <!-- Usage of information -->
                     <div class="margin-2p">
-                        <textarea class="form-control primary-content-color" id="textarea" name="infoTA" rows="6" placeholder="How would you use this information?"></textarea>
+                        <textarea class="form-control border-primary primary-content-color" id="textarea" name="infoTA" rows="6" placeholder="How would you use this information?"></textarea>
                     </div>
                     <!-- Button -->
                     <div class="margin-4p">
@@ -147,7 +147,13 @@
         </div>
     </section>
 
-    
+    <script>
+        $(document).ready(function() {
+            $(".select-control").selectmenu();
+            $(".select-control-b").selectmenu();
+            $(".download-control").selectmenu();
+        });
+    </script>    
 
     <!-- Footer -->
     <footer class="container-fluid content-section text-center primary-color white-content padding-md margin-4p">

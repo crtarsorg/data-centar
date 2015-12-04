@@ -1,56 +1,149 @@
 {% extends "layout.html" %} {% block body %}
 
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
 <style>
 	#mainVis{
 		height: 550px;
 	}
+	div[id^="sideVis"]{
+		height: 30%;
+		max-width: 100%;
+	}
 </style>
 <script>
-var params = 	
+var params = {
+        "tipPodataka": ["rashodi", "prihodi"],
+        "klasifikacijaBroj": [
+            710000,
+            712000,
+            713000,
+            730000,
+            733000,
+            410000,
+            422000,
+            460000,
+            450000
+
+        ],
+        opstine:[]
+    }
+
+var params1 = 	
 {
-    "tipPodataka": "rashodi",
+    "tipPodataka": [
+        "rashodi",
+        "prihodi"
+    ],
     "godine": [
-        2015
+        2015,
+        2014
     ],
     "opstine": [
         "prijepolje",
         "valjevo",
-        "vranje"
+        "vranje",
+        "zvezdara"
     ],
     "klasifikacija": {
         "broj": [
-            413
+           
         ],
         "pocinjeSa": ""
     },
     "filteri": {
-        "ukupno": {
-            "veceIliJednako": 50000,
-            "manjeIliJednako": 150000
+        "ostali": {
+           
         }
     }
 }
+  
 
-	/*$.ajax({
-	  method: "POST",
-	  url: "../api/prosek",
-	  data: JSON.stringify (params),
-	  contentType:"application/json;charset=utf-8",
-	  dataType: "json"
 
-	})
-  .done(function( msg ) {
-    //console.log( msg );
+    var result1, result2;
+    $.when(
 
-  });*/
+        $.ajax({
+            method: "POST",
+            url: "../api/prosek",
+            data: JSON.stringify(params),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function(returnhtml){                          
+                result1 = returnhtml;     
+            }      
+
+        })
+
+        ,
+        $.ajax({
+            method: "POST",
+            url: "../api/zbir",
+            data: JSON.stringify(params1),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function(returnhtml){                          
+                result2 = returnhtml;     
+            }   
+
+        })
+
+
+
+    ).then(function() {
+        
+        mainVis(result2);
+        sideVis(result2, result1)
+        //visu(result1, result2)
+    });
+
 
 
   $(function(){
 
+  
+  	$("[name='dataItem']").on("selectmenuchange",function (ev,ui) {
+  		$("#dataLabel").html(ui.item.label)
+  		
+  	})
+
+  	$("[name='muncipalityItem']").on("selectmenuchange",function (ev,ui) {
+  		$("#mucipalityLabel").html(ui.item.label)
+  		
+  	})
+
+  	$("[name='yearItem']").on("selectmenuchange",function (ev,ui) {
+  		$("#yearLabel").html(ui.item.label)
+  		
+  	})
+
+  	$("[name='budgetItem[]']").on("selectmenuchange",function (ev,ui) {
+  		$("#budgetItemLabel").html(ui.item.label)
+  		
+  	})
+
+  	$("[name='operatorItem[]']").on("selectmenuchange",function (ev,ui) {
+  		$("#operatorLabel").html(ui.item.label)
+  		
+  	})
+
+  	$("[name='amountItem[]']").on("selectmenuchange",function (ev,ui) {
+  		$("#amountLabel").html(ui.item.label)
+  		
+  	})
+
+
+  	$(document).on('click', ".advancedCondition",function(ev){
+
+  		$(".advanced").removeClass("hidden");
+  		$(".optionalFieldSet.form-group:first").removeClass("hidden");
+  
+  	})
+
   	$(document).on('click', ".addCondition",function(ev){  		
 
-  		$(this).parents().filter(".optionalFieldSet").next().removeClass("hidden");
-  		
+  		$(this).parents().filter(".optionalFieldSet").next().removeClass("hidden");	
   	})
 
   	$(document).on('click', ".removeCondition",function(ev){  		
@@ -63,6 +156,320 @@ var params =
   	
   })
 
+/*===========================
+=            vis            =
+===========================*/
+
+//mainVis
+
+function mainVis(data) {
+	
+	console.log(data);
+
+	var opstina = "Zvezdara";
+	var kontoBroj = 611; 
+
+	data = data.filter(function(la){
+		return la.opstina == opstina; 
+		}).map(function(po){
+			po.y =po.ukupno; 
+			po.name = po.klasifikacijaBroj; 
+			if(+po.klasifikacijaBroj == kontoBroj)
+				{
+					po.sliced = true;
+					po.selected = true;
+				}
+			return po; 
+		})
+
+		console.log(data);
+
+	
+	var $containerMain = $('#mainVis'),
+        chart
+       /* origChartWidth = 400,
+        origChartHeight = 200,
+        chartWidth = origChartWidth,
+        chartHeight = origChartHeight*/;
+
+        // Build the chart
+        $containerMain.highcharts({
+            chart: {
+            	backgroundColor: "#7DC1D1",
+    			/*width: chartWidth,
+            	height: chartHeight,*/
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Udeo '+kontoBroj+ " u ukupnom budzetu"
+            },
+            legend:{
+            	title:{
+            		text:'Nekakav tekst'
+            	}
+            },
+            tooltip: {
+            	headerFormat:'<span style="font-size: 10px">Konto: {point.key}</span><br/>',
+                pointFormat: ' {series.name}: <b>{point.y} din</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                name: 'Iznos',
+                colorByPoint: true,
+                data: data
+            }]
+        });
+    
+
+}
+
+
+
+		
+
+function sideVis(arg1, arg2) {
+
+	
+
+	var $container = $('#sideVisTop'),
+        chart,
+        origChartWidth = 400,
+        origChartHeight = 200,
+        chartWidth = origChartWidth,
+        chartHeight = origChartHeight;
+
+    $container.highcharts({
+    	chart:{
+    		backgroundColor: "#7DC1D1",
+    		width: chartWidth,
+            height: chartHeight
+    		},
+       /* title: {
+            text: 'Monthly Average Temperature',
+            x: -20 //center
+        },*/
+       /* subtitle: {
+            text: 'Source: WorldClimate.com',
+            x: -20
+        },*/
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        yAxis: {
+            title: {
+                text: 'Temperature (°C)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 0.5,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '°C'
+        },
+        legend: {
+            /*layout: 'vertical',*/
+            align: 'top',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'Tokyo',
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+        }, {
+            name: 'New York',
+            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+        }, {
+            name: 'Berlin',
+            data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+        }, {
+            name: 'London',
+            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+        }]
+    });
+
+
+
+var $container1 = $('#sideVisMiddle'),
+        chart,
+        origChartWidth = 400,
+        origChartHeight = 200,
+        chartWidth = origChartWidth,
+        chartHeight = origChartHeight;
+
+ 
+    $container1 .highcharts({
+        chart: {
+        	backgroundColor: "#7DC1D1",
+    		width: chartWidth,
+            height: chartHeight,
+            type: 'bar'
+        },
+        title: {
+            text: 'Historic World Population by Region'
+        },
+        
+        xAxis: {
+            categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Population (millions)',
+                align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' millions'
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -40,
+            y: 80,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: 'Year 1800',
+            data: [107, 31, 635, 203, 2]
+        }, {
+            name: 'Year 1900',
+            data: [133, 156, 947, 408, 6]
+        }, {
+            name: 'Year 2012',
+            data: [1052, 954, 4250, 740, 38]
+        }]
+    });
+
+
+
+
+var $container2 = $('#sideVisBottom'),
+        chart,
+        origChartWidth = 400,
+        origChartHeight = 200,
+        chartWidth = origChartWidth,
+        chartHeight = origChartHeight;
+
+    $container2.highcharts({
+        chart: {
+        	backgroundColor: "#7DC1D1",
+    		width: chartWidth,
+            height: chartHeight,
+            type: 'area'
+        },
+        title: {
+            text: 'US and USSR nuclear stockpiles'
+        },
+       
+        xAxis: {
+            allowDecimals: false,
+            labels: {
+                formatter: function () {
+                    return this.value; // clean, unformatted number for year
+                }
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Nuclear weapon states'
+            },
+            labels: {
+                formatter: function () {
+                    return this.value / 1000 + 'k';
+                }
+            }
+        },
+        tooltip: {
+            pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
+        },
+        plotOptions: {
+            area: {
+                pointStart: 1940,
+                marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                        }
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'USA',
+            data: [null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640,
+                1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126,
+                27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662,
+                26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605,
+                24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586,
+                22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950,
+                10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104]
+        }, {
+            name: 'USSR/Russia',
+            data: [null, null, null, null, null, null, null, null, null, null,
+                5, 25, 50, 120, 150, 200, 426, 660, 869, 1060, 1605, 2471, 3322,
+                4238, 5221, 6129, 7089, 8339, 9399, 10538, 11643, 13092, 14478,
+                15915, 17385, 19055, 21205, 23044, 25393, 27935, 30062, 32049,
+                33952, 35804, 37431, 39197, 45000, 43000, 41000, 39000, 37000,
+                35000, 33000, 31000, 29000, 27000, 25000, 24000, 23000, 22000,
+                21000, 20000, 19000, 18000, 18000, 17000, 16000]
+        }]
+    });
+
+
+
+
+///end on load
+}
+
+
+
+//sideVisTop
+//sideVisMiddle
+//sideVisBottom
+
+
+
+
+/*=====  End of vis  ======*/
+
  
 
 </script>
@@ -72,7 +479,7 @@ var params =
     <!-- <div class="intro-body container"> -->
         <div class="intro-content container padding-lg">
             <p class="text-center lead text-underline">
-                Show me data about [...] in [...]. See this astonishing site. Look at those fabulous data. <em>bibendum diam velit et dui.</em>
+                Show me data about <span id="dataLabel">[...]</span> in <span id="mucipalityLabel">[...]</span> <span id="yearLabel"></span> <span id="advancedLabel">related to</span> <span id="budgetItemLabel"></span> that <span id="operatorLabel"></span> <span id="amountLabel"></span> .
             </p>
         </div>
     <!-- </div> -->
@@ -85,45 +492,68 @@ var params =
 	            <form action="" id="searchForm" class="form-horizontal" role="form">
 	                <div class="form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Budget</option>
+	                        <select class="form-control border-primary search-control" name="dataItem">
+	                            <option value="budget">Budžet</option>
+	                            <option value="javneNabavke">Javne nabavke</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Belgrade</option>
+	                        <select class="form-control border-primary search-control" name="muncipalityItem">
+		                        <option value="chachak">Čačak</option>
+							    <option value="indjija">Inđija</option>
+							    <option value="kraljevo">Kraljevo</option>
+							    <option value="loznitsa">Loznica</option>
+							    <option value="novi-beograd">Novi Beograd</option>
+							    <option value="prijepolje">Pripolje</option>
+							    <option value="valjevo">Valjevo</option>
+							    <option value="vranje">Vranje</option>
+							    <option value="zvezdara">Zvezdara</option>
 	                        </select>
+
+
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">2010</option>
+	                        <select class="form-control border-primary search-control" name="yearItem">
+	                            <option value="">2015</option>
+	                            <option value="">2014</option>
+	                            <option value="">2013</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-1">
 	                        <button type="button"  class="form-control border-primary text-center">&#x2713;</button>
 	                    </div>
 	                    <div class="col-xs-4 col-sm-2 pull-right">
-	                        <button type="button"  class=" addCondition form-control border-primary button-full">Advanced</button>
+	                        <button type="button"  class=" advancedCondition form-control border-primary button-full">Advanced</button>
 	                    </div>
 	                </div>
-	                <div class="advanced">
+	                <div class="advanced hidden">
 	                	<p>Advanced</p>
 	                </div>
-	                <div class="optionalFieldSet form-group">
+	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Education</option>
-	                            <option value="">Social</option>
+	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                           <option value='710000'>Prihodi</option>
+								<option value='712000'>Porez na zarade</option>
+								<option value='713000'>Porez na imovinu</option>
+								<option value='730000'>Donacije i transferi</option>
+								<option value='733000'>Transferi od drugih nivoa vlasti</option>
+								<option value='410000'>Rashodi</option>
+								<option value='422000'>Troškovi putovanja</option>
+								<option value='460000'>Donacije, dotacije i transferi</option>
+								<option value='450000'>Subvencije</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Operator</option>
-	                            <option value="">Operator2</option>
+	                        <select class="form-control border-primary search-control" name="operatorItem[]">
+	                           	<option value=""> is  </option>
+	                            <option value=""> is > </option>
+	                            <option value=""> is < </option>
+	                            <option value=""> is empty </option>
+	                            <option value=""> contains </option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary search-control" name="amountItem[]">
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -137,21 +567,36 @@ var params =
 	                    </div>
 	                </div>
 
-	                <div class="optionalFieldSet form-group hidden">
+					
+
+	                
+
+	                
+	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Education</option>
-	                            <option value="">Social</option>
+	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                           <option value='710000'>Prihodi</option>
+								<option value='712000'>Porez na zarade</option>
+								<option value='713000'>Porez na imovinu</option>
+								<option value='730000'>Donacije i transferi</option>
+								<option value='733000'>Transferi od drugih nivoa vlasti</option>
+								<option value='410000'>Rashodi</option>
+								<option value='422000'>Troškovi putovanja</option>
+								<option value='460000'>Donacije, dotacije i transferi</option>
+								<option value='450000'>Subvencije</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Operator</option>
-	                            <option value="">Operator2</option>
+	                        <select class="form-control border-primary search-control" name="operatorItem[]">
+	                           	<option value=""> is  </option>
+	                            <option value=""> is > </option>
+	                            <option value=""> is < </option>
+	                            <option value=""> is empty </option>
+	                            <option value=""> contains </option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary search-control" name="amountItem[]">
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -165,21 +610,31 @@ var params =
 	                    </div>
 	                </div>
 
-	                <div class="optionalFieldSet form-group hidden">
+	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Education</option>
-	                            <option value="">Social</option>
+	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                           <option value='710000'>Prihodi</option>
+								<option value='712000'>Porez na zarade</option>
+								<option value='713000'>Porez na imovinu</option>
+								<option value='730000'>Donacije i transferi</option>
+								<option value='733000'>Transferi od drugih nivoa vlasti</option>
+								<option value='410000'>Rashodi</option>
+								<option value='422000'>Troškovi putovanja</option>
+								<option value='460000'>Donacije, dotacije i transferi</option>
+								<option value='450000'>Subvencije</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Operator</option>
-	                            <option value="">Operator2</option>
+	                        <select class="form-control border-primary search-control" name="operatorItem[]">
+	                           	<option value=""> is  </option>
+	                            <option value=""> is > </option>
+	                            <option value=""> is < </option>
+	                            <option value=""> is empty </option>
+	                            <option value=""> contains </option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary search-control" name="amountItem[]">
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -193,21 +648,31 @@ var params =
 	                    </div>
 	                </div>
 
-	                <div class="optionalFieldSet form-group hidden">
+	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Education</option>
-	                            <option value="">Social</option>
+	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                           <option value='710000'>Prihodi</option>
+								<option value='712000'>Porez na zarade</option>
+								<option value='713000'>Porez na imovinu</option>
+								<option value='730000'>Donacije i transferi</option>
+								<option value='733000'>Transferi od drugih nivoa vlasti</option>
+								<option value='410000'>Rashodi</option>
+								<option value='422000'>Troškovi putovanja</option>
+								<option value='460000'>Donacije, dotacije i transferi</option>
+								<option value='450000'>Subvencije</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Operator</option>
-	                            <option value="">Operator2</option>
+	                        <select class="form-control border-primary search-control" name="operatorItem[]">
+	                           	<option value=""> is  </option>
+	                            <option value=""> is > </option>
+	                            <option value=""> is < </option>
+	                            <option value=""> is empty </option>
+	                            <option value=""> contains </option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary search-control" name="amountItem[]">
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -221,21 +686,31 @@ var params =
 	                    </div>
 	                </div>
 
-	                <div class="optionalFieldSet form-group hidden">
+	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Education</option>
-	                            <option value="">Social</option>
+	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                           <option value='710000'>Prihodi</option>
+								<option value='712000'>Porez na zarade</option>
+								<option value='713000'>Porez na imovinu</option>
+								<option value='730000'>Donacije i transferi</option>
+								<option value='733000'>Transferi od drugih nivoa vlasti</option>
+								<option value='410000'>Rashodi</option>
+								<option value='422000'>Troškovi putovanja</option>
+								<option value='460000'>Donacije, dotacije i transferi</option>
+								<option value='450000'>Subvencije</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Operator</option>
-	                            <option value="">Operator2</option>
+	                        <select class="form-control border-primary search-control" name="operatorItem[]">
+	                           	<option value=""> is  </option>
+	                            <option value=""> is > </option>
+	                            <option value=""> is < </option>
+	                            <option value=""> is empty </option>
+	                            <option value=""> contains </option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary search-control" name="amountItem[]">
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -247,7 +722,13 @@ var params =
 	                    <div class="col-xs-4 col-sm-2 pull-right">
 	                        <button type="button"   class="addCondition form-control border-primary button-full">Add</button>
 	                    </div>
-	                </div>
+	                </div>		                
+
+	                
+
+	                
+
+	                
 
 
 	            </form>

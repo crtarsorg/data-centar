@@ -214,3 +214,24 @@ function initFiltersDisplay(){
             }
         });
 }
+
+function displayClassificationNumbers(parentRef, prihodiJson, rashodiJson){
+    $("#" + parentRef + " #data_type").change(function(){
+
+        $("#"+parentRef+" #classifications option").remove();
+
+        if ($("#"+parentRef+" #data_type").val() == "prihodi"){
+            $.each(prihodiJson['responseJSON'], function () {
+                $("#" + parentRef + " #classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+            });
+        }
+
+        if ($("#" + parentRef + " #data_type").val() == "rashodi"){
+            $.each(rashodiJson['responseJSON'], function () {
+                $("#" + parentRef + " #classifications").append($("<option></option>").val(this['klasifikacijaBroj']).html(this['klasifikacijaBroj'] + " " + "-" + " " + this['klasifikacijaOpis']));
+
+            });
+        }
+
+    });
+}

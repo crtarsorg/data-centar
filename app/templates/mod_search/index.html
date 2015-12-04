@@ -164,7 +164,6 @@ var params1 =
 
 function mainVis(data) {
 	
-	console.log(data);
 
 	var opstina = "Zvezdara";
 	var kontoBroj = 611; 
@@ -182,7 +181,6 @@ function mainVis(data) {
 			return po; 
 		})
 
-		console.log(data);
 
 	
 	var $containerMain = $('#mainVis'),
@@ -204,12 +202,14 @@ function mainVis(data) {
                 type: 'pie'
             },
             title: {
-                text: 'Udeo '+kontoBroj+ " u ukupnom budzetu"
+                text: 'Udeo '+kontoBroj+ " u ukupnom budzetu opštine " + opstina
             },
             legend:{
             	title:{
-            		text:'Nekakav tekst'
-            	}
+            		// text:'Nekakav tekst'
+            	},
+            	tooltip:"nekakav tekst"
+
             },
             tooltip: {
             	headerFormat:'<span style="font-size: 10px">Konto: {point.key}</span><br/>',
@@ -240,7 +240,6 @@ function mainVis(data) {
 		
 
 function sideVis(arg1, arg2) {
-
 	
 
 	var $container = $('#sideVisTop'),
@@ -304,6 +303,19 @@ function sideVis(arg1, arg2) {
 
 
 
+	var data = [];
+	var kategorije = [] ;
+	arg1.filter(function(la){
+		return +la.klasifikacijaBroj == 611
+		})
+		.forEach(function(po){
+			var tempAr = [po.opstina, po.ukupno];
+			data.push(tempAr);
+			kategorije.push(po.opstina)
+		})
+
+
+
 var $container1 = $('#sideVisMiddle'),
         chart,
         origChartWidth = 400,
@@ -320,27 +332,27 @@ var $container1 = $('#sideVisMiddle'),
             type: 'bar'
         },
         title: {
-            text: 'Historic World Population by Region'
+            text: 'Uporedni prikaz iznosa za konto : ' + 611
         },
         
         xAxis: {
-            categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+            categories: kategorije,
             title: {
-                text: null
+                text: "Opštine"
             }
         },
         yAxis: {
-            min: 0,
+          
             title: {
-                text: 'Population (millions)',
-                align: 'high'
+               /* text: 'Population (millions)',
+                align: 'high'*/
             },
             labels: {
                 overflow: 'justify'
             }
         },
         tooltip: {
-            valueSuffix: ' millions'
+           // valueSuffix: ' millions'
         },
         plotOptions: {
             bar: {
@@ -349,7 +361,7 @@ var $container1 = $('#sideVisMiddle'),
                 }
             }
         },
-        legend: {
+      /*  legend: {
             layout: 'vertical',
             align: 'right',
             verticalAlign: 'top',
@@ -359,20 +371,14 @@ var $container1 = $('#sideVisMiddle'),
             borderWidth: 1,
             backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
             shadow: true
-        },
+        },*/
         credits: {
             enabled: false
         },
-        series: [{
-            name: 'Year 1800',
-            data: [107, 31, 635, 203, 2]
-        }, {
-            name: 'Year 1900',
-            data: [133, 156, 947, 408, 6]
-        }, {
-            name: 'Year 2012',
-            data: [1052, 954, 4250, 740, 38]
-        }]
+        series:[{
+        	 name: 'Iznos',
+        	 data : data
+        }] 
     });
 
 

@@ -1,5 +1,4 @@
-{% extends "layout.html" %} 
-{% block body %}
+{% extends "layout.html" %} {% block body %}
 <style>
 /* 
 .embed-container {
@@ -23,9 +22,11 @@
 .padding-10{ padding:10px;}
 .explore-icon{width: 180px;}
  */
-.icon-size{
-   /*  max-width: 30%; */
+
+.icon-size {
+    /*  max-width: 30%; */
 }
+
 #timelineImg {
     max-width: 100%;
     min-height: 50%;
@@ -36,7 +37,6 @@
     -webkit-columns: 4;
     -moz-columns: 4;
 }
-
 </style>
 <script>
 //https://developers.google.com/youtube/player_parameters?hl=en
@@ -67,31 +67,40 @@ $(function() {
     $(".explore-icon").hover(function() {
         //if active, don't change
         //change ul content
-        var random = function() {
-            return Math.floor(Math.random() * 10);
+        $("#descDiv ul").addClass("hidden");
+
+        var idIcon = $(this).attr("id");
+        if(  idIcon == "liberatIcon"){
+            $("#titleHowTo").html("Tell us what to liberate next");
+            $("#liberateNext").removeClass("hidden");
         }
+        else if(idIcon == "apiIcon"){
+            $("#titleHowTo").html("API");
+            $("#api").removeClass("hidden");
+        }
+        else {
+            $("#titleHowTo").html("Advanced search");
+            $("#search").removeClass("hidden");
+        }    
 
 
-        $("#descHowToUse").html("");
-        $("#descHowToUse").append($("<li class='col-xs-6'>").append("<p>Some Text. Nesto nesto" + random() + "</p>"));
-        $("#descHowToUse").append($("<li class='col-xs-6'>").append("<p>Some Text. Nesto nesto" + random() + "</p>"));
-        $("#descHowToUse").append($("<li class='col-xs-6'>").append("<p>Some Text. Nesto nesto" + random() + "</p>"));
-        $("#descHowToUse").append($("<li class='col-xs-6'>").append("<p>Some Text. Nesto nesto" + random() + "</p>"));
+        
+      
     })
 })
 </script>
 <header class="intro primary-color">
     <!-- <div class="intro-body"> -->
-        <div class="container">
-            <div class="white-content">
-                <div class="intro-content padding-lg">
-                    <h2 class="text-center">About</h2>
-                    <p class="text-justify margin-2p">
-                       Data Center is an open online platform that provides easy access to datasets of various public information at the national and local level in Serbia. It was developed to help journalists, activists, researchers and public officials in search for valuable data to power their stories, campaigns, analyses or decision making. With the use of latest technologies, Data Center simplifies, integrates and prepares complex, disparate and disorganized datasets for easy and meaningful use by all interested stakeholders. By making good use of public data, Data Center and its users push for governments to offer useful and good quality data and provide the public what they need to participate in decision making as active and informed citizens.
-                    </p>
-                </div>
+    <div class="container">
+        <div class="white-content">
+            <div class="intro-content padding-lg">
+                <h2 class="text-center">About</h2>
+                <p class="text-justify margin-2p">
+                    Data Center is an open online platform that provides easy access to datasets of various public information at the national and local level in Serbia. It was developed to help journalists, activists, researchers and public officials in search for valuable data to power their stories, campaigns, analyses or decision making. With the use of latest technologies, Data Center simplifies, integrates and prepares complex, disparate and disorganized datasets for easy and meaningful use by all interested stakeholders. By making good use of public data, Data Center and its users push for governments to offer useful and good quality data and provide the public what they need to participate in decision making as active and informed citizens.
+                </p>
             </div>
         </div>
+    </div>
 </header>
 <div class="container">
     <div class="overlay-video text-center">
@@ -99,7 +108,6 @@ $(function() {
             <div class='embed-container'>
                 <div id="ytPlayerAbout"></div>
             </div>
-
         </div>
     </div>
 </div>
@@ -107,29 +115,39 @@ $(function() {
 <section id="howToUseS" class="container-fluid content-section text-center secondary-color white-content margin-4p padding-sm">
     <div class="row">
         <div class="container">
-            <h2>Ways to Use the Site</h2>
+            <h2 >Ways to Use the Site</h2>
             <div class="row">
                 <div class="col-md-4 col-xs-6 padding-10 icon-size">
-                    <img class="explore-icon" src="{{ url_for('static', filename='images/DC_Icon_1.svg') }}"  onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_1_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_1.svg') }}';" alt=""></div>
+                    <img id="searchIcon"  class="explore-icon" src="{{ url_for('static', filename='images/DC_Icon_1.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_1_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_1.svg') }}';" alt=""></div>
                 <div class="col-md-4 col-xs-6 padding-10 icon-size">
-                    <img class="explore-icon" src="{{ url_for('static', filename='images/DC_Icon_2.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_2_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_2.svg') }}';" alt=""></div>
+                    <img id="apiIcon"  class="explore-icon" src="{{ url_for('static', filename='images/DC_Icon_2.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_2_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_2.svg') }}';" alt=""></div>
                 <div class="col-md-4 col-xs-6 padding-10 icon-size">
-                    <img class="explore-icon" src="{{ url_for('static', filename='images/DC_Icon_3.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_3_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_3.svg') }}';"  alt=""></div>
-                
+                    <img id="liberatIcon" class="explore-icon" src="{{ url_for('static', filename='images/DC_Icon_3.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_3_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_3.svg') }}';" alt=""></div>
             </div>
             <div class="row">
-                <ul id="descHowToUse">
-                    <li class="col-xs-6">
-                        <p><b>Description</b> nausgaard small batch hammock umami first</p>
-                    </li>
-                    <li class="col-xs-6">
-                        <p><b>Description</b> nausgaard small batch hammock umami second</p>
-                    </li>
-                    <li class="col-xs-6">
-                        <p><b>Description</b> nausgaard small batch hammock umami third</p>
-                    </li>
-                    
-                </ul>
+                <div id="descDiv" class="col-md-8 col-md-offset-2">
+                    <h1 id="titleHowTo">Advanced search</h1>
+
+                    <ul id="search">
+                        <li> You can start exploring right from the homepage: click on the pre-made search right below the video, or click on “show me another” to get a new pre-made search</li>
+                        <li>On the <a href="{{ url_for('search.index') }}">Search</a> page, you can visualize all our data and filter it by any variable (like geographic location, amount, or anything else)</li>
+                        <li>The visualization are automatically updated, to give you an easier overview of what the data is saying</li>
+                        <li>We are working on custom advanced searches, where you will be able to define <b>operators</b> like “less than”, “is true”, “is empty” etc to create complex filtering directly on the website</li>
+                        <li>You can also download the data in different open formats for your own analyses</li>
+                    </ul>
+                    <ul id="api" class="hidden">
+                        <li>Don’t know what an API is? The School of Data explains <a href="http://schoolofdata.org/2013/11/18/web-apis-for-non-programmers/">APIs for non-programmers</a> (but you should probably get a developer to help you - <a href="mailto:data@datacentar.io">or ask us for help</a>!)</li>
+                        <li>On the <a href="{{ url_for('api.index') }}">API page</a> you can learn about all the parameters you can use for your API calls, and create your custom API</li>
+                        <li>Run the custom API directly on the Data Centar website to see what results it provides you, then tweak to your delight</li>
+                        <li>Once you’re happy, take the API and plug it into your website, or use it to download raw data on your computer</li>
+                        <li>Our entire Search page is powered by our API - so you can create advanced searches, and copy the API link of the search you made</li>
+                    </ul>
+                    <ul id="liberateNext" class="hidden">
+                        <li>At the bottom of each page, you will find a form where you can choose between four datasets we plan to open. </li>
+                        <li>Take your pick, and if you want, leave us a comment on how you would use that data. Your feedback is crucial!</li>
+                        <li>If you’re not interested in any of the proposed datasets, <a href="mailto:data@datacentar.io">get in touch</a> and propose what you would like us to liberate next</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -140,9 +158,7 @@ $(function() {
         <img id="timelineImg" src="{{ url_for('static', filename='images/timeline.svg') }}" alt="">
         <div class="col-lg-8 col-lg-offset-2">
             <!-- <h2 class="margin-2p">Timeline</h2> -->
-            
-            
-            <h2 class="margin-top-10vh">The Future</h2>  
+            <h2 class="margin-top-10vh">The Future</h2>
             <p class="margin-2p">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo facilis molestias, repudiandae omnis! Voluptate minima minus atque asperiores sint harum omnis molestiae pariatur animi, corporis quam alias, fuga consectetur culpa?</p>
         </div>
     </div>

@@ -57,6 +57,36 @@ var params =
   $(function(){
 
   
+  	$("[name='dataItem']").on("selectmenuchange",function (ev,ui) {
+  		$("#dataLabel").html(ui.item.label)
+  		
+  	})
+
+  	$("[name='muncipalityItem']").on("selectmenuchange",function (ev,ui) {
+  		$("#mucipalityLabel").html(ui.item.label)
+  		
+  	})
+
+  	$("[name='yearItem']").on("selectmenuchange",function (ev,ui) {
+  		$("#yearLabel").html(ui.item.label)
+  		
+  	})
+
+  	$("[name='budgetItem']").on("selectmenuchange",function (ev,ui) {
+  		$("#budgetItemLabel").html(ui.item.label)
+  		
+  	})
+
+  	$("[name='operatorItem']").on("selectmenuchange",function (ev,ui) {
+  		$("#operatorLabel").html(ui.item.label)
+  		
+  	})
+
+  	$("[name='amountItem']").on("selectmenuchange",function (ev,ui) {
+  		$("#amountLabel").html(ui.item.label)
+  		
+  	})
+
 
   	$(document).on('click', ".advancedCondition",function(ev){
 
@@ -87,7 +117,7 @@ var params =
 //mainVis
 
 $(function  (argument) {
-	$("#mainVis").html("lalslaldslasdla");
+	
 
 	var $containerMain = $('#mainVis'),
         chart
@@ -396,7 +426,7 @@ var $container2 = $('#sideVisBottom'),
     <!-- <div class="intro-body container"> -->
         <div class="intro-content container padding-lg">
             <p class="text-center lead text-underline">
-                Show me data about [...] in [...].
+                Show me data about <span id="dataLabel">[...]</span> in <span id="mucipalityLabel">[...]</span> <span id="yearLabel"></span> <span id="advancedLabel">related to</span> <span id="budgetItemLabel"></span> that <span id="operatorLabel"></span> <span id="amountLabel"></span> .
             </p>
         </div>
     <!-- </div> -->
@@ -409,24 +439,17 @@ var $container2 = $('#sideVisBottom'),
 	            <form action="" id="searchForm" class="form-horizontal" role="form">
 	                <div class="form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                           <option value='710000'>Prihodi</option>
-								<option value='712000'>Porez na zarade</option>
-								<option value='713000'>Porez na imovinu</option>
-								<option value='730000'>Donacije i transferi</option>
-								<option value='733000'>Transferi od drugih nivoa vlasti</option>
-								<option value='410000'>Rashodi</option>
-								<option value='422000'>Troškovi putovanja</option>
-								<option value='460000'>Donacije, dotacije i transferi</option>
-								<option value='450000'>Subvencije</option>
+	                        <select class="form-control border-primary search-control" name="dataItem">
+	                            <option value="budget">Budžet</option>
+	                            <option value="javneNabavke">Javne nabavke</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary search-control" name="muncipalityItem">
 		                        <option value="chachak">Čačak</option>
-							    <option value="indjija">Inđjija</option>
+							    <option value="indjija">Inđija</option>
 							    <option value="kraljevo">Kraljevo</option>
-							    <option value="loznitsa">Loznitsa</option>
+							    <option value="loznitsa">Loznica</option>
 							    <option value="novi-beograd">Novi Beograd</option>
 							    <option value="prijepolje">Pripolje</option>
 							    <option value="valjevo">Valjevo</option>
@@ -437,7 +460,7 @@ var $container2 = $('#sideVisBottom'),
 
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary search-control" name="yearItem">
 	                            <option value="">2015</option>
 	                            <option value="">2014</option>
 	                            <option value="">2013</option>
@@ -455,13 +478,20 @@ var $container2 = $('#sideVisBottom'),
 	                </div>
 	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Education</option>
-	                            <option value="">Social</option>
+	                        <select class="form-control border-primary search-control" name="budgetItem">
+	                           <option value='710000'>Prihodi</option>
+								<option value='712000'>Porez na zarade</option>
+								<option value='713000'>Porez na imovinu</option>
+								<option value='730000'>Donacije i transferi</option>
+								<option value='733000'>Transferi od drugih nivoa vlasti</option>
+								<option value='410000'>Rashodi</option>
+								<option value='422000'>Troškovi putovanja</option>
+								<option value='460000'>Donacije, dotacije i transferi</option>
+								<option value='450000'>Subvencije</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary search-control" name="operatorItem">
 	                           	<option value=""> is  </option>
 	                            <option value=""> is > </option>
 	                            <option value=""> is < </option>
@@ -470,7 +500,7 @@ var $container2 = $('#sideVisBottom'),
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary search-control" name="amountItem">
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>

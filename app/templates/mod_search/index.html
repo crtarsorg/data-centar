@@ -13,24 +13,44 @@
 	}
 </style>
 <script>
-var params = 	
+var params = {
+        "tipPodataka": ["rashodi", "prihodi"],
+        "klasifikacijaBroj": [
+            710000,
+            712000,
+            713000,
+            730000,
+            733000,
+            410000,
+            422000,
+            460000,
+            450000
+
+        ],
+        opstine:[]
+    }
+
+var params1 = 	
 {
     "tipPodataka": [
         "rashodi",
         "prihodi"
     ],
     "godine": [
-        2015
+        2015,
+        2014
     ],
     "opstine": [
-       
+        "prijepolje",
+        "valjevo",
+        "vranje",
+        "zvezdara"
     ],
     "klasifikacija": {
         "broj": [
-            413,
-            71000
+           
         ],
-        "pocinjeSa": "56"
+        "pocinjeSa": ""
     },
     "filteri": {
         "ostali": {
@@ -38,20 +58,46 @@ var params =
         }
     }
 }
-                
+  
 
-	$.ajax({
-	  method: "POST",
-	  url: "../api/zbir",
-	  data: JSON.stringify (params),
-	  contentType:"application/json;charset=utf-8",
-	  dataType: "json"
 
-	})
-  .done(function( msg ) {
-    console.log( msg );
+    var result1, result2;
+    $.when(
 
-  });
+        $.ajax({
+            method: "POST",
+            url: "../api/prosek",
+            data: JSON.stringify(params),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function(returnhtml){                          
+                result1 = returnhtml;     
+            }      
+
+        })
+
+        ,
+        $.ajax({
+            method: "POST",
+            url: "../api/zbir",
+            data: JSON.stringify(params1),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function(returnhtml){                          
+                result2 = returnhtml;     
+            }   
+
+        })
+
+
+
+    ).then(function() {
+        
+        mainVis(result2);
+        sideVis(result2, result1)
+        //visu(result1, result2)
+    });
+
 
 
   $(function(){
@@ -72,17 +118,17 @@ var params =
   		
   	})
 
-  	$("[name='budgetItem']").on("selectmenuchange",function (ev,ui) {
+  	$("[name='budgetItem[]']").on("selectmenuchange",function (ev,ui) {
   		$("#budgetItemLabel").html(ui.item.label)
   		
   	})
 
-  	$("[name='operatorItem']").on("selectmenuchange",function (ev,ui) {
+  	$("[name='operatorItem[]']").on("selectmenuchange",function (ev,ui) {
   		$("#operatorLabel").html(ui.item.label)
   		
   	})
 
-  	$("[name='amountItem']").on("selectmenuchange",function (ev,ui) {
+  	$("[name='amountItem[]']").on("selectmenuchange",function (ev,ui) {
   		$("#amountLabel").html(ui.item.label)
   		
   	})
@@ -116,9 +162,29 @@ var params =
 
 //mainVis
 
-$(function  (argument) {
+function mainVis(data) {
 	
+	console.log(data);
 
+	var opstina = "Zvezdara";
+	var kontoBroj = 611; 
+
+	data = data.filter(function(la){
+		return la.opstina == opstina; 
+		}).map(function(po){
+			po.y =po.ukupno; 
+			po.name = po.klasifikacijaBroj; 
+			if(+po.klasifikacijaBroj == kontoBroj)
+				{
+					po.sliced = true;
+					po.selected = true;
+				}
+			return po; 
+		})
+
+		console.log(data);
+
+	
 	var $containerMain = $('#mainVis'),
         chart
        /* origChartWidth = 400,
@@ -138,10 +204,16 @@ $(function  (argument) {
                 type: 'pie'
             },
             title: {
-                text: 'Browser market shares January, 2015 to May, 2015'
+                text: 'Udeo '+kontoBroj+ " u ukupnom budzetu"
+            },
+            legend:{
+            	title:{
+            		text:'Nekakav tekst'
+            	}
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            	headerFormat:'<span style="font-size: 10px">Konto: {point.key}</span><br/>',
+                pointFormat: ' {series.name}: <b>{point.y} din</b>'
             },
             plotOptions: {
                 pie: {
@@ -154,41 +226,22 @@ $(function  (argument) {
                 }
             },
             series: [{
-                name: 'Brands',
+                name: 'Iznos',
                 colorByPoint: true,
-                data: [{
-                    name: 'Microsoft Internet Explorer',
-                    y: 56.33
-                }, {
-                    name: 'Chrome',
-                    y: 24.03,
-                    sliced: true,
-                    selected: true
-                }, {
-                    name: 'Firefox',
-                    y: 10.38
-                }, {
-                    name: 'Safari',
-                    y: 4.77
-                }, {
-                    name: 'Opera',
-                    y: 0.91
-                }, {
-                    name: 'Proprietary or Undetectable',
-                    y: 0.2
-                }]
+                data: data
             }]
         });
     
 
-})
+}
 
 
 
 		
 
-$(function () {
+function sideVis(arg1, arg2) {
 
+	
 
 	var $container = $('#sideVisTop'),
         chart,
@@ -404,7 +457,7 @@ var $container2 = $('#sideVisBottom'),
 
 
 ///end on load
-});
+}
 
 
 
@@ -478,7 +531,7 @@ var $container2 = $('#sideVisBottom'),
 	                </div>
 	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="budgetItem">
+	                        <select class="form-control border-primary search-control" name="budgetItem[]">
 	                           <option value='710000'>Prihodi</option>
 								<option value='712000'>Porez na zarade</option>
 								<option value='713000'>Porez na imovinu</option>
@@ -491,7 +544,7 @@ var $container2 = $('#sideVisBottom'),
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="operatorItem">
+	                        <select class="form-control border-primary search-control" name="operatorItem[]">
 	                           	<option value=""> is  </option>
 	                            <option value=""> is > </option>
 	                            <option value=""> is < </option>
@@ -500,7 +553,7 @@ var $container2 = $('#sideVisBottom'),
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="amountItem">
+	                        <select class="form-control border-primary search-control" name="amountItem[]">
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -514,46 +567,27 @@ var $container2 = $('#sideVisBottom'),
 	                    </div>
 	                </div>
 
-					<div class="hidden optionalFieldSet form-group">
-	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Education</option>
-	                            <option value="">Social</option>
-	                        </select>
-	                    </div>
-	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                           	<option value=""> is  </option>
-	                            <option value=""> is > </option>
-	                            <option value=""> is < </option>
-	                            <option value=""> is empty </option>
-	                            <option value=""> contains </option>
-	                        </select>
-	                    </div>
-	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Function</option>
-	                            <option value="">Function2</option>
-	                        </select>
-	                    </div>
-	                    <div class="col-xs-2 col-sm-1 text-center">
-	                        <button type="button"  class="form-control border-primary pull-left" style="width: 50%;">&#x2713;</button>
-	                        <button type="button"  class="removeCondition form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
-	                    </div>
-	                    <div class="col-xs-4 col-sm-2 pull-right">
-	                        <button type="button"   class="addCondition form-control border-primary button-full">Add</button>
-	                    </div>
-	                </div>
+					
 
+	                
+
+	                
 	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Education</option>
-	                            <option value="">Social</option>
+	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                           <option value='710000'>Prihodi</option>
+								<option value='712000'>Porez na zarade</option>
+								<option value='713000'>Porez na imovinu</option>
+								<option value='730000'>Donacije i transferi</option>
+								<option value='733000'>Transferi od drugih nivoa vlasti</option>
+								<option value='410000'>Rashodi</option>
+								<option value='422000'>Troškovi putovanja</option>
+								<option value='460000'>Donacije, dotacije i transferi</option>
+								<option value='450000'>Subvencije</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary search-control" name="operatorItem[]">
 	                           	<option value=""> is  </option>
 	                            <option value=""> is > </option>
 	                            <option value=""> is < </option>
@@ -562,7 +596,7 @@ var $container2 = $('#sideVisBottom'),
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary search-control" name="amountItem[]">
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -578,13 +612,20 @@ var $container2 = $('#sideVisBottom'),
 
 	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Education</option>
-	                            <option value="">Social</option>
+	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                           <option value='710000'>Prihodi</option>
+								<option value='712000'>Porez na zarade</option>
+								<option value='713000'>Porez na imovinu</option>
+								<option value='730000'>Donacije i transferi</option>
+								<option value='733000'>Transferi od drugih nivoa vlasti</option>
+								<option value='410000'>Rashodi</option>
+								<option value='422000'>Troškovi putovanja</option>
+								<option value='460000'>Donacije, dotacije i transferi</option>
+								<option value='450000'>Subvencije</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary search-control" name="operatorItem[]">
 	                           	<option value=""> is  </option>
 	                            <option value=""> is > </option>
 	                            <option value=""> is < </option>
@@ -593,7 +634,7 @@ var $container2 = $('#sideVisBottom'),
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary search-control" name="amountItem[]">
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -606,15 +647,23 @@ var $container2 = $('#sideVisBottom'),
 	                        <button type="button"   class="addCondition form-control border-primary button-full">Add</button>
 	                    </div>
 	                </div>
+
 	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
-	                            <option value="">Education</option>
-	                            <option value="">Social</option>
+	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                           <option value='710000'>Prihodi</option>
+								<option value='712000'>Porez na zarade</option>
+								<option value='713000'>Porez na imovinu</option>
+								<option value='730000'>Donacije i transferi</option>
+								<option value='733000'>Transferi od drugih nivoa vlasti</option>
+								<option value='410000'>Rashodi</option>
+								<option value='422000'>Troškovi putovanja</option>
+								<option value='460000'>Donacije, dotacije i transferi</option>
+								<option value='450000'>Subvencije</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary search-control" name="operatorItem[]">
 	                           	<option value=""> is  </option>
 	                            <option value=""> is > </option>
 	                            <option value=""> is < </option>
@@ -623,7 +672,45 @@ var $container2 = $('#sideVisBottom'),
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="">
+	                        <select class="form-control border-primary search-control" name="amountItem[]">
+	                            <option value="">Function</option>
+	                            <option value="">Function2</option>
+	                        </select>
+	                    </div>
+	                    <div class="col-xs-2 col-sm-1 text-center">
+	                        <button type="button"  class="form-control border-primary pull-left" style="width: 50%;">&#x2713;</button>
+	                        <button type="button"  class="removeCondition form-control border-secondary pull-left" style="width: 50%;">&#x2715;</button>
+	                    </div>
+	                    <div class="col-xs-4 col-sm-2 pull-right">
+	                        <button type="button"   class="addCondition form-control border-primary button-full">Add</button>
+	                    </div>
+	                </div>
+
+	                <div class="hidden optionalFieldSet form-group">
+	                    <div class="col-xs-12 col-sm-3">
+	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                           <option value='710000'>Prihodi</option>
+								<option value='712000'>Porez na zarade</option>
+								<option value='713000'>Porez na imovinu</option>
+								<option value='730000'>Donacije i transferi</option>
+								<option value='733000'>Transferi od drugih nivoa vlasti</option>
+								<option value='410000'>Rashodi</option>
+								<option value='422000'>Troškovi putovanja</option>
+								<option value='460000'>Donacije, dotacije i transferi</option>
+								<option value='450000'>Subvencije</option>
+	                        </select>
+	                    </div>
+	                    <div class="col-xs-12 col-sm-3">
+	                        <select class="form-control border-primary search-control" name="operatorItem[]">
+	                           	<option value=""> is  </option>
+	                            <option value=""> is > </option>
+	                            <option value=""> is < </option>
+	                            <option value=""> is empty </option>
+	                            <option value=""> contains </option>
+	                        </select>
+	                    </div>
+	                    <div class="col-xs-12 col-sm-3">
+	                        <select class="form-control border-primary search-control" name="amountItem[]">
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>

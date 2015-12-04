@@ -13,6 +13,28 @@ class PrihodiImportingTestCases(unittest.TestCase):
         "ТЕКУЋИ ПРИХОДИ": [6, 499264973],
         "ДРУГИ ПРИХОДИ": [8, 132364859]
     }
+    loznica_counts_of_parents_and_total = {
+        "ПОРЕЗ НА ДОХОДАК, ДОБИТ И КАПИТАЛНЕ ДОБИТКЕ": 13,
+        "ПОРЕЗ НА ФОНД ЗАРАДА": 1,
+        "ПОРЕЗ НА ИМОВИНУ": 6,
+        "ПОРЕЗ НА ДОБРА И УСЛУГЕ": 7,
+        "ДРУГИ ПОРЕЗИ": 1,
+        "ДОНАЦИЈЕ ОД ИНОСТРАНИХ ДРЖАВА":1,
+        "ДОНАЦИЈЕ ОД МЕЂ. ОРГАНИЗАЦИЈА": 2,
+        "ТРАНСФЕРИ ОД ДРУГИХ НИВОА ВЛАСТИ": 4,
+        "ПРИХОДИ ОД ИМОВИНЕ": 11,
+        "ПРИХОДИ ОД ПРОДАЈЕ ДОБАРА И УСЛУГА": 9,
+        "НОВЧАНЕ КАЗНЕ И ОДУЗЕТА ИМОВИНСКА КОРИСТ": 2,
+        "ДОБРОВОЉНИ ТРАНСФЕРИ ОД ФИЗИЧКИХ И ПРАВНИХ ЛИЦА": 2,
+        "МЕШОВИТИ И НЕОДРЕЂЕНИ ПРИХОДИ": 3,
+        "МЕМОРАНДУМСКЕ СТАВКЕ ЗА РЕФУНДАЦИЈУ РАСХОДА": 1,
+        "Меморандумске ставке за рефундацију расхода из предходне године":1,
+        "ПРИХОДИ ИЗ БУЏЕТА":1,
+        "ПРИМАЊА ОД ПРОДАЈЕ НЕПОКРЕТНОСТИ": 2,
+        "ПРИМАЊА ОД ПРОДАЈЕ  РОБЕ ЗА ДАЉУ ПРОДАЈУ":1,
+        "ПРИМАЊА ОД ЗАДУЖИВАЊА": 1,
+        "ПРИМАЊА ОД ПРОДАЈЕ ФИН. ИМОВИНЕ":1
+    }
 
     # Json container for each vranje parent category
     vranje_counts_of_parents_and_total = {
@@ -185,6 +207,10 @@ class PrihodiImportingTestCases(unittest.TestCase):
         # Test the counts of particular parent category for Vranje municipality
         for parent in self.vranje_counts_of_parents_and_total:
             self.asserts_for_parent_categories_elements("Vranje", parent, self.vranje_counts_of_parents_and_total[parent], "prihodi")
+
+        #Test the counts of particular parent category for Loznica municipality
+        for parent in self.loznica_counts_of_parents_and_total:
+            self.asserts_for_parent_categories_elements("Loznica", parent, self.loznica_counts_of_parents_and_total[parent], "prihodi")
 
 
     def test_total_sum_for_parent_categories(self):

@@ -116,7 +116,7 @@ class DataImporterBase(object):
         if kategorija_roditelj is not None:
             json_doc["kategorijaRoditelj"]["opis"]["cirilica"] = kategorija_roditelj.strip()
             json_doc["kategorijaRoditelj"]["opis"]["latinica"] = cyrtranslit.to_latin(kategorija_roditelj, "sr")
-            json_doc["kategorijaRoditelj"]["broj"] = int(roditelj_broj)
+            json_doc["kategorijaRoditelj"]["broj"] = roditelj_broj
 
 
         json_doc["klasifikacija"]["broj"] = class_number.strip()

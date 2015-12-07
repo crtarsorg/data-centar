@@ -80,7 +80,7 @@ class PrihodiDataImporter(DataImporterBase):
         # Iterate throughout every row in data handler
         for index, row in enumerate(rows):
 
-            if index > 1:
+            if index > 1 and index < 86:
                 # Use this check to retrieve parent category from csv file rows
                 if row[1][-3:] == '000' and row[1][-4:] not in ["00000", "0000"]:
                     parent_handler = row[2]
@@ -95,6 +95,20 @@ class PrihodiDataImporter(DataImporterBase):
                     db.opstine.insert(json_doc)
 
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Лозница", parent_handler, row[1])
+            elif index >= 86:
+                if row[1] in ["771001", "790000", "772000", "811000", "823000", "910000", "920000"]:
+                    parent_handler = row[2]
+                    parent_num = row[1]
+
+                if row[1] not in ["", " ", parent_num, "900000", "800000", "770000"]:
+                    # Build mongo document
+                    json_doc = self.build_mongo_document_structure("Лозница", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
+
+                    # Insert JSON document in mongo
+                    db.opstine.insert(json_doc)
+
+                    print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Лозница", parent_handler, row[1])
+
 
     def data_importer_of_municipality_sombor(self, municipality, data_type):
 
@@ -230,8 +244,8 @@ class PrihodiDataImporter(DataImporterBase):
                         row[4],
                         row[5],
                         None,
-                        None,
-                        None
+                        parent_handler,
+                        parent_num
                     )
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Kategorija Roditelj: %s - Broj: %s - Opis: %s" % ("Čačak", parent_handler, row[1], row[2])

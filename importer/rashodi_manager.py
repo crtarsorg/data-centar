@@ -27,8 +27,8 @@ class RashodiDataImporter(object):
         program = ""
         subprogram = ""
         for index, row in enumerate(data_handler):
-            if index > 1:
-                if row[1] in ["", " "] and row[2] not in ["", " "] and row[2].strip() in utils.program_categories_for_prijepolje():
+            if index > 0:
+                if row[1] in ["", " "] and row[2] not in ["", " "] and row[2].strip() in utils.program_categories_for_prijepolje().keys():
                     program = row[2].strip()
 
                 if program != "" and row[2].strip() in utils.program_categories_for_prijepolje()[program]:
@@ -68,7 +68,7 @@ class RashodiDataImporter(object):
         program_categories = utils.sombor_programs()
         # Iterate throughout every row in data handler
         for index, row in enumerate(data_handler):
-            if index > 6:
+            if index > 4:
                 # init program
                 if row[2] not in ["", " "]:
                     if row[2].strip() in program_categories:

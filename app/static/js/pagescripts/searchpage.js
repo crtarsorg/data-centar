@@ -135,12 +135,37 @@ function fethData(query){
         contentType: 'application/json',
         data: JSON.stringify(query),
         success: function(rsp){
-            // TODO: Build result table here.
-            console.log(rsp);
+            buildResultTable(rsp);
+            sideVis(rsp);
         }
     });
 }
 
+
+function buildResultTable (response) {
+
+    /*
+        {"opstina":"Novi Beograd","ukupno":1000000,"godina":2015,"sopstveniPrihodi":0,"prihodiBudzeta":1000000,"klasifikacijaBroj":"515",
+        "donacije":0,"ostali":0,"tipPodataka":"Rashodi"}
+     */
+
+    $('#tableResults').DataTable( {
+        data: response,
+        scrollY: 400,
+          columns: [
+            { "sTitle": "Opština" , data: 'opstina' },
+            { "sTitle": "Ukupno" , data: 'ukupno' },
+            { "sTitle": "Godina" , data: 'godina' },
+            { "sTitle": "Sopstveni Prihodi" , data: 'sopstveniPrihodi' },
+            { "sTitle": "Prihodi Budžeta" , data: 'prihodiBudzeta' },
+            { "sTitle": "Conto" , data: 'klasifikacijaBroj' },
+            { "sTitle": "Donacije" , data: 'donacije' },
+            { "sTitle": "Ostali" , data: 'ostali' },
+            { "sTitle": "Tip Podataka" , data: 'tipPodataka' },
+        ]
+    } );
+
+}
 
 function addAdvancedFilterRow(){
     var filterRow = '<div class="advanced-filter-row">' +
@@ -531,7 +556,7 @@ var $container1 = $('#sideVisMiddle'),
             type: 'bar'
         },
         title: {
-            text: 'Uporedni prikaz iznosa za konto : ' + 611
+            text: 'Uporedni prikaz, konto : ' + 611
         },
 
         xAxis: {

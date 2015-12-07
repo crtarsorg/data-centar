@@ -24,10 +24,72 @@ $(function(ready){
 
 });
 
+function applyFilters(){
+
+    // Get basic filter parameters
+    var year = parseInt($('#query-param-selection-year').find(":selected").text());
+    var municipality = $('#query-param-selection-municipality').find(":selected").val();
+
+    // Prepare filter object
+    var query = {
+        "tipPodataka": [
+            "rashodi",
+            "prihodi"
+        ],
+        "godine": [
+            year
+        ],
+        "opstine": [municipality],
+        "klasifikacija": {
+            "broj": [],
+            "pocinjeSa": ""
+        },
+        "filteri": {
+            "ukupno": {},
+            "sopstveniPrihodi": {},
+            "prihodiBudzeta": {},
+            "donacije": {},
+            "ostali": {}
+        }
+    };
+
+
+    // Get advanced filter parameters
+    $('#advanced-filter-container').children('div').each(function () {
+        var currentBudgetItem = undefined;
+        var currentOperand = undefined;
+        var currentValue = undefined;
+
+        $(this).children('div').each(function () {
+            if($(this).hasClass('advanced-filter-selection-budget-item')){
+                currentBudgetItem = $(this).children().find(":selected").val();
+
+            }else if($(this).hasClass('advanced-filter-selection-operand')){
+                currentOperand = $(this).children().find(":selected").val();
+
+            }else if($(this).hasClass('advanced-filter-selection-value')){
+                currentValue = $(this).children().val();
+                query['filteri'][currentBudgetItem][currentOperand] = parseInt(currentValue);
+            }
+        });
+    });
+
+    // TODO: don't hardcode URL. But Can't use Jinja2 function
+    $.ajax({
+        type: "POST",
+        url: '/api/zbir',
+        contentType: 'application/json',
+        data: JSON.stringify(query),
+        success: function(rsp){
+            console.log(rsp);
+        }
+    });
+}
+
 
 function addAdvancedFilterRow(){
     var filterRow = '<div class="advanced-filter-row">' +
-        '<div class="col-xs-12 col-sm-3">' +
+        '<div class="advanced-filter-selection-budget-item col-xs-12 col-sm-3">' +
             '<select class="form-control border-primary search-control">' +
                 '<option selected disabled>Budget Item</option>' +
                 '<option value="ukupno">Ukupno</option>' +
@@ -37,18 +99,18 @@ function addAdvancedFilterRow(){
                 '<option value="ostali">Ostali</option>' +
             '</select>' +
         '</div>' +
-        '<div class="col-xs-12 col-sm-3">' +
+        '<div class="advanced-filter-selection-operand col-xs-12 col-sm-3">' +
             '<select class="form-control border-primary search-control">' +
                 '<option selected disabled>Operand</option>' +
                 '<option value="veceIliJednako"> is >= </option>' +
                 '<option value="manjeIliJednako"> is <= </option>' +
             '</select>' +
         '</div>' +
-        '<div class="col-xs-12 col-sm-3">' +
+        '<div class="advanced-filter-selection-value col-xs-12 col-sm-3">' +
             '<input type="text" class="form-control border-primary search-control"/>' +
         '</div>' +
         '<div class="col-xs-2 col-sm-1 text-center">' +
-            '<button type="button"  class="form-control border-primary pull-left" style="width: 50%;">&#x2713;</button>' +
+            '<button type="button"  class="form-control border-primary pull-left" style="width: 50%;" onClick="javascript:applyFilters()">&#x2713;</button>' +
             '<button type="button"  class="removeCondition form-control border-secondary pull-left" style="width: 50%;" onClick="javascript:removeAdvancedFilterRow(this)">&#x2715;</button>' +
         '</div>' +
         '<div class="col-xs-4 col-sm-2 pull-right">' +

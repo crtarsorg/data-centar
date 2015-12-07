@@ -4,15 +4,24 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 <style>
+
+	#searchLink{
+		cursor: hand;
+		cursor: pointer;
+	}
+
 	#mainVis{
 		height: 550px;
 	}
+
 	div[id^="sideVis"]{
 		height: 30%;
 		max-width: 100%;
 	}
 </style>
 <script>
+
+
 var params = {
         "tipPodataka": ["rashodi", "prihodi"],
         "klasifikacijaBroj": [
@@ -25,7 +34,6 @@ var params = {
             422000,
             460000,
             450000
-
         ],
         opstine:[]
     }
@@ -59,46 +67,43 @@ var params1 =
     }
 }
   
+	function searchApiCall (argument) {
 
+	    var result1, result2;
+	    $.when(
 
-    var result1, result2;
-    $.when(
+	        $.ajax({
+	            method: "POST",
+	            url: "../api/prosek",
+	            data: JSON.stringify(params),
+	            contentType: "application/json;charset=utf-8",
+	            dataType: "json",
+	            success: function(returnhtml){                          
+	                result1 = returnhtml;     
+	            }      
 
-        $.ajax({
-            method: "POST",
-            url: "../api/prosek",
-            data: JSON.stringify(params),
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success: function(returnhtml){                          
-                result1 = returnhtml;     
-            }      
+	        })
+	        ,
+	        $.ajax({
+	            method: "POST",
+	            url: "../api/zbir",
+	            data: JSON.stringify(params1),
+	            contentType: "application/json;charset=utf-8",
+	            dataType: "json",
+	            success: function(returnhtml){                          
+	                result2 = returnhtml;     
+	            }   
 
-        })
+	        })
 
-        ,
-        $.ajax({
-            method: "POST",
-            url: "../api/zbir",
-            data: JSON.stringify(params1),
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success: function(returnhtml){                          
-                result2 = returnhtml;     
-            }   
+	    ).then(function() {
+	        
+	        mainVis(result2);
+	        sideVis(result2, result1)
+	        //visu(result1, result2)
+	    });
 
-        })
-
-
-
-    ).then(function() {
-        
-        mainVis(result2);
-        sideVis(result2, result1)
-        //visu(result1, result2)
-    });
-
-
+    }
 
   $(function(){
 
@@ -152,6 +157,13 @@ var params1 =
 		//reset to default
 		//if 
   		
+  	})
+
+
+  	$("#searchLink").click(function (argument) {
+  		var $podaci = $("#searchForm").serialize();
+  		
+  		searchApiCall($podaci);
   	})
   	
   })
@@ -432,7 +444,8 @@ var $container1 = $('#sideVisMiddle'),
 <header class="intro primary-color">
     <!-- <div class="intro-body container"> -->
         <div class="intro-content container padding-lg">
-            <p class="text-center lead text-underline">
+            
+            <p id="searchLink" class="text-center lead text-underline">
                 Show me data about <span id="dataLabel">[...]</span> in <span id="mucipalityLabel">[...]</span> <span id="yearLabel"></span> <span id="advancedLabel">related to</span> <span id="budgetItemLabel"></span> that <span id="operatorLabel"></span> <span id="amountLabel"></span> .
             </p>
         </div>
@@ -447,12 +460,14 @@ var $container1 = $('#sideVisMiddle'),
 	                <div class="form-group">
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="dataItem">
+	                        	<option selected disabled>Data Set</option>
 	                            <option value="budget">Budžet</option>
 	                            <option value="javneNabavke">Javne nabavke</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="muncipalityItem">
+	                        	<option selected disabled>Opština</option>
 		                        <option value="chachak">Čačak</option>
 							    <option value="indjija">Inđija</option>
 							    <option value="kraljevo">Kraljevo</option>
@@ -468,6 +483,7 @@ var $container1 = $('#sideVisMiddle'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="yearItem">
+	                        	<option selected disabled>Godina</option>
 	                            <option value="">2015</option>
 	                            <option value="">2014</option>
 	                            <option value="">2013</option>
@@ -486,7 +502,8 @@ var $container1 = $('#sideVisMiddle'),
 	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="budgetItem[]">
-	                           <option value='710000'>Prihodi</option>
+	                        	<option selected disabled>Budžetske stavke</option>
+	                           	<option value='710000'>Prihodi</option>
 								<option value='712000'>Porez na zarade</option>
 								<option value='713000'>Porez na imovinu</option>
 								<option value='730000'>Donacije i transferi</option>
@@ -499,6 +516,7 @@ var $container1 = $('#sideVisMiddle'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="operatorItem[]">
+	                        	<option selected disabled>Operacija</option>
 	                           	<option value=""> is  </option>
 	                            <option value=""> is > </option>
 	                            <option value=""> is < </option>
@@ -508,6 +526,7 @@ var $container1 = $('#sideVisMiddle'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="amountItem[]">
+	                        	<option selected disabled>Iznos</option>
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -529,6 +548,7 @@ var $container1 = $('#sideVisMiddle'),
 	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                        	<option selected disabled>Budžetska stavka</option>
 	                           <option value='710000'>Prihodi</option>
 								<option value='712000'>Porez na zarade</option>
 								<option value='713000'>Porez na imovinu</option>
@@ -542,6 +562,7 @@ var $container1 = $('#sideVisMiddle'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="operatorItem[]">
+	                        <option selected disabled>Operacija</option>
 	                           	<option value=""> is  </option>
 	                            <option value=""> is > </option>
 	                            <option value=""> is < </option>
@@ -551,6 +572,7 @@ var $container1 = $('#sideVisMiddle'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="amountItem[]">
+	                        <option selected disabled>Iznos</option>
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -567,6 +589,7 @@ var $container1 = $('#sideVisMiddle'),
 	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                        	<option selected disabled>Budžetska stavka</option>
 	                           <option value='710000'>Prihodi</option>
 								<option value='712000'>Porez na zarade</option>
 								<option value='713000'>Porez na imovinu</option>
@@ -580,6 +603,7 @@ var $container1 = $('#sideVisMiddle'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="operatorItem[]">
+	                           	<option selected disabled>Operacija</option>
 	                           	<option value=""> is  </option>
 	                            <option value=""> is > </option>
 	                            <option value=""> is < </option>
@@ -589,6 +613,7 @@ var $container1 = $('#sideVisMiddle'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="amountItem[]">
+	                        	<option selected disabled>Iznos</option>
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -605,6 +630,7 @@ var $container1 = $('#sideVisMiddle'),
 	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                        	<option selected disabled>Budžetska stavka</option>
 	                           <option value='710000'>Prihodi</option>
 								<option value='712000'>Porez na zarade</option>
 								<option value='713000'>Porez na imovinu</option>
@@ -618,6 +644,7 @@ var $container1 = $('#sideVisMiddle'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="operatorItem[]">
+	                        <option selected disabled>Operacija</option>
 	                           	<option value=""> is  </option>
 	                            <option value=""> is > </option>
 	                            <option value=""> is < </option>
@@ -627,6 +654,7 @@ var $container1 = $('#sideVisMiddle'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="amountItem[]">
+	                        	<option selected disabled>Iznos</option>
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -643,6 +671,7 @@ var $container1 = $('#sideVisMiddle'),
 	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                           	<option selected disabled>Budžetska stavka</option>
 	                           <option value='710000'>Prihodi</option>
 								<option value='712000'>Porez na zarade</option>
 								<option value='713000'>Porez na imovinu</option>
@@ -656,6 +685,7 @@ var $container1 = $('#sideVisMiddle'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="operatorItem[]">
+	                        <option selected disabled>Operacija</option>
 	                           	<option value=""> is  </option>
 	                            <option value=""> is > </option>
 	                            <option value=""> is < </option>
@@ -665,6 +695,7 @@ var $container1 = $('#sideVisMiddle'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="amountItem[]">
+	                        <option selected disabled>Iznos</option>
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -676,13 +707,7 @@ var $container1 = $('#sideVisMiddle'),
 	                    <div class="col-xs-4 col-sm-2 pull-right">
 	                        <button type="button"   class="addCondition form-control border-primary button-full">Add</button>
 	                    </div>
-	                </div>		                
-
-	                
-
-	                
-
-	                
+	                </div>		           
 
 
 	            </form>

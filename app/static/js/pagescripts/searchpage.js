@@ -22,7 +22,33 @@ $(function(ready){
         }
     });
 
+    defaultSearchResult();
+
 });
+
+function defaultSearchResult(){
+    //TODO: get filters in URL parameters, if they exist.
+    
+    var query = {
+        "tipPodataka": [
+            "rashodi",
+            "prihodi"
+        ],
+        "godine": [
+            2015
+        ],
+        "opstine": [],
+        "klasifikacija": {
+            "broj": [],
+            "pocinjeSa": ""
+        },
+        "filteri": {}
+    };
+
+    // TODO: don't hardcode URL. But Can't use Jinja2 function.
+    fethData(query);
+
+}
 
 function applyFilters(){
 
@@ -74,7 +100,11 @@ function applyFilters(){
         });
     });
 
-    // TODO: don't hardcode URL. But Can't use Jinja2 function
+    fethData(query);
+}
+
+function fethData(query){
+    // TODO: don't hardcode URL. But Can't use Jinja2 function.
     $.ajax({
         type: "POST",
         url: '/api/zbir',

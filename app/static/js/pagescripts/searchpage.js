@@ -14,9 +14,55 @@ $(function(ready){
         var option = $(this).find('option:selected').text();
         $('#query-param-year').html(option.toUpperCase());
     });
+
+    $( ".advancedCondition" ).click(function() {
+        if($(".advanced").hasClass("hidden")) {
+            $(".advanced").removeClass("hidden");
+            addAdvancedFilterRow();
+        }
+    });
+
 });
 
 
+function addAdvancedFilterRow(){
+    var filterRow = '<div class="advanced-filter-row">' +
+        '<div class="col-xs-12 col-sm-3">' +
+            '<select class="form-control border-primary search-control">' +
+                '<option selected disabled>Budget Item</option>' +
+                '<option value="ukupno">Ukupno</option>' +
+                '<option value="sopstveniPrihodi">Sopstveni Prihodi</option>' +
+                '<option value="prihodiBudzeta">Prihodi Budzeta</option>' +
+                '<option value="donacije">Donacije</option>' +
+                '<option value="ostali">Ostali</option>' +
+            '</select>' +
+        '</div>' +
+        '<div class="col-xs-12 col-sm-3">' +
+            '<select class="form-control border-primary search-control">' +
+                '<option selected disabled>Operand</option>' +
+                '<option value="veceIliJednako"> is >= </option>' +
+                '<option value="manjeIliJednako"> is <= </option>' +
+            '</select>' +
+        '</div>' +
+        '<div class="col-xs-12 col-sm-3">' +
+            '<input type="text" class="form-control border-primary search-control"/>' +
+        '</div>' +
+        '<div class="col-xs-2 col-sm-1 text-center">' +
+            '<button type="button"  class="form-control border-primary pull-left" style="width: 50%;">&#x2713;</button>' +
+            '<button type="button"  class="removeCondition form-control border-secondary pull-left" style="width: 50%;" onClick="javascript:removeAdvancedFilterRow(this)">&#x2715;</button>' +
+        '</div>' +
+        '<div class="col-xs-4 col-sm-2 pull-right">' +
+            '<button type="button" class="addCondition form-control border-primary button-full" onClick="javascript:addAdvancedFilterRow()">Add</button>' +
+        '</div>' +
+        '<br><br>' +
+    '</div>';
+
+    $('#advanced-filter-container').append(filterRow);
+}
+
+function removeAdvancedFilterRow(row){
+    $(row).closest(".advanced-filter-row").remove();
+}
 
 var params = {
         "tipPodataka": ["rashodi", "prihodi"],

@@ -48,15 +48,12 @@ function loadSearchPageWithRandomQuery(getUrl){
 
 
 $(function() {
-
     $("#anotherFavQuery").click(function() {
         generateRandomQuery();
     });
-
 });
 
 $(function() {
-
 
     var colors = (function() {
         var colors = [],

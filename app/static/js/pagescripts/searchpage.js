@@ -28,7 +28,7 @@ $(function(ready){
 
 function defaultSearchResult(){
     //TODO: get filters in URL parameters, if they exist.
-    
+
     var query = {
         "tipPodataka": [
             "rashodi",
@@ -104,13 +104,13 @@ function applyFilters(){
 }
 
 function fethData(query){
-    // TODO: don't hardcode URL. But Can't use Jinja2 function.
     $.ajax({
         type: "POST",
-        url: '/api/zbir',
+        url: SEARCH_REQUEST_SUM_URL,
         contentType: 'application/json',
         data: JSON.stringify(query),
         success: function(rsp){
+            // TODO: Build result table here.
             console.log(rsp);
         }
     });

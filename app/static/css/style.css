@@ -435,6 +435,19 @@ table td:nth-child(2) {
         margin-right: 0px;
     }
 }
+
+#api-sums .form-group .col-xs-1, #api-sums .form-group .col-xs-3, #api-sums .form-group .col-xs-5 {
+        padding-left: 0px;
+        /*padding-right: 0px;*/
+}
+
+@media screen and (max-width: 320px) {
+    #api-sums .form-group .col-xs-1, #api-sums .form-group .col-xs-3, #api-sums .form-group .col-xs-5 {
+            padding-left: 0px;
+            padding-right: 0px;
+    }
+}
+
 /*LAYOUT*/
 .datareq {
     float: none;

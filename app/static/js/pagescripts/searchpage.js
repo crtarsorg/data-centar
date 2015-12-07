@@ -1,4 +1,9 @@
 
+function filterDefaultSearchResults(){
+
+}
+
+
 var params = {
         "tipPodataka": ["rashodi", "prihodi"],
         "klasifikacijaBroj": [
@@ -15,7 +20,7 @@ var params = {
         opstine:[]
     }
 
-var params1 = 	
+var params1 =
 {
     "tipPodataka": [
         "rashodi",
@@ -33,17 +38,17 @@ var params1 =
     ],
     "klasifikacija": {
         "broj": [
-           
+
         ],
         "pocinjeSa": ""
     },
     "filteri": {
         "ostali": {
-           
+
         }
     }
 }
-  
+
 	function searchApiCall (argument) {
 
 	    var result1, result2;
@@ -55,9 +60,9 @@ var params1 =
 	            data: JSON.stringify(params),
 	            contentType: "application/json;charset=utf-8",
 	            dataType: "json",
-	            success: function(returnhtml){                          
-	                result1 = returnhtml;     
-	            }      
+	            success: function(returnhtml){
+	                result1 = returnhtml;
+	            }
 
 	        })
 	        ,
@@ -67,14 +72,14 @@ var params1 =
 	            data: JSON.stringify(params1),
 	            contentType: "application/json;charset=utf-8",
 	            dataType: "json",
-	            success: function(returnhtml){                          
-	                result2 = returnhtml;     
-	            }   
+	            success: function(returnhtml){
+	                result2 = returnhtml;
+	            }
 
 	        })
 
 	    ).then(function() {
-	        
+
 	        mainVis(result2);
 	        sideVis(result2, result1)
 	        //visu(result1, result2)
@@ -86,7 +91,7 @@ var params1 =
 
     //append to searchLink
     //if there is alredy that item , put new template to searchLink
-  
+
     inputOption("dataItem") ;
     inputOption("muncipalityItem");
     inputOption("yearItem");
@@ -96,21 +101,21 @@ var params1 =
 
     function inputOption (selector) {
         $("[name='" + selector + "']").on("selectmenuchange",function (ev,ui) {
-        
+
         var itemName = selector.split("Item")[0];
         var $label = $("#"+itemName+"Label");
-        
+
         var labelText = $label.html();
 
-        if( labelText.length == 0 || (selector =="dataItem" || selector =="muncipalityItem")) 
+        if( labelText.length == 0 || (selector =="dataItem" || selector =="muncipalityItem"))
             $label.html(ui.item.label)
         else {
-          var opciono = 
+          var opciono =
               ' <span id="budgetLabel"></span> that <span id="operatorLabel"></span> <span id="amountLabel"></span> ';
 
           $("#searchLink").append( opciono );
-        }  
-        
+        }
+
       })
     }
 
@@ -119,34 +124,34 @@ var params1 =
 
   		$(".advanced").removeClass("hidden");
   		$(".optionalFieldSet.form-group:first").removeClass("hidden");
-  
-  	})
-
-  	$(document).on('click', ".addCondition",function(ev){  		
-
-  		$(this).parents().filter(".optionalFieldSet").next().removeClass("hidden");	
-
-
 
   	})
 
-  	$(document).on('click', ".removeCondition",function(ev){  		
+  	$(document).on('click', ".addCondition",function(ev){
+
+  		$(this).parents().filter(".optionalFieldSet").next().removeClass("hidden");
+
+
+
+  	})
+
+  	$(document).on('click', ".removeCondition",function(ev){
 
   		$(this).parents().filter(".optionalFieldSet").addClass("hidden");
 		//reset to default
-		//if 
-  		
+		//if
+
   	})
 
 
   	$("#searchLink").click(function (argument) {
   		var $podaci = $("#searchForm").serialize();
-  		
+
       alert($podaci);
 
   		searchApiCall( $podaci );
   	})
-  	
+
   })
 
 /*===========================
@@ -156,26 +161,26 @@ var params1 =
 //mainVis
 
 function mainVis(data) {
-	
+
 
 	var opstina = "Zvezdara";
-	var kontoBroj = 611; 
+	var kontoBroj = 611;
 
 	data = data.filter(function(la){
-		return la.opstina == opstina; 
+		return la.opstina == opstina;
 		}).map(function(po){
-			po.y =po.ukupno; 
-			po.name = po.klasifikacijaBroj; 
+			po.y =po.ukupno;
+			po.name = po.klasifikacijaBroj;
 			if(+po.klasifikacijaBroj == kontoBroj)
 				{
 					po.sliced = true;
 					po.selected = true;
 				}
-			return po; 
+			return po;
 		})
 
 
-	
+
 	var $containerMain = $('#mainVis'),
         chart
        /* origChartWidth = 400,
@@ -224,13 +229,13 @@ function mainVis(data) {
                 data: data
             }]
         });
-    
+
 
 }
 
 
 
-		
+
 
 function sideVis(arg1, arg2) {
 	// 2-3 contos with max value + selected one
@@ -239,14 +244,14 @@ function sideVis(arg1, arg2) {
 
 	var data = [];
 	var kategorije = [] ;
-	
+
 	console.log(arg1);
 
 	arg1.filter(function(la){
 		return +la.klasifikacijaBroj == 611
 		})
 		.forEach(function(po){
-			var tempOb = {}; 
+			var tempOb = {};
 			tempOb.data = [ 0.8 * po.ukupno, Math.floor(Math.random()  * po.ukupno), po.ukupno];
 			tempOb.name = po.opstina;
 
@@ -280,7 +285,7 @@ function sideVis(arg1, arg2) {
     		width: chartWidth,
             height: chartHeight
     		},
-    	colors:["red","yellow","brown"],	
+    	colors:["red","yellow","brown"],
        /* title: {
             text: 'Monthly Average Temperature',
             x: -20 //center
@@ -307,7 +312,7 @@ function sideVis(arg1, arg2) {
         },
         legend: {
             /*layout: 'vertical',*/
-           
+
             verticalAlign: 'bottom',
             borderWidth: 0
         },
@@ -338,7 +343,7 @@ var $container1 = $('#sideVisMiddle'),
         chartWidth = origChartWidth,
         chartHeight = origChartHeight;
 
- 
+
     $container1 .highcharts({
         chart: {
         	backgroundColor: "#7DC1D1",
@@ -349,7 +354,7 @@ var $container1 = $('#sideVisMiddle'),
         title: {
             text: 'Uporedni prikaz iznosa za konto : ' + 611
         },
-        
+
         xAxis: {
             categories: kategorije,
             title: {
@@ -357,7 +362,7 @@ var $container1 = $('#sideVisMiddle'),
             }
         },
         yAxis: {
-          
+
             title: {
                /* text: 'Population (millions)',
                 align: 'high'*/
@@ -394,7 +399,7 @@ var $container1 = $('#sideVisMiddle'),
         series:[{
         	 name: 'Iznos',
         	 data : data
-        }] 
+        }]
     });
 
 

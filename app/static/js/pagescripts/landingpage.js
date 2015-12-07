@@ -30,9 +30,30 @@ function generateRandomQuery(){
     var budgetType = utils.getRandomBudgetType().toUpperCase();
     var municipality = utils.getRandomMunicipality().toUpperCase();
 
-    var text = "Show me data about BUDGET " + budgetType  + " for " + municipality + " in 2015";
+    var text = "Show me data about " +
+        "<span id='query-param-data-source'>BUDGET</span> " +
+        "<span id='query-param-budget-type'>" + budgetType + "</span> " +
+        "for <span id='query-param-municipality'>" + municipality + "</span> " +
+        "in <span id='query-param-year'>2015</span>";
 
     $("#searchWithParams").html(text);
+}
+
+function executeRandomQuery(getUrl){
+
+     var data = {
+         'source': $('#query-param-data-source').html(),
+         'type': $('#query-param-budget-type').html(),
+         'municipality': $('#query-param-municipality').html(),
+         'year': parseInt($('#query-param-year').html()),
+     };
+
+     $.ajax({
+         type: "GET",
+         url: getUrl,
+         contentType: 'application/json',
+         data: data
+    });
 }
 
 

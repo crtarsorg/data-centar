@@ -54,8 +54,7 @@ $( document ).ready(function() {
                         <div id="ytplayerLanding"></div>
                     </div>
                     <div class="welcome-text margin-9p text-underline">
-                        <a href="{{ url_for('api.index') }}">
-                            <span id="searchWithParams"></span>
+                        <a href="javascript:executeRandomQuery('{{ url_for('search.index') }}')" id="searchWithParams">
                         </a>
                     </div>
                     <div class="row welcome-buttons margin-9p">

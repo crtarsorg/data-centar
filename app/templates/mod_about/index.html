@@ -64,6 +64,13 @@ function onYouTubePlayerAPIReady() {
 }
 
 $(function() {
+
+    $("#api, #liberateNext").css("height", $("#search").outerHeight()+1);
+
+    window.onresize = function() {
+        $("#api, #liberateNext").css("height", $("#search").outerHeight()+1);
+    }
+
     $(".explore-icon").hover(function() {
         //if active, don't change
         //change ul content
@@ -81,14 +88,21 @@ $(function() {
         else {
             $("#titleHowTo").html("Advanced search");
             $("#search").removeClass("hidden");
-        }    
-
-
-        
+        }  
       
     })
+
 })
+
+// function waysHeight() {
+    
+
+//     window.onload = waysHeight;
+//     window.onresize = waysHeight;
+// }
+
 </script>
+
 <header class="intro primary-color">
     <!-- <div class="intro-body"> -->
     <div class="container">
@@ -138,7 +152,7 @@ $(function() {
                             <li class="margin-2p">You can also download the data in different open formats for your own analyses</li>
                         </div>
                     </ul>
-                    <ul id="api" class="hidden margin-2p">
+                    <ul class="hidden margin-2p" id="api">
                         <div class="col-xs-12 col-sm-6">
                             <li>Don’t know what an API is? The School of Data explains <a href="http://schoolofdata.org/2013/11/18/web-apis-for-non-programmers/">APIs for non-programmers</a> (but you should probably get a developer to help you - <a href="mailto:data@datacentar.io">or ask us for help</a>!)</li>
                             <li class="margin-2p">On the <a href="{{ url_for('api.index') }}">API page</a> you can learn about all the parameters you can use for your API calls, and create your custom API</li>
@@ -149,7 +163,7 @@ $(function() {
                             <li class="margin-2p">Our entire Search page is powered by our API - so you can create advanced searches, and copy the API link of the search you made</li>
                         </div>
                     </ul>
-                    <ul id="liberateNext" class="hidden margin-2p">
+                    <ul class="hidden margin-2p" id="liberateNext">
                         <div class="col-xs-12 col-sm-6">
                             <li>At the bottom of each page, you will find a form where you can choose between four datasets we plan to open. </li>
                             <li class="margin-2p">Take your pick, and if you want, leave us a comment on how you would use that data. Your feedback is crucial!</li>

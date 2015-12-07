@@ -1,5 +1,6 @@
 //https://developers.google.com/youtube/player_parameters?hl=en
 
+
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/player_api";
 
@@ -20,43 +21,28 @@ function onYouTubePlayerAPIReady() {
         }
 
     });
+};
+
+
+
+function generateRandomQuery(){
+    // Eventually, this logic will have to be expanded for datasources that are not budges (.e.g. procurements) and different years.
+    var budgetType = utils.getRandomBudgetType().toUpperCase();
+    var municipality = utils.getRandomMunicipality().toUpperCase();
+
+    var text = "Show me data about BUDGET " + budgetType  + " for " + municipality + " in 2015";
+
+    $("#searchWithParams").html(text);
 }
 
-
-function favouriteQueries() {
-    var data = [{
-        "url": "./api?data=1",
-        "text": "Show me data about MUNICIPAL BUDGETS in BELGRADE in 1999 related to EDUCATION"
-    }, {
-        "url": "./api?data=2",
-        "text": "Show me data about MUNICIPAL DONATIONS in NIS in 2010 related to PUBLIC TRANSPORTATIONS"
-    }, {
-        "url": "./api?data=3",
-        "text": "Show me data about MUNICIPAL BUDGETS in NOVI SAD in 2010 related to PUBLIC HEALTH"
-    }, {
-        "url": "./api?data=4",
-        "text": "Show me data about MUNICIPAL EXPANDITURES in PRIJEPOLJE in 2015 related to PROCUREMENT"
-    }, {
-        "url": "./api?data=5",
-        "text": "Show me data about REGIONAL INCOMES in CENTRALNA SRBIJA in 2013 "
-    }];
-    var indx = Math.floor(Math.random() * 4);
-
-    return data[indx];
-
-}
 
 $(function() {
 
     $("#anotherFavQuery").click(function() {
+        generateRandomQuery();
+    });
 
-        var datum = favouriteQueries();
-        $("#searchWithParams").html(datum.text);
-        $("#searchWithParams").parent().attr("href", datum.url);
-    })
-
-
-})
+});
 
 $(function() {
 

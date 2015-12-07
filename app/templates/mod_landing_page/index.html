@@ -27,7 +27,14 @@ polyline {
 </style>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="{{ url_for('static', filename='js/utils.js') }}"></script>
 <script src="{{ url_for('static', filename='js/pagescripts/landingpage.js') }}"></script>
+
+<script>
+$( document ).ready(function() {
+    generateRandomQuery();
+});
+</script>
 
 <!-- Intro Header; Welcome section -->
 <section class="">
@@ -46,7 +53,11 @@ polyline {
                     <div class='embed-container'>
                         <div id="ytplayerLanding"></div>
                     </div>
-                    <div class="welcome-text margin-9p text-underline"><a href="{{ url_for('api.index') }}"><span id="searchWithParams">Show me data about MUNICIPAL BUDGETS in BELGRADE in 2010 related to EDUCATION</span></a></div>
+                    <div class="welcome-text margin-9p text-underline">
+                        <a href="{{ url_for('api.index') }}">
+                            <span id="searchWithParams"></span>
+                        </a>
+                    </div>
                     <div class="row welcome-buttons margin-9p">
                         <div class="col-xs-12 col-sm-6">
                             <a href="{{ url_for('api.index') }}">

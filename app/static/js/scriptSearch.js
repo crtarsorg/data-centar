@@ -84,36 +84,35 @@ var params1 =
 
   $(function(){
 
+    //append to searchLink
+    //if there is alredy that item , put new template to searchLink
   
-  	$("[name='dataItem']").on("selectmenuchange",function (ev,ui) {
-  		$("#dataLabel").html(ui.item.label)
-  		
-  	})
+    inputOption("dataItem") ;
+    inputOption("muncipalityItem");
+    inputOption("yearItem");
+    inputOption("budgetItem[]");
+    inputOption("operatorItem[]");
+    inputOption("amountItem[]");
 
-  	$("[name='muncipalityItem']").on("selectmenuchange",function (ev,ui) {
-  		$("#mucipalityLabel").html(ui.item.label)
-  		
-  	})
+    function inputOption (selector) {
+        $("[name='" + selector + "']").on("selectmenuchange",function (ev,ui) {
+        
+        var itemName = selector.split("Item")[0];
+        var $label = $("#"+itemName+"Label");
+        
+        var labelText = $label.html();
 
-  	$("[name='yearItem']").on("selectmenuchange",function (ev,ui) {
-  		$("#yearLabel").html(ui.item.label)
-  		
-  	})
+        if( labelText.length == 0 || (selector =="dataItem" || selector =="muncipalityItem")) 
+            $label.html(ui.item.label)
+        else {
+          var opciono = 
+              ' <span id="budgetLabel"></span> that <span id="operatorLabel"></span> <span id="amountLabel"></span> ';
 
-  	$("[name='budgetItem[]']").on("selectmenuchange",function (ev,ui) {
-  		$("#budgetItemLabel").html(ui.item.label)
-  		
-  	})
-
-  	$("[name='operatorItem[]']").on("selectmenuchange",function (ev,ui) {
-  		$("#operatorLabel").html(ui.item.label)
-  		
-  	})
-
-  	$("[name='amountItem[]']").on("selectmenuchange",function (ev,ui) {
-  		$("#amountLabel").html(ui.item.label)
-  		
-  	})
+          $("#searchLink").append( opciono );
+        }  
+        
+      })
+    }
 
 
   	$(document).on('click', ".advancedCondition",function(ev){
@@ -126,6 +125,9 @@ var params1 =
   	$(document).on('click', ".addCondition",function(ev){  		
 
   		$(this).parents().filter(".optionalFieldSet").next().removeClass("hidden");	
+
+
+
   	})
 
   	$(document).on('click', ".removeCondition",function(ev){  		

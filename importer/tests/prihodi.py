@@ -229,7 +229,7 @@ class PrihodiImportingTestCases(unittest.TestCase):
 
         # Test the counts of particular parent category for Cacak municipality
         for parent in self.cacak_counts_and_values_for_parents:
-            self.asserts_for_parent_categories_elements("Čačak", parent, self.cacak_counts_and_values_for_parents[parent], "prihodi")
+            self.asserts_for_classification_categories_elements("Čačak", parent, self.cacak_counts_and_values_for_parents[parent][0], "prihodi")
 
 
     def test_total_sum_for_parent_categories(self):

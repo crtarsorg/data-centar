@@ -244,8 +244,8 @@ class PrihodiDataImporter(DataImporterBase):
                         row[4],
                         row[5],
                         None,
-                        None,
-                        None
+                        parent_handler,
+                        parent_num
                     )
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Kategorija Roditelj: %s - Broj: %s - Opis: %s" % ("Čačak", parent_handler, row[1], row[2])

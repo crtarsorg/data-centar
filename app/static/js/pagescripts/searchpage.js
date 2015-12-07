@@ -151,18 +151,39 @@ function buildResultTable (response) {
 
     $('#tableResults').DataTable( {
         data: response,
-        scrollY: 400,
-          columns: [
+        scrollY: 300,
+        stripeClasses: [ 'oddRow', 'evenRow' ],
+        buttons: [ 'copy', 'csv', 'excel' ],
+        columns: [
+            
             { "sTitle": "Opština" , data: 'opstina' },
-            { "sTitle": "Ukupno" , data: 'ukupno' },
-            { "sTitle": "Godina" , data: 'godina' },
-            { "sTitle": "Sopstveni Prihodi" , data: 'sopstveniPrihodi' },
-            { "sTitle": "Prihodi Budžeta" , data: 'prihodiBudzeta' },
-            { "sTitle": "Conto" , data: 'klasifikacijaBroj' },
-            { "sTitle": "Donacije" , data: 'donacije' },
-            { "sTitle": "Ostali" , data: 'ostali' },
-            { "sTitle": "Tip Podataka" , data: 'tipPodataka' },
-        ]
+            { "sTitle": "Konto" , data: 'klasifikacijaBroj' },
+            { "sTitle": "Ukupno" , data: 'ukupno' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+            // { "sTitle": "Godina" , data: 'godina' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+            { "sTitle": "Sopstveni Prihodi" , data: 'sopstveniPrihodi' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+            { "sTitle": "Prihodi Budžeta" , data: 'prihodiBudzeta' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+            
+            { "sTitle": "Donacije" , data: 'donacije' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+            { "sTitle": "Ostali" , data: 'ostali' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+            { "sTitle": "Tip " , data: 'tipPodataka' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )}
+        ],
+        "language": {
+            "info": "Stranica _PAGE_ od _PAGES_ (_TOTAL_ unosa)"
+          },
+           dom: 'Bfrtip',
+           buttons: [
+                {
+                    extend: 'collection',
+                    text: 'Export',
+                     buttons: [
+                        'copyHtml5',
+                        'excelHtml5',
+                        'csvHtml5',
+                        'pdfHtml5'
+                    ]
+                }
+            ]
+        
     } );
 
 }

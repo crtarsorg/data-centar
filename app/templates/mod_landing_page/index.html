@@ -43,9 +43,8 @@ $( document ).ready(function() {
             <div class="white-content container padding-lg">
                 <h2 class="text-center">Welcome to Data Centar</h2>
                 <p class="text-center lead margin-2p">
-                    The Data Centar is an open platform in Serbia that helps you find, liberate and make use of different public data.
-                    <br /><b>We start small to grow responsibly:</b> from municipal budgets in Serbia, to what our audience wants us to liberate next.    
-                    <br/> Check the video below to learn about what we wish to achieve.
+                    The Data Centar is an open platform in Serbia that helps you find, liberate and make use of public data.
+                    <br /><b>We start small to grow responsibly:</b> from municipal budgets in Serbia, to whatever our audience wants us to liberate next. Check the video below to find out more.
                 </p>
             </div>
         </div>
@@ -61,17 +60,17 @@ $( document ).ready(function() {
                     </div>
                     <div class="row welcome-buttons margin-9p">
                         <div class="col-xs-12 col-sm-6">
+                            <button id="anotherFavQuery" type="button" class="button-full">
+                                Generate different search
+                            </button>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
                             <a href="{{ url_for('api.index') }}">
                                 <button type="button" class="button-full">
                                     <!--btn btn-block btn-lg  btn-link btn-white-border primary-color white-content-->
-                                    Just take me to search
+                                    Just show me all the data
                                 </button>
                             </a>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <button id="anotherFavQuery" type="button" class="button-full">
-                                Meh, what else you got?
-                            </button>
                         </div>
                     </div>
                 </div>

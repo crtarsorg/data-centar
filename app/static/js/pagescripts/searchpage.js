@@ -152,6 +152,7 @@ function buildResultTable (response) {
     $('#tableResults').DataTable( {
         data: response,
         scrollY: 300,
+        bFilter: false,
         stripeClasses: [ 'oddRow', 'evenRow' ],
         buttons: [ 'copy', 'csv', 'excel' ],
         columns: [
@@ -169,8 +170,8 @@ function buildResultTable (response) {
         ],
         "language": {
             "info": "Stranica _PAGE_ od _PAGES_ (_TOTAL_ unosa)"
-          },
-           dom: 'Bfrtip',
+          }/*
+          , dom: 'Bfrtip',
            buttons: [
                 {
                     extend: 'collection',
@@ -182,7 +183,7 @@ function buildResultTable (response) {
                         'pdfHtml5'
                     ]
                 }
-            ]
+            ]*/
         
     } );
 

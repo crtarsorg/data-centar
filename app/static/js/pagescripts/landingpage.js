@@ -31,10 +31,10 @@ function generateRandomQuery(){
     var municipality = utils.getRandomMunicipality().toUpperCase();
 
     var text = "Show me data about " +
-        "<span id='query-param-data-source'>BUDGET</span> " +
-        "<span id='query-param-budget-type'>" + budgetType + "</span> " +
-        "for <span id='query-param-municipality'>" + municipality + "</span> " +
-        "in <span id='query-param-year'>2015</span>";
+        "[<span id='query-param-data-source'>BUDGET</span> " +
+        "<span id='query-param-budget-type'>" + budgetType + "</span>] " +
+        "for [<span id='query-param-municipality'>" + municipality + "</span>] " +
+        "in [<span id='query-param-year'>2015</span>].";
 
     $("#searchWithParams").html(text);
 }

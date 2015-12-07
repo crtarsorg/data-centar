@@ -28,5 +28,15 @@ var utils = {
     getRandomBudgetType: function(){
         var btIdx = Math.floor(Math.random() * utils.getAvailableBudgetTypes().length);
         return utils.getAvailableBudgetTypes()[btIdx];
+    },
+
+    getURLParameter: function(name){
+        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        if (results==null){
+           return null;
+        }
+        else{
+           return results[1] || 0;
+        }
     }
 };

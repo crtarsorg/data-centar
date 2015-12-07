@@ -27,8 +27,8 @@ $(function(ready){
 });
 
 function defaultSearchResult(){
-    //TODO: get filters in URL parameters, if they exist.
 
+    // Default query, grabs all the data.
     var query = {
         "tipPodataka": [
             "rashodi",
@@ -45,7 +45,33 @@ function defaultSearchResult(){
         "filteri": {}
     };
 
-    // TODO: don't hardcode URL. But Can't use Jinja2 function.
+    // If they exist, get and use filters in the URL parameters to refine the default query.
+    var dataSourceType = utils.getURLParameter('type');
+    if(dataSourceType != null){
+        if(dataSourceType === "EXPENDITURES"){
+            query["tipPodataka"] = ['rashodi'];
+        }else if(dataSourceType === "REVENUES"){
+            query["tipPodataka"] = ['prihodi'];
+        }
+    }
+
+    var year = utils.getURLParameter('year');
+    if(year != null){
+        query["godine"] = [2015];
+    }
+
+    var municipality = utils.getURLParameter('municipality');
+    if(municipality != null){
+        // TODO: This is unacceptable, need to fix this by already passing these values as slugs in the URL.
+        if (municipality === "%C4%8CA%C4%8CAK"){
+            municipality = "CHACHAK";
+        }else if (municipality === "IN%C4%90IJA") {
+            municipality = "INDJIJA";
+        }
+        query["opstine"] = [$.slugify(municipality.replace(/%20/g,'-'))];
+    }
+
+    // Fetch data.
     fethData(query);
 
 }

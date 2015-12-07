@@ -64,6 +64,9 @@ textarea {
 a {
     color: #0794A0;
 }
+.hover {
+    cursor: pointer;
+}
 /*=====  End of Whole page  ======*/
 
 
@@ -345,6 +348,13 @@ select.primary-content-color{
 }
 #descHowToUse li {
     text-align: left;
+}
+#howToUseS img {
+    max-width: 258px;
+    margin: 0 auto;
+}
+#howToUseS ul {
+        -webkit-padding-start: 0px;
 }
 /*=====  End of about page  ======*/
 

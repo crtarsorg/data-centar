@@ -112,40 +112,51 @@ $(function() {
     </div>
 </div>
 <!-- Ways to Use the Site Section -->
-<section id="howToUseS" class="container-fluid content-section text-center secondary-color white-content margin-4p padding-sm">
+<section id="howToUseS" class="container-fluid content-section secondary-color white-content margin-4p padding-sm">
     <div class="row">
         <div class="container">
-            <h2 >Ways to Use the Site</h2>
-            <div class="row">
-                <div class="col-md-4 col-xs-6 padding-10 icon-size">
-                    <img id="searchIcon"  class="explore-icon" src="{{ url_for('static', filename='images/DC_Icon_1.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_1_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_1.svg') }}';" alt=""></div>
-                <div class="col-md-4 col-xs-6 padding-10 icon-size">
-                    <img id="apiIcon"  class="explore-icon" src="{{ url_for('static', filename='images/DC_Icon_2.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_2_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_2.svg') }}';" alt=""></div>
-                <div class="col-md-4 col-xs-6 padding-10 icon-size">
-                    <img id="liberatIcon" class="explore-icon" src="{{ url_for('static', filename='images/DC_Icon_3.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_3_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_3.svg') }}';" alt=""></div>
+            <h2 class="text-center">Ways to Use the Site</h2>
+            <div class="row margin-4p">
+                <div class="col-xs-4">
+                    <img id="searchIcon" class="explore-icon img-responsive hover" src="{{ url_for('static', filename='images/DC_Icon_1.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_1_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_1.svg') }}';" alt=""></div>
+                <div class="col-xs-4">
+                    <img id="apiIcon"  class="explore-icon img-responsive hover" src="{{ url_for('static', filename='images/DC_Icon_2.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_2_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_2.svg') }}';" alt=""></div>
+                <div class="col-xs-4">
+                    <img id="liberatIcon" class="explore-icon img-responsive hover" src="{{ url_for('static', filename='images/DC_Icon_3.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_3_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_3.svg') }}';" alt=""></div>
             </div>
-            <div class="row">
-                <div id="descDiv" class="col-md-8 col-md-offset-2">
-                    <h1 id="titleHowTo">Advanced search</h1>
-
-                    <ul id="search">
-                        <li> You can start exploring right from the homepage: click on the pre-made search right below the video, or click on “show me another” to get a new pre-made search</li>
-                        <li>On the <a href="{{ url_for('search.index') }}">Search</a> page, you can visualize all our data and filter it by any variable (like geographic location, amount, or anything else)</li>
-                        <li>The visualization are automatically updated, to give you an easier overview of what the data is saying</li>
-                        <li>We are working on custom advanced searches, where you will be able to define <b>operators</b> like “less than”, “is true”, “is empty” etc to create complex filtering directly on the website</li>
-                        <li>You can also download the data in different open formats for your own analyses</li>
+            <div class="">
+                <div id="descDiv" class="margin-4p">
+                    <h2 class="text-center" id="titleHowTo">Advanced search</h2>
+                    <ul class="margin-2p" id="search">
+                        <div class="col-xs-12 col-sm-6">
+                            <li>You can start exploring right from the homepage: click on the pre-made search right below the video, or click on “show me another” to get a new pre-made search</li>
+                            <li class="margin-2p">On the <a href="{{ url_for('search.index') }}">Search</a> page, you can visualize all our data and filter it by any variable (like geographic location, amount, or anything else)</li>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <li>The visualization are automatically updated, to give you an easier overview of what the data is saying</li>
+                            <li class="margin-2p">We are working on custom advanced searches, where you will be able to define <b>operators</b> like “less than”, “is true”, “is empty” etc to create complex filtering directly on the website</li>
+                            <li class="margin-2p">You can also download the data in different open formats for your own analyses</li>
+                        </div>
                     </ul>
-                    <ul id="api" class="hidden">
-                        <li>Don’t know what an API is? The School of Data explains <a href="http://schoolofdata.org/2013/11/18/web-apis-for-non-programmers/">APIs for non-programmers</a> (but you should probably get a developer to help you - <a href="mailto:data@datacentar.io">or ask us for help</a>!)</li>
-                        <li>On the <a href="{{ url_for('api.index') }}">API page</a> you can learn about all the parameters you can use for your API calls, and create your custom API</li>
-                        <li>Run the custom API directly on the Data Centar website to see what results it provides you, then tweak to your delight</li>
-                        <li>Once you’re happy, take the API and plug it into your website, or use it to download raw data on your computer</li>
-                        <li>Our entire Search page is powered by our API - so you can create advanced searches, and copy the API link of the search you made</li>
+                    <ul id="api" class="hidden margin-2p">
+                        <div class="col-xs-12 col-sm-6">
+                            <li>Don’t know what an API is? The School of Data explains <a href="http://schoolofdata.org/2013/11/18/web-apis-for-non-programmers/">APIs for non-programmers</a> (but you should probably get a developer to help you - <a href="mailto:data@datacentar.io">or ask us for help</a>!)</li>
+                            <li class="margin-2p">On the <a href="{{ url_for('api.index') }}">API page</a> you can learn about all the parameters you can use for your API calls, and create your custom API</li>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <li>Run the custom API directly on the Data Centar website to see what results it provides you, then tweak to your delight</li>
+                            <li class="margin-2p">Once you’re happy, take the API and plug it into your website, or use it to download raw data on your computer</li>
+                            <li class="margin-2p">Our entire Search page is powered by our API - so you can create advanced searches, and copy the API link of the search you made</li>
+                        </div>
                     </ul>
-                    <ul id="liberateNext" class="hidden">
-                        <li>At the bottom of each page, you will find a form where you can choose between four datasets we plan to open. </li>
-                        <li>Take your pick, and if you want, leave us a comment on how you would use that data. Your feedback is crucial!</li>
-                        <li>If you’re not interested in any of the proposed datasets, <a href="mailto:data@datacentar.io">get in touch</a> and propose what you would like us to liberate next</li>
+                    <ul id="liberateNext" class="hidden margin-2p">
+                        <div class="col-xs-12 col-sm-6">
+                            <li>At the bottom of each page, you will find a form where you can choose between four datasets we plan to open. </li>
+                            <li class="margin-2p">Take your pick, and if you want, leave us a comment on how you would use that data. Your feedback is crucial!</li>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <li>If you’re not interested in any of the proposed datasets, <a href="mailto:data@datacentar.io">get in touch</a> and propose what you would like us to liberate next</li>
+                        </div>
                     </ul>
                 </div>
             </div>
@@ -153,13 +164,26 @@ $(function() {
     </div>
 </section>
 <!-- Timeline Section -->
-<section id="timelineS" class="container-fluid content-section text-center primary-content-color">
-    <div class="row">
+<section id="timelineS" class="container content-section text-center primary-content-color">
+    <div class="">
         <img id="timelineImg" src="{{ url_for('static', filename='images/timeline.svg') }}" alt="">
-        <div class="col-lg-8 col-lg-offset-2">
-            <!-- <h2 class="margin-2p">Timeline</h2> -->
-            <h2 class="margin-top-10vh">The Future</h2>
-            <p class="margin-2p">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo facilis molestias, repudiandae omnis! Voluptate minima minus atque asperiores sint harum omnis molestiae pariatur animi, corporis quam alias, fuga consectetur culpa?</p>
+        <div class="margin-4p">
+            <h2>The Future</h2>
+            <p class="margin-2p">
+                The vision for Data Center development in the following two years is to grow into a single online hub for collection, processing and preparation of different datasets of public information at the local, national and regional level.
+            </p>
+            <p class="margin-2p">
+                After the launch of the initial MVP for opening up the Government data in 2015, Data Center will expend the number of datasets from Serbia, and will enrich Data Center platform with 2016 budgetary data and at least two different datasets proposed by Data Center user community. The main focus of Data Center in 2016 will be to build the user community and strengthen its engagement through inputs and ideas for opening up more and more datasets relevant to the community.
+            </p>
+            <p class="margin-2p">
+                In 2016 and 2017, with support of its user community, Data Center will seek to further its advocacy for increasing the level of government openness by influencing the state of Open Data status in Serbia, and with integration of at least two datasets acquired through the Serbian Government API.
+            </p>
+            <p class="margin-2p">
+                Following these accomplishments, Data Center will spread its efforts for opening up the public data in the region, starting from hosting datasets from at least two Balkan region countries in 2017, and further incorporation of diverse datasets from other countries as well.
+            </p>
+            <p class="margin-2p">
+                By the end of 2017, Data Center will be completely functional open platform that provides broad, easy and full access to multiple datasets of public information from many countries in the region, and allows for the meaningful utilization of public data by all interested stakeholders (journalists, activists, researchers, decision makers). Established as one-stop-shop for open data, and with enlarged and active user community, Data Center will be able to influence governments and institutions to increase the quality and provide access to open and useful data.
+            </p>
         </div>
     </div>
 </section>

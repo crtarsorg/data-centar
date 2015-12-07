@@ -4,15 +4,24 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 <style>
+
+	#searchLink{
+		cursor: hand;
+		cursor: pointer;
+	}
+
 	#mainVis{
 		height: 550px;
 	}
+
 	div[id^="sideVis"]{
 		height: 30%;
 		max-width: 100%;
 	}
 </style>
 <script>
+
+
 var params = {
         "tipPodataka": ["rashodi", "prihodi"],
         "klasifikacijaBroj": [
@@ -25,7 +34,6 @@ var params = {
             422000,
             460000,
             450000
-
         ],
         opstine:[]
     }
@@ -59,46 +67,43 @@ var params1 =
     }
 }
   
+	function searchApiCall (argument) {
 
+	    var result1, result2;
+	    $.when(
 
-    var result1, result2;
-    $.when(
+	        $.ajax({
+	            method: "POST",
+	            url: "../api/prosek",
+	            data: JSON.stringify(params),
+	            contentType: "application/json;charset=utf-8",
+	            dataType: "json",
+	            success: function(returnhtml){                          
+	                result1 = returnhtml;     
+	            }      
 
-        $.ajax({
-            method: "POST",
-            url: "../api/prosek",
-            data: JSON.stringify(params),
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success: function(returnhtml){                          
-                result1 = returnhtml;     
-            }      
+	        })
+	        ,
+	        $.ajax({
+	            method: "POST",
+	            url: "../api/zbir",
+	            data: JSON.stringify(params1),
+	            contentType: "application/json;charset=utf-8",
+	            dataType: "json",
+	            success: function(returnhtml){                          
+	                result2 = returnhtml;     
+	            }   
 
-        })
+	        })
 
-        ,
-        $.ajax({
-            method: "POST",
-            url: "../api/zbir",
-            data: JSON.stringify(params1),
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success: function(returnhtml){                          
-                result2 = returnhtml;     
-            }   
+	    ).then(function() {
+	        
+	        mainVis(result2);
+	        sideVis(result2, result1)
+	        //visu(result1, result2)
+	    });
 
-        })
-
-
-
-    ).then(function() {
-        
-        mainVis(result2);
-        sideVis(result2, result1)
-        //visu(result1, result2)
-    });
-
-
+    }
 
   $(function(){
 
@@ -153,6 +158,13 @@ var params1 =
 		//if 
   		
   	})
+
+
+  	$("#searchLink").click(function (argument) {
+  		var $podaci = $("#searchForm").serialize();
+  		
+  		searchApiCall($podaci);
+  	})
   	
   })
 
@@ -164,7 +176,6 @@ var params1 =
 
 function mainVis(data) {
 	
-	console.log(data);
 
 	var opstina = "Zvezdara";
 	var kontoBroj = 611; 
@@ -182,7 +193,6 @@ function mainVis(data) {
 			return po; 
 		})
 
-		console.log(data);
 
 	
 	var $containerMain = $('#mainVis'),
@@ -204,12 +214,14 @@ function mainVis(data) {
                 type: 'pie'
             },
             title: {
-                text: 'Udeo '+kontoBroj+ " u ukupnom budzetu"
+                text: 'Prikaz '+" budžeta opštine " + opstina
             },
             legend:{
             	title:{
-            		text:'Nekakav tekst'
-            	}
+            		// text:'Nekakav tekst'
+            	},
+            	tooltip:"nekakav tekst"
+
             },
             tooltip: {
             	headerFormat:'<span style="font-size: 10px">Konto: {point.key}</span><br/>',
@@ -240,8 +252,39 @@ function mainVis(data) {
 		
 
 function sideVis(arg1, arg2) {
+	// 2-3 contos with max value + selected one
 
+	// zasad random conta
+
+	var data = [];
+	var kategorije = [] ;
 	
+	console.log(arg1);
+
+	arg1.filter(function(la){
+		return +la.klasifikacijaBroj == 611
+		})
+		.forEach(function(po){
+			var tempOb = {}; 
+			tempOb.data = [ 0.8 * po.ukupno, Math.floor(Math.random()  * po.ukupno), po.ukupno];
+			tempOb.name = po.opstina;
+
+			data.push(tempOb);
+			kategorije.push(po.opstina)
+		})
+
+
+	/*var data = [{
+            name: 'Zvezdara',
+            data: [7.0, 6.9, 9.5]
+        }, {
+            name: 'Novi Beograd',
+            data: [-0.2, 0.8, 5.7]
+        }, {
+            name: 'Zrenjanin',
+            data: [-0.9, 0.6, 3.5]
+        }];*/
+
 
 	var $container = $('#sideVisTop'),
         chart,
@@ -256,6 +299,7 @@ function sideVis(arg1, arg2) {
     		width: chartWidth,
             height: chartHeight
     		},
+    	colors:["red","yellow","brown"],	
        /* title: {
             text: 'Monthly Average Temperature',
             x: -20 //center
@@ -265,12 +309,11 @@ function sideVis(arg1, arg2) {
             x: -20
         },*/
         xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            categories: ['2013', '2014', '2015']
         },
         yAxis: {
             title: {
-                text: 'Temperature (°C)'
+                text: 'Iznos'
             },
             plotLines: [{
                 value: 0,
@@ -283,25 +326,28 @@ function sideVis(arg1, arg2) {
         },
         legend: {
             /*layout: 'vertical',*/
-            align: 'top',
-            verticalAlign: 'middle',
+           
+            verticalAlign: 'bottom',
             borderWidth: 0
         },
-        series: [{
-            name: 'Tokyo',
-            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-        }, {
-            name: 'New York',
-            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
-        }, {
-            name: 'Berlin',
-            data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
-        }, {
-            name: 'London',
-            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-        }]
+        series: data
     });
 
+
+
+	var data = [];
+	var kategorije = [] ;
+	arg1.filter(function(la){
+		return +la.klasifikacijaBroj == 611
+		})
+		.forEach(function(po){
+			var tempAr = [po.opstina, po.ukupno];
+			data.push(tempAr);
+			kategorije.push(po.opstina)
+		})
+
+
+//Average for whole data set
 
 
 var $container1 = $('#sideVisMiddle'),
@@ -320,36 +366,37 @@ var $container1 = $('#sideVisMiddle'),
             type: 'bar'
         },
         title: {
-            text: 'Historic World Population by Region'
+            text: 'Uporedni prikaz iznosa za konto : ' + 611
         },
         
         xAxis: {
-            categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+            categories: kategorije,
             title: {
-                text: null
+                text: "Opštine"
             }
         },
         yAxis: {
-            min: 0,
+          
             title: {
-                text: 'Population (millions)',
-                align: 'high'
+               /* text: 'Population (millions)',
+                align: 'high'*/
             },
             labels: {
                 overflow: 'justify'
             }
         },
         tooltip: {
-            valueSuffix: ' millions'
+            valueSuffix: ' din'
         },
         plotOptions: {
             bar: {
                 dataLabels: {
                     enabled: true
-                }
+                },
+                color: 'red'
             }
         },
-        legend: {
+      /*  legend: {
             layout: 'vertical',
             align: 'right',
             verticalAlign: 'top',
@@ -359,99 +406,18 @@ var $container1 = $('#sideVisMiddle'),
             borderWidth: 1,
             backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
             shadow: true
-        },
+        },*/
         credits: {
             enabled: false
         },
-        series: [{
-            name: 'Year 1800',
-            data: [107, 31, 635, 203, 2]
-        }, {
-            name: 'Year 1900',
-            data: [133, 156, 947, 408, 6]
-        }, {
-            name: 'Year 2012',
-            data: [1052, 954, 4250, 740, 38]
-        }]
+        series:[{
+        	 name: 'Iznos',
+        	 data : data
+        }] 
     });
 
 
 
-
-var $container2 = $('#sideVisBottom'),
-        chart,
-        origChartWidth = 400,
-        origChartHeight = 200,
-        chartWidth = origChartWidth,
-        chartHeight = origChartHeight;
-
-    $container2.highcharts({
-        chart: {
-        	backgroundColor: "#7DC1D1",
-    		width: chartWidth,
-            height: chartHeight,
-            type: 'area'
-        },
-        title: {
-            text: 'US and USSR nuclear stockpiles'
-        },
-       
-        xAxis: {
-            allowDecimals: false,
-            labels: {
-                formatter: function () {
-                    return this.value; // clean, unformatted number for year
-                }
-            }
-        },
-        yAxis: {
-            title: {
-                text: 'Nuclear weapon states'
-            },
-            labels: {
-                formatter: function () {
-                    return this.value / 1000 + 'k';
-                }
-            }
-        },
-        tooltip: {
-            pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
-        },
-        plotOptions: {
-            area: {
-                pointStart: 1940,
-                marker: {
-                    enabled: false,
-                    symbol: 'circle',
-                    radius: 2,
-                    states: {
-                        hover: {
-                            enabled: true
-                        }
-                    }
-                }
-            }
-        },
-        series: [{
-            name: 'USA',
-            data: [null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640,
-                1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126,
-                27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662,
-                26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605,
-                24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586,
-                22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950,
-                10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104]
-        }, {
-            name: 'USSR/Russia',
-            data: [null, null, null, null, null, null, null, null, null, null,
-                5, 25, 50, 120, 150, 200, 426, 660, 869, 1060, 1605, 2471, 3322,
-                4238, 5221, 6129, 7089, 8339, 9399, 10538, 11643, 13092, 14478,
-                15915, 17385, 19055, 21205, 23044, 25393, 27935, 30062, 32049,
-                33952, 35804, 37431, 39197, 45000, 43000, 41000, 39000, 37000,
-                35000, 33000, 31000, 29000, 27000, 25000, 24000, 23000, 22000,
-                21000, 20000, 19000, 18000, 18000, 17000, 16000]
-        }]
-    });
 
 
 
@@ -478,7 +444,8 @@ var $container2 = $('#sideVisBottom'),
 <header class="intro primary-color">
     <!-- <div class="intro-body container"> -->
         <div class="intro-content container padding-lg">
-            <p class="text-center lead text-underline">
+            
+            <p id="searchLink" class="text-center lead text-underline">
                 Show me data about <span id="dataLabel">[...]</span> in <span id="mucipalityLabel">[...]</span> <span id="yearLabel"></span> <span id="advancedLabel">related to</span> <span id="budgetItemLabel"></span> that <span id="operatorLabel"></span> <span id="amountLabel"></span> .
             </p>
         </div>
@@ -493,12 +460,14 @@ var $container2 = $('#sideVisBottom'),
 	                <div class="form-group">
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="dataItem">
+	                        	<option selected disabled>Data Set</option>
 	                            <option value="budget">Budžet</option>
 	                            <option value="javneNabavke">Javne nabavke</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="muncipalityItem">
+	                        	<option selected disabled>Opština</option>
 		                        <option value="chachak">Čačak</option>
 							    <option value="indjija">Inđija</option>
 							    <option value="kraljevo">Kraljevo</option>
@@ -514,6 +483,7 @@ var $container2 = $('#sideVisBottom'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="yearItem">
+	                        	<option selected disabled>Godina</option>
 	                            <option value="">2015</option>
 	                            <option value="">2014</option>
 	                            <option value="">2013</option>
@@ -532,7 +502,8 @@ var $container2 = $('#sideVisBottom'),
 	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="budgetItem[]">
-	                           <option value='710000'>Prihodi</option>
+	                        	<option selected disabled>Budžetske stavke</option>
+	                           	<option value='710000'>Prihodi</option>
 								<option value='712000'>Porez na zarade</option>
 								<option value='713000'>Porez na imovinu</option>
 								<option value='730000'>Donacije i transferi</option>
@@ -545,6 +516,7 @@ var $container2 = $('#sideVisBottom'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="operatorItem[]">
+	                        	<option selected disabled>Operacija</option>
 	                           	<option value=""> is  </option>
 	                            <option value=""> is > </option>
 	                            <option value=""> is < </option>
@@ -554,6 +526,7 @@ var $container2 = $('#sideVisBottom'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="amountItem[]">
+	                        	<option selected disabled>Iznos</option>
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -575,6 +548,7 @@ var $container2 = $('#sideVisBottom'),
 	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                        	<option selected disabled>Budžetska stavka</option>
 	                           <option value='710000'>Prihodi</option>
 								<option value='712000'>Porez na zarade</option>
 								<option value='713000'>Porez na imovinu</option>
@@ -588,6 +562,7 @@ var $container2 = $('#sideVisBottom'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="operatorItem[]">
+	                        <option selected disabled>Operacija</option>
 	                           	<option value=""> is  </option>
 	                            <option value=""> is > </option>
 	                            <option value=""> is < </option>
@@ -597,6 +572,7 @@ var $container2 = $('#sideVisBottom'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="amountItem[]">
+	                        <option selected disabled>Iznos</option>
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -613,6 +589,7 @@ var $container2 = $('#sideVisBottom'),
 	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                        	<option selected disabled>Budžetska stavka</option>
 	                           <option value='710000'>Prihodi</option>
 								<option value='712000'>Porez na zarade</option>
 								<option value='713000'>Porez na imovinu</option>
@@ -626,6 +603,7 @@ var $container2 = $('#sideVisBottom'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="operatorItem[]">
+	                           	<option selected disabled>Operacija</option>
 	                           	<option value=""> is  </option>
 	                            <option value=""> is > </option>
 	                            <option value=""> is < </option>
@@ -635,6 +613,7 @@ var $container2 = $('#sideVisBottom'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="amountItem[]">
+	                        	<option selected disabled>Iznos</option>
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -651,6 +630,7 @@ var $container2 = $('#sideVisBottom'),
 	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                        	<option selected disabled>Budžetska stavka</option>
 	                           <option value='710000'>Prihodi</option>
 								<option value='712000'>Porez na zarade</option>
 								<option value='713000'>Porez na imovinu</option>
@@ -664,6 +644,7 @@ var $container2 = $('#sideVisBottom'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="operatorItem[]">
+	                        <option selected disabled>Operacija</option>
 	                           	<option value=""> is  </option>
 	                            <option value=""> is > </option>
 	                            <option value=""> is < </option>
@@ -673,6 +654,7 @@ var $container2 = $('#sideVisBottom'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="amountItem[]">
+	                        	<option selected disabled>Iznos</option>
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -689,6 +671,7 @@ var $container2 = $('#sideVisBottom'),
 	                <div class="hidden optionalFieldSet form-group">
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="budgetItem[]">
+	                           	<option selected disabled>Budžetska stavka</option>
 	                           <option value='710000'>Prihodi</option>
 								<option value='712000'>Porez na zarade</option>
 								<option value='713000'>Porez na imovinu</option>
@@ -702,6 +685,7 @@ var $container2 = $('#sideVisBottom'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="operatorItem[]">
+	                        <option selected disabled>Operacija</option>
 	                           	<option value=""> is  </option>
 	                            <option value=""> is > </option>
 	                            <option value=""> is < </option>
@@ -711,6 +695,7 @@ var $container2 = $('#sideVisBottom'),
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" name="amountItem[]">
+	                        <option selected disabled>Iznos</option>
 	                            <option value="">Function</option>
 	                            <option value="">Function2</option>
 	                        </select>
@@ -722,13 +707,7 @@ var $container2 = $('#sideVisBottom'),
 	                    <div class="col-xs-4 col-sm-2 pull-right">
 	                        <button type="button"   class="addCondition form-control border-primary button-full">Add</button>
 	                    </div>
-	                </div>		                
-
-	                
-
-	                
-
-	                
+	                </div>		           
 
 
 	            </form>

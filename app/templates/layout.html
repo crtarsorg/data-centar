@@ -9,6 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}"/>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon-32x32.png') }}" sizes="32x32" />
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon-16x16.png') }}" sizes="16x16" />
 
     <title>DataCentar</title>
 
@@ -113,7 +115,7 @@
     <!-- Open data request Section -->
     <section id="dataRequestS" class="container content-section margin-4p">
         <div class="datareq col-xs-12 col-sm-8">
-            <h2 class="primary-content-color">WHICH DATA SET SHOULD CENTAR OPEN NEXT?</h2>
+            <h2 class="primary-content-color">WHICH DATA SET SHOULD WE OPEN NEXT?</h2>
             <div class="margin-2p">               
                 <form id="newDataForm" class="form-horizontal" action="//formspree.io/data@datacentar.io" method="POST">
                <!--  <input type="hidden" name="_next" value="#thx"/> -->
@@ -128,8 +130,11 @@
                         <!-- Closed dataset dropdown -->
                         <div class="col-xs-12 col-sm-6 margin-2p">
                             <select id="datasetSel" name="datasetSel" class="form-control select-control-b">
-                                <option value="1">Closed dataset list</option>
-                                <option value="2">Option two</option>
+                                <option value="1"><i>Choose a dataset</i></option>
+                                <option value="2">Asset declarations</option>
+                                <option value="3">More municipal budgets</option>
+                                <option value="4">Regional budgets</option>
+                                <option value="4">Other, specified in comment</option>
                             </select>
                         </div>
                     </div>

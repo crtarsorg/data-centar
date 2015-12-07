@@ -455,6 +455,7 @@ table td:nth-child(2) {
 }
 .creative-commons {
     background: url("../images/creative-commons.svg") no-repeat;
+    display: block;
     width: 150px;
     height: 43px;
 /*

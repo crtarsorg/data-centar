@@ -57,7 +57,7 @@ function defaultSearchResult(){
 
     var year = utils.getURLParameter('year');
     if(year != null){
-        query["godine"] = [2015];
+        query["godine"] = [parseInt(year)];
     }
 
     var municipality = utils.getURLParameter('municipality');
@@ -104,7 +104,6 @@ function applyFilters(){
             "ostali": {}
         }
     };
-
 
     // Get advanced filter parameters
     $('#advanced-filter-container').children('div').each(function () {

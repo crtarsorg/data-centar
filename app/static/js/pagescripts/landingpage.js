@@ -39,21 +39,11 @@ function generateRandomQuery(){
     $("#searchWithParams").html(text);
 }
 
-function executeRandomQuery(getUrl){
-
-     var data = {
-         'source': $('#query-param-data-source').html(),
-         'type': $('#query-param-budget-type').html(),
-         'municipality': $('#query-param-municipality').html(),
-         'year': parseInt($('#query-param-year').html()),
-     };
-
-     $.ajax({
-         type: "GET",
-         url: getUrl,
-         contentType: 'application/json',
-         data: data
-    });
+function loadSearchPageWithRandomQuery(getUrl){
+     window.location = getUrl + '?source=' + $('#query-param-data-source').html() +
+            '&type=' + $('#query-param-budget-type').html() +
+            '&municipality=' + $('#query-param-municipality').html() +
+            '&year=' + parseInt($('#query-param-year').html())
 }
 
 

@@ -1,10 +1,5 @@
 {% extends "layout.html" %} {% block body %}
-
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="{{ url_for('static', filename='js/pagescripts/searchpage.js') }}"></script>
 <style>
-
 	#searchLink{
 		cursor: hand;
 		cursor: pointer;
@@ -20,14 +15,29 @@
 	}
 </style>
 
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="{{ url_for('static', filename='js/pagescripts/searchpage.js') }}"></script>
+
+
+<script>
+$( document ).ready(function() {
+
+});
+</script>
 
 
 <header class="intro primary-color">
     <!-- <div class="intro-body container"> -->
         <div class="intro-content container padding-lg">
-            
+            {#
             <p id="searchLink" class="text-center lead text-underline">
                 Show me data about <span id="dataLabel">[Everything]</span> in <span id="muncipalityLabel">[Everything]</span> <span id="yearLabel"></span> <span id="advancedLabel">related to</span> <span id="budgetLabel"></span> that <span id="operatorLabel"></span> <span id="amountLabel"></span> .
+            </p>
+            #}
+
+            <p id="searchLink" class="text-center lead text-underline">
+                Show me data about [<span id="query-param-data-source">{{ source }}</span><span id="query-param-data-type">{{ type }}</span>] for [<span id="query-param-municipality">{{ municipality }}</span>] in [<span id="query-param-year">{{ year }}</span>].
             </p>
         </div>
     <!-- </div> -->
@@ -43,7 +53,7 @@
 	                        <select class="form-control border-primary search-control" name="dataItem">
 	                        	<option selected disabled>Data Set</option>
 	                            <option value="budget">Budžet</option>
-	                            <option value="javneNabavke">Javne nabavke</option>
+	                            <option value="javne-nabavke">Javne nabavke</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">

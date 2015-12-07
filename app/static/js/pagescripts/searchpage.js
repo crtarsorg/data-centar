@@ -87,6 +87,7 @@ var params1 =
 
     }
 
+/**
   $(function(){
 
     //append to searchLink
@@ -152,8 +153,9 @@ var params1 =
   		searchApiCall( $podaci );
   	})
 
-  })
 
+  })
+*/
 /*===========================
 =            vis            =
 ===========================*/

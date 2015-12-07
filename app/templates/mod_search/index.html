@@ -20,13 +20,6 @@
 <script src="{{ url_for('static', filename='js/pagescripts/searchpage.js') }}"></script>
 
 
-<script>
-$( document ).ready(function() {
-
-});
-</script>
-
-
 <header class="intro primary-color">
     <!-- <div class="intro-body container"> -->
         <div class="intro-content container padding-lg">
@@ -50,14 +43,13 @@ $( document ).ready(function() {
 	            <form action="" id="searchForm" class="form-horizontal" role="form">
 	                <div class="form-group">
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="dataItem">
-	                        	<option selected disabled>Data Set</option>
-	                            <option value="budget">Budžet</option>
-	                            <option value="javne-nabavke">Javne nabavke</option>
+	                        <select class="form-control border-primary search-control" id="query-param-selection-source">
+	                        	<option selected disabled>Dataset</option>
+	                            <option value="budget">Budget</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="muncipalityItem">
+	                        <select class="form-control border-primary search-control" id="query-param-selection-municipality">
 	                        	<option selected disabled>Opština</option>
 		                        <option value="chachak">Čačak</option>
 							    <option value="indjija">Inđija</option>
@@ -73,11 +65,9 @@ $( document ).ready(function() {
 
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
-	                        <select class="form-control border-primary search-control" name="yearItem">
-	                        	<option selected disabled>Godina</option>
+	                        <select class="form-control border-primary search-control" id="query-param-selection-year">
+	                        	<option selected disabled>Year</option>
 	                            <option value="">2015</option>
-	                            <option value="">2014</option>
-	                            <option value="">2013</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-1">

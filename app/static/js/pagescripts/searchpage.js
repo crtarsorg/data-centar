@@ -1,7 +1,21 @@
 
-function filterDefaultSearchResults(){
+$(function(ready){
+    $('#query-param-selection-source').on("selectmenuchange",function (ev, ui) {
+        var option = $(this).find('option:selected').text();
+        $('#query-param-data-source').html(option.toUpperCase());
+    });
 
-}
+    $('#query-param-selection-municipality').on("selectmenuchange",function (ev, ui) {
+        var option = $(this).find('option:selected').text();
+        $('#query-param-municipality').html(option.toUpperCase());
+    });
+
+    $('#query-param-selection-year').on("selectmenuchange",function (ev, ui) {
+        var option = $(this).find('option:selected').text();
+        $('#query-param-year').html(option.toUpperCase());
+    });
+});
+
 
 
 var params = {

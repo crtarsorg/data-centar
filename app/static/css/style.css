@@ -157,7 +157,6 @@ nav {
     overflow: hidden;
     max-width: 100%;
     margin: auto;
-    border: 3px solid #7DC1D1;
 }
 
 .embed-container iframe,
@@ -168,6 +167,10 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+.embed-container iframe {
+	border: 3px solid #7DC1D1;
 }
 
 /*.height-110{

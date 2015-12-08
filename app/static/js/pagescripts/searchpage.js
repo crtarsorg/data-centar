@@ -79,12 +79,25 @@ function defaultSearchResult(){
 
 }
 
-function applyFilters(btn){
+function applyBasicFilters(btn){
 
-    if(!$(btn).hasClass('btn-apply-filter')) {
+    if (!$(btn).hasClass('btn-apply-filter')) {
+        $(btn).addClass('btn-apply-filter');
+        $(btn).closest('.basic-filter-row').addClass('apply-filter-row');
+    } else {
+        $(btn).removeClass('btn-apply-filter');
+        $(btn).closest('.basic-filter-row').removeClass('apply-filter-row');
+    }
+
+    buildQueryAndFetchData();
+}
+
+function applyAdvancedFilters(btn){
+
+    if (!$(btn).hasClass('btn-apply-filter')) {
         $(btn).addClass('btn-apply-filter');
         $(btn).closest('.advanced-filter-row').addClass('apply-filter-row');
-    }else{
+    } else {
         $(btn).removeClass('btn-apply-filter');
         $(btn).closest('.advanced-filter-row').removeClass('apply-filter-row');
     }
@@ -93,9 +106,16 @@ function applyFilters(btn){
 }
 
 function buildQueryAndFetchData(){
-    // Get basic filter parameters
-    var year = parseInt($('#query-param-selection-year').find(":selected").text());
-    var municipality = $('#query-param-selection-municipality').find(":selected").val();
+    // Get basic filter parameters.
+    // By default, no filters. Just grab all.
+    var yearArray = [];
+    var municipalityArray = [];
+
+    // If basic filter is enabled, get those filter parameters
+    if($('.basic-filter-row').hasClass('apply-filter-row')){
+        yearArray = (($('#query-param-selection-year')[0].selectedIndex > 0) ? [parseInt($('#query-param-selection-year').find(":selected").text())] : []);
+        municipalityArray = (($('#query-param-selection-municipality')[0].selectedIndex > 0) ? [$('#query-param-selection-municipality').find(":selected").val()] : []);
+    }
 
     // Prepare filter object
     var query = {
@@ -103,10 +123,8 @@ function buildQueryAndFetchData(){
             "rashodi",
             "prihodi"
         ],
-        "godine": [
-            year
-        ],
-        "opstine": [municipality],
+        "godine": yearArray,
+        "opstine": municipalityArray,
         "klasifikacija": {
             "broj": [],
             "pocinjeSa": ""
@@ -233,7 +251,7 @@ function addAdvancedFilterRow(){
             '<input type="text" class="form-control border-primary search-control"/>' +
         '</div>' +
         '<div class="col-xs-2 col-sm-1 text-center">' +
-            '<button type="button" class="form-control border-primary pull-left" style="width: 50%;" onClick="javascript:applyFilters(this)">&#x2713;</button>' +
+            '<button type="button" class="form-control border-primary pull-left" style="width: 50%;" onClick="javascript:applyAdvancedFilters(this)">&#x2713;</button>' +
             '<button type="button" class="removeCondition form-control border-secondary pull-left" style="width: 50%;" onClick="javascript:removeAdvancedFilterRow(this)">&#x2715;</button>' +
         '</div>' +
         '<div class="col-xs-4 col-sm-2 pull-right">' +

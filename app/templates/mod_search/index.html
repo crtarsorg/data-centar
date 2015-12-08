@@ -57,12 +57,6 @@
 <header class="intro primary-color">
     <!-- <div class="intro-body container"> -->
         <div class="intro-content container padding-lg">
-            {#
-            <p id="searchLink" class="text-center lead text-underline">
-                Show me data about <span id="dataLabel">[Everything]</span> in <span id="muncipalityLabel">[Everything]</span> <span id="yearLabel"></span> <span id="advancedLabel">related to</span> <span id="budgetLabel"></span> that <span id="operatorLabel"></span> <span id="amountLabel"></span> .
-            </p>
-            #}
-
             <p id="searchLink" class="text-center lead text-underline">
                 Show me data about [<span id="query-param-data-source">{{ source }}</span><span id="query-param-data-type">{{ type }}</span>] for [<span id="query-param-municipality">{{ municipality }}</span>] in [<span id="query-param-year">{{ year }}</span>].
             </p>
@@ -75,7 +69,7 @@
 	    <!-- <div class="row"> -->
 	        <div class="">
 	            <form action="" id="searchForm" class="form-horizontal" role="form">
-	                <div class="form-group">
+	                <div class="form-group basic-filter-row">
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" id="query-param-selection-source">
 	                        	<option selected disabled>Dataset</option>
@@ -103,7 +97,7 @@
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-1">
-	                        <button type="button"  class="form-control border-primary text-center" onClick="javascript:applyFilters()">&#x2713;</button>
+	                        <button type="button"  class="form-control border-primary text-center" onClick="javascript:applyBasicFilters(this)">&#x2713;</button>
 	                    </div>
 	                    <div class="col-xs-4 col-sm-2 pull-right">
 	                        <button type="button"  class=" advancedCondition form-control border-primary button-full">Advanced</button>

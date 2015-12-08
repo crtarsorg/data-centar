@@ -3,16 +3,31 @@ $(function(ready){
     $('#query-param-selection-source').change(function() {
         var option = $(this).find('option:selected').text();
         $('#query-param-data-source').html(option.toUpperCase());
+
+        // Apply filters (if basic filtering is checked as enabled)
+        if($('.basic-filter-row').hasClass('apply-filter-row')) {
+            applyBasicFilters();
+        }
     });
 
     $('#query-param-selection-municipality').change(function() {
         var option = $(this).find('option:selected').text();
         $('#query-param-municipality').html(option.toUpperCase());
+
+        // Apply filters (if basic filtering is checked as enabled)
+        if($('.basic-filter-row').hasClass('apply-filter-row')) {
+            applyBasicFilters();
+        }
     });
 
     $('#query-param-selection-year').change(function() {
         var option = $(this).find('option:selected').text();
         $('#query-param-year').html(option.toUpperCase());
+
+        // Apply filters (if basic filtering is checked as enabled)
+        if($('.basic-filter-row').hasClass('apply-filter-row')) {
+            applyBasicFilters();
+        }
     });
 
     $( ".advancedCondition" ).click(function() {
@@ -79,11 +94,45 @@ function defaultSearchResult(){
 
 }
 
-function applyFilters(){
+function applyBasicFilters(btn){
 
-    // Get basic filter parameters
-    var year = parseInt($('#query-param-selection-year').find(":selected").text());
-    var municipality = $('#query-param-selection-municipality').find(":selected").val();
+    if($(btn) != undefined){
+        if (!$(btn).hasClass('btn-apply-filter')) {
+            $(btn).addClass('btn-apply-filter');
+            $(btn).closest('.basic-filter-row').addClass('apply-filter-row');
+        } else {
+            $(btn).removeClass('btn-apply-filter');
+            $(btn).closest('.basic-filter-row').removeClass('apply-filter-row');
+        }
+    }
+
+    buildQueryAndFetchData();
+}
+
+function applyAdvancedFilters(btn){
+
+    if (!$(btn).hasClass('btn-apply-filter')) {
+        $(btn).addClass('btn-apply-filter');
+        $(btn).closest('.advanced-filter-row').addClass('apply-filter-row');
+    } else {
+        $(btn).removeClass('btn-apply-filter');
+        $(btn).closest('.advanced-filter-row').removeClass('apply-filter-row');
+    }
+
+    buildQueryAndFetchData();
+}
+
+function buildQueryAndFetchData(){
+    // Get basic filter parameters.
+    // By default, no filters. Just grab all.
+    var yearArray = [];
+    var municipalityArray = [];
+
+    // If basic filter is enabled, get those filter parameters
+    if($('.basic-filter-row').hasClass('apply-filter-row')){
+        yearArray = (($('#query-param-selection-year')[0].selectedIndex > 0) ? [parseInt($('#query-param-selection-year').find(":selected").text())] : []);
+        municipalityArray = (($('#query-param-selection-municipality')[0].selectedIndex > 0) ? [$('#query-param-selection-municipality').find(":selected").val()] : []);
+    }
 
     // Prepare filter object
     var query = {
@@ -91,10 +140,8 @@ function applyFilters(){
             "rashodi",
             "prihodi"
         ],
-        "godine": [
-            year
-        ],
-        "opstine": [municipality],
+        "godine": yearArray,
+        "opstine": municipalityArray,
         "klasifikacija": {
             "broj": [],
             "pocinjeSa": ""
@@ -109,7 +156,7 @@ function applyFilters(){
     };
 
     // Get advanced filter parameters
-    $('#advanced-filter-container').children('div').each(function () {
+    $('#advanced-filter-container').children('div .apply-filter-row').each(function () {
         var currentBudgetItem = undefined;
         var currentOperand = undefined;
         var currentValue = undefined;
@@ -131,6 +178,11 @@ function applyFilters(){
     fethData(query);
 }
 
+function removeAdvancedFilterRow(btn){
+    $(btn).closest(".advanced-filter-row").remove();
+    buildQueryAndFetchData();
+}
+
 function fethData(query){
     $.ajax({
         type: "POST",
@@ -145,7 +197,6 @@ function fethData(query){
         }
     });
 }
-
 
 function buildResultTable (response) {
 
@@ -220,8 +271,8 @@ function addAdvancedFilterRow(){
             '<input type="text" class="form-control border-primary search-control"/>' +
         '</div>' +
         '<div class="col-xs-2 col-sm-1 text-center">' +
-            '<button type="button"  class="form-control border-primary pull-left" style="width: 50%;" onClick="javascript:applyFilters()">&#x2713;</button>' +
-            '<button type="button"  class="removeCondition form-control border-secondary pull-left" style="width: 50%;" onClick="javascript:removeAdvancedFilterRow(this)">&#x2715;</button>' +
+            '<button type="button" class="form-control border-primary pull-left" style="width: 50%;" onClick="javascript:applyAdvancedFilters(this)">&#x2713;</button>' +
+            '<button type="button" class="removeCondition form-control border-secondary pull-left" style="width: 50%;" onClick="javascript:removeAdvancedFilterRow(this)">&#x2715;</button>' +
         '</div>' +
         '<div class="col-xs-4 col-sm-2 pull-right">' +
             '<button type="button" class="addCondition form-control border-primary button-full" onClick="javascript:addAdvancedFilterRow()">Add</button>' +
@@ -230,10 +281,6 @@ function addAdvancedFilterRow(){
     '</div>';
 
     $('#advanced-filter-container').append(filterRow);
-}
-
-function removeAdvancedFilterRow(row){
-    $(row).closest(".advanced-filter-row").remove();
 }
 
 var params = {
@@ -279,6 +326,7 @@ var params1 =
         }
     }
 }
+
 
 	function searchApiCall (entry) {
 
@@ -334,8 +382,7 @@ var params1 =
 	    ).then(function() {
 
             if(result1[0] != undefined)
-	        
-	        sideVis(result2, result1, result1[0].conto)
+	           sideVis(result2, result1, result1[0].conto)
 	        //mainVis(result2);
             //visu(result1, result2)
 	    });
@@ -376,41 +423,6 @@ var params1 =
     }
 
 
-  	$(document).on('click', ".advancedCondition",function(ev){
-
-  		$(".advanced").removeClass("hidden");
-  		$(".optionalFieldSet.form-group:first").removeClass("hidden");
-
-  	})
-
-  	$(document).on('click', ".addCondition",function(ev){
-
-  		$(this).parents().filter(".optionalFieldSet").next().removeClass("hidden");
-
-
-
-  	})
-
-  	$(document).on('click', ".removeCondition",function(ev){
-
-  		$(this).parents().filter(".optionalFieldSet").addClass("hidden");
-		//reset to default
-		//if
-
-  	})
-
-
-  	$("#searchLink").click(function (argument) {
-  		var $podaci = $("#searchForm").serialize();
-
-      alert($podaci);
-
-  		searchApiCall( $podaci );
-  	})
-
-
-  })
-*/
 /*===========================
 =            vis            =
 ===========================*/

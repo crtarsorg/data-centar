@@ -356,17 +356,23 @@ select.primary-content-color{
 
 #fundersS .row div {
     max-height: 150px;
-    margin-bottom: 20px;
     position: relative;
     overflow: hidden;
 }
 .funder-img{
     width: auto;
-    max-height: 77px;
+    max-height: 160px;
     margin: 0 auto;
     vertical-align: bottom;
     display: table-cell;
 }
+
+.funder-img:hover {
+	opacity: 0.5;
+}
+
+
+
 #descHowToUse li {
     text-align: left;
 }

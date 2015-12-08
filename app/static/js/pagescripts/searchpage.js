@@ -170,10 +170,11 @@ function buildResultTable (response) {
         ],
         "language": {
             "info": "Stranica _PAGE_ od _PAGES_ (_TOTAL_ unosa)"
-          }/*
+          }
           , dom: 'Bfrtip',
            buttons: [
                 {
+                    className:"btnDownload",
                     extend: 'collection',
                     text: 'Export',
                      buttons: [
@@ -183,7 +184,7 @@ function buildResultTable (response) {
                         'pdfHtml5'
                     ]
                 }
-            ]*/
+            ]
         
     } );
 

@@ -67,7 +67,10 @@ function defaultSearchResult(){
             municipality = "CHACHAK";
         }else if (municipality === "IN%C4%90IJA") {
             municipality = "INDJIJA";
+        }else if (municipality === "LOZNICA") {
+            municipality = "LOZNITSA";
         }
+
         query["opstine"] = [$.slugify(municipality.replace(/%20/g,'-'))];
     }
 
@@ -164,16 +167,17 @@ function buildResultTable (response) {
             { "sTitle": "Sopstveni Prihodi" , data: 'sopstveniPrihodi' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
             { "sTitle": "Prihodi Budžeta" , data: 'prihodiBudzeta' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
             
-            { "sTitle": "Donacije" , data: 'donacije' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+            // { "sTitle": "Donacije" , data: 'donacije' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
             { "sTitle": "Ostali" , data: 'ostali' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
             { "sTitle": "Tip " , data: 'tipPodataka' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )}
         ],
         "language": {
             "info": "Stranica _PAGE_ od _PAGES_ (_TOTAL_ unosa)"
-          }/*
+          }
           , dom: 'Bfrtip',
            buttons: [
                 {
+                    className:"btnDownload",
                     extend: 'collection',
                     text: 'Export',
                      buttons: [
@@ -183,7 +187,7 @@ function buildResultTable (response) {
                         'pdfHtml5'
                     ]
                 }
-            ]*/
+            ]
         
     } );
 

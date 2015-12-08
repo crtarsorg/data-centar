@@ -569,3 +569,22 @@ button:focus, select:focus {
 .table-striped>tbody>tr:nth-of-type(odd) {
     background: #fff;
 }
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    background-color: #fff;
+    border-color: #fff;
+    color: #7DC1D1;
+}
+
+.pagination>li>a, .pagination>li>span {
+    color: #fff;
+    border-color: #fff;
+    background-color: transparent;
+}
+
+.pagination>.disabled>a, .pagination>.disabled>a:focus, .pagination>.disabled>a:hover, .pagination>.disabled>span, .pagination>.disabled>span:focus, .pagination>.disabled>span:hover {
+    color: #fff;
+    cursor: not-allowed;
+    background-color: transparent;
+    border-color: #fff;
+}

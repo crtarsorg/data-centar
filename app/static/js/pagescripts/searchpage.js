@@ -389,39 +389,6 @@ var params1 =
 
     }
 
-/**
-  $(function(){
-
-    //append to searchLink
-    //if there is alredy that item , put new template to searchLink
-
-    inputOption("dataItem") ;
-    inputOption("muncipalityItem");
-    inputOption("yearItem");
-    inputOption("budgetItem[]");
-    inputOption("operatorItem[]");
-    inputOption("amountItem[]");
-
-    function inputOption (selector) {
-        $("[name='" + selector + "']").on("selectmenuchange",function (ev,ui) {
-
-        var itemName = selector.split("Item")[0];
-        var $label = $("#"+itemName+"Label");
-
-        var labelText = $label.html();
-
-        if( labelText.length == 0 || (selector =="dataItem" || selector =="muncipalityItem"))
-            $label.html(ui.item.label)
-        else {
-          var opciono =
-              ' <span id="budgetLabel"></span> that <span id="operatorLabel"></span> <span id="amountLabel"></span> ';
-
-          $("#searchLink").append( opciono );
-        }
-
-      })
-    }
-
 
 /*===========================
 =            vis            =

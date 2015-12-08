@@ -270,11 +270,11 @@ function addAdvancedFilterRow(){
         '<div class="advanced-filter-selection-value col-xs-12 col-sm-3">' +
             '<input type="text" class="form-control border-primary search-control"/>' +
         '</div>' +
-        '<div class="col-xs-2 col-sm-1 text-center">' +
+        '<div class="col-xs-4 col-sm-2 col-md-1 text-center">' +
             '<button type="button" class="form-control border-primary pull-left" style="width: 50%;" onClick="javascript:applyAdvancedFilters(this)">&#x2713;</button>' +
             '<button type="button" class="removeCondition form-control border-secondary pull-left" style="width: 50%;" onClick="javascript:removeAdvancedFilterRow(this)">&#x2715;</button>' +
         '</div>' +
-        '<div class="col-xs-4 col-sm-2 pull-right">' +
+        '<div class="col-xs-4 col-sm-1 col-md-2 pull-right">' +
             '<button type="button" class="addCondition form-control border-primary button-full" onClick="javascript:addAdvancedFilterRow()">Add</button>' +
         '</div>' +
         '<br><br>' +

@@ -3,16 +3,31 @@ $(function(ready){
     $('#query-param-selection-source').change(function() {
         var option = $(this).find('option:selected').text();
         $('#query-param-data-source').html(option.toUpperCase());
+
+        // Apply filters (if basic filtering is checked as enabled)
+        if($('.basic-filter-row').hasClass('apply-filter-row')) {
+            applyBasicFilters();
+        }
     });
 
     $('#query-param-selection-municipality').change(function() {
         var option = $(this).find('option:selected').text();
         $('#query-param-municipality').html(option.toUpperCase());
+
+        // Apply filters (if basic filtering is checked as enabled)
+        if($('.basic-filter-row').hasClass('apply-filter-row')) {
+            applyBasicFilters();
+        }
     });
 
     $('#query-param-selection-year').change(function() {
         var option = $(this).find('option:selected').text();
         $('#query-param-year').html(option.toUpperCase());
+
+        // Apply filters (if basic filtering is checked as enabled)
+        if($('.basic-filter-row').hasClass('apply-filter-row')) {
+            applyBasicFilters();
+        }
     });
 
     $( ".advancedCondition" ).click(function() {
@@ -81,12 +96,14 @@ function defaultSearchResult(){
 
 function applyBasicFilters(btn){
 
-    if (!$(btn).hasClass('btn-apply-filter')) {
-        $(btn).addClass('btn-apply-filter');
-        $(btn).closest('.basic-filter-row').addClass('apply-filter-row');
-    } else {
-        $(btn).removeClass('btn-apply-filter');
-        $(btn).closest('.basic-filter-row').removeClass('apply-filter-row');
+    if($(btn) != undefined){
+        if (!$(btn).hasClass('btn-apply-filter')) {
+            $(btn).addClass('btn-apply-filter');
+            $(btn).closest('.basic-filter-row').addClass('apply-filter-row');
+        } else {
+            $(btn).removeClass('btn-apply-filter');
+            $(btn).closest('.basic-filter-row').removeClass('apply-filter-row');
+        }
     }
 
     buildQueryAndFetchData();

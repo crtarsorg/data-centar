@@ -154,6 +154,7 @@ function buildResultTable (response) {
 
     $('#tableResults').DataTable( {
         data: response,
+        bDestroy: true,
         scrollY: 300,
         bFilter: false,
         stripeClasses: [ 'oddRow', 'evenRow' ],

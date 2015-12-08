@@ -76,19 +76,20 @@ $(function() {
         //if active, don't change
         //change ul content
         $("#descDiv ul").addClass("hidden");
+        $("#descSvg div").addClass("hidden");
 
         var idIcon = $(this).attr("id");
         if(  idIcon == "liberatIcon"){
             $("#titleHowTo").html("Tell us what to liberate next");
-            $("#liberateNext").removeClass("hidden");
+            $("#liberateNext, #liberate-svg").removeClass("hidden");
         }
         else if(idIcon == "apiIcon"){
             $("#titleHowTo").html("API");
-            $("#api").removeClass("hidden");
+            $("#api, #api-svg").removeClass("hidden");
         }
         else {
             $("#titleHowTo").html("Advanced search");
-            $("#search").removeClass("hidden");
+            $("#search, #search-svg").removeClass("hidden");
         }  
       
     })
@@ -133,11 +134,37 @@ $(function() {
             <h2 class="text-center">Ways to Use the Site</h2>
             <div class="row margin-4p">
                 <div class="col-xs-4">
-                    <img id="searchIcon" class="explore-icon img-responsive hover" src="{{ url_for('static', filename='images/DC_Icon_1.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_1_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_1.svg') }}';" alt=""></div>
+                    <img id="searchIcon" class="explore-icon img-responsive hover" src="{{ url_for('static', filename='images/DC_Icon_1.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_1_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_1.svg') }}';" alt="">
+                </div>
                 <div class="col-xs-4">
-                    <img id="apiIcon"  class="explore-icon img-responsive hover" src="{{ url_for('static', filename='images/DC_Icon_2.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_2_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_2.svg') }}';" alt=""></div>
+                    <img id="apiIcon"  class="explore-icon img-responsive hover" src="{{ url_for('static', filename='images/DC_Icon_2.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_2_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_2.svg') }}';" alt="">
+                </div>
                 <div class="col-xs-4">
-                    <img id="liberatIcon" class="explore-icon img-responsive hover" src="{{ url_for('static', filename='images/DC_Icon_3.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_3_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_3.svg') }}';" alt=""></div>
+                    <img id="liberatIcon" class="explore-icon img-responsive hover" src="{{ url_for('static', filename='images/DC_Icon_3.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_3_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_3.svg') }}';" alt="">
+                </div>
+            </div>
+            <div id="descSvg">
+                <div id="search-svg">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1188.001 70" enable-background="new 0 0 1188.001 70" xml:space="preserve" style="margin-left: 15.5%;" id="search-svg">
+                    <g>
+                        <polygon fill="#FFFFFF" points="970,70 0,70 0,0 2.572,0 2.572,68 970,68   "/>
+                    </g>
+                    </svg>
+                </div>
+                <div id="api-svg" class="hidden">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1188.001 70" enable-background="new 0 0 1188.001 70" xml:space="preserve" style="margin-left: 15.5%;">
+                    <g>
+                    <polygon fill="#FFFFFF" points="485.817,68 485.817,0 484.182,0 484.182,68 0,68 0,70 970,70 970,68 "/>
+                    </g>
+                    </svg>
+                </div>
+                <div id="liberate-svg" class="hidden"> 
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1188.001 70" enable-background="new 0 0 1188.001 70" xml:space="preserve" style="margin-left: 15.5%;">
+                    <g>
+                        <polygon fill="#FFFFFF" points="6,68 970,68 970,0 972,0 972,70 6,70     "/>
+                    </g>
+                    </svg>
+                </div>
             </div>
             <div class="">
                 <div id="descDiv" class="margin-4p">
@@ -213,7 +240,7 @@ $(function() {
                     <img src="{{ url_for('static', filename='images/open-data-kosovo-logo.png') }}" alt="" class="funder-img img-responsive">
                 </div>
                 <div class="col-xs-6 col-sm-3">
-                    <img src="{{ url_for('static', filename='images/the-engine-room-logo.png') }}" alt="" class="funder-img img-responsive">
+                    <img src="{{ url_for('static', filename='images/eR-logo-white-transparent.png') }}" alt="" class="funder-img img-responsive">
                 </div>
                 <div class="col-xs-6 col-sm-3">
                     <img src="{{ url_for('static', filename='images/crta-logo.png') }}" alt="" class="funder-img img-responsive">

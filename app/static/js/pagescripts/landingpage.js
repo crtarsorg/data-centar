@@ -13,7 +13,7 @@ function onYouTubePlayerAPIReady() {
     player = new YT.Player('ytplayerLanding', {
         /* height: '390',
          width: '640',*/
-        videoId: 'k7uuLp5FpJA',
+        videoId: 'X2hMoXoqMiU',
         playerVars: {
             'showinfo': 0,
             /*'controls': 1,*/

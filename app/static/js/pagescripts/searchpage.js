@@ -1,16 +1,16 @@
 
 $(function(ready){
-    $('#query-param-selection-source').on("selectmenuchange",function (ev, ui) {
+    $('#query-param-selection-source').change(function() {
         var option = $(this).find('option:selected').text();
         $('#query-param-data-source').html(option.toUpperCase());
     });
 
-    $('#query-param-selection-municipality').on("selectmenuchange",function (ev, ui) {
+    $('#query-param-selection-municipality').change(function() {
         var option = $(this).find('option:selected').text();
         $('#query-param-municipality').html(option.toUpperCase());
     });
 
-    $('#query-param-selection-year').on("selectmenuchange",function (ev, ui) {
+    $('#query-param-selection-year').change(function() {
         var option = $(this).find('option:selected').text();
         $('#query-param-year').html(option.toUpperCase());
     });

@@ -164,7 +164,7 @@ function buildResultTable (response) {
             { "sTitle": "Sopstveni Prihodi" , data: 'sopstveniPrihodi' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
             { "sTitle": "Prihodi Budžeta" , data: 'prihodiBudzeta' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
             
-            { "sTitle": "Donacije" , data: 'donacije' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+            // { "sTitle": "Donacije" , data: 'donacije' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
             { "sTitle": "Ostali" , data: 'ostali' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
             { "sTitle": "Tip " , data: 'tipPodataka' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )}
         ],

@@ -365,6 +365,9 @@ select.primary-content-color{
     position: relative;
     overflow: hidden;
 }
+#descDiv ul {
+    min-height: 176px;
+}
 #howToUseS img {
     max-width: 210px;
     margin: 0 auto;

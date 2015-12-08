@@ -148,9 +148,14 @@
 
     <script>
         $(document).ready(function() {
-            $(".select-control").selectmenu();
-            $(".select-control-b").selectmenu();
-            $(".download-control").selectmenu();
+            if($(".select-control").length != 0)
+                $(".select-control").selectmenu();
+            
+            if($(".select-control-b").length != 0)
+                $(".select-control-b").selectmenu();
+            
+            if( $(".download-control").length != 0)
+                $(".download-control").selectmenu();
         });
     </script>    
 

@@ -67,7 +67,10 @@ function defaultSearchResult(){
             municipality = "CHACHAK";
         }else if (municipality === "IN%C4%90IJA") {
             municipality = "INDJIJA";
+        }else if (municipality === "LOZNICA") {
+            municipality = "LOZNITSA";
         }
+
         query["opstine"] = [$.slugify(municipality.replace(/%20/g,'-'))];
     }
 

@@ -89,6 +89,10 @@ function applyFilters(btn){
         $(btn).closest('.advanced-filter-row').removeClass('apply-filter-row');
     }
 
+    buildQueryAndFetchData();
+}
+
+function buildQueryAndFetchData(){
     // Get basic filter parameters
     var year = parseInt($('#query-param-selection-year').find(":selected").text());
     var municipality = $('#query-param-selection-municipality').find(":selected").val();
@@ -137,6 +141,11 @@ function applyFilters(btn){
     });
 
     fethData(query);
+}
+
+function removeAdvancedFilterRow(btn){
+    $(btn).closest(".advanced-filter-row").remove();
+    buildQueryAndFetchData();
 }
 
 function fethData(query){
@@ -234,10 +243,6 @@ function addAdvancedFilterRow(){
     '</div>';
 
     $('#advanced-filter-container').append(filterRow);
-}
-
-function removeAdvancedFilterRow(row){
-    $(row).closest(".advanced-filter-row").remove();
 }
 
 var params = {

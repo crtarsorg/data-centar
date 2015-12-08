@@ -248,6 +248,12 @@ select.primary-content-color{
     border-radius: 7px;
     color: #0794A0;
 }
+
+.btn-apply-filter {
+    color: white;
+    background-color: #0794A0;
+}
+
 .ui-widget {
     font-weight: normal;
     font-family: 'Ubuntu Mono';

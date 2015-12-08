@@ -79,7 +79,15 @@ function defaultSearchResult(){
 
 }
 
-function applyFilters(){
+function applyFilters(btn){
+
+    if(!$(btn).hasClass('btn-apply-filter')) {
+        $(btn).addClass('btn-apply-filter');
+        $(btn).closest('.advanced-filter-row').addClass('apply-filter-row');
+    }else{
+        $(btn).removeClass('btn-apply-filter');
+        $(btn).closest('.advanced-filter-row').removeClass('apply-filter-row');
+    }
 
     // Get basic filter parameters
     var year = parseInt($('#query-param-selection-year').find(":selected").text());
@@ -109,7 +117,7 @@ function applyFilters(){
     };
 
     // Get advanced filter parameters
-    $('#advanced-filter-container').children('div').each(function () {
+    $('#advanced-filter-container').children('div .apply-filter-row').each(function () {
         var currentBudgetItem = undefined;
         var currentOperand = undefined;
         var currentValue = undefined;
@@ -143,7 +151,6 @@ function fethData(query){
         }
     });
 }
-
 
 function buildResultTable (response) {
 
@@ -216,8 +223,8 @@ function addAdvancedFilterRow(){
             '<input type="text" class="form-control border-primary search-control"/>' +
         '</div>' +
         '<div class="col-xs-2 col-sm-1 text-center">' +
-            '<button type="button"  class="form-control border-primary pull-left" style="width: 50%;" onClick="javascript:applyFilters()">&#x2713;</button>' +
-            '<button type="button"  class="removeCondition form-control border-secondary pull-left" style="width: 50%;" onClick="javascript:removeAdvancedFilterRow(this)">&#x2715;</button>' +
+            '<button type="button" class="form-control border-primary pull-left" style="width: 50%;" onClick="javascript:applyFilters(this)">&#x2713;</button>' +
+            '<button type="button" class="removeCondition form-control border-secondary pull-left" style="width: 50%;" onClick="javascript:removeAdvancedFilterRow(this)">&#x2715;</button>' +
         '</div>' +
         '<div class="col-xs-4 col-sm-2 pull-right">' +
             '<button type="button" class="addCondition form-control border-primary button-full" onClick="javascript:addAdvancedFilterRow()">Add</button>' +
@@ -277,113 +284,44 @@ var params1 =
     }
 }
 
-	function searchApiCall (argument) {
+function searchApiCall (argument) {
 
-	    var result1, result2;
-	    $.when(
+    var result1, result2;
+    $.when(
 
-	        $.ajax({
-	            method: "POST",
-	            url: "../api/prosek",
-	            data: JSON.stringify(params),
-	            contentType: "application/json;charset=utf-8",
-	            dataType: "json",
-	            success: function(returnhtml){
-	                result1 = returnhtml;
-	            }
+        $.ajax({
+            method: "POST",
+            url: "../api/prosek",
+            data: JSON.stringify(params),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function(returnhtml){
+                result1 = returnhtml;
+            }
 
-	        })
-	        ,
-	        $.ajax({
-	            method: "POST",
-	            url: "../api/zbir",
-	            data: JSON.stringify(params1),
-	            contentType: "application/json;charset=utf-8",
-	            dataType: "json",
-	            success: function(returnhtml){
-	                result2 = returnhtml;
-	            }
+        })
+        ,
+        $.ajax({
+            method: "POST",
+            url: "../api/zbir",
+            data: JSON.stringify(params1),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function(returnhtml){
+                result2 = returnhtml;
+            }
 
-	        })
+        })
 
-	    ).then(function() {
+    ).then(function() {
 
-	        mainVis(result2);
-	        sideVis(result2, result1)
-	        //visu(result1, result2)
-	    });
+        mainVis(result2);
+        sideVis(result2, result1)
+        //visu(result1, result2)
+    });
 
-    }
+}
 
-/**
-  $(function(){
-
-    //append to searchLink
-    //if there is alredy that item , put new template to searchLink
-
-    inputOption("dataItem") ;
-    inputOption("muncipalityItem");
-    inputOption("yearItem");
-    inputOption("budgetItem[]");
-    inputOption("operatorItem[]");
-    inputOption("amountItem[]");
-
-    function inputOption (selector) {
-        $("[name='" + selector + "']").on("selectmenuchange",function (ev,ui) {
-
-        var itemName = selector.split("Item")[0];
-        var $label = $("#"+itemName+"Label");
-
-        var labelText = $label.html();
-
-        if( labelText.length == 0 || (selector =="dataItem" || selector =="muncipalityItem"))
-            $label.html(ui.item.label)
-        else {
-          var opciono =
-              ' <span id="budgetLabel"></span> that <span id="operatorLabel"></span> <span id="amountLabel"></span> ';
-
-          $("#searchLink").append( opciono );
-        }
-
-      })
-    }
-
-
-  	$(document).on('click', ".advancedCondition",function(ev){
-
-  		$(".advanced").removeClass("hidden");
-  		$(".optionalFieldSet.form-group:first").removeClass("hidden");
-
-  	})
-
-  	$(document).on('click', ".addCondition",function(ev){
-
-  		$(this).parents().filter(".optionalFieldSet").next().removeClass("hidden");
-
-
-
-  	})
-
-  	$(document).on('click', ".removeCondition",function(ev){
-
-  		$(this).parents().filter(".optionalFieldSet").addClass("hidden");
-		//reset to default
-		//if
-
-  	})
-
-
-  	$("#searchLink").click(function (argument) {
-  		var $podaci = $("#searchForm").serialize();
-
-      alert($podaci);
-
-  		searchApiCall( $podaci );
-  	})
-
-
-  })
-*/
 /*===========================
 =            vis            =
 ===========================*/

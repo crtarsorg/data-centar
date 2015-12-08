@@ -139,13 +139,16 @@ function fethData(query){
         data: JSON.stringify(query),
         success: function(rsp){
             buildResultTable(rsp);
-            sideVis(rsp);
+            searchApiCall(rsp[0]);
+            //console.log(query)
+            //sideVis(rsp);
         }
     });
 }
 
 
 function buildResultTable (response) {
+
 
     /*
         {"opstina":"Novi Beograd","ukupno":1000000,"godina":2015,"sopstveniPrihodi":0,"prihodiBudzeta":1000000,"klasifikacijaBroj":"515",
@@ -256,8 +259,7 @@ var params1 =
         "prihodi"
     ],
     "godine": [
-        2015,
-        2014
+        2015
     ],
     "opstine": [
         "prijepolje",
@@ -267,7 +269,7 @@ var params1 =
     ],
     "klasifikacija": {
         "broj": [
-
+                
         ],
         "pocinjeSa": ""
     },
@@ -278,7 +280,29 @@ var params1 =
     }
 }
 
-	function searchApiCall (argument) {
+	function searchApiCall (entry) {
+
+        //get three random municipalities
+        var tempOpstine = params1.opstine ;
+
+        var munc = entry.opstina.toLowerCase();
+
+         if (munc === "čačak"){
+            munc = "chachak";
+        }else if (munc === "inđija") {
+            munc = "indjija";
+        }else if (munc === "loznica") {
+            munc = "loznitsa";
+        }
+
+        if(tempOpstine.indexOf(munc)==-1 )
+            tempOpstine.push(munc);
+
+        if(params.opstine.indexOf(munc)==-1 )
+            params.opstine.push(munc);
+
+        params1.opstine = tempOpstine;
+        params1.klasifikacija.broj.push( munc )
 
 	    var result1, result2;
 	    $.when(
@@ -309,9 +333,11 @@ var params1 =
 
 	    ).then(function() {
 
-	        mainVis(result2);
-	        sideVis(result2, result1)
-	        //visu(result1, result2)
+            if(result1[0] != undefined)
+	        
+	        sideVis(result2, result1, result1[0].conto)
+	        //mainVis(result2);
+            //visu(result1, result2)
 	    });
 
     }
@@ -468,18 +494,19 @@ function mainVis(data) {
 
 
 
-function sideVis(arg1, arg2) {
+function sideVis(arg1, arg2, konto) {
 	// 2-3 contos with max value + selected one
 
 	// zasad random conta
 
+    var konto = + konto;
 	var data = [];
 	var kategorije = [] ;
 
-	console.log(arg1);
+	//console.log(arg1);
 
 	arg1.filter(function(la){
-		return +la.klasifikacijaBroj == 611
+		return +la.klasifikacijaBroj == konto
 		})
 		.forEach(function(po){
 			var tempOb = {};
@@ -489,18 +516,6 @@ function sideVis(arg1, arg2) {
 			data.push(tempOb);
 			kategorije.push(po.opstina)
 		})
-
-
-	/*var data = [{
-            name: 'Zvezdara',
-            data: [7.0, 6.9, 9.5]
-        }, {
-            name: 'Novi Beograd',
-            data: [-0.2, 0.8, 5.7]
-        }, {
-            name: 'Zrenjanin',
-            data: [-0.9, 0.6, 3.5]
-        }];*/
 
 
 	var $container = $('#sideVisTop'),
@@ -516,11 +531,11 @@ function sideVis(arg1, arg2) {
     		width: chartWidth,
             height: chartHeight
     		},
-    	colors:["red","yellow","brown"],
-       /* title: {
-            text: 'Monthly Average Temperature',
+    	colors:["#0794a0","#a1d6db","#45afb8"],
+        title: {
+            text: 'Chart based on hypothetical time data  ',
             x: -20 //center
-        },*/
+        },
        /* subtitle: {
             text: 'Source: WorldClimate.com',
             x: -20
@@ -539,7 +554,7 @@ function sideVis(arg1, arg2) {
             }]
         },
         tooltip: {
-            valueSuffix: '°C'
+            valueSuffix: ' rsd '
         },
         legend: {
             /*layout: 'vertical',*/
@@ -555,7 +570,7 @@ function sideVis(arg1, arg2) {
 	var data = [];
 	var kategorije = [] ;
 	arg1.filter(function(la){
-		return +la.klasifikacijaBroj == 611
+		return +la.klasifikacijaBroj == konto
 		})
 		.forEach(function(po){
 			var tempAr = [po.opstina, po.ukupno];
@@ -583,7 +598,7 @@ var $container1 = $('#sideVisMiddle'),
             type: 'bar'
         },
         title: {
-            text: 'Uporedni prikaz, konto : ' + 611
+            text: 'Uporedni prikaz, konto : ' + konto
         },
 
         xAxis: {
@@ -610,7 +625,7 @@ var $container1 = $('#sideVisMiddle'),
                 dataLabels: {
                     enabled: true
                 },
-                color: 'red'
+                color: '#0794a0'
             }
         },
       /*  legend: {

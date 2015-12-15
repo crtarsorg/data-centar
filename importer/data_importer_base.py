@@ -14,7 +14,7 @@ db = mongo.datacentar
 
 class DataImporterBase(object):
 
-    def remove_previous_mongo_docs(self, municipality, data_type):
+    def remove_previous_mongo_docs_for_prihodi_and_rashodi(self, municipality, data_type):
         db.opstine.remove(
             {
                 "tipPodataka.slug": data_type,
@@ -29,7 +29,7 @@ class DataImporterBase(object):
 
         :rtype : object
         """
-        self.remove_previous_mongo_docs(municipality, data_type)
+        self.remove_previous_mongo_docs_for_prihodi_and_rashodi(municipality, data_type)
 
         #define file path
         file_path = "data/"+ data_type +"/"+ municipality + ".csv"
@@ -39,7 +39,7 @@ class DataImporterBase(object):
         return data_handler
 
 
-    def build_mongo_document_structure(self, municipality, class_number, opis, prihodi_vudzeta, sopstveni_prihodi, ostali, ukupno,  kategorija_roditelj=None, roditelj_broj=None):
+    def build_mongo_document_structure_for_prihodi_rashodi(self, municipality, class_number, opis, prihodi_vudzeta, sopstveni_prihodi, ostali, ukupno,  kategorija_roditelj=None, roditelj_broj=None):
         """
 
         :param municipality:
@@ -120,6 +120,68 @@ class DataImporterBase(object):
 
 
         json_doc["klasifikacija"]["broj"] = class_number.strip()
+
+        return json_doc
+
+    def build_mongo_document_structure_for_budzets(self, razdeo, glava, program, funkcija, programska_aktivnost_projekat, ekonomska_klasifikacija, opis, ukupna_sredstva):
+        """
+
+        :param razdeo:
+        :param glava:
+        :param program:
+        :param funkcija:
+        :param programska_aktivnost_projekat:
+        :param ekonomska_klasifikacija:
+        :param opis:
+        :param ukupna_sredstva: the total for economic classification
+        :return:
+        """
+        json_doc = {
+            "razdeo": {
+                "broj": razdeo,
+                "opis": {
+                    "cirilica": opis,
+                    "latinica": cyrtranslit.to_latin(opis, "sr")
+                }
+            },
+            "glava": {
+                "broj": glava,
+                "opis": {
+                    "cirilica": opis,
+                    "latinica": cyrtranslit.to_latin(opis, "sr")
+                }
+            },
+            "program": {
+                "broj": program,
+                "opis": {
+                    "cirilica": opis,
+                    "latinica": cyrtranslit.to_latin(opis, "sr")
+                }
+            },
+            "funkcija": {
+                "broj": funkcija,
+                "opis": {
+                    "cirilica": opis,
+                    "latinica": cyrtranslit.to_latin(opis, "sr")
+                }
+            },
+            "programskaAktivnostProjekat": {
+                "broj": programska_aktivnost_projekat,
+                "opis": {
+                    "cirilica": opis,
+                    "latinica": cyrtranslit.to_latin(opis, "sr")
+                }
+            },
+            "ekonomskaKlasifikacija": {
+                "broj": ekonomska_klasifikacija,
+                "opis": {
+                    "cirilica": opis,
+                    "latinica": cyrtranslit.to_latin(opis, "sr")
+
+                },
+                "ukupna_sredstva": self.convert_to_float(ukupna_sredstva.replace(",", ""))
+            }
+        }
 
         return json_doc
 

@@ -5,6 +5,7 @@ import os
 
 from importer.tests.rashodi import RashodiImportingTestCases
 from importer.tests.prihodi import PrihodiImportingTestCases
+from importer.tests.budzets import BudzetsImportingTestCases
 
 
 
@@ -26,6 +27,7 @@ if __name__ == '__main__':
         # Importer test suites.
         suites.append(unittest.TestLoader().loadTestsFromTestCase(RashodiImportingTestCases))
         suites.append(unittest.TestLoader().loadTestsFromTestCase(PrihodiImportingTestCases))
+        suites.append(unittest.TestLoader().loadTestsFromTestCase(BudzetsImportingTestCases))
 
         # run test cases
         test_cases = unittest.TestSuite(suites)

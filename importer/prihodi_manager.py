@@ -2,7 +2,7 @@
 from csv import reader
 import cyrtranslit
 from slugify import slugify
-from abstract_data_importer import DataImporterBase, db
+from data_importer_base import DataImporterBase, db
 from utils import ImporterUtils
 
 # Instantiate utils object
@@ -26,7 +26,7 @@ class PrihodiDataImporter(DataImporterBase):
                     parent_num = row[1]
 
                 if len(row[1]) > 3 and row[1][-3:] != '000':
-                    json_doc = self.build_mongo_document_structure("Пријепоље", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Пријепоље", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Пријепоље", parent_handler, row[1])
 
@@ -50,7 +50,7 @@ class PrihodiDataImporter(DataImporterBase):
                 if len(row[1]) > 3 and row[1][-3:] != '000' and row[1] not in ["7+8+9", "3+7+8+9", "", " "]:
 
                     # Build mongo document
-                    json_doc = self.build_mongo_document_structure("Врање", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Врање", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
 
                     # Insert JSON document in mongo
                     db.opstine.insert(json_doc)
@@ -64,7 +64,7 @@ class PrihodiDataImporter(DataImporterBase):
                 if row[1] not in ["810000", "840000", "910000", "920000", "900000", "7+8+9", "3+7+8+9", "", " ", "800000"]:
 
                     # Build mongo document
-                    json_doc = self.build_mongo_document_structure("Врање", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Врање", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
 
                     # Insert JSON document in mongo
                     db.opstine.insert(json_doc)
@@ -89,7 +89,7 @@ class PrihodiDataImporter(DataImporterBase):
                 if row[1][-3:] != '000' and row[1] not in ["", " "]:
 
                     # Build mongo document
-                    json_doc = self.build_mongo_document_structure("Лозница", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Лозница", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
 
                     # Insert JSON document in mongo
                     db.opstine.insert(json_doc)
@@ -102,7 +102,7 @@ class PrihodiDataImporter(DataImporterBase):
 
                 if row[1] not in ["", " ", parent_num, "900000", "800000", "770000"]:
                     # Build mongo document
-                    json_doc = self.build_mongo_document_structure("Лозница", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Лозница", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
 
                     # Insert JSON document in mongo
                     db.opstine.insert(json_doc)
@@ -124,7 +124,7 @@ class PrihodiDataImporter(DataImporterBase):
 
                  if row[1][-3:] != "000" and row[1] not in ["", " "]:
                      # Build mongo document
-                        json_doc = self.build_mongo_document_structure("Сомбор", row[1], row[2], row[3], row[4], row[5], row[6], parent_handler, parent_num)
+                        json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Сомбор", row[1], row[2], row[3], row[4], row[5], row[6], parent_handler, parent_num)
 
                         # Insert JSON document in mongo
                         db.opstine.insert(json_doc)
@@ -147,7 +147,7 @@ class PrihodiDataImporter(DataImporterBase):
                 if row[1][-3:] != "000" and row[1] not in ["", " "] or row[2] in ["Приходи од  продаје  индиректних корисника буџета"]:
 
                     # Build mongo document
-                    json_doc = self.build_mongo_document_structure("Ваљево", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Ваљево", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
 
                     # Insert JSON document in mongo
                     db.opstine.insert(json_doc)
@@ -162,7 +162,7 @@ class PrihodiDataImporter(DataImporterBase):
                 if row[1] not in ["", " ", "800000", parent_num, "900000", "821001"] or row[1] == "821000":
 
                     # Build mongo document
-                    json_doc = self.build_mongo_document_structure("Ваљево", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Ваљево", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
 
                     # Insert JSON document in mongo
                     db.opstine.insert(json_doc)
@@ -185,7 +185,7 @@ class PrihodiDataImporter(DataImporterBase):
 
                  elif row[1] != "":
                     # Build mongo document
-                    json_doc = self.build_mongo_document_structure("Инђија", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Инђија", row[1], row[2], row[3], row[4], row[5], None, parent_handler, parent_num)
 
                     # Insert JSON document in mongo
                     db.opstine.insert(json_doc)
@@ -209,7 +209,7 @@ class PrihodiDataImporter(DataImporterBase):
                 if row[1] not in ["", " ", parent_num] and row[1][-4:] != "0000":
 
                     # Build mongo document
-                    json_doc = self.build_mongo_document_structure("Краљево", row[1], row[2], row[3], row[4], row[5], row[6], parent_handler, parent_num)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Краљево", row[1], row[2], row[3], row[4], row[5], row[6], parent_handler, parent_num)
 
                     # Insert JSON document in mongo
                     db.opstine.insert(json_doc)
@@ -236,7 +236,7 @@ class PrihodiDataImporter(DataImporterBase):
                     row[4] = row[4].replace(',00', '').replace('.', '')
                     row[5] = row[5].replace(',00', '').replace('.', '')
                     # Build and insert JSON document in mongo
-                    json_doc = self.build_mongo_document_structure(
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi(
                         "Чачак",
                         row[1],
                         row[2],
@@ -265,7 +265,7 @@ class PrihodiDataImporter(DataImporterBase):
 
                 if row[1] != "741000":
                     # Build mongo document
-                    json_doc = self.build_mongo_document_structure("Звездара", row[1], row[2], row[3], row[4], row[5], row[6], None, None)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Звездара", row[1], row[2], row[3], row[4], row[5], row[6], None, None)
 
                     # Insert JSON document in mongo
                     db.opstine.insert(json_doc)
@@ -285,7 +285,7 @@ class PrihodiDataImporter(DataImporterBase):
 
                 if len(row[1]) != 2 and row[1] not in ["", " "]:
                      # Build mongo document
-                    json_doc = self.build_mongo_document_structure("Нови Београд", row[1], row[2], row[3], row[4], row[5], row[6], parent_handler, parent_num)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Нови Београд", row[1], row[2], row[3], row[4], row[5], row[6], parent_handler, parent_num)
 
                     # Insert JSON document in mongo
                     db.opstine.insert(json_doc)

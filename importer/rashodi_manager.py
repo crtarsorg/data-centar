@@ -4,7 +4,7 @@ import cyrtranslit
 from flask_pymongo import MongoClient
 from utils import ImporterUtils
 from slugify import slugify
-from abstract_data_importer import DataImporterBase
+from data_importer_base import DataImporterBase
 
 # Instantiate utils object
 utils = ImporterUtils()
@@ -35,7 +35,7 @@ class RashodiDataImporter(object):
                     subprogram = row[2].strip()
 
                 if row[1] not in ["", " "] and len(row[1]) > 2 and program not in ["", " "] and subprogram not in ["", " "]:
-                    json_doc = self.build_mongo_document_structure(
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi(
                         "Пријепоље",
                         row[1],
                         row[2],
@@ -78,7 +78,7 @@ class RashodiDataImporter(object):
                         subprogram = row[2].strip()
 
                 if row[1] not in ["", " "] and program not in ["", " "] and subprogram not in ["", " "] and len(row[1]) < 4:
-                    json_doc = self.build_mongo_document_structure(
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi(
                         "Сомбор",
                         row[1],
                         row[2].replace("*", ""),
@@ -116,7 +116,7 @@ class RashodiDataImporter(object):
                         parent_handler = parent_categories[row[1][0:2]]
                     else:
                         parent_handler = parent_categories["51"]
-                    json_doc = self.build_mongo_document_structure(
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi(
                         "Врање",
                         row[1],
                         row[2],
@@ -141,7 +141,7 @@ class RashodiDataImporter(object):
                             subprogram = row[2].strip()
 
                     if row[1] not in ["", " "] and program not in ["", " "] and subprogram not in ["", " "]:
-                        json_doc = self.build_mongo_document_structure(
+                        json_doc = self.build_mongo_document_structure_for_prihodi_rashodi(
                             "Врање",
                             row[1],
                             row[2],
@@ -167,7 +167,7 @@ class RashodiDataImporter(object):
         for index, row in enumerate(data_handler):
             if index > 0:
                 if row[1] not in ["", " "]:
-                    json_doc = self.build_mongo_document_structure("Лозница", row[1], row[2], row[3], row[4], row[5], row[6], None)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Лозница", row[1], row[2], row[3], row[4], row[5], row[6], None)
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Klasifikacija Broj: %s - Opis: %s" % ("Лозница", row[1], row[2])
 
@@ -181,7 +181,7 @@ class RashodiDataImporter(object):
                     parent_num = row[1]
 
                 if row[1] not in ["", " ", "400", "500"] and row[1][2] != "0":
-                    json_doc = self.build_mongo_document_structure("Ваљево", row[1], row[2], row[3], row[4], row[5], row[6], None, parent_handler, parent_num)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Ваљево", row[1], row[2], row[3], row[4], row[5], row[6], None, parent_handler, parent_num)
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Ваљево", parent_handler, row[1])
 
@@ -195,7 +195,7 @@ class RashodiDataImporter(object):
                     parent_num = row[1]
 
                 if len(row[1]) > 2 and row[1] not in ["", " "]:
-                    json_doc = self.build_mongo_document_structure("Инђија", row[1], row[2], row[3], row[4], row[5], row[6], None, parent_handler, parent_num)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Инђија", row[1], row[2], row[3], row[4], row[5], row[6], None, parent_handler, parent_num)
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Инђија", parent_handler, row[2])
 
@@ -205,7 +205,7 @@ class RashodiDataImporter(object):
         for index, row in enumerate(data_handler):
             if index > 0:
                 if len(row[1]) > 2 and row[1] not in ["", " "] and row[1] != "4+5":
-                    json_doc = self.build_mongo_document_structure("Чачак", row[1], row[2], row[3][:-2], row[4][:-2], row[5][:-2], row[6][:-2], None)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Чачак", row[1], row[2], row[3][:-2], row[4][:-2], row[5][:-2], row[6][:-2], None)
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Klasifikacija Broj: %s - Opis: %s" % ("Краљево", row[1], row[2])
 
@@ -215,7 +215,7 @@ class RashodiDataImporter(object):
         for index, row in enumerate(data_handler):
             if index > 0:
                 if row[1] not in ["", " "]:
-                    json_doc = self.build_mongo_document_structure("Краљево", row[1], row[2], row[3], row[4], row[5], row[6], row[7])
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Краљево", row[1], row[2], row[3], row[4], row[5], row[6], row[7])
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Klasifikacija Broj: %s - Opis: %s" % ("Краљево", row[1], row[2])
 
@@ -229,7 +229,7 @@ class RashodiDataImporter(object):
                     parent_num = row[1]
 
                 if len(row[1]) > 2 and row[1] != "482":
-                    json_doc = self.build_mongo_document_structure("Звездара", row[1], row[2], row[3], row[4], row[5], row[6], None, parent_handler, parent_num)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Звездара", row[1], row[2], row[3], row[4], row[5], row[6], None, parent_handler, parent_num)
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Звездара", parent_handler, row[2])
 
@@ -243,11 +243,11 @@ class RashodiDataImporter(object):
                         parent_num = row[1]
 
                 if len(row[1]) > 2 and row[1] != "499":
-                    json_doc = self.build_mongo_document_structure("Нови Београд", row[1], row[2], row[3], row[4], row[5], row[6], None, parent_handler, parent_num)
+                    json_doc = self.build_mongo_document_structure_for_prihodi_rashodi("Нови Београд", row[1], row[2], row[3], row[4], row[5], row[6], None, parent_handler, parent_num)
                     db.opstine.insert(json_doc)
                     print "Opstine: %s - Kategorija Roditelj: %s - Opis: %s" % ("Нови Београд", parent_handler, row[2])
 
-    def build_mongo_document_structure(self, municipality, class_number, opis, prihodi_vudzeta, sopstveni_prihodi, donacije, ostali, ukupno,  kategorija_roditelj=None, roditelj_broj=None):
+    def build_mongo_document_structure_for_prihodi_rashodi(self, municipality, class_number, opis, prihodi_vudzeta, sopstveni_prihodi, donacije, ostali, ukupno,  kategorija_roditelj=None, roditelj_broj=None):
         """
 
         :param municipality:

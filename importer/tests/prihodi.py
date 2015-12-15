@@ -1,6 +1,6 @@
 #coding=utf-8
 import unittest
-from importer.abstract_data_importer import mongo
+from importer.data_importer_base import mongo
 
 class PrihodiImportingTestCases(unittest.TestCase):
 

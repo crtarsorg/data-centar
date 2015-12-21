@@ -7,9 +7,11 @@ var utils = {
             "Loznica",
             "Novi Beograd",
             "Pripolje",
+            "Sombor",
             "Valjevo",
             "Vranje",
             "Zvezdara"
+
         ]
     },
 

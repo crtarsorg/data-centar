@@ -16,70 +16,74 @@ class DataProvider():
         if query_params['tipPodataka'] != []:
             match['$match']["tipPodataka.slug"] = {'$in': query_params['tipPodataka']}
 
-        if query_params['klasifikacija']['broj'] != []:
-            query_params['klasifikacija']['broj'] = [str(i) for i in query_params['klasifikacija']['broj']]
+        if "klasifikacija" in query_params:
+            if query_params['klasifikacija']['broj'] != []:
+                query_params['klasifikacija']['broj'] = [str(i) for i in query_params['klasifikacija']['broj']]
 
-        ### Let's set the values rage for ukupno ###
-        if "ukupno" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['ukupno']:
-            if 'ukupno' not in match['$match']:
-                match['$match']["ukupno"] = {}
-            match['$match']["ukupno"]["$gte"] = query_params["filteri"]["ukupno"]["veceIliJednako"]
+        if "filteri" in query_params:
 
-        if "ukupno" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['ukupno']:
-            if 'ukupno' not in match['$match']:
-                match['$match']["ukupno"] = {}
-            match['$match']["ukupno"]["$lte"] = query_params["filteri"]["ukupno"]["manjeIliJednako"]
+            ### Let's set the values rage for ukupno ###
+            if "ukupno" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['ukupno']:
+                if 'ukupno' not in match['$match']:
+                    match['$match']["ukupno"] = {}
+                match['$match']["ukupno"]["$gte"] = query_params["filteri"]["ukupno"]["veceIliJednako"]
 
-        ### Let's set the values rage for sopstveniPrihodi ###
-        if "sopstveniPrihodi" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['sopstveniPrihodi']:
-            if 'sopstveniPrihodi' not in match['$match']:
-                match['$match']["sopstveniPrihodi"] = {}
-            match['$match']["sopstveniPrihodi"]["$gte"] = query_params["filteri"]["sopstveniPrihodi"]["veceIliJednako"]
+            if "ukupno" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['ukupno']:
+                if 'ukupno' not in match['$match']:
+                    match['$match']["ukupno"] = {}
+                match['$match']["ukupno"]["$lte"] = query_params["filteri"]["ukupno"]["manjeIliJednako"]
 
-        if "sopstveniPrihodi" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['sopstveniPrihodi']:
-            if 'sopstveniPrihodi' not in match['$match']:
-                match['$match']["sopstveniPrihodi"] = {}
-            match['$match']["sopstveniPrihodi"]["$lte"] = query_params["filteri"]["sopstveniPrihodi"]["manjeIliJednako"]
+            ### Let's set the values rage for sopstveniPrihodi ###
+            if "sopstveniPrihodi" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['sopstveniPrihodi']:
+                if 'sopstveniPrihodi' not in match['$match']:
+                    match['$match']["sopstveniPrihodi"] = {}
+                match['$match']["sopstveniPrihodi"]["$gte"] = query_params["filteri"]["sopstveniPrihodi"]["veceIliJednako"]
 
-        ### Let's set the values rage for prihodiBudzeta ###
-        if "prihodiBudzeta" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['prihodiBudzeta']:
-            if 'prihodiBudzeta' not in match['$match']:
-                match['$match']["prihodiBudzeta"] = {}
-            match['$match']["prihodiBudzeta"]["$gte"] = query_params["filteri"]["prihodiBudzeta"]["veceIliJednako"]
+            if "sopstveniPrihodi" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['sopstveniPrihodi']:
+                if 'sopstveniPrihodi' not in match['$match']:
+                    match['$match']["sopstveniPrihodi"] = {}
+                match['$match']["sopstveniPrihodi"]["$lte"] = query_params["filteri"]["sopstveniPrihodi"]["manjeIliJednako"]
 
-        if "prihodiBudzeta" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['prihodiBudzeta']:
-            if 'prihodiBudzeta' not in match['$match']:
-                match['$match']["prihodiBudzeta"] = {}
-            match['$match']["prihodiBudzeta"]["$lte"] = query_params["filteri"]["prihodiBudzeta"]["manjeIliJednako"]
+            ### Let's set the values rage for prihodiBudzeta ###
+            if "prihodiBudzeta" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['prihodiBudzeta']:
+                if 'prihodiBudzeta' not in match['$match']:
+                    match['$match']["prihodiBudzeta"] = {}
+                match['$match']["prihodiBudzeta"]["$gte"] = query_params["filteri"]["prihodiBudzeta"]["veceIliJednako"]
 
-        ### Let's set the values rage for donacije ###
-        if "donacije" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['donacije']:
-            if 'donacije' not in match['$match']:
-                match['$match']["donacije"] = {}
-            match['$match']["donacije"]["$gte"] = query_params["filteri"]["donacije"]["veceIliJednako"]
+            if "prihodiBudzeta" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['prihodiBudzeta']:
+                if 'prihodiBudzeta' not in match['$match']:
+                    match['$match']["prihodiBudzeta"] = {}
+                match['$match']["prihodiBudzeta"]["$lte"] = query_params["filteri"]["prihodiBudzeta"]["manjeIliJednako"]
 
-        if "donacije" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['donacije']:
-            if 'donacije' not in match['$match']:
-                match['$match']["donacije"] = {}
-            match['$match']["donacije"]["$lte"] = query_params["filteri"]["donacije"]["manjeIliJednako"]
+            ### Let's set the values rage for donacije ###
+            if "donacije" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['donacije']:
+                if 'donacije' not in match['$match']:
+                    match['$match']["donacije"] = {}
+                match['$match']["donacije"]["$gte"] = query_params["filteri"]["donacije"]["veceIliJednako"]
 
-        ### Let's set the values rage for ostali ###
-        if "ostali" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['ostali']:
-            if 'ostali' not in match['$match']:
-                match['$match']["ostali"] = {}
-            match['$match']["ostali"]["$gte"] = query_params["filteri"]["ostali"]["veceIliJednako"]
+            if "donacije" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['donacije']:
+                if 'donacije' not in match['$match']:
+                    match['$match']["donacije"] = {}
+                match['$match']["donacije"]["$lte"] = query_params["filteri"]["donacije"]["manjeIliJednako"]
 
-        if "ostali" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['ostali']:
-            if 'ostali' not in match['$match']:
-                match['$match']["ostali"] = {}
-            match['$match']["ostali"]["$lte"] = query_params["filteri"]["ostali"]["manjeIliJednako"]
+            ### Let's set the values rage for ostali ###
+            if "ostali" in query_params["filteri"] and 'veceIliJednako' in query_params["filteri"]['ostali']:
+                if 'ostali' not in match['$match']:
+                    match['$match']["ostali"] = {}
+                match['$match']["ostali"]["$gte"] = query_params["filteri"]["ostali"]["veceIliJednako"]
+
+            if "ostali" in query_params["filteri"] and 'manjeIliJednako' in query_params["filteri"]['ostali']:
+                if 'ostali' not in match['$match']:
+                    match['$match']["ostali"] = {}
+                match['$match']["ostali"]["$lte"] = query_params["filteri"]["ostali"]["manjeIliJednako"]
 
         # Add other filters
         if query_params['godine'] != []:
             match['$match']["godina"] = {'$in': query_params['godine']}
 
-        if query_params['opstine'] != []:
-            match['$match']["opstina.slug"] = {'$in': query_params['opstine']}
+        if "opstine" in query_params:
+            if query_params['opstine'] != []:
+                match['$match']["opstina.slug"] = {'$in': query_params['opstine']}
 
         # Build group pipeline
         group = {

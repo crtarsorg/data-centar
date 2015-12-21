@@ -96,7 +96,7 @@ function getFormData(referenceId){
     });
 
     var data = {
-        "tipPodataka": $( '#'+ referenceId + ' #data_type' ).val(),
+        "tipPodataka": [$( '#'+ referenceId + ' #data_type' ).val()],
         "godine": [parseInt($('#'+ referenceId + ' #years').val())],
         "klasifikacijaBroj": classifications
     };

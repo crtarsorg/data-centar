@@ -38,7 +38,7 @@ class PrihodiImportingTestCases(unittest.TestCase):
 
     # Json container for each vranje parent category
     vranje_counts_of_parents_and_total = {
-        "ПОРЕЗ НА ДОХОДАК, ДОБИТ И КАПИТАЛНЕ ДОБИТКЕ":12,
+        "ПОРЕЗ НА ДОХОДАК, ДОБИТ И КАПИТАЛНЕ ДОБИТКЕ": 12,
         "ПОРЕЗ НА ИМОВИНУ": 9,
         "ПОРЕЗ НА ДОБРА И УСЛУГЕ": 8,
         "ДРУГИ ПОРЕЗИ": 1,
@@ -234,29 +234,33 @@ class PrihodiImportingTestCases(unittest.TestCase):
 
     def test_total_sum_for_parent_categories(self):
 
-        # # Test how much is the total for every parent categories for Prijepolje municipality
+        # # Test if the imported value is correct for every parent categories of Prijepolje municipality
         for parent in self.prijepolje_counts_of_parents_and_total:
             self.asserts_for_total_of_parent_categories("Prijepolje", parent, self.prijepolje_counts_of_parents_and_total[parent][1], "prihodi")
 
-        # # Test how much is the total for every parent categories for Sombor municipality
+        # # Test if the imported value is correct for every parent categories of Sombor municipality
         for parent in self.sombor_counts_of_parents_and_total:
             self.asserts_for_total_of_parent_categories("Sombor", parent, self.sombor_counts_of_parents_and_total[parent][1], "prihodi")
 
-        # Test how much is the total for every parent categories for Inđija municipality
+        # Test if the imported value is correct for every parent categories of Inđija municipality
         for parent in self.indjija_parent_counts:
             self.asserts_for_total_of_parent_categories("Inđija", parent, self.indjija_parent_counts[parent][1], "prihodi")
 
-        # Test how much is the total for every parent categories for Inđija municipality
+        # Test if the imported value is correct for every parent categories of Inđija municipality
         for parent in self.valjevo_counts_of_parents_and_total:
             self.asserts_for_total_of_parent_categories("Valjevo", parent, self.valjevo_counts_of_parents_and_total[parent][1], "prihodi")
 
-        # Test how much is the total for every parent categories for Novi Beograd municipality
+        # Test if the imported value is correct for every parent categories of Novi Beograd municipality
         for parent in self.novi_beograd_counts_of_parents_and_total:
             self.asserts_for_total_of_parent_categories("Novi Beograd", parent, self.novi_beograd_counts_of_parents_and_total[parent][1], "prihodi")
 
-         # Test how much is the total for every parent categories for Zvezdara municipality
+        # Test if the imported value is correct for every parent categories of Zvezdara municipality
         for parent in self.zvezdara_counts_for_parents:
             self.asserts_total_sum_of_classification_categories("Zvezdara", parent, self.zvezdara_counts_for_parents[parent][1], "prihodi")
+
+        # Test if the imported value is correct for every parent categories of Cacak municipality
+        for parent in self.cacak_counts_and_values_for_parents:
+            self.asserts_total_sum_of_classification_categories("Čačak", parent, self.cacak_counts_and_values_for_parents[parent][1], "prihodi")
 
 
     def asserts_for_parent_categories_elements(self, municipality, parent_category, expected_value, data_source):
@@ -297,7 +301,6 @@ class PrihodiImportingTestCases(unittest.TestCase):
 
     def asserts_for_total_of_parent_categories(self, municipality, parent_category, expected_value, data_source):
         """
-
         :param municipality: The municipality we want to test
         :param parent_category: The parent category for the municipality we want to test
         :param expected_value: The expected value of the total for that parent category

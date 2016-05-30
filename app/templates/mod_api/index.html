@@ -29,12 +29,12 @@
             var rashodiParam = false;
 
             if(prihodiParam == false){
-                prihodiJson = $.getJSON('{{ url_for('api.activities') }}', {'dataType': "prihodi"});
+                prihodiJson = $.getJSON('{{ url_for('api.activities', lang_code=g.current_lang) }}', {'dataType': "prihodi"});
                 prihodiParam = true;
 
             }
             if(rashodiParam == false){
-                rashodiJson = $.getJSON('{{ url_for('api.activities') }}', {'dataType': "rashodi"});
+                rashodiJson = $.getJSON('{{ url_for('api.activities', lang_code=g.current_lang) }}', {'dataType': "rashodi"});
                 rashodiParam = true;
             }
 
@@ -74,19 +74,19 @@
         function postSumRequest() {
 
             var data = get_request_form_data('sum-req-form');
-            executePost(data, '{{ url_for('api.sum') }}', "sum-req-rsp-box", "sum-req-body-box");
+            executePost(data, '{{ url_for('api.sum', lang_code=g.current_lang) }}', "sum-req-rsp-box", "sum-req-body-box");
 
         }
 
         function postRequestForMunicipalities() {
 
             var data = getFormData('municipalities-req-form');
-            executePost(data, '{{ url_for('api.aggregated_classifications') }}', "municipalities-req-rsp-box", "municipalities-req-body-box");
+            executePost(data, '{{ url_for('api.aggregated_classifications', lang_code=g.current_lang) }}', "municipalities-req-rsp-box", "municipalities-req-body-box");
         }
 
         function postRequestListMunicipalities() {
             var data = getFormData('list-mun-req-form');
-            executePost(data, '{{ url_for('api.list_of_municipalities') }}', "list-mun-req-rsp-box", "list-mun-req-body-box");
+            executePost(data, '{{ url_for('api.list_of_municipalities', lang_code=g.current_lang) }}', "list-mun-req-rsp-box", "list-mun-req-body-box");
 
         }
 
@@ -101,7 +101,7 @@
                 "godine": [parseInt($('#class_years').val())],
                 "opstine": municipalities
             };
-            executePost(data, '{{ url_for('api.activities') }}', "activities-req-rsp-box", "activities-req-body-box");
+            executePost(data, '{{ url_for('api.activities', lang_code=g.current_lang) }}', "activities-req-rsp-box", "activities-req-body-box");
         }
     </script>
     <script src="{{ url_for('static', filename='prismjs/prism.js') }}"></script>
@@ -132,8 +132,8 @@
                     <div class="panel-body primary-content-color">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#sums-how" aria-controls="sums-how" role="tab" data-toggle="tab">Kako?</a></li>
-                            <li role="presentation"><a href="#sums-tryit" aria-controls="sums-tryit" role="tab" data-toggle="tab">Probaj!</a></li>
+                            <li role="presentation" class="active"><a href="#sums-how" aria-controls="sums-how" role="tab" data-toggle="tab">{{ _('How?') }}</a></li>
+                            <li role="presentation"><a href="#sums-tryit" aria-controls="sums-tryit" role="tab" data-toggle="tab">{{ _('Try it!') }}</a></li>
                         </ul>
 
                         <!-- Tab panes -->
@@ -143,28 +143,28 @@
 
                                 <div class="form-group text-center">
                                     <!--<h5>OPIS:</h5>-->
-                                    <span>OPIS: Koristite ovaj POST zahtev za preuzimanje podataka.</span>
+                                    <span>{{ _('DESCRIPTION: Use this POST request to download data.') }}</span>
                                 </div>
 
                                 <div class="text-center">
                                     <!--<h5>URL POST ZAHTEVA:</h5>-->
-                                    <span>URL POST ZAHTEVA: http://datacentar.io/api/zbir</span>
+                                    <span>{{ _('POST REQUEST URL: http://datacentar.io/en/api/zbir') }}</span>
                                 </div>
                                 <br>
 
                                 <div>
-                                    <h5>PARAMETRI UPITA:</h5>
+                                    <h5>INQUIRY PARAMETERS:</h5>
                                     <table class="table table-striped margin-2p">
                                         <thead class="secondary-color white-content">
                                         <tr>
                                             <td >
-                                                Parameter
+                                               {{ _('Parameter') }}
                                             </td>
                                             <td>
-                                                Vrsta
+                                               {{ _('Type') }}
                                             </td>
                                             <td>
-                                                Opis
+                                                {{ _('Description') }}
                                             </td>
                                         </tr>
                                         </thead>
@@ -174,10 +174,10 @@
                                                     tipPodataka
                                                 </td>
                                                 <td>
-                                                    Stringova.
+                                                    {{ _('String.') }}
                                                 </td>
                                                 <td>
-                                                    Use this parameter to filter based on the type of data.
+                                                   {{ _('Use this parameter to filter based on the type of data.') }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -185,10 +185,10 @@
                                                     godine
                                                 </td>
                                                 <td>
-                                                    Lista celih brojeva.
+                                                   {{ _('List of whole numbers.') }}
                                                 </td>
                                                 <td>
-                                                    Godine za koje želimo da preuzmemo podatke.
+                                                    {{ _('Years we want to download data for.') }}
                                                 </td>
                                             </tr>
 
@@ -197,10 +197,10 @@
                                                     opstine
                                                 </td>
                                                 <td>
-                                                    Lista stringova.
+                                                   {{ _('List of strings.') }}
                                                 </td>
                                                 <td>
-                                                    Opštine.
+                                                   {{ _('Municipalities.') }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -208,10 +208,10 @@
                                                     klasifikacijaBroj
                                                 </td>
                                                 <td>
-                                                    Lista celih brojeva.
+                                                   {{ _('List of whole numbers.') }}
                                                 </td>
                                                 <td>
-                                                    Ekonomskih klasifikacija.
+                                                   {{ _('Economic classification.') }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -219,10 +219,10 @@
                                                     pocinjeSa
                                                 </td>
                                                 <td>
-                                                    Stringova.
+                                                    {{ _('String.') }}
                                                 </td>
                                                 <td>
-                                                    Use this parameter to filter based on the type of data.
+                                                   {{ _('Use this parameter to filter based on the type of data.') }}
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -231,7 +231,7 @@
                                         <thead class="white-content">
                                             <tr>
                                                 <td class="secondary-color">
-                                                    Filteri
+                                                    {{ _('Fillters') }}
                                                 </td>
                                                 <td class="third-color"></td>
                                                 <td class="third-color"></td>
@@ -243,10 +243,10 @@
                                                     ukupno
                                                 </td>
                                                 <td>
-                                                    broj.
+                                                    {{ _('Number.') }}
                                                 </td>
                                                 <td>
-                                                    Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
+                                                    {{ _('Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.') }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -254,10 +254,10 @@
                                                     sopstveniPrihodi
                                                 </td>
                                                 <td>
-                                                    broj.
+                                                    {{ _('Number.') }}
                                                 </td>
                                                 <td>
-                                                    Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
+                                                    {{ _('Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.') }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -265,10 +265,10 @@
                                                     prihodiBudzeta
                                                 </td>
                                                 <td>
-                                                    broj.
+                                                    {{ _('Number.') }}
                                                 </td>
                                                 <td>
-                                                    Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
+                                                    {{ _('Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.') }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -276,10 +276,10 @@
                                                     donacije
                                                 </td>
                                                 <td>
-                                                    broj.
+                                                    {{ _('Number.') }}
                                                 </td>
                                                 <td>
-                                                    Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
+                                                    {{ _('Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.') }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -287,10 +287,10 @@
                                                     ostali
                                                 </td>
                                                 <td>
-                                                    broj.
+                                                    {{ _('Number.') }}
                                                 </td>
                                                 <td>
-                                                    Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.
+                                                   {{ _('Set the range by setting parameter <strong>veceIliJednako</strong> as the minimal value and parameter <strong>manjeIliJednako</strong> as the maximal value.') }}
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -330,7 +330,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-8">
-                                                <p>Filteri:</p>
+                                                <p>{{ _('Filters:') }}</p>
                                                 <hr>
                                                 <div class="form-group">
                                                     <div class="col-xs-1">
@@ -415,7 +415,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
-                                                <p>Request Body:</p>
+                                                <p>{{ _('Request Body:') }}</p>
                                                 <pre style="height:340px;">
                                                     <code class="language-javascript" id="sum-req-body-box"></code>
                                                 </pre>
@@ -424,7 +424,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-12 margin-2p">
-                                    <p>Response:</p>
+                                    <p>{{ _('Response:') }}</p>
                                     <pre style="height:250px;">
                                         <code class="language-javascript" id="sum-req-rsp-box"></code>
                                     </pre>
@@ -442,16 +442,16 @@
             <div class="col-xs-12 col-md-8 float-none">
                 <div class="panel panel-default border-primary">
                     <div class="panel-heading text-center">
-                        <h3 class="panel-title white-content">Ekonomskih Klasifikacija</h3>
+                        <h3 class="panel-title white-content">{{ _('Economic classification.') }}</h3>
                     </div>
                     <div class="panel-body primary-content-color">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#activities-how"
                                                                       aria-controls="activities-how" role="tab"
-                                                                      data-toggle="tab">Kako?</a></li>
+                                                                      data-toggle="tab">{{ _('How?') }}</a></li>
                             <li role="presentation"><a href="#activities-tryit" aria-controls="activities-tryit"
-                                                       role="tab" data-toggle="tab">Probaj!</a></li>
+                                                       role="tab" data-toggle="tab">{{ _('Try it!') }}</a></li>
                         </ul>
 
                         <!-- Tab panes -->
@@ -459,28 +459,28 @@
                             <div role="tabpanel" class="tab-pane active" id="activities-how">
                                 <div class="form-group text-center">
                                     <!--<h5>OPIS:</h5>-->
-                                    <span>OPIS: Koristite ovaj POST zahtev za preuzimanje podataka.</span>
+                                    <span>{{ _('DESCRIPTION: Use this POST request to download data.') }}</span>
                                 </div>
 
                                 <div class="text-center">
                                     <!--<h5>URL POST ZAHTEVA:</h5>-->
-                                    <span>URL POST ZAHTEVA: http://datacentar.io/api/ekonomska-klasifikacija</span>
+                                    <span>{{ _('POST REQUEST URL: http://datacentar.io/en/api/ekonomska-klasifikacija') }}</span>
                                 </div>
                                 <br>
 
                                 <div>
-                                    <h5>PARAMETRI UPITA:</h5>
+                                    <h5>{{ _('INQUIRY PARAMETERS:') }}</h5>
                                     <table class="table table-striped margin-2p">
                                         <thead class="secondary-color white-content">
                                         <tr>
                                             <td>
-                                                Parameter
+                                                {{ _('Parameter') }}
                                             </td>
                                             <td>
-                                                Vrsta
+                                                {{ _('Type')  }}
                                             </td>
                                             <td>
-                                                Opis
+                                                {{ _('Description')  }}
                                             </td>
                                         </tr>
                                         </thead>
@@ -490,10 +490,10 @@
                                                 tipPodataka
                                             </td>
                                             <td>
-                                                Stringova.
+                                                {{ _('String.')  }}
                                             </td>
                                             <td>
-                                                Use this parameter to filter based on the type of data.
+                                                {{ _('Use this parameter to filter based on the type of data.')  }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -501,10 +501,10 @@
                                                 godine
                                             </td>
                                             <td>
-                                                Lista celih brojeva.
+                                                {{ _('List of whole numbers.') }}
                                             </td>
                                             <td>
-                                                Godine za koje želimo da preuzmemo podatke.
+                                                {{ _('Years we want to download data for.') }}
                                             </td>
                                         </tr>
 
@@ -513,10 +513,10 @@
                                                 opstine
                                             </td>
                                             <td>
-                                                Lista stringova.
+                                                {{ _('List of strings.') }}
                                             </td>
                                             <td>
-                                                Opštine.
+                                                {{ _('Municipalities.') }}
                                             </td>
                                         </tr>
                                         </tbody>
@@ -551,14 +551,14 @@
                                         </form>
                                     </div>
                                     <div class="col-md-4">
-                                        <strong>Request Body:</strong>
+                                        <strong>{{ _('Request Body:') }}</strong>
                                         <pre style="height:258px;">
                                             <code class="language-javascript" id="activities-req-body-box"></code>
                                         </pre>
                                     </div>
                                 </div>
                                 <div style="padding-top:20px;">
-                                    <strong>Response:</strong>
+                                    <strong>{{ _('Response:') }}</strong>
                                     <pre style="height:400px;">
                                         <code class="language-javascript" id="activities-req-rsp-box"></code>
                                     </pre>
@@ -576,16 +576,16 @@
             <div class="col-xs-12 col-md-8 float-none">
                 <div class="panel panel-default border-primary">
                     <div class="panel-heading text-center">
-                        <h3 class="panel-title white-content">Ekonomskih Klasifikacija Info za Opstine</h3>
+                        <h3 class="panel-title white-content">{{ _('Economic classification info for municipalities') }}</h3>
                     </div>
                     <div class="panel-body primary-content-color">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#municipalities-how"
                                                                       aria-controls="municipalities-how" role="tab"
-                                                                      data-toggle="tab">Kako?</a></li>
+                                                                      data-toggle="tab">{{ _('How?') }}</a></li>
                             <li role="presentation"><a href="#municipalities-tryit" aria-controls="municipalities-tryit"
-                                                       role="tab" data-toggle="tab">Probaj!</a></li>
+                                                       role="tab" data-toggle="tab">{{ _('Try it!') }}</a></li>
                         </ul>
 
                         <!-- Tab panes -->
@@ -593,28 +593,28 @@
                             <div role="tabpanel" class="tab-pane active" id="municipalities-how">
                                 <div class="form-group text-center">
                                     <!--<h5>OPIS:</h5>-->
-                                    <span>OPIS: Koristite ovaj POST zahtev za preuzimanje podataka.</span>
+                                    <span>{{ _('DESCRIPTION: Use this POST request to download data.') }}</span>
                                 </div>
 
                                 <div class="text-center">
                                     <!--<h5>URL POST ZAHTEVA:</h5>-->
-                                    <span>URL POST ZAHTEVA: http://datacentar.io/api/sakupiti-klasifikacija-za-opstine</span>
+                                    <span>{{ _('POST REQUEST URL: http://datacentar.io/en/api/sakupiti-klasifikacija-za-opstine') }}</span>
                                 </div>
                                 <br>
 
                                 <div>
-                                    <h5>PARAMETRI UPITA:</h5>
+                                    <h5>{{ _('INQUIRY PARAMETERS:') }}</h5>
                                     <table class="table table-striped margin-2p">
                                         <thead class="secondary-color white-content">
                                         <tr>
                                             <td>
-                                                Parameter
+                                                {{ _('Parameter') }}
                                             </td>
                                             <td>
-                                                Vrsta
+                                                {{ _('Type') }}
                                             </td>
                                             <td>
-                                                Opis
+                                                {{ _('Description') }}
                                             </td>
                                         </tr>
                                         </thead>
@@ -624,10 +624,10 @@
                                                 tipPodataka
                                             </td>
                                             <td>
-                                                Stringova.
+                                                {{ _('String.') }}
                                             </td>
                                             <td>
-                                                Use this parameter to filter based on the type of data.
+                                               {{ _('Use this parameter to filter based on the type of data.') }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -635,10 +635,10 @@
                                                 godine
                                             </td>
                                             <td>
-                                                Lista celih brojeva.
+                                                {{ _('List of whole numbers.') }}
                                             </td>
                                             <td>
-                                                Godine za koje želimo da preuzmemo podatke.
+                                                {{ _('Years we want to download data for.') }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -646,10 +646,10 @@
                                                 klasifikacijaBroj
                                             </td>
                                             <td>
-                                                Lista celih brojeva.
+                                                {{ _('List of whole numbers.') }}
                                             </td>
                                             <td>
-                                                Ekonomskih klasifikacija.
+                                                {{ _('Economic classification') }}
                                             </td>
                                         </tr>
                                         </tbody>
@@ -682,14 +682,14 @@
                                         </form>
                                     </div>
                                     <div class="col-md-4">
-                                        <strong>Request Body:</strong>
+                                        <strong>{{ _('Request Body:') }}</strong>
                                         <pre style="height:258px;">
                                             <code class="language-javascript" id="municipalities-req-body-box"></code>
                                         </pre>
                                     </div>
                                 </div>
                                 <div style="padding-top:20px;">
-                                    <strong>Response:</strong>
+                                    <strong>{{ _('Response:') }}</strong>
                                     <pre style="height:400px;">
                                         <code class="language-javascript" id="municipalities-req-rsp-box"></code>
                                     </pre>
@@ -706,15 +706,15 @@
             <div class="col-xs-12 col-md-8 float-none">
                 <div class="panel panel-default border-primary">
                     <div class="panel-heading text-center">
-                        <h3 class="panel-title white-content">Spisak Opština za Klasifikacija Broj</h3>
+                        <h3 class="panel-title white-content">{{ _('List of Municipalities for Classification Number') }}</h3>
                     </div>
                     <div class="panel-body primary-content-color">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#list-mun-how" aria-controls="list-mun-how"
-                                                                      role="tab" data-toggle="tab">Kako?</a></li>
+                                                                      role="tab" data-toggle="tab">{{ _('How?') }}</a></li>
                             <li role="presentation"><a href="#list-mun-tryit" aria-controls="list-mun-tryit" role="tab"
-                                                       data-toggle="tab">Probaj!</a></li>
+                                                       data-toggle="tab">{{ _('Try it!') }}</a></li>
                         </ul>
 
                         <!-- Tab panes -->
@@ -722,28 +722,28 @@
                             <div role="tabpanel" class="tab-pane active" id="list-mun-how">
                                 <div class="form-group text-center">
                                     <!--<h5>OPIS:</h5>-->
-                                    <span>OPIS: Koristite ovaj POST zahtev za preuzimanje podataka.</span>
+                                    <span>{{ _('DESCRIPTION: Use this POST request to download data.') }}</span>
                                 </div>
 
                                 <div class="text-center">
                                     <!--<h5>URL POST ZAHTEVA:</h5>-->
-                                    <span>URL POST ZAHTEVA: http://datacentar.io/api/spisak-opstina-za-klasifikacija-broj</span>
+                                    <span>{{ _('POST REQUEST URL: http://datacentar.io/en/api/spisak-opstina-za-klasifikacija-broj') }}</span>
                                 </div>
                                 <br>
 
                                 <div>
-                                    <h5>PARAMETRI UPITA:</h5>
+                                    <h5>{{ _('INQUIRY PARAMETERS:') }}</h5>
                                     <table class="table table-striped margin-2p">
                                         <thead class="secondary-color white-content">
                                         <tr>
                                             <td>
-                                                Parameter
+                                                {{ _('Parameter') }}
                                             </td>
                                             <td>
-                                                Vrsta
+                                                {{ _('Type') }}
                                             </td>
                                             <td>
-                                                Opis
+                                                {{ _('Description') }}
                                             </td>
                                         </tr>
                                         </thead>
@@ -753,10 +753,10 @@
                                                 tipPodataka
                                             </td>
                                             <td>
-                                                Stringova.
+                                                {{ _('String.') }}
                                             </td>
                                             <td>
-                                                Use this parameter to filter based on the type of data.
+                                                {{ _('Use this parameter to filter based on the type of data.') }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -764,10 +764,10 @@
                                                 godine
                                             </td>
                                             <td>
-                                                Lista celih brojeva.
+                                                {{ _('List of whole numbers.') }}
                                             </td>
                                             <td>
-                                                Godine za koje želimo da preuzmemo podatke.
+                                                {{ _('Years we want to download data for.') }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -775,10 +775,10 @@
                                                 klasifikacijaBroj
                                             </td>
                                             <td>
-                                                Lista celih brojeva.
+                                                {{ _('List of whole numbers.') }}
                                             </td>
                                             <td>
-                                                Ekonomskih klasifikacija.
+                                                {{ _('Economic classification.') }}
                                             </td>
                                         </tr>
                                         </tbody>
@@ -813,14 +813,14 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <strong>Request Body:</strong>
+                                        <strong>{{ _('Request Body:') }}</strong>
                                         <pre style="height:258px;">
                                             <code class="language-javascript" id="list-mun-req-body-box"></code>
                                         </pre>
                                     </div>
                                 </div>
                                 <div style="padding-top:20px;">
-                                    <strong>Response:</strong>
+                                    <strong>{{ _('Response:') }}</strong>
                                     <pre style="height:400px;">
                                         <code class="language-javascript" id="list-mun-req-rsp-box"></code>
                                     </pre>

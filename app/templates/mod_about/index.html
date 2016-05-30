@@ -80,7 +80,7 @@ $(function() {
 
         var idIcon = $(this).attr("id");
         if(  idIcon == "liberatIcon"){
-            $("#titleHowTo").html("Tell us what to liberate next");
+            $("#titleHowTo").html("{{ _('Tell us what to liberate next') }}");
             $("#liberateNext, #liberate-svg").removeClass("hidden");
         }
         else if(idIcon == "apiIcon"){
@@ -88,7 +88,7 @@ $(function() {
             $("#api, #api-svg").removeClass("hidden");
         }
         else {
-            $("#titleHowTo").html("Advanced search");
+            $("#titleHowTo").html("{{ _('Advanced search') }}");
             $("#search, #search-svg").removeClass("hidden");
         }  
       
@@ -110,9 +110,9 @@ $(function() {
     <div class="container">
         <div class="white-content">
             <div class="intro-content padding-lg">
-                <h2 class="text-center">About</h2>
+                <h2 class="text-center">{{ _('About') }}</h2>
                 <p class="text-justify margin-2p">
-                    Data Centar is an open online platform that provides easy access to datasets of various public information at the national and local level in Serbia. It was developed to help journalists, activists, researchers and public officials in search for valuable data to power their stories, campaigns, analyses or decision making. With the use of latest technologies, Data Centar simplifies, integrates and prepares complex, disparate and disorganized datasets for easy and meaningful use by all interested stakeholders. By making good use of public data, Data Centar and its users push for governments to offer useful and good quality data and provide the public what they need to participate in decision making as active and informed citizens.
+                    {{ _('Data Centar is an open online platform that provides easy access to datasets of various public information at the national and local level in Serbia. It was developed to help journalists, activists, researchers and public officials in search for valuable data to power their stories, campaigns, analyses or decision making. With the use of latest technologies, Data Centar simplifies, integrates and prepares complex, disparate and disorganized datasets for easy and meaningful use by all interested stakeholders. By making good use of public data, Data Centar and its users push for governments to offer useful and good quality data and provide the public what they need to participate in decision making as active and informed citizens.') }}
                 </p>
             </div>
         </div>
@@ -131,7 +131,7 @@ $(function() {
 <section id="howToUseS" class="container-fluid content-section secondary-color white-content margin-4p padding-sm">
     <div class="row">
         <div class="container">
-            <h2 class="text-center">Ways to Use the Site</h2>
+            <h2 class="text-center">{{ _('Ways to Use the Site') }}</h2>
             <div class="row margin-4p">
                 <div class="col-xs-4">
                     <img id="searchIcon" class="explore-icon img-responsive hover" src="{{ url_for('static', filename='images/DC_Icon_1.svg') }}" onmouseover="this.src='{{ url_for('static', filename='images/DC_Icon_1_hover.svg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/DC_Icon_1.svg') }}';" alt="">
@@ -168,36 +168,36 @@ $(function() {
             </div>
             <div class="">
                 <div id="descDiv" class="margin-4p">
-                    <h2 class="text-center" id="titleHowTo">Advanced search</h2>
+                    <h2 class="text-center" id="titleHowTo"></h2>
                     <ul class="margin-2p" id="search">
                         <div class="col-xs-12 col-sm-6">
-                            <li>You can start exploring right from the homepage: click on the pre-made search right below the video, or click on “show me another” to get a new pre-made search</li>
-                            <li class="margin-2p">On the <a href="{{ url_for('search.index') }}">Search</a> page, you can visualize all our data and filter it by any variable (like geographic location, amount, or anything else)</li>
+                            <li>{{ _('You can start exploring right from the homepage: click on the pre-made search right below the video, or click on “show me another” to get a new pre-made search') }}</li>
+                            <li class="margin-2p">{{ _('On the') }} <a href="{{ url_for('search.index', lang_code=g.current_lang) }}">{{ _('Search') }}</a>{{ _(' page, you can visualize all our data and filter it by any variable (like geographic location, amount, or anything else)') }}</li>
                         </div>
                         <div class="col-xs-12 col-sm-6">
-                            <li>The visualization are automatically updated, to give you an easier overview of what the data is saying</li>
-                            <li class="margin-2p">We are working on custom advanced searches, where you will be able to define <b>operators</b> like “less than”, “is true”, “is empty” etc to create complex filtering directly on the website</li>
-                            <li class="margin-2p">You can also download the data in different open formats for your own analyses</li>
+                            <li>{{ _('The visualization are automatically updated, to give you an easier overview of what the data is saying') }}</li>
+                            <li class="margin-2p">{{ _('We are working on custom advanced searches, where you will be able to define <b>operators</b> like “less than”, “is true”, “is empty” etc to create complex filtering directly on the website') }}</li>
+                            <li class="margin-2p">{{ _('You can also download the data in different open formats for your own analyses') }}</li>
                         </div>
                     </ul>
                     <ul class="hidden margin-2p" id="api">
                         <div class="col-xs-12 col-sm-6">
-                            <li>Don’t know what an API is? The School of Data explains <a href="http://schoolofdata.org/2013/11/18/web-apis-for-non-programmers/">APIs for non-programmers</a> (but you should probably get a developer to help you - <a href="mailto:data@datacentar.io">or ask us for help</a>!)</li>
-                            <li class="margin-2p">On the <a href="{{ url_for('api.index') }}">API page</a> you can learn about all the parameters you can use for your API calls, and create your custom API</li>
+                            <li>{{ _('Don’t know what an API is? The School of Data explains <a href="http://schoolofdata.org/2013/11/18/web-apis-for-non-programmers/">APIs for non-programmers</a> (but you should probably get a developer to help you - <a href="mailto:data@datacentar.io">or ask us for help</a>!)') }}</li>
+                            <li class="margin-2p">{{ _('On the ') }}<a href="{{ url_for('api.index', lang_code=g.current_lang) }}">{{ _('API page') }}</a>{{ _(' you can learn about all the parameters you can use for your API calls, and create your custom API') }}</li>
                         </div>
                         <div class="col-xs-12 col-sm-6">
-                            <li>Run the custom API directly on the Data Centar website to see what results it provides you, then tweak to your delight</li>
-                            <li class="margin-2p">Once you’re happy, take the API and plug it into your website, or use it to download raw data on your computer</li>
-                            <li class="margin-2p">Our entire Search page is powered by our API - so you can create advanced searches, and copy the API link of the search you made</li>
+                            <li>{{ _('Run the custom API directly on the Data Centar website to see what results it provides you, then tweak to your delight') }}</li>
+                            <li class="margin-2p">{{ _('Once you’re happy, take the API and plug it into your website, or use it to download raw data on your computer') }}</li>
+                            <li class="margin-2p">{{ _('Our entire Search page is powered by our API - so you can create advanced searches, and copy the API link of the search you made') }}</li>
                         </div>
                     </ul>
                     <ul class="hidden margin-2p" id="liberateNext">
                         <div class="col-xs-12 col-sm-6">
-                            <li>At the bottom of each page, you will find a form where you can choose between four datasets we plan to open. </li>
-                            <li class="margin-2p">Take your pick, and if you want, leave us a comment on how you would use that data. Your feedback is crucial!</li>
+                            <li>{{ _('At the bottom of each page, you will find a form where you can choose between four datasets we plan to open.') }} </li>
+                            <li class="margin-2p">{{ _('Take your pick, and if you want, leave us a comment on how you would use that data. Your feedback is crucial!') }}</li>
                         </div>
                         <div class="col-xs-12 col-sm-6">
-                            <li>If you’re not interested in any of the proposed datasets, <a href="mailto:data@datacentar.io">get in touch</a> and propose what you would like us to liberate next</li>
+                            <li>{{ _('If you’re not interested in any of the proposed datasets, <a href="mailto:data@datacentar.io">get in touch</a> and propose what you would like us to liberate next') }}</li>
                         </div>
                     </ul>
                 </div>
@@ -210,19 +210,19 @@ $(function() {
     <div class="">
         <img id="timelineImg" src="{{ url_for('static', filename='images/timeline.svg') }}" alt="">
         <div class="margin-4p">
-            <h2>The Future</h2>
+            <h2>{{ _('The Future') }}</h2>
             <p class="margin-2p">
-                <b>We wish to grow into a single online hub for collection, processing and preparation of different datasets of public information at the local, national and regional level.</b>
+                {{ _('<b>We wish to grow into a single online hub for collection, processing and preparation of different datasets of public information at the local, national and regional level.</b>') }}
             </p>
             <p class="margin-2p">
-                <b>After the MVP launch in 2015</b>, Data Centar will expand the number of municipal and other datasets from Serbia, add 2016 budgetary data, and at least two different datasets proposed by the community. The main focus of Data Centar in 2016 will be, in fact, to build a strong community and make sure they are at the forefront of the Data Centar's growth.
+                {{ _("<b>After the MVP launch in 2015</b>, Data Centar will expand the number of municipal and other datasets from Serbia, add 2016 budgetary data, and at least two different datasets proposed by the community. The main focus of Data Centar in 2016 will be, in fact, to build a strong community and make sure they are at the forefront of the Data Centar's growth.") }}
             </p>
             <p class="margin-2p">
-                <b>In 2016 and 2017</b>, Data Centar will keep growing organically and responsibly. We will also advocate for increasing the level of governmental openness by influencing the state of open data in Serbia: we wish to see at least two governmental datasets integrated into Data Centar through an open, government-managed API.
-                <br />Data Centar wants to go global: we wish to host datasets from at least two Balkan region countries by end 2017, and incorporate datasets from non-Balkan countries.
+                {{ _("<b>In 2016 and 2017</b>, Data Centar will keep growing organically and responsibly. We will also advocate for increasing the level of governmental openness by influencing the state of open data in Serbia: we wish to see at least two governmental datasets integrated into Data Centar through an open, government-managed API.") }}
+               {{ _(" <br />Data Centar wants to go global: we wish to host datasets from at least two Balkan region countries by end 2017, and incorporate datasets from non-Balkan countries.") }}
             </p>
             <p class="margin-2p">
-                <b>By the end of 2017</b>, Data Centar aims to be a completely functional open platform that provides broad, easy and full access to multiple datasets of public information from many countries in the region. Our goal is to gain recognition as a one-stop-shop for opening data in a usable and useful way, with a strong and active user community that leads us. This way, Data Centar will be able to influence governments and institutions to increase the quality and provide access to open and useful data.
+                {{ _("<b>By the end of 2017</b>, Data Centar aims to be a completely functional open platform that provides broad, easy and full access to multiple datasets of public information from many countries in the region. Our goal is to gain recognition as a one-stop-shop for opening data in a usable and useful way, with a strong and active user community that leads us. This way, Data Centar will be able to influence governments and institutions to increase the quality and provide access to open and useful data.") }}
             </p>
         </div>
     </div>
@@ -231,7 +231,7 @@ $(function() {
 <section id="fundersS" class="container-fluid text-center primary-color white-content margin-4p">
     <div class="container">
         <div class="padding-sm">
-            <h2>Partners</h2>
+            <h2>{{ _('Partners') }}</h2>
             <div class="row text-center margin-4p">
                 <div class="col-xs-6 col-sm-3">
                     <a href="http://www.undp.org/content/serbia/en/home.html" target="_blank"><img src="{{ url_for('static', filename='images/undp-logo.png') }}" alt="" class="funder-img img-responsive"></a>

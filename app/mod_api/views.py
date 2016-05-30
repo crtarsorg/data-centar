@@ -7,7 +7,7 @@ import json
 
 utils = MongoUtils()
 
-mod_api = Blueprint('api', __name__, url_prefix='/api')
+mod_api = Blueprint('api', __name__, url_prefix='/<lang_code>/api')
 
 @mod_api.route("/", methods=['GET'])
 def index():

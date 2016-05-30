@@ -8,3 +8,5 @@ awesome-slugify==1.6.5
 coverage==4.0b1
 cyrtranslit==0.3
 Flask-Cors==2.1.2
+Flask-Babel==0.9
+tldextract==1.7.4

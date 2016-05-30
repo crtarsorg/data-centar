@@ -597,3 +597,13 @@ button:focus, select:focus {
     background-color: transparent;
     border-color: #fff;
 }
+.language-switcher {
+    float:right;margin-left:20px;     margin-top: 15px;
+    cursor:pointer;
+}
+#dc-navbar{
+    float:right;
+}
+a.language-switch:active {
+    color: #0F4044;
+}

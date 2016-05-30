@@ -1,0 +1,656 @@
+# Serbian translations for PROJECT.
+# Copyright (C) 2016 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2016-05-30 10:26+0200\n"
+"PO-Revision-Date: 2016-05-27 09:47+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: sr\n"
+"Language-Team: sr <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+#: app/templates/layout.html:2
+msgid "en"
+msgstr ""
+
+#: app/templates/layout.html:123 app/templates/mod_about/index.html:175
+msgid "Search"
+msgstr "Pretraga"
+
+#: app/templates/layout.html:126
+msgid "API"
+msgstr "API"
+
+#: app/templates/layout.html:129 app/templates/mod_about/index.html:113
+msgid "About"
+msgstr "O nama"
+
+#: app/templates/layout.html:149
+msgid "WHICH DATASET SHOULD WE OPEN NEXT?"
+msgstr "Koji sledeći skup podataka da oslobodimo?"
+
+#: app/templates/layout.html:164
+msgid "Choose a dataset"
+msgstr "Izaberite skup podataka"
+
+#: app/templates/layout.html:165
+msgid "Asset declarations"
+msgstr "Prijava imovine"
+
+#: app/templates/layout.html:166
+msgid "More municipal budgets"
+msgstr "Još opštinskih budžeta"
+
+#: app/templates/layout.html:167
+msgid "Public procurements"
+msgstr "Javne nabavke"
+
+#: app/templates/layout.html:168
+msgid "Business association registries"
+msgstr "Registar privrednih subjekata"
+
+#: app/templates/layout.html:169
+msgid "Other, specified in comment"
+msgstr "Drugo, pojašnjeno u komentaru"
+
+#: app/templates/layout.html:175
+msgid "How would you use this information?"
+msgstr "Kako biste koristili ove informacije?"
+
+#: app/templates/layout.html:179
+msgid "Send"
+msgstr "Pošaljite"
+
+#: app/templates/layout.html:203
+msgid "Contact us"
+msgstr "Kontaktirajte nas"
+
+#: app/templates/layout.html:204
+msgid ""
+"Write to us</b></a> if you need any special information, data, or "
+"visualizations."
+msgstr ""
+"Pišite nam ukoliko vam je potrebna bilo kakva posebna infromacija, "
+"podatak ili vizuelizacija."
+
+#: app/templates/layout.html:225
+msgid ""
+"Data Centar is freely available to all under a Creative Commons CC-0 "
+"license."
+msgstr "Data Centar je dostupan svima pod uslovima licence Creative Commons CC-0."
+
+#: app/templates/layout.html:243
+msgid "Thank you"
+msgstr "Hvala vam!"
+
+#: app/templates/layout.html:246
+msgid "Thank you!"
+msgstr "Hvala vam!"
+
+#: app/templates/layout.html:246
+msgid "Your vote will help us decide which dataset to liberate next."
+msgstr ""
+"Vaš glas će nam pomoći da odlučimo koji sledeći skup podataka da "
+"oslobodimo."
+
+#: app/templates/layout.html:246
+msgid "If you want to keep in touch, follow us on "
+msgstr "Ukoliko želite da ostanemo u kontaktu, pratite nas na "
+
+#: app/templates/layout.html:246
+msgid " and "
+msgstr " i "
+
+#: app/templates/mod_about/index.html:83
+msgid "Tell us what to liberate next"
+msgstr "Recite nam šta sledeće da oslobodimo"
+
+#: app/templates/mod_about/index.html:91
+msgid "Advanced search"
+msgstr "Napredna pretraga"
+
+#: app/templates/mod_about/index.html:115
+msgid ""
+"Data Centar is an open online platform that provides easy access to "
+"datasets of various public information at the national and local level in"
+" Serbia. It was developed to help journalists, activists, researchers and"
+" public officials in search for valuable data to power their stories, "
+"campaigns, analyses or decision making. With the use of latest "
+"technologies, Data Centar simplifies, integrates and prepares complex, "
+"disparate and disorganized datasets for easy and meaningful use by all "
+"interested stakeholders. By making good use of public data, Data Centar "
+"and its users push for governments to offer useful and good quality data "
+"and provide the public what they need to participate in decision making "
+"as active and informed citizens."
+msgstr ""
+"Data Centar je otvorena, onlajn platforma, koja omogućava lak pristup "
+"skupovima podataka o različitim javnim informacijama u Srbiji, na "
+"državnom i lokalnom nivou. Razvijen je sa ciljem da pomogne novinarima, "
+"aktivistima, istraživačima i javnim funkcionerima u potrazi za vrednim "
+"podacima koji bi potkrepili njihove priče, kampanje, analize i proces "
+"donošenja odluka. Uz pomoć najnovijih tehnologija, Data Centar "
+"pojednostavljuje, integriše i priprema složene, različite i "
+"neorganizovane skupove podataka za jednostavnu i suvislu upotrebu svih "
+"zainteresovanih strana. Dobrim korišćenjem javnih podataka Data Centar i "
+"njegovi korisnici vrše pritisak na vlast da ponudi korisne i kvalitetne "
+"podatke i pruži javnosti ono što joj je potrebno da učestvuje u procesu "
+"donošenja odluka kao aktivni i informisani građani."
+
+#: app/templates/mod_about/index.html:134
+msgid "Ways to Use the Site"
+msgstr "Načini za korišćenje sajta"
+
+#: app/templates/mod_about/index.html:174
+msgid ""
+"You can start exploring right from the homepage: click on the pre-made "
+"search right below the video, or click on “show me another” to get a new "
+"pre-made search"
+msgstr ""
+"Istraživanje možete početi odmah na naslovnoj strani: kliknite na polje "
+"za pretragu odmah ispod videa ili kliknite na \"prikažite drugo\" kako "
+"biste pokrenuli novu pretragu"
+
+#: app/templates/mod_about/index.html:175
+msgid "On the"
+msgstr "Na"
+
+#: app/templates/mod_about/index.html:175
+msgid ""
+" page, you can visualize all our data and filter it by any variable (like"
+" geographic location, amount, or anything else)"
+msgstr ""
+" pretraga, možete da vizuelizujete sve naše podatke i filtrirate ih po "
+"bilo kojoj promenljivoj (kao što su geografski položaj, iznos ili nešto "
+"drugo) "
+
+#: app/templates/mod_about/index.html:178
+msgid ""
+"The visualization are automatically updated, to give you an easier "
+"overview of what the data is saying"
+msgstr ""
+"Vizuelizacije se automatski ažuriraju kako bi vam omogućile jednostavniji"
+" pregled o tome šta podaci govore"
+
+#: app/templates/mod_about/index.html:179
+msgid ""
+"We are working on custom advanced searches, where you will be able to "
+"define <b>operators</b> like “less than”, “is true”, “is empty” etc to "
+"create complex filtering directly on the website"
+msgstr ""
+"Radimo na posebnoj, naprednoj pretrazi, gde ćete moći da definišete "
+"operatore kao “manje od“, “je tačno“, “je prazno“, itd. kako biste dobili"
+" složeno filtriranje direktno na sajtu"
+
+#: app/templates/mod_about/index.html:180
+msgid ""
+"You can also download the data in different open formats for your own "
+"analyses"
+msgstr ""
+"Takođe možete da preuzmete podatke u različitim otvorenim formatima za "
+"sopstvene analize"
+
+#: app/templates/mod_about/index.html:185
+msgid ""
+"Don’t know what an API is? The School of Data explains <a "
+"href=\"http://schoolofdata.org/2013/11/18/web-apis-for-non-"
+"programmers/\">APIs for non-programmers</a> (but you should probably get "
+"a developer to help you - <a href=\"mailto:data@datacentar.io\">or ask us"
+" for help</a>!)"
+msgstr ""
+"Ne znate šta je to API? Škola podataka [The School of Data] <a "
+"href=\"http://schoolofdata.org/2013/11/18/web-apis-for-non-"
+"programmers/\"> objašnjava šta je to API svima koji nisu programeri "
+"</a>(ali verovatno će vam trebati programer da vam pomogne - <a "
+"href=\"mailto:data@datacentar.io\">ili pitajte nas za pomoć!</a>)"
+
+#: app/templates/mod_about/index.html:186
+msgid "On the "
+msgstr "Na"
+
+#: app/templates/mod_about/index.html:186
+msgid "API page"
+msgstr "strani API"
+
+#: app/templates/mod_about/index.html:186
+msgid ""
+" you can learn about all the parameters you can use for your API calls, "
+"and create your custom API"
+msgstr ""
+"možete da saznate koje sve parametre možete koristiti za vaše API zahteve"
+" i možete da napraviti svoj personalizovani API"
+
+#: app/templates/mod_about/index.html:189
+msgid ""
+"Run the custom API directly on the Data Centar website to see what "
+"results it provides you, then tweak to your delight"
+msgstr ""
+"Pokrenite personalizovani API direktno na sajtu Data Centra da vidite "
+"kakve razultate vam to daje, a onda ga izmenite tako da budete zadovoljni"
+
+#: app/templates/mod_about/index.html:190
+msgid ""
+"Once you’re happy, take the API and plug it into your website, or use it "
+"to download raw data on your computer"
+msgstr ""
+"Kada budete zadovoljni, preuzmite API i postavite na svoj sajt ili ga "
+"koristite za preuzimanje sirovih podataka na vaš kompjuter"
+
+#: app/templates/mod_about/index.html:191
+msgid ""
+"Our entire Search page is powered by our API - so you can create advanced"
+" searches, and copy the API link of the search you made"
+msgstr ""
+"Čitavu našu stranicu za pretragu pokreće naš API - tako da možete "
+"kreirate napredne pretrage i kopirate API link vaše pretrage"
+
+#: app/templates/mod_about/index.html:196
+msgid ""
+"At the bottom of each page, you will find a form where you can choose "
+"between four datasets we plan to open."
+msgstr ""
+"Na kraju svake strane naći ćete formu gde možete da birate između četiri "
+"skupa podataka koje planiramo da otvorimo. "
+
+#: app/templates/mod_about/index.html:197
+msgid ""
+"Take your pick, and if you want, leave us a comment on how you would use "
+"that data. Your feedback is crucial!"
+msgstr ""
+"Izaberite i ukoliko želite, ostavite nam komentar kako biste koristili te"
+" podatke. Povratna informacija od vas je ključna!"
+
+#: app/templates/mod_about/index.html:200
+msgid ""
+"If you’re not interested in any of the proposed datasets, <a "
+"href=\"mailto:data@datacentar.io\">get in touch</a> and propose what you "
+"would like us to liberate next"
+msgstr ""
+"Ukoliko vas ne interesuje nijedan od predloženih skupova podataka, <a "
+"href=\"mailto:data@datacentar.io\">javite nam se i predložite</a> šta "
+"biste sledeće voleli da oslobodimo"
+
+#: app/templates/mod_about/index.html:213
+msgid "The Future"
+msgstr "Budućnost"
+
+#: app/templates/mod_about/index.html:215
+msgid ""
+"<b>We wish to grow into a single online hub for collection, processing "
+"and preparation of different datasets of public information at the local,"
+" national and regional level.</b>"
+msgstr ""
+"<b>Želimo da prerastemo u jedan onlajn centar za prikupljanje, obradu i "
+"pripremu različitih skupova podataka o javnim informacijama na lokalnom, "
+"nacionalnom i regionalnom nivou.</b>"
+
+#: app/templates/mod_about/index.html:218
+msgid ""
+"<b>After the MVP launch in 2015</b>, Data Centar will expand the number "
+"of municipal and other datasets from Serbia, add 2016 budgetary data, and"
+" at least two different datasets proposed by the community. The main "
+"focus of Data Centar in 2016 will be, in fact, to build a strong "
+"community and make sure they are at the forefront of the Data Centar's "
+"growth."
+msgstr ""
+"<b>Nakon pokretanja MVP-a*** 2015. godine,</b> Data Centar će proširiti "
+"broj opštinskih i drugih skupova podataka iz Srbije, dodati podatke o "
+"budžetu za 2016. godinu i najmanje dva različita skupa podataka koje "
+"predloži zajednica. Fokus Data Centra u 2016. godini zapravo će biti da "
+"izgradi čvrstu zajednicu i pobrine se da je ona na čelu razvoja Data "
+"Centra."
+
+#: app/templates/mod_about/index.html:221
+msgid ""
+"<b>In 2016 and 2017</b>, Data Centar will keep growing organically and "
+"responsibly. We will also advocate for increasing the level of "
+"governmental openness by influencing the state of open data in Serbia: we"
+" wish to see at least two governmental datasets integrated into Data "
+"Centar through an open, government-managed API."
+msgstr ""
+"<b>U 2016. i 2017. godini </b> Data Centar će nastaviti da raste organski"
+" i odgovorno. Takođe ćemo zagovarati povećanje nivoa otvorenosti vlasti "
+"uticajem na državu da otvori podatke u Srbiji: želimo da vidimo najmanje "
+"dva vladina skupa podataka integrisana u Data Centar kroz otvoren, API "
+"kojim upravlja vlada."
+
+#: app/templates/mod_about/index.html:222
+msgid ""
+" <br />Data Centar wants to go global: we wish to host datasets from at "
+"least two Balkan region countries by end 2017, and incorporate datasets "
+"from non-Balkan countries."
+msgstr ""
+"<br /> Data Centar želi da se širi globalno: želimo da do kraja 2017. "
+"godine budemo sajt-domaćin za skupove podataka za najmanje dve države sa "
+"Balkana i da inkorporiramo skupove podataka iz zemalja van Balkana. "
+
+#: app/templates/mod_about/index.html:225
+msgid ""
+"<b>By the end of 2017</b>, Data Centar aims to be a completely functional"
+" open platform that provides broad, easy and full access to multiple "
+"datasets of public information from many countries in the region. Our "
+"goal is to gain recognition as a one-stop-shop for opening data in a "
+"usable and useful way, with a strong and active user community that leads"
+" us. This way, Data Centar will be able to influence governments and "
+"institutions to increase the quality and provide access to open and "
+"useful data."
+msgstr ""
+"<b>Do kraja 2017, Data Centar ima za cilj da bude potpuno funkcionalna "
+"otvorena platforma koja pruža širok, jednostavan i potpun pristup brojnim"
+" skupovima podataka u vezi sa javnim infromacijama iz mnogih država "
+"regiona. Naš cilj je da postanemo poznati kao jedinstven servis za "
+"otvaranje podatka na upotrebljiv i koristan način, sa snažnom i aktivnom "
+"zajednicom korisnika koja nas vodi. Na ovaj način, Data Centar će biti u "
+"mogućnosti da utiče na vlade i institucije kako bi povećale kvalitet i "
+"omogućile pristup otvorenim i korisnim podacima."
+
+#: app/templates/mod_about/index.html:234
+msgid "Partners"
+msgstr "Partneri"
+
+#: app/templates/mod_api/index.html:135 app/templates/mod_api/index.html:452
+#: app/templates/mod_api/index.html:586 app/templates/mod_api/index.html:715
+msgid "How?"
+msgstr "Kako?"
+
+#: app/templates/mod_api/index.html:136 app/templates/mod_api/index.html:454
+#: app/templates/mod_api/index.html:588 app/templates/mod_api/index.html:717
+msgid "Try it!"
+msgstr "Probaj!"
+
+#: app/templates/mod_api/index.html:146 app/templates/mod_api/index.html:462
+#: app/templates/mod_api/index.html:596 app/templates/mod_api/index.html:725
+msgid "DESCRIPTION: Use this POST request to download data."
+msgstr "OPIS: Koristite ovaj POST zahtev za preuzimanje podataka."
+
+#: app/templates/mod_api/index.html:151
+msgid "POST REQUEST URL: http://datacentar.io/en/api/zbir"
+msgstr "URL POST ZAHTEVA: http://datacentar.io/en/api/zbir"
+
+#: app/templates/mod_api/index.html:161 app/templates/mod_api/index.html:477
+#: app/templates/mod_api/index.html:611 app/templates/mod_api/index.html:740
+msgid "Parameter"
+msgstr "Parametar"
+
+#: app/templates/mod_api/index.html:164 app/templates/mod_api/index.html:480
+#: app/templates/mod_api/index.html:614 app/templates/mod_api/index.html:743
+msgid "Type"
+msgstr "Vrsta"
+
+#: app/templates/mod_api/index.html:167 app/templates/mod_api/index.html:483
+#: app/templates/mod_api/index.html:617 app/templates/mod_api/index.html:746
+msgid "Description"
+msgstr "Opis."
+
+#: app/templates/mod_api/index.html:177 app/templates/mod_api/index.html:222
+#: app/templates/mod_api/index.html:493 app/templates/mod_api/index.html:627
+#: app/templates/mod_api/index.html:756
+msgid "String."
+msgstr "Stringova."
+
+#: app/templates/mod_api/index.html:180 app/templates/mod_api/index.html:225
+#: app/templates/mod_api/index.html:496 app/templates/mod_api/index.html:630
+#: app/templates/mod_api/index.html:759
+msgid "Use this parameter to filter based on the type of data."
+msgstr "Koristite ovaj paramentar za filtriranje na osnovu vrste podataka."
+
+#: app/templates/mod_api/index.html:188 app/templates/mod_api/index.html:211
+#: app/templates/mod_api/index.html:504 app/templates/mod_api/index.html:638
+#: app/templates/mod_api/index.html:649 app/templates/mod_api/index.html:767
+#: app/templates/mod_api/index.html:778
+msgid "List of whole numbers."
+msgstr "Lista celih brojeva."
+
+#: app/templates/mod_api/index.html:191 app/templates/mod_api/index.html:507
+#: app/templates/mod_api/index.html:641 app/templates/mod_api/index.html:770
+msgid "Years we want to download data for."
+msgstr "Godine za koje želimo da preuzmemo podatke."
+
+#: app/templates/mod_api/index.html:200 app/templates/mod_api/index.html:516
+msgid "List of strings."
+msgstr "Lista stringova."
+
+#: app/templates/mod_api/index.html:203 app/templates/mod_api/index.html:519
+msgid "Municipalities."
+msgstr "Opštine."
+
+#: app/templates/mod_api/index.html:214 app/templates/mod_api/index.html:445
+#: app/templates/mod_api/index.html:781
+msgid "Economic classification."
+msgstr "Ekonomske klasifikacije."
+
+#: app/templates/mod_api/index.html:234
+msgid "Fillters"
+msgstr "Filteri:"
+
+#: app/templates/mod_api/index.html:246 app/templates/mod_api/index.html:257
+#: app/templates/mod_api/index.html:268 app/templates/mod_api/index.html:279
+#: app/templates/mod_api/index.html:290
+msgid "Number."
+msgstr "Broj."
+
+#: app/templates/mod_api/index.html:249 app/templates/mod_api/index.html:260
+#: app/templates/mod_api/index.html:271 app/templates/mod_api/index.html:282
+#: app/templates/mod_api/index.html:293
+msgid ""
+"Set the range by setting parameter <strong>veceIliJednako</strong> as the"
+" minimal value and parameter <strong>manjeIliJednako</strong> as the "
+"maximal value."
+msgstr ""
+"Odredite opseg postavljanjem parametara većeIlijednako kao minimalne "
+"vrednosti i parametra manjeIliJednako kao maksimalne vrednosti."
+
+#: app/templates/mod_api/index.html:333
+msgid "Filters:"
+msgstr "Filteri:"
+
+#: app/templates/mod_api/index.html:418 app/templates/mod_api/index.html:554
+#: app/templates/mod_api/index.html:685 app/templates/mod_api/index.html:816
+msgid "Request Body:"
+msgstr "Telo od koga se zahteva:"
+
+#: app/templates/mod_api/index.html:427 app/templates/mod_api/index.html:561
+#: app/templates/mod_api/index.html:692 app/templates/mod_api/index.html:823
+msgid "Response:"
+msgstr "Odgovor:"
+
+#: app/templates/mod_api/index.html:467
+msgid "POST REQUEST URL: http://datacentar.io/en/api/ekonomska-klasifikacija"
+msgstr "URL POST ZAHTEVA: http://datacentar.io/en/api/ekonomska-klasifikacija"
+
+#: app/templates/mod_api/index.html:472 app/templates/mod_api/index.html:606
+#: app/templates/mod_api/index.html:735
+msgid "INQUIRY PARAMETERS:"
+msgstr "PARAMETRI UPITA:"
+
+#: app/templates/mod_api/index.html:579
+msgid "Economic classification info for municipalities"
+msgstr "Ekonomskih Klasifikacija Info za Opstine"
+
+#: app/templates/mod_api/index.html:601
+msgid ""
+"POST REQUEST URL: http://datacentar.io/en/api/sakupiti-klasifikacija-za-"
+"opstine"
+msgstr ""
+"POST REQUEST URL: http://datacentar.io/en/api/sakupiti-klasifikacija-za-"
+"opstine"
+
+#: app/templates/mod_api/index.html:652
+msgid "Economic classification"
+msgstr "Ekonomske klasifikacije."
+
+#: app/templates/mod_api/index.html:709
+msgid "List of Municipalities for Classification Number"
+msgstr "Spisak Opština za Klasifikacija Broj"
+
+#: app/templates/mod_api/index.html:730
+msgid ""
+"POST REQUEST URL: http://datacentar.io/en/api/spisak-opstina-za-"
+"klasifikacija-broj"
+msgstr ""
+"URL POST ZAHTEVA: http://datacentar.io/en/api/spisak-opstina-za-"
+"klasifikacija-broj"
+
+#: app/templates/mod_landing_page/index.html:44
+msgid "Welcome to Data Centar"
+msgstr "Dobro došli u Data Centar"
+
+#: app/templates/mod_landing_page/index.html:46
+msgid ""
+"Data Centar is an open platform in Serbia that helps you find, liberate "
+"and make use of public data."
+msgstr ""
+"Data Centar je otvorena platforma u Srbiji koja vam može pomoći da "
+"pronađete, oslobodite i koristite javne podatke."
+
+#: app/templates/mod_landing_page/index.html:47
+msgid ""
+"We start small to grow responsibly:</b> from municipal budgets in Serbia,"
+" to whatever our audience wants us to liberate next. Check the video "
+"below to find out more."
+msgstr ""
+"Počinjemo od najmanjih kako bismo odgovorno rasli: od opštinskih budžeta "
+"u Srbiji pa do bilo čega što naši korisnici budu želeli da otvorimo. Da "
+"saznate više, pogledajte video ispod. "
+
+#: app/templates/mod_landing_page/index.html:58
+#: app/templates/mod_search/index.html:61
+msgid "Show me data about "
+msgstr "Prikaži podatke o"
+
+#: app/templates/mod_landing_page/index.html:60
+msgid "for"
+msgstr "za"
+
+#: app/templates/mod_landing_page/index.html:61
+msgid "in"
+msgstr "za"
+
+#: app/templates/mod_landing_page/index.html:67
+msgid "Generate different search"
+msgstr "Nova pretraga"
+
+#: app/templates/mod_landing_page/index.html:74
+msgid "Just show me all the data"
+msgstr "Prikaži sve podatke"
+
+#: app/templates/mod_landing_page/index.html:89
+msgid ""
+"We currently have [20] datasets from [10] Serbian municipalities "
+"totalling [4,407] line items."
+msgstr ""
+"Trenutno imamo [20] skupova podataka iz [10] opština u Srbiji sa ukupno "
+"[4,407] stavki."
+
+#: app/templates/mod_search/index.html:61
+msgid " for "
+msgstr "za"
+
+#: app/templates/mod_search/index.html:61
+msgid " in "
+msgstr "za"
+
+#: app/templates/mod_search/index.html:75
+msgid "Dataset"
+msgstr ""
+
+#: app/templates/mod_search/index.html:76
+msgid "Budget"
+msgstr "Budžet"
+
+#: app/templates/mod_search/index.html:97
+msgid "Year"
+msgstr "Godina"
+
+#: app/templates/mod_search/index.html:105
+msgid "Advanced"
+msgstr ""
+
+#: app/templates/mod_search/index.html:169
+msgid "List item 0"
+msgstr ""
+
+#: app/templates/mod_search/index.html:170
+msgid "List item 1"
+msgstr ""
+
+#: app/templates/mod_search/index.html:171
+msgid "List item 2"
+msgstr ""
+
+#: app/templates/mod_search/index.html:172
+msgid "List item 3"
+msgstr ""
+
+#: app/templates/mod_search/index.html:173
+msgid "List item 5"
+msgstr ""
+
+#: app/templates/mod_search/index.html:174
+msgid "List item 6"
+msgstr ""
+
+#: app/templates/mod_search/index.html:175
+msgid "List item 7"
+msgstr ""
+
+#~ msgid ""
+#~ msgstr ""
+
+#~ msgid "Na  "
+#~ msgstr ""
+
+#~ msgid "OPIS: Koristite ovaj POST zahtev za preuzimanje podataka."
+#~ msgstr ""
+
+#~ msgid "URL POST ZAHTEVA: http://datacentar.io/api/zbir"
+#~ msgstr ""
+
+#~ msgid "Vrsta"
+#~ msgstr ""
+
+#~ msgid "Opis"
+#~ msgstr ""
+
+#~ msgid "Stringova"
+#~ msgstr ""
+
+#~ msgid "Lista celih brojeva."
+#~ msgstr ""
+
+#~ msgid "Godine za koje želimo da preuzmemo podatke."
+#~ msgstr ""
+
+#~ msgid "Lista stringova."
+#~ msgstr ""
+
+#~ msgid "Opštine."
+#~ msgstr ""
+
+#~ msgid "Ekonomskih klasifikacija."
+#~ msgstr ""
+
+#~ msgid "Stringova."
+#~ msgstr ""
+
+#~ msgid "Filteri."
+#~ msgstr ""
+
+#~ msgid "broj.."
+#~ msgstr ""
+
+#~ msgid "String"
+#~ msgstr "Stringova"
+
+#~ msgid "Podataka"
+#~ msgstr ""
+

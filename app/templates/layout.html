@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  lang="{{ _('en') }}">
 
 <head>
 
@@ -65,7 +65,37 @@
         }
         
     </style>
+    <script type="text/javascript">
+        template_vars = {
+            api_sum: "{{ url_for('api.sum', lang_code=g.current_lang) }}",
+            api_averages: "{{ url_for('api.averages', lang_code=g.current_lang) }}"
+            // etc
+        }
+        $(document).ready(function(){
+{#            console.log({{ g.current_lang }});#}
+            $(".language-switch").click(function(){
 
+                var value = $( this ).text();
+                var current_lang = "{{ g.current_lang }}";
+{#                console.log($( this ).text());#}
+{#                $( this ).href = window.location.href.replace("{{ g.current_lang }}", value);#}
+
+
+                if(current_lang!=""){
+                    console.log(current_lang);
+                    window.location.href = window.location.href.replace(current_lang, value);
+                }else{
+                    console.log(window.location.href + "/" + value);
+                    window.location.href = window.location.href + "" + value;
+                }
+
+
+{#                $(".language-switch").css("color","green");#}
+
+            });
+
+        });
+</script>
 </head>
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
@@ -80,25 +110,34 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="{{ url_for('landing_page.index') }}">
+                <a class="navbar-brand page-scroll" href="{{ url_for('landing_page.root', lang_code = g.current_lang) }}">
                     <img src="{{ url_for('static', filename='images/logo-vector-fit.svg') }}" alt="Datacentar logo" id="logoSvg">
                 </a>
+
             </div>
 
             <div class="collapse navbar-collapse" id="dc-navbar">
-                <ul class="nav navbar-nav navbar-right">
+
+                <ul class="nav navbar-nav">
                     <li>
-                        <a class="page-scroll" href="{{ url_for('search.index') }}">Search</a>
+                        <a class="page-scroll" href="{{ url_for('search.index', lang_code=g.current_lang) }}">{{ _('Search') }}</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="{{ url_for('api.index') }}">API</a>
+                        <a class="page-scroll" href="{{ url_for('api.index', lang_code=g.current_lang) }}">{{ _('API') }}</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="{{ url_for('about.index') }}">About</a>
+                        <a class="page-scroll" href="{{ url_for('about.index', lang_code=g.current_lang)  }}">{{ _('About') }}</a>
                     </li>
                 </ul>
+                <div class="language-switcher">
+                    <a class="language-switch" >en</a> | <a class="language-switch">sr</a>
+                </div>
+
             </div><!-- /.navbar-collapse -->
+
+
         </div><!-- /.container-fluid -->
+
     </nav>
 
     {% block body %}
@@ -107,7 +146,7 @@
     <!-- Open data request Section -->
     <section id="dataRequestS" class="container content-section margin-4p">
         <div class="datareq col-xs-12 col-sm-8">
-            <h2 class="primary-content-color text-center">WHICH DATASET SHOULD WE OPEN NEXT?</h2>
+            <h2 class="primary-content-color text-center">{{ _('WHICH DATASET SHOULD WE OPEN NEXT?') }}</h2>
             <div class="margin-2p">               
                 <form id="newDataForm" class="form-horizontal" action="//formspree.io/data@datacentar.io" method="POST">
                <!--  <input type="hidden" name="_next" value="#thx"/> -->
@@ -122,22 +161,22 @@
                         <!-- Closed dataset dropdown -->
                         <div class="col-xs-12 col-sm-6 margin-2p">
                             <select id="datasetSel" name="datasetSel" class="form-control select-control-b border-primary">
-                                <option value="1"><em>Choose a dataset</em></option>
-                                <option value="2">Asset declarations</option>
-                                <option value="3">More municipal budgets</option>
-                                <option value="4">Public procurements</option>
-                                <option value="5">Business association registries</option>
-                                <option value="6">Other, specified in comment</option>
+                                <option value="1"><em>{{ _('Choose a dataset') }}</em></option>
+                                <option value="2">{{ _('Asset declarations') }}</option>
+                                <option value="3">{{ _('More municipal budgets') }}</option>
+                                <option value="4">{{ _('Public procurements') }}</option>
+                                <option value="5">{{ _('Business association registries') }}</option>
+                                <option value="6">{{ _('Other, specified in comment') }}</option>
                             </select>
                         </div>
                     </div>
                     <!-- Usage of information -->
                     <div class="margin-2p">
-                        <textarea class="form-control border-primary primary-content-color" id="textarea" name="infoTA" rows="6" placeholder="How would you use this information?"></textarea>
+                        <textarea class="form-control border-primary primary-content-color" id="textarea" name="infoTA" rows="6" placeholder="{{ _('How would you use this information?') }}"></textarea>
                     </div>
                     <!-- Button -->
                     <div class="margin-4p">
-                        <button id="sendBtn" name="sendBtn" class="button-full margin-auto">Send</button>
+                        <button id="sendBtn" name="sendBtn" class="button-full margin-auto">{{ _('Send') }}</button>
                     </div>
                 </fieldset>
         </form>
@@ -161,8 +200,8 @@
     <!-- Footer -->
     <footer class="container-fluid content-section text-center primary-color white-content padding-md margin-4p">
         <div class="container position-relative">    
-            <h2 class="margin-2p">Contact us</h2>
-            <p class="margin-2p"><a class="white-content" href="mailto:office@crta.org"><b>Write to us</b></a> if you need any special information, data, or visualizations.</p>
+            <h2 class="margin-2p">{{ _('Contact us') }}</h2>
+            <p class="margin-2p"><a class="white-content" href="mailto:office@crta.org"><b />{{ _('Write to us</b></a> if you need any special information, data, or visualizations.') }}</p>
             <ul class="list-inline banner-social-buttons margin-2p">
                 <li>
                     <a href="http://www.crta.rs/" class=" btn-lg white-content font-lg-custom"><i class="fa fa-globe fa-fw"></i></a>
@@ -183,7 +222,7 @@
                     <a href="https://github.com/crtarsorg" class=" btn-lg white-content font-lg-custom"><i class="fa fa-github fa-fw"></i></a>
                 </li>
             </ul>
-            <p class="margin-2p">Data Centar is freely available to all under a Creative Commons CC-0 license.</p>
+            <p class="margin-2p">{{ _('Data Centar is freely available to all under a Creative Commons CC-0 license.')}}</p>
             <ul class="list-inline banner-social-buttons margin-2p">
                 <li>
                     <a href="https://creativecommons.org/publicdomain/zero/1.0/"><div class="creative-commons"></div></a>
@@ -201,10 +240,10 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close primary-content-color" data-dismiss="modal">&times;</button>
-          <h2 id="titleMailModal" class="text-center primary-content-color ">Thank you</h2>
+          <h2 id="titleMailModal" class="text-center primary-content-color ">{{ _('Thank you') }}</h2>
         </div>
         <div class="modal-body text-center primary-content-color">
-          <p id="bodyMailModal" class="">Thank you! <br />Your vote will help us decide which dataset to liberate next. <br />If you want to keep in touch, follow us on <a href="https://twitter.com/datacentario">Twitter</a> and <a href="https://www.facebook.com/datacentar.io">Facebook</a>.</p>
+          <p id="bodyMailModal" class="">{{ _('Thank you!') }} <br /> {{ _('Your vote will help us decide which dataset to liberate next.') }} <br />{{ _('If you want to keep in touch, follow us on ') }} <a href="https://twitter.com/datacentario">Twitter</a> {{ _(' and ') }}  <a href="https://www.facebook.com/datacentar.io">Facebook</a>.</p>
         </div>
        
       </div>

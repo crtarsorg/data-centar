@@ -30,13 +30,16 @@ function generateRandomQuery(){
     var budgetType = utils.getRandomBudgetType().toUpperCase();
     var municipality = utils.getRandomMunicipality().toUpperCase();
 
-    var text = "Show me data about " +
-        "[<span id='query-param-data-source'>BUDGET</span> " +
-        "<span id='query-param-budget-type'>" + budgetType + "</span>] " +
-        "for [<span id='query-param-municipality'>" + municipality + "</span>] " +
-        "in [<span id='query-param-year'>2015</span>].";
+    //var text = "" +
+    //    "[<span id='query-param-data-source'>BUDGET</span> " +
+    //    "<span id='query-param-budget-type'>" + budgetType + "</span>] " +
+    //    "for [<span id='query-param-municipality'>" + municipality + "</span>] " +
+    //    "in [<span id='query-param-year'>2015</span>].";
+    //
+    $("#query-param-budget-type").html(budgetType);
 
-    $("#searchWithParams").html(text);
+    $("#query-param-municipality").html(municipality);
+    //$("#searchWithParamsText").html(text);
 }
 
 function loadSearchPageWithRandomQuery(getUrl){
@@ -113,7 +116,7 @@ $(function() {
 
         $.ajax({
             method: "POST",
-            url: "../api/prosek",
+            url: template_vars.api_averages,
             data: JSON.stringify(params),
             contentType: "application/json;charset=utf-8",
             dataType: "json",
@@ -126,7 +129,7 @@ $(function() {
         ,
         $.ajax({
             method: "POST",
-            url: "../api/zbir",
+            url: template_vars.api_sum,
             data: JSON.stringify(params2),
             contentType: "application/json;charset=utf-8",
             dataType: "json",

@@ -1,9 +1,14 @@
-from flask import Flask
+from flask import Flask, request, g, abort
 import os
 import ConfigParser
 from logging.handlers import RotatingFileHandler
 from flask.ext.pymongo import PyMongo
 from flask.ext.cors import CORS
+from flask.ext.babel import Babel
+import tldextract
+
+
+babel = Babel()
 
 # Create MongoDB database object.
 mongo = PyMongo()
@@ -26,6 +31,23 @@ def create_app():
 
     # Initialize the app to work with MongoDB
     mongo.init_app(app, config_prefix='MONGO')
+
+    # init internationalization
+    babel.init_app(app)
+
+    # Get local based on domain name used.
+    @babel.localeselector
+    def get_locale():
+        """Direct babel to use the language defined in the session."""
+        return g.get('current_lang', 'en')
+
+    @app.before_request
+    def before():
+        if request.view_args and 'lang_code' in request.view_args:
+            if request.view_args['lang_code'] not in ('sr', 'en'):
+                return abort(404)
+            g.current_lang = request.view_args['lang_code']
+            request.view_args.pop('lang_code')
 
     return app
 

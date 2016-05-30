@@ -41,10 +41,10 @@ $( document ).ready(function() {
     <header class="landing">
         <div class="intro primary-color">
             <div class="white-content container padding-lg">
-                <h2 class="text-center">Welcome to Data Centar</h2>
+                <h2 class="text-center">{{ _('Welcome to Data Centar') }}</h2>
                 <p class="text-center lead margin-2p">
-                    Data Centar is an open platform in Serbia that helps you find, liberate and make use of public data.
-                    <br /><b>We start small to grow responsibly:</b> from municipal budgets in Serbia, to whatever our audience wants us to liberate next. Check the video below to find out more.
+                    {{ _('Data Centar is an open platform in Serbia that helps you find, liberate and make use of public data.') }}
+                    <br /><b>{{ _('We start small to grow responsibly:</b> from municipal budgets in Serbia, to whatever our audience wants us to liberate next. Check the video below to find out more.') }}
                 </p>
             </div>
         </div>
@@ -55,20 +55,23 @@ $( document ).ready(function() {
                         <div id="ytplayerLanding"></div>
                     </div>
                     <div class="welcome-text margin-9p text-underline">
-                        <a href="javascript:loadSearchPageWithRandomQuery('{{ url_for('search.index') }}')" id="searchWithParams">
+                        <a href="javascript:loadSearchPageWithRandomQuery('{{ url_for('search.index', lang_code=g.current_lang) }}')" id="searchWithParams">{{ _('Show me data about ') }}
+                            [<span id='query-param-data-source'>BUDGET</span> <span id='query-param-budget-type'></span>]
+                            {{ _('for') }} [<span id='query-param-municipality'></span>]
+                            {{ _('in') }} [<span id='query-param-year'>2015</span>].
                         </a>
                     </div>
                     <div class="row welcome-buttons margin-9p">
                         <div class="col-xs-12 col-sm-6">
                             <button id="anotherFavQuery" type="button" class="button-full">
-                                Generate different search
+                                {{ _('Generate different search') }}
                             </button>
                         </div>
                         <div class="col-xs-12 col-sm-6">
-                            <a href="{{ url_for('search.index') }}">
+                            <a href="{{ url_for('search.index', lang_code=g.current_lang) }}">
                                 <button type="button" class="button-full">
                                     <!--btn btn-block btn-lg  btn-link btn-white-border primary-color white-content-->
-                                    Just show me all the data
+                                   {{ _('Just show me all the data') }}
                                 </button>
                             </a>
                         </div>
@@ -83,17 +86,35 @@ $( document ).ready(function() {
     <div class="container">
         <div class="margin-4p">
             <!--col-lg-8 col-lg-offset-2-->
-            <h3>We currently have [20] datasets from [10] Serbian municipalities totalling [4,407] line items.</h3>
+            <h3>{{ _('We currently have [20] datasets from [10] Serbian municipalities totalling [4,407] line items.') }}</h3>
             <div class="infographics margin-auto margin-2p">
-	            <div class="col-md-4">
-		            <iframe class="highcharts-iframe" src="//cloud.highcharts.com/embed/azamuq" style="border: 0; width: 100%; height: 500px"></iframe>
-		        </div>
-	            <div class="col-md-4">
-		        	<iframe class="highcharts-iframe" src="//cloud.highcharts.com/embed/ilogas" style="border: 0; width: 100%; height: 500px"></iframe>    
-	            </div>
-	            <div class="col-md-4">
-	            <iframe class="highcharts-iframe" src="//cloud.highcharts.com/embed/ymocew" style="border: 0; width: 100%; height: 500px"></iframe>
-	            </div>   
+                {% if g.current_lang == "sr" %}
+                    <div class="col-md-4">
+                        <iframe class="highcharts-iframe" src="//cloud.highcharts.com/embed/azamuq" style="border: 0; width: 100%; height: 500px"></iframe>
+                    </div>
+                    <div class="col-md-4">
+                        <iframe class="highcharts-iframe" src="//cloud.highcharts.com/embed/ilogas" style="border: 0; width: 100%; height: 500px"></iframe>
+                    </div>
+                    <div class="col-md-4">
+                        <iframe class="highcharts-iframe" src="//cloud.highcharts.com/embed/ymocew" style="border: 0; width: 100%; height: 500px"></iframe>
+                    </div>
+                {% else %}
+                    <div class="col-md-4">
+                        <iframe class='highcharts-iframe' src='//cloud.highcharts.com/embed/ijejoc' style='border: 0; width: 100%; height: 500px'></iframe>
+                    </div>
+                    <div class="col-md-4">
+                        <iframe class='highcharts-iframe' src='//cloud.highcharts.com/embed/omejob' style='border: 0; width: 100%; height: 500px'></iframe>
+                    </div>
+                    <div class="col-md-4">
+                        <iframe class='highcharts-iframe' src='//cloud.highcharts.com/embed/alucyz' style='border: 0; width: 100%; height: 500px'></iframe>
+                    </div>
+                {% endif %}
+
+
+
+
+
+
             </div>
             <div id="vis1"></div>
         </div>

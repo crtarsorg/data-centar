@@ -186,10 +186,11 @@ function removeAdvancedFilterRow(btn){
 function fethData(query){
     $.ajax({
         type: "POST",
-        url: SEARCH_REQUEST_SUM_URL,
+        url: template_vars.api_sum,
         contentType: 'application/json',
         data: JSON.stringify(query),
         success: function(rsp){
+            console.log(rsp);
             buildResultTable(rsp);
             searchApiCall(rsp[0]);
             //console.log(query)
@@ -353,11 +354,12 @@ var params1 =
         params1.klasifikacija.broj.push( munc )
 
 	    var result1, result2;
+        console.log(template_vars.api_averages);
 	    $.when(
 
 	        $.ajax({
 	            method: "POST",
-	            url: "../api/prosek",
+	            url: template_vars.api_averages,
 	            data: JSON.stringify(params),
 	            contentType: "application/json;charset=utf-8",
 	            dataType: "json",
@@ -369,7 +371,7 @@ var params1 =
 	        ,
 	        $.ajax({
 	            method: "POST",
-	            url: "../api/zbir",
+	            url: template_vars.api_sum,
 	            data: JSON.stringify(params1),
 	            contentType: "application/json;charset=utf-8",
 	            dataType: "json",

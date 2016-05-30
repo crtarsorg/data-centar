@@ -46,7 +46,7 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 <script>
-    var SEARCH_REQUEST_SUM_URL = "{{ url_for('api.sum') }}";
+    var SEARCH_REQUEST_SUM_URL = "{{ url_for('api.sum', lang_code=g.current_lang) }}";
 </script>
 <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
 <script src="{{ url_for('static', filename='js/speakingurl.min.js') }}"></script>
@@ -58,7 +58,7 @@
     <!-- <div class="intro-body container"> -->
         <div class="intro-content container padding-lg">
             <p id="searchLink" class="text-center lead text-underline">
-                Show me data about [<span id="query-param-data-source">{{ source }}</span><span id="query-param-data-type">{{ type }}</span>] for [<span id="query-param-municipality">{{ municipality }}</span>] in [<span id="query-param-year">{{ year }}</span>].
+                {{ _('Show me data about ') }}[<span id="query-param-data-source">{{ source }}</span><span id="query-param-data-type">{{ type }}</span>] {{ _(' for ') }} [<span id="query-param-municipality">{{ municipality }}</span>] {{ _(' in ') }} [<span id="query-param-year">{{ year }}</span>].
             </p>
         </div>
     <!-- </div> -->
@@ -72,8 +72,8 @@
 	                <div class="basic-filter-row" style="padding-bottom: 40px;">
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" id="query-param-selection-source">
-	                        	<option selected disabled>Dataset</option>
-	                            <option value="budget">Budget</option>
+	                        	<option selected disabled>{{ _('Dataset') }}</option>
+	                            <option value="budget">{{ _('Budget') }}</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
@@ -94,7 +94,7 @@
 	                    </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" id="query-param-selection-year">
-	                        	<option selected disabled>Year</option>
+	                        	<option selected disabled>{{ _('Year') }}</option>
 	                            <option value="">2015</option>
 	                        </select>
 	                    </div>
@@ -102,7 +102,7 @@
 	                        <button type="button"  class="form-control border-primary text-center" onClick="javascript:applyBasicFilters(this)">&#x2713;</button>
 	                    </div>
 	                    <div class="col-xs-4 col-sm-2 pull-right">
-	                        <button type="button"  class=" advancedCondition form-control border-primary button-full">Advanced</button>
+	                        <button type="button"  class=" advancedCondition form-control border-primary button-full">{{ _('Advanced') }}</button>
 	                    </div>
 	                </div>
 	                <div class="advanced hidden" style="padding-top: 20px;">
@@ -166,13 +166,13 @@
                 <h2>BROWSABLE LIST OF DATASETS?</h2>
                 <div class="content-dataset col-lg-8 col-lg-offset-2">
                     <ul>
-                        <li>List item 0</li>
-                        <li>List item 1</li>
-                        <li>List item 2</li>
-                        <li>List item 3</li>
-                        <li>List item 4</li>
-                        <li>List item 5</li>
-                        <li>List item 6</li>
+                        <li>{{ _('List item 0') }}</li>
+                        <li>{{ _('List item 1') }}</li>
+                        <li>{{ _('List item 2') }}</li>
+                        <li>{{ _('List item 3') }}</li>
+                        <li>{{ _('List item 5') }}</li>
+                        <li>{{ _('List item 6') }}</li>
+                        <li>{{ _('List item 7') }}</li>
                     </ul>
                 </div>
             </div>

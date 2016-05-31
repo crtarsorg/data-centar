@@ -208,7 +208,12 @@ $(function() {
 <!-- Timeline Section -->
 <section id="timelineS" class="container content-section text-center primary-content-color">
     <div class="">
+        {% if g.current_lang == "en" %}
         <img id="timelineImg" src="{{ url_for('static', filename='images/timeline.svg') }}" alt="">
+        {% endif %}
+        {% if g.current_lang == "sr" %}
+        <img id="timelineImg" src="{{ url_for('static', filename='images/timeline-sr.svg') }}" alt="">
+        {% endif %}
         <div class="margin-4p">
             <h2>{{ _('The Future') }}</h2>
             <p class="margin-2p">

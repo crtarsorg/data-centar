@@ -75,18 +75,17 @@
 {#            console.log({{ g.current_lang }});#}
             $(".language-switch").click(function(){
 
-                var value = $( this ).text();
-                var current_lang = "{{ g.current_lang }}";
+                var value = "/"+$( this ).text();
+                var current_lang = "/"+"{{ g.current_lang }}";
 {#                console.log($( this ).text());#}
 {#                $( this ).href = window.location.href.replace("{{ g.current_lang }}", value);#}
 
 
                 if(current_lang!=""){
-                    console.log(current_lang);
+
                     window.location.href = window.location.href.replace(current_lang, value);
                 }else{
-                    console.log(window.location.href + "/" + value);
-                    window.location.href = window.location.href + "" + value;
+                    window.location.href = window.location.href + value+"/";
                 }
 
 

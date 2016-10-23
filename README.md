@@ -45,15 +45,30 @@ Import all election data:
 TODO: Document
 
 ### Elections
+#### Parliamentary
 **GET** election results grouped by territories:
-/api/izbori/<string:election_type_slug>/godina/<int:year>/teritorija
+/api/izbori/parlamentarni/godina/<int:godina>/teritorija
 
 **GET** election results for a given territory:
-/api/izbori/<string:election_type_slug>/godina/<int:year>/teritorija/<string:territory_slug>
+/api/izbori/parlamentarni/godina/<int:godina>/teritorija/<string:teritorija_slug>
 
 **GET** election results grouped by parties:
-/api/izbori/<string:election_type_slug>/godina/<int:year>/izborna-lista
+/api/izbori/parlamentarni/godina/<int:godina>/izborna-lista
 
 **GET** election results for a given party:
-/api/izbori/<string:election_type_slug>/godina/<int:year>/izborna-lista/<string:izborna_lista_slug>
+/api/izbori/parlamentarni/godina/<int:godina>/izborna-lista/<string:izborna_lista_slug>
 
+#### Presidential
+Note: value of 'krug' parameter can be set to either 'prvi' or 'drugi'.
+
+**GET** election results grouped by territories:
+/api/izbori/predsjednicki/godina/<int:godina>/krug/<string:krug>/teritorija
+
+**GET** election results for a given territory:
+/api/izbori/predsjednicki/godina/<int:godina>/krug/<string:krug>/teritorija/<string:teritorija_slug>
+
+**GET** election results grouped by candidate:
+/api/izbori/predsjednicki/godina/<int:godina>/krug/<string:krug>/kandidat
+
+**GET** election results for a given candidate:
+/api/izbori/predsjednicki/godina/<int:godina>/krug/<string:krug>/kandidat/<string:kandidat_slug>

@@ -113,11 +113,13 @@ def init_modules(app):
     from app.mod_landing_page.views import mod_landing_page
     #from app.mod_map.views import mod_map
     from app.mod_api.views import mod_api
+    from app.mod_api_izbori.views import mod_api_izbori
     from app.mod_about.views import mod_about
     from app.mod_search.views import mod_search
 
     app.register_blueprint(mod_landing_page)
     #app.register_blueprint(mod_map)
     app.register_blueprint(mod_api)
+    app.register_blueprint(mod_api_izbori)
     app.register_blueprint(mod_about) 
     app.register_blueprint(mod_search) 

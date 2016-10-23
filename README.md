@@ -54,17 +54,17 @@ TODO: Document
 ### Elections
 **GET** election results grouped by territories:
 
-/api/izbori/&lt;string:election_type_slug&lt;/godina/&lt;int:year&lt;/teritorija
+/api/izbori/&lt;string:election_type_slug&gt;/godina/&lt;int:year&gt;/teritorija
 
 **GET** election results for a given territory:
 
-/api/izbori/&lt;string:election_type_slug&lt;/godina/&lt;int:year&lt;/teritorija/&lt;string:territory_slug&lt;
+/api/izbori/&lt;string:election_type_slug&gt;/godina/&lt;int:year&gt;/teritorija/&lt;string:territory_slug&gt;
 
 **GET** election results grouped by parties:
 
-/api/izbori/&lt;string:election_type_slug&lt;/godina/&lt;int:year&lt;/izborna-lista
+/api/izbori/&lt;string:election_type_slug&gt;/godina/&lt;int:year&gt;/izborna-lista
 
 **GET** election results for a given party:
 
-/api/izbori/&lt;string:election_type_slug&lt;/godina/&lt;int:year&lt;/izborna-lista/&lt;string:izborna_lista_slug&lt;
+/api/izbori/&lt;string:election_type_slug&gt;/godina/&lt;int:year&gt;/izborna-lista/&lt;string:izborna_lista_slug&gt;
 

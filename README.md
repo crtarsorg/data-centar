@@ -12,6 +12,13 @@ cp config-template.cfg config.cfg
 nano config.cfg
 ```
 
+## Run
+`bash run.sh`
+
+For debug mode:
+
+`bash run-debug.sh`
+
 ## Importing Data
 ### Budget Data
 

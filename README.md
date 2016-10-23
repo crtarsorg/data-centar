@@ -4,6 +4,14 @@
 
 `bash install.sh`
 
+## Configure
+Create configuration file and set config property values:
+
+```
+cp config-template.cfg config.cfg
+nano config.cfg
+```
+
 ## Importing Data
 ### Budget Data
 
@@ -78,7 +86,7 @@ Note: value of 'krug' parameter can be set to either 'prvi' or 'drugi'.
 
 /api/izbori/predsjednicki/godina/&lt;int:godina&gt;/krug/&lt;string:krug&gt;/teritorija/&lt;string:teritorija_slug&gt;
 
-**GET** election results grouped by candidate:
+**GET** election results grouped by candidates:
 
 /api/izbori/predsjednicki/godina/&lt;int:godina&gt;/krug/&lt;string:krug&gt;/kandidat
 

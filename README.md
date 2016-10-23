@@ -84,4 +84,4 @@ Note: value of 'krug' parameter can be set to either 'prvi' or 'drugi'.
 
 **GET** election results for a given candidate:
 
-/api/izbori/predsjednicki/godina/&lt;int:godina&gt;/krug/&lt;string:krug&gt;/kandidat/&lt;string:kandidat_slug&gt
+/api/izbori/predsjednicki/godina/&lt;int:godina&gt;/krug/&lt;string:krug&gt;/kandidat/&lt;string:kandidat_slug&gt;

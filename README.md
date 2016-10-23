@@ -34,13 +34,13 @@ Data is available for the following municipalities:
 
 ### Election Data
 
-Import 2016 Parliamentary Election data:
+Import data for 2016 Parliamentary Election:
 
 `bash import-izbori.sh parlamentarni 2016`
 
-Import 2014 Presidential Election data:
+Import data for 2008 first round Presidential Election:
 
-`bash import-izbori.sh predsjednicki 2014`
+`bash import-izbori.sh predsjednicki 2008 januar prvi`
 
 Import all election data:
 
@@ -71,13 +71,17 @@ TODO: Document
 Note: value of 'krug' parameter can be set to either 'prvi' or 'drugi'.
 
 **GET** election results grouped by territories:
-/api/izbori/predsjednicki/godina/<int:godina>/krug/<string:krug>/teritorija
+
+/api/izbori/predsjednicki/godina/&lt;int:godina&gt;/krug/&lt;string:krug&gt;/teritorija
 
 **GET** election results for a given territory:
-/api/izbori/predsjednicki/godina/<int:godina>/krug/<string:krug>/teritorija/<string:teritorija_slug>
+
+/api/izbori/predsjednicki/godina/&lt;int:godina&gt;/krug/&lt;string:krug&gt;/teritorija/&lt;string:teritorija_slug&gt;
 
 **GET** election results grouped by candidate:
-/api/izbori/predsjednicki/godina/<int:godina>/krug/<string:krug>/kandidat
+
+/api/izbori/predsjednicki/godina/&lt;int:godina&gt;/krug/&lt;string:krug&gt;/kandidat
 
 **GET** election results for a given candidate:
-/api/izbori/predsjednicki/godina/<int:godina>/krug/<string:krug>/kandidat/<string:kandidat_slug>
+
+/api/izbori/predsjednicki/godina/&lt;int:godina&gt;/krug/&lt;string:krug&gt;/kandidat/&lt;string:kandidat_slug&gt

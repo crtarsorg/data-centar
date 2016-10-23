@@ -85,13 +85,6 @@ class IzboriDataImporter(object):
                 'krug': cyrtranslit.to_cyrillic(rnd.title(), 'sr')
             })
 
-            print {
-                'izbori': cyrtranslit.to_cyrillic(election_type.title(), 'sr'),
-                'godina': int(year),
-                'mesec': cyrtranslit.to_cyrillic(month.title(), 'sr'),
-                'krug': cyrtranslit.to_cyrillic(rnd.title(), 'sr')
-            }
-
             print 'Importing data for %s %s %s %s...' % (election_type, year, month, rnd)
 
         else:

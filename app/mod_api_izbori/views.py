@@ -34,7 +34,7 @@ def parliamentary_votes_grouped_by_party(election_type, year):
     return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')
 
 
-@mod_api_izbori.route("/<string:election_type>/godina/<int:godina>/izborna-lista/<string:party_slug>", methods=['GET'])
+@mod_api_izbori.route("/<string:election_type>/godina/<int:year>/izborna-lista/<string:party_slug>", methods=['GET'])
 def parliamentary_votes_for_party(election_type, year, party_slug):
     rsp = izbori_data_provider.get_votes_grouped_by_party_or_candidate(election_type, year, party_slug)
     return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')

@@ -70,19 +70,19 @@ TODO: Document
 #### Parliamentary
 **GET** election results grouped by territories:
 
-/api/izbori/parlamentarni/godina/&lt;int:year&gt;/teritorija
+/api/izbori/parlamentarni/godina/&lt;int:godina&gt;/teritorija
 
 **GET** election results for a given territory:
 
-/api/izbori/parlamentarni/godina/&lt;int:year&gt;/teritorija/&lt;string:territory_slug&gt;
+/api/izbori/parlamentarni/godina/&lt;int:godina&gt;/teritorija/&lt;string:territory_slug&gt;
 
 **GET** election results grouped by parties:
 
-/api/izbori/parlamentarni/godina/&lt;int:year&gt;/izborna-lista
+/api/izbori/parlamentarni/godina/&lt;int:godina&gt;/izborna-lista
 
 **GET** election results for a given party:
 
-/api/izbori/parlamentarni/godina/&lt;int:year&gt;/izborna-lista/&lt;string:izborna_lista_slug&gt;
+/api/izbori/parlamentarni/godina/&lt;int:godina&gt;/izborna-lista/&lt;string:izborna_lista_slug&gt;
 
 #### Presidential
 Note: value of 'krug' parameter can be set to either 'prvi' or 'drugi'.

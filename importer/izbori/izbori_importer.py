@@ -47,6 +47,16 @@ class IzboriDataImporter(object):
                     }
                 }
 
+                # All values with capital letters are grouped regions
+                # we need to mark them so that we don't count votes more than once
+                territory_slug = slugify(cyrtranslit.to_latin(territory.encode('utf-8'), 'sr'))
+
+                if territory_slug.isupper():
+                    results[territory][candidate]['skupiti'] = True
+                else:
+                    results[territory][candidate]['skupiti'] = False
+
+                # Set remaining values depending on whether is is a presidential or parliamentary election
                 if election_type == 'predsjednicki':
                     month_cyr = cyrtranslit.to_cyrillic(month.title(), 'sr')
                     rnd_cyr = cyrtranslit.to_cyrillic(rnd.title(), 'sr')

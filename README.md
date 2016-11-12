@@ -108,7 +108,7 @@ Data Source 1 only supports requests from 1 through 3 for all election types and
 
 Data Source 2 supports from 1 through 4 but only for 2014 and 2016 parliamentary elections.
 
-_Note: Requests for territory_admin_level **4** for Data Source 2 might return an error due to the large size of the response it generates. This is because it attempts to fetch results disaggregated by  polling station and there are a lot of polling stations._**This needs to be fixed, probably with pagination.**
+_Note: Requests for territory_admin_level **4** for Data Source 2 might return an error due to the large size of the response it generates. This is because it attempts to fetch results disaggregated by  polling station and there are a lot of polling stations. _**This needs to be fixed, probably with pagination.**
 
 
 ##### The API Requests

@@ -71,8 +71,6 @@ class IzboriDataProvider():
             {'$project': project}
         ]
 
-        print pipeline
-
         rsp = mongo.db[collection].aggregate(pipeline, allowDiskUse=True)
 
         return rsp['result']

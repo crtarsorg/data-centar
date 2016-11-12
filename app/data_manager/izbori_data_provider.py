@@ -4,50 +4,72 @@ import cyrtranslit
 
 class IzboriDataProvider():
 
-    def get_votes_grouped_by_territory(self, election_type_slug, year, territory_slug=None, round_slug=None):
+    def get_votes_grouped_by_territory(self, data_source, election_type_slug, year, instanca=None, territory_slug=None, round_slug=None):
+        collection = 'izbori' if data_source == 1 else 'izbori2'
 
         match = {
             'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
-            'godina': year
+            'godina': year,
+            'instanca': instanca
         }
+
+        # For now, we only support territorial levels for parliament elections
+        #if election_type_slug != 'predsjednicki' and instanca is not None:
+            #match['instanca'] = instanca
 
         if round_slug is not None:
             round_val = cyrtranslit.to_cyrillic(round_slug.title(), 'sr')
             match['krug'] = round_val
-            print round_val
 
         if territory_slug is not None:
             match['teritorijaSlug'] = territory_slug
 
+        group = {
+            '_id': {
+                'teritorija': '$teritorija',
+                'teritorijaSlug': '$teritorijaSlug',
+            },
+            'rezultat': {
+                '$push': self.get_push_pipeline_operation_for_votes_grouped_by_territory_group_by_result(
+                    election_type_slug)
+            }
+        }
+
+        if data_source == 2:
+            group['_id']['parentTeritorija'] = '$parentTeritorija'
+            group['_id']['parentTeritorijaSlug'] = '$parentTeritorijaSlug'
+            group['_id']['adresaBirackogMesta'] = '$adresaBirackogMesta'
+            group['_id']['koordinateBirackomMestu'] = '$koordinateBirackomMestu'
+            group['_id']['brojUpisanihBiracaUBirackiSpisak'] = '$brojUpisanihBiracaUBirackiSpisak'
+            group['_id']['biraciKojiSuGlasali'] = '$biraciKojiSuGlasali'
+            group['_id']['brojPrimljenihGlasackihListica'] = '$brojPrimljenihGlasackihListica'
+            group['_id']['brojNeupoTrebljenihGlasackihListica'] = '$brojNeupoTrebljenihGlasackihListica'
+            group['_id']['brojGlasackihListicaUKutiji'] = '$brojGlasackihListicaUKutiji'
+            group['_id']['vazeciGlasackiListici'] = '$vazeciGlasackiListici'
+
+        project = {
+            '_id': 0,
+            'teritorija': '$_id.teritorija',
+            'teritorijaSlug': '$_id.teritorijaSlug',
+            'rezultat': 1
+        }
+
         pipeline = [
             {'$match': match},
-            {'$group': {
-                '_id': {
-                    'teritorija': '$teritorija',
-                    'teritorijaSlug': '$teritorijaSlug',
-                },
-                'rezultat': {
-                    '$push': self.get_push_pipeline_operation_for_votes_grouped_by_territory_group_by_result(
-                        election_type_slug)
-                }
-            }},
-            {'$project': {
-                '_id': 0,
-                'teritorija': '$_id.teritorija',
-                'teritorijaSlug': '$_id.teritorijaSlug',
-                'rezultat': 1
-            }}
+            {'$group': group},
+            {'$project': project}
         ]
 
-        rsp = mongo.db['izbori'].aggregate(pipeline)
+        rsp = mongo.db[collection].aggregate(pipeline, allowDiskUse=True)
 
-        if territory_slug is not None:
-            return rsp['result'][0]
-        else:
-            return rsp['result']
+        #if territory_slug is not None:
+        #    return rsp['result'][0]
+        #else:
+        #    return rsp['result']
+        return rsp['result']
 
-
-    def get_votes_grouped_by_party_or_candidate(self, election_type_slug, year, party_or_candidate_slug=None, round_slug=None):
+    def get_votes_grouped_by_party_or_candidate(self, data_source, election_type_slug, year, party_or_candidate_slug=None, round_slug=None):
+        collection = 'izbori' if data_source == 1 else 'izbori2'
 
         match = {
             'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
@@ -64,22 +86,36 @@ class IzboriDataProvider():
             else:
                 match['izbornaListaSlug'] = party_or_candidate_slug
 
+        group = {
+            '_id': self.get_id_pipeline_operation_for_votes_grouped_by_party_or_candidate(election_type_slug),
+            'rezultat': {
+                '$push': {
+                    'teritorija': '$teritorija',
+                    'teritorijaSlug': '$teritorijaSlug',
+                    'rezultat': '$rezultat'
+                }
+            }
+        }
+
+        if data_source == 2:
+            group['_id']['parentTeritorija'] = '$parentTeritorija'
+            group['_id']['parentTeritorijaSlug'] = '$parentTeritorijaSlug'
+            group['_id']['adresaBirackogMesta'] = '$adresaBirackogMesta'
+            group['_id']['koordinateBirackomMestu'] = '$koordinateBirackomMestu'
+            group['_id']['brojUpisanihBiracaUBirackiSpisak'] = '$brojUpisanihBiracaUBirackiSpisak'
+            group['_id']['biraciKojiSuGlasali'] = '$biraciKojiSuGlasali'
+            group['_id']['brojPrimljenihGlasackihListica'] = '$brojPrimljenihGlasackihListica'
+            group['_id']['brojNeupoTrebljenihGlasackihListica'] = '$brojNeupoTrebljenihGlasackihListica'
+            group['_id']['brojGlasackihListicaUKutiji'] = '$brojGlasackihListicaUKutiji'
+            group['_id']['vazeciGlasackiListici'] = '$vazeciGlasackiListici'
+
         pipeline = [
             {'$match': match},
-            {'$group': {
-                '_id': self.get_id_pipeline_operation_for_votes_grouped_by_party_or_candidate(election_type_slug),
-                'rezultat': {
-                    '$push': {
-                        'teritorija': '$teritorija',
-                        'teritorijaSlug': '$teritorijaSlug',
-                        'rezultat': '$rezultat'
-                    }
-                }
-            }},
+            {'$group': group},
             {'$project': self.get_poject_pipeline_operation_for_votes_grouped_by_party_or_candidate(election_type_slug)}
         ]
 
-        rsp = mongo.db['izbori'].aggregate(pipeline)
+        rsp = mongo.db[collection].aggregate(pipeline)
 
         if party_or_candidate_slug is not None:
             return rsp['result'][0]

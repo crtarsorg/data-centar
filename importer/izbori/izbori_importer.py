@@ -51,10 +51,14 @@ class IzboriDataImporter(object):
                 # we need to mark them so that we don't count votes more than once
                 territory_slug = slugify(cyrtranslit.to_latin(territory.encode('utf-8'), 'sr'))
 
-                if territory_slug.isupper():
-                    results[territory][candidate]['skupiti'] = True
+                if territory_slug.isupper() and ('okrug' in territory_slug.lower() or territory_slug.lower() == 'grad-beograd') :
+                    results[territory][candidate]['instanca'] = 2
+
+                elif territory_slug.isupper():
+                    results[territory][candidate]['instanca'] = 1
+
                 else:
-                    results[territory][candidate]['skupiti'] = False
+                    results[territory][candidate]['instanca'] = 3
 
                 # Set remaining values depending on whether is is a presidential or parliamentary election
                 if election_type == 'predsjednicki':

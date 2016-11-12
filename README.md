@@ -76,30 +76,40 @@ TODO: Document
 
 ### Elections
 We have two data sources for election data:
+
 1 - Statistics Agency: Covers parliamentary elections from 2000 to 2016 and presidential electiosn from 2002 to 2012.
+
 2 - CRTA Spreadsheets: Only covers parliamentary elections for 2014 and 2016. Has more data than Statistics Agency such as valid/invalid ballots, other ballot information, and polling stations addresses (as well as coordinates for 2016).
 
 #### Parliamentary
 ##### Some notes on two URL parameters:
 
 **data_source_id**
+
 The value of data_source_id can either be **1**, to fetch data from Statistics Agency, or **2**, to fetch data from CRTA Spreadsheet.
+
 Using data_source_id **2** is currently only available for 2014 and 2016 parliamentary elections when disaggregating by territory.
+
 All other requests with Data Source **2** have not yet been implemented
 
 **territory_admin_level**
+
 The value of territory_admin_level can be from 1 to 4. The higher the number to more granular the territorial area we are retrieving data from.
 
 1: Large aggregation of territories that include several municipalities or counties. E.g.: "Vojvodina" or even just all of "Republic of Serbia."
+
 2: Counties (Okrug). E.g.: "Nisavski Okrug," "Rasinski Okrug," or even "Grad Beograd."
-3: Municipalities. E.g.: "Senta" or  "Plandiste."
+
+3: Municipalities. E.g.: "Senta" or "Plandiste."
+
 4: Polling Stations.
 
 Data Source 1 only supports requests from 1 through 3 for all election types and all years.
+
 Data Source 2 supports from 1 through 4 but only for 2014 and 2016 parliamentary elections.
 
-Requests for territory_admin_level **4** for Data Source 2 might return an error due to the large size of the response it generates. THis is because it attempts to fetch results disaggregated by  polling station and there are a lot of polling stations.
-**This needs to be fixed, probably with pagination.**
+_Note: Requests for territory_admin_level **4** for Data Source 2 might return an error due to the large size of the response it generates. This is because it attempts to fetch results disaggregated by  polling station and there are a lot of polling stations._**This needs to be fixed, probably with pagination.**
+
 
 ##### The API Requests
 

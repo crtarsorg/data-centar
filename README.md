@@ -92,7 +92,7 @@ Using data_source_id **2** is currently only available for 2014 and 2016 parliam
 
 All other requests with Data Source **2** have not yet been implemented
 
-**territory_admin_level**
+**territory_admin_level (instanca)**
 
 The value of territory_admin_level can be from 1 to 4. The higher the number to more granular the territorial area we are retrieving data from.
 
@@ -104,11 +104,11 @@ The value of territory_admin_level can be from 1 to 4. The higher the number to 
 
 4: Polling Stations.
 
-Data Source 1 only supports requests from 1 through 3 for all election types and all years.
+Data Source 1 only supports requests for territory_admin_level (instanca) 1 through 3 for all election types and all years.
 
-Data Source 2 supports from 1 through 4 but only for 2014 and 2016 parliamentary elections.
+Data Source 2 has data for territory_admin_level (instanca from 1 through 4 for 2014 parliamentary elections but only for 4 for 2016 parliamentary elections.
 
-_Note: Requests for territory_admin_level **4** for Data Source 2 might return an error due to the large size of the response it generates. This is because it attempts to fetch results disaggregated by  polling station and there are a lot of polling stations. _**This needs to be fixed, probably with pagination.**
+_Note: Requests for territory_admin_level **4** for Data Source 2 might throw an _"aggregation result exceeds maximum document size"_ error due to the large size of the response it generates. This is because it attempts to fetch results disaggregated by  polling station and there are a lot of polling stations. _**This needs to be fixed, probably with pagination.**
 
 
 ##### The API Requests
@@ -117,7 +117,7 @@ _Note: Requests for territory_admin_level **4** for Data Source 2 might return a
 
 /api/izbori/&lt;int:data_source_id&gt;/parlamentarni/godina/&lt;int:godina&gt;/teritorija/instanca/&lt;int:territory_admin_level&gt;
 
-_Note: Works with Data Source 2._
+_Note: Works with Data Source 2. For 2016 the only value we have for territory_admin_level (instanca) is 4.
 
 **GET** election results for a given territory:
 

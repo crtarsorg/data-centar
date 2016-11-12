@@ -9,13 +9,12 @@ class IzboriDataProvider():
 
         match = {
             'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
-            'godina': year,
-            'instanca': instanca
+            'godina': year
         }
 
         # For now, we only support territorial levels for parliament elections
-        #if election_type_slug != 'predsjednicki' and instanca is not None:
-            #match['instanca'] = instanca
+        if election_type_slug != 'predsjednicki' and instanca is not None:
+            match['instanca'] = instanca
 
         if round_slug is not None:
             round_val = cyrtranslit.to_cyrillic(round_slug.title(), 'sr')
@@ -54,18 +53,28 @@ class IzboriDataProvider():
             'rezultat': 1
         }
 
+        if data_source == 2:
+            project['parentTeritorija'] = '$_id.parentTeritorija'
+            project['parentTeritorijaSlug'] = '$_id.parentTeritorijaSlug'
+            project['adresaBirackogMesta'] = '$_id.adresaBirackogMesta'
+            project['koordinateBirackomMestu'] = '$_id.koordinateBirackomMestu'
+            project['brojUpisanihBiracaUBirackiSpisak'] = '$_id.brojUpisanihBiracaUBirackiSpisak'
+            project['biraciKojiSuGlasali'] = '$_id.biraciKojiSuGlasali'
+            project['brojPrimljenihGlasackihListica'] = '$_id.brojPrimljenihGlasackihListica'
+            project['brojNeupoTrebljenihGlasackihListica'] = '$_id.brojNeupoTrebljenihGlasackihListica'
+            project['brojGlasackihListicaUKutiji'] = '$_id.brojGlasackihListicaUKutiji'
+            project['vazeciGlasackiListici'] = '$_id.vazeciGlasackiListici'
+
         pipeline = [
             {'$match': match},
             {'$group': group},
             {'$project': project}
         ]
 
+        print pipeline
+
         rsp = mongo.db[collection].aggregate(pipeline, allowDiskUse=True)
 
-        #if territory_slug is not None:
-        #    return rsp['result'][0]
-        #else:
-        #    return rsp['result']
         return rsp['result']
 
     def get_votes_grouped_by_party_or_candidate(self, data_source, election_type_slug, year, party_or_candidate_slug=None, round_slug=None):

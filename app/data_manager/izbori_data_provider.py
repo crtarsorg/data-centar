@@ -173,3 +173,79 @@ class IzboriDataProvider():
                 'izbornaListaSlug': '$_id.izbornaListaSlug',
                 'rezultat': 1
             }
+
+    def get_push_pipeline_operation_for_top_indicators(self, election_type_slug):
+
+        if election_type_slug == 'predsjednicki':
+            return {
+                "_id": 0,
+                "kandidatSlug": "$_id.kandidatSlug",
+                "glasova": "$glasova",
+                "udeo": "$udeo",
+            }
+        else:
+            return {
+                "_id": 0,
+                'izbornaLista': '$izbornaLista',
+                'izbornaListaSlug': '$izbornaListaSlug',
+                "glasova": "$glasova",
+                "udeo": "$udeo",
+            }
+
+    def get_top_indicators_by_type(self, election_type_slug, godina, round_slug=None):
+
+        collection = 'izbori'
+        match = {
+            'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
+            'godina': godina
+
+        }
+
+        if round_slug is not None:
+            round_val = cyrtranslit.to_cyrillic(round_slug.title(), 'sr')
+            match['krug'] = round_val
+
+        if election_type_slug == 'predsjednicki':
+            group = {
+                '_id': {
+                    'kandidatSlug': '$kandidatSlug'
+                },
+                'glasova': {"$sum": "$rezultat.glasova"},
+                'udeo': {"$sum": "$rezultat.udeo"}
+            }
+        else:
+            group = {
+                '_id': {
+                    'kandidatSlug': '$kandidatSlug'
+                },
+                'glasova': {"$sum": "$rezultat.glasova"},
+                'udeo': {"$sum": "$rezultat.udeo"}
+            }
+
+        group_total = {
+            "_id": None,
+            "total": {
+                "$sum": "$rezultat.glasova"
+            }
+        }
+        sort = {
+            "glasova": -1
+        }
+        pipeline = [
+            {'$match': match},
+            {'$group': group},
+            {'$sort': sort},
+            {'$project': self.get_push_pipeline_operation_for_top_indicators(election_type_slug)}
+        ]
+        pipeline_total = [
+            {"$match": match},
+            {"$group": group_total}
+        ]
+        rsp_total = mongo.db[collection].aggregate(pipeline_total)
+        rsp = mongo.db[collection].aggregate(pipeline)
+        total_votes = rsp_total['result'][0]["total"]
+
+        for candidate in rsp['result']:
+            print candidate
+            candidate["udeo"] = (float(candidate["glasova"]) / total_votes) * 100
+        return [rsp['result'][0], rsp['result'][1]]

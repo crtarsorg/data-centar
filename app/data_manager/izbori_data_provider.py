@@ -186,25 +186,20 @@ class IzboriDataProvider():
         else:
             return {
                 "_id": 0,
-                'izbornaLista': '$izbornaLista',
-                'izbornaListaSlug': '$izbornaListaSlug',
+                'izbornaLista': '$_id.izbornaLista',
                 "glasova": "$glasova",
                 "udeo": "$udeo",
             }
 
-    def get_top_indicators_by_type(self, election_type_slug, godina, round_slug=None):
+    def get_top_indicators_by_type(self, data_source,election_type_slug, godina, instanca):
+        collection = 'izbori' if data_source == 1 else 'izbori2'
 
-        collection = 'izbori'
         match = {
             'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
-            'godina': godina
+            'godina': godina,
+            'instanca':instanca
 
         }
-
-        if round_slug is not None:
-            round_val = cyrtranslit.to_cyrillic(round_slug.title(), 'sr')
-            match['krug'] = round_val
-
         if election_type_slug == 'predsjednicki':
             group = {
                 '_id': {
@@ -216,12 +211,11 @@ class IzboriDataProvider():
         else:
             group = {
                 '_id': {
-                    'kandidatSlug': '$kandidatSlug'
+                    'izbornaLista': '$izbornaLista'
                 },
                 'glasova': {"$sum": "$rezultat.glasova"},
                 'udeo': {"$sum": "$rezultat.udeo"}
             }
-
         group_total = {
             "_id": None,
             "total": {
@@ -244,8 +238,9 @@ class IzboriDataProvider():
         rsp_total = mongo.db[collection].aggregate(pipeline_total)
         rsp = mongo.db[collection].aggregate(pipeline)
         total_votes = rsp_total['result'][0]["total"]
-
+        print total_votes
         for candidate in rsp['result']:
             print candidate
             candidate["udeo"] = (float(candidate["glasova"]) / total_votes) * 100
-        return [rsp['result'][0], rsp['result'][1]]
+
+        return [rsp['result'][0],rsp['result'][1]]

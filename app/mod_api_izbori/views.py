@@ -111,7 +111,7 @@ def presidential_votes_for_candidate(data_source, election_type, year, round_slu
         rsp = izbori_data_provider.get_votes_grouped_by_party_or_candidate(data_source, election_type, year, candidate_slug, round_slug)
         return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')
 
-@mod_api_izbori.route("/<string:election_type_slug>/<int:godina>", methods=['GET'])
-def top_indicators(election_type_slug,godina):
-        rsp = izbori_data_provider.get_top_indicators_by_type(election_type_slug,godina)
+@mod_api_izbori.route("/<int:data_source>/<string:election_type_slug>/godina/<int:godina>/instanca/<int:instanca>", methods=['GET'])
+def top_indicators(data_source,election_type_slug,godina, instanca):
+        rsp = izbori_data_provider.get_top_indicators_by_type(data_source, election_type_slug, godina, instanca)
         return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')

@@ -180,6 +180,7 @@ class IzboriDataProvider():
             return {
                 "_id": 0,
                 "kandidatSlug": "$_id.kandidatSlug",
+                "kandidat": "$_id.kandidat",
                 "glasova": "$glasova",
                 "udeo": "$udeo",
             }
@@ -203,7 +204,7 @@ class IzboriDataProvider():
         if election_type_slug == 'predsjednicki':
             group = {
                 '_id': {
-                    'kandidatSlug': '$kandidatSlug'
+                    'kandidat': '$kandidat'
                 },
                 'glasova': {"$sum": "$rezultat.glasova"},
                 'udeo': {"$sum": "$rezultat.udeo"}
@@ -242,5 +243,4 @@ class IzboriDataProvider():
         for candidate in rsp['result']:
             print candidate
             candidate["udeo"] = (float(candidate["glasova"]) / total_votes) * 100
-
-        return [rsp['result'][0],rsp['result'][1]]
+        return rsp['result']

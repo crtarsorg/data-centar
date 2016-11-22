@@ -22,18 +22,20 @@ class IzboriDataProvider():
 
         if territory_slug is not None:
             match['teritorijaSlug'] = territory_slug
-
         group = {
             '_id': {
                 'teritorija': '$teritorija',
                 'teritorijaSlug': '$teritorijaSlug',
             },
+
             'rezultat': {
                 '$push': self.get_push_pipeline_operation_for_votes_grouped_by_territory_group_by_result(
                     election_type_slug)
             }
         }
-
+        sort = {
+            "rezultat.glasova": -1
+        }
         if data_source == 2:
             group['_id']['parentTeritorija'] = '$parentTeritorija'
             group['_id']['parentTeritorijaSlug'] = '$parentTeritorijaSlug'
@@ -67,6 +69,7 @@ class IzboriDataProvider():
 
         pipeline = [
             {'$match': match},
+            {'$sort': sort},
             {'$group': group},
             {'$project': project}
         ]

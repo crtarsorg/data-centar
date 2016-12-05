@@ -50,5 +50,4 @@ def aggregated_classifications():
 def list_of_municipalities():
     query_params = json.loads(request.data)
     json_resp = DataProvider().calculate_sum_of_expenditure_types(query_params)
-
     return Response(response=json_util.dumps(json_resp), status=200, mimetype="application/json")

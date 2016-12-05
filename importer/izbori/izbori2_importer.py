@@ -166,6 +166,7 @@ class Izbori2DataImporter(object):
                     territory_slug = slugify(cyrtranslit.to_latin(territory, 'sr'), to_lower=True)
 
                     polling_station_num = int(row[1].strip()) if row[1].strip() is not '' else row[1].strip()
+
                     polling_station_address = row[2].strip()
                     registered_voters_count = int(row[3].strip())
                     voters_who_voted_count = int(row[4].strip())
@@ -229,7 +230,6 @@ class Izbori2DataImporter(object):
                         doc['rezultat'] = {}
                         doc['rezultat']['glasova'] = int(row[j])
                         doc['rezultat']['udeo'] = float(row[j+1])
-
                         # Set remaining values depending on whether is is a presidential or parliamentary election
                         if election_type == 'predsjednicki':
                             month_cyr = cyrtranslit.to_cyrillic(month.title(), 'sr')

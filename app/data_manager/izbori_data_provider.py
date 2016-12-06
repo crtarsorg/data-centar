@@ -669,7 +669,6 @@ class IzboriDataProvider():
         }
         pipeline = [
             {'$match': match},
-
             {'$group': group},
             {'$project': project}
         ]

@@ -28,15 +28,13 @@ class IzboriDataProvider():
                 'teritorija': '$teritorija',
                 'teritorijaSlug': '$teritorijaSlug',
             },
-
             'rezultat': {
                 '$push': self.get_push_pipeline_operation_for_votes_grouped_by_territory_group_by_result(
-                    election_type_slug)
+                    election_type_slug),
+
             },
 
         }
-
-
         sort = {
             "rezultat.glasova": -1
         }
@@ -81,27 +79,22 @@ class IzboriDataProvider():
         ]
 
         rsp = mongo.db[collection].aggregate(pipeline, allowDiskUse=True)
-
         return rsp['result']
 
     def get_votes_grouped_by_party_or_candidate(self, data_source, election_type_slug, year, party_or_candidate_slug=None, round_slug=None):
         collection = 'izbori' if data_source == 1 else 'izbori2'
-
         match = {
             'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
             'godina': year
         }
-
         if round_slug is not None:
             round_val = cyrtranslit.to_cyrillic(round_slug.title(), 'sr')
             match['krug'] = round_val
-
         if party_or_candidate_slug is not None:
             if election_type_slug == 'predsjednicki':
                 match['kandidatSlug'] = party_or_candidate_slug
             else:
                 match['izbornaListaSlug'] = party_or_candidate_slug
-
         group = {
             '_id': self.get_id_pipeline_operation_for_votes_grouped_by_party_or_candidate(election_type_slug),
             'rezultat': {
@@ -220,7 +213,6 @@ class IzboriDataProvider():
                 },
                 'glasova': {"$sum": "$rezultat.glasova"},
                 'udeo': {"$sum": "$rezultat.udeo"},
-
 
             }
         else:
@@ -641,7 +633,9 @@ class IzboriDataProvider():
             "name": "ДЕМОКРАТСКА СТРАНКА СРБИЈЕ-ВОЈИСЛАВ КОШТУНИЦА",
             "color": "#ffffff"
         })
+
         return data
+
 
     def get_winners_for_each_territory(self, data_source,election_type_slug,year,instanca):
         collection = 'izbori' if data_source == 1 else 'izbori2'

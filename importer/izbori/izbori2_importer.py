@@ -12,8 +12,6 @@ mongo = MongoClient()
 # Create mongo database instance
 db = mongo['datacentar']
 collection = 'izbori2'
-
-
 class Izbori2DataImporter(object):
 
     def import_data(self, election_type, year, month=None, rnd=None):
@@ -99,11 +97,18 @@ class Izbori2DataImporter(object):
                                                               to_lower=True)
                         doc['brojBirackogMesta'] = polling_station_num
                         doc['adresaBirackogMesta'] = polling_station_address
-
+                    total_votes=0
+                    udeo=0
                     for j in range(12, len(row)):
                         doc['rezultat'] = {}
                         doc['rezultat']['glasova'] = int(row[j])
-                        # doc['rezultat']['udeo'] = None
+                        if int(row[j]) != 0:
+                            total_votes += int(row[j])
+                            udeo = (float(int(row[j])) / total_votes) * 100
+
+                        else:
+                            udeo = 0.0
+                        doc['rezultat']['udeo'] = udeo
                         doc['teritorija'] = territory
                         doc['teritorijaSlug'] = territory_slug
                         doc['izbori'] = cyrtranslit.to_cyrillic(election_type.title(), 'sr')
@@ -203,11 +208,18 @@ class Izbori2DataImporter(object):
                                                               to_lower=True)
                         doc['brojBirackogMesta'] = polling_station_num
                         doc['adresaBirackogMesta'] = polling_station_address
-
+                    total_votes=0
+                    udeo=0
                     for j in range(10, len(row)):
                         doc['rezultat'] = {}
                         doc['rezultat']['glasova'] = int(row[j])
-                        # doc['rezultat']['udeo'] = None
+                        if int(row[j]) != 0:
+                            total_votes += int(row[j])
+                            udeo = (float(int(row[j])) / total_votes) * 100
+
+                        else:
+                            udeo = 0.0
+                        doc['rezultat']['udeo'] = udeo
                         doc['teritorija'] = territory
                         doc['teritorijaSlug'] = territory_slug
                         doc['izbori'] = cyrtranslit.to_cyrillic(election_type.title(), 'sr')
@@ -321,10 +333,18 @@ class Izbori2DataImporter(object):
                     doc['instanca'] = 4
 
                     # print '---------'
+                    total_votes=0
+                    udeo=0
                     for j in range(14, len(row)):
                         doc['rezultat'] = {}
                         doc['rezultat']['glasova'] = int(row[j])
-                        # doc['rezultat']['udeo'] = None
+                        if int(row[j]) != 0:
+                            total_votes += int(row[j])
+                            udeo = (float(int(row[j])) / total_votes) * 100
+
+                        else:
+                            udeo = 0.0
+                        doc['rezultat']['udeo'] = udeo
 
                         doc['izbornaLista'] = candidates_or_parties[str(j)]
                         doc['izbornaListaSlug'] = slugify(cyrtranslit.to_latin(candidates_or_parties[str(j)], 'sr'),
@@ -498,6 +518,8 @@ class Izbori2DataImporter(object):
                         doc['adresaBirackogMesta'] = polling_station_address
 
                     if int(year)==2003 and election_type in ["predsjednicki","parlamentarni"]:
+                        total_votes=0
+                        udeo=0
                         for j in xrange(6, len(row)):
                             doc['teritorija'] = territory
                             doc['teritorijaSlug'] = territory_slug
@@ -506,6 +528,17 @@ class Izbori2DataImporter(object):
 
                             doc['rezultat'] = {}
                             doc['rezultat']['glasova'] = int(row[j])
+
+
+                            if int(row[j]) != 0:
+                                total_votes += int(row[j])
+                                udeo = (float(int(row[j])) / total_votes) * 100
+
+                            else:
+                                udeo = 0.0
+
+                            doc['rezultat']['udeo'] =float(udeo)
+
 
                             doc['izbornaLista'] = candidates_or_parties[str(j)]
                             doc['izbornaListaSlug'] = slugify(
@@ -524,6 +557,8 @@ class Izbori2DataImporter(object):
                                 db[collection].insert(docs)
                                 docs = []
                     elif int(year) == 2002 and election_type == "predsjednicki":
+                        total_votes=0
+                        udeo=0
                         for j in xrange(7, len(row)):
                             doc['teritorija'] = territory
                             doc['teritorijaSlug'] = territory_slug
@@ -534,6 +569,13 @@ class Izbori2DataImporter(object):
 
 
                             doc['rezultat']['glasova'] = int(row[j])
+                            if int(row[j]) != 0:
+                                total_votes += int(row[j])
+                                udeo = (float(int(row[j])) / total_votes) * 100
+                                print udeo
+                            else:
+                                udeo = 0.0
+                            doc['rezultat']['udeo'] = udeo
                             # Set remaining values depending on whether is is a presidential or parliamentary election
 
                             month_cyr = cyrtranslit.to_cyrillic(month.title(), 'sr')
@@ -558,6 +600,8 @@ class Izbori2DataImporter(object):
                                 db[collection].insert(docs)
                                 docs = []
                     elif int(year) == 2004 and election_type == "predsjednicki":
+                        total_votes=0
+                        udeo=0
                         for j in xrange(11, len(row)):
                             doc['teritorija'] = territory
                             doc['teritorijaSlug'] = territory_slug
@@ -567,6 +611,13 @@ class Izbori2DataImporter(object):
                             doc['rezultat'] = {}
 
                             doc['rezultat']['glasova'] = int(row[j])
+                            if int(row[j]) != 0:
+                                total_votes += int(row[j])
+                                udeo = (float(int(row[j])) / total_votes) * 100
+                                print udeo
+                            else:
+                                udeo = 0.0
+                            doc['rezultat']['udeo'] = udeo
                             # Set remaining values depending on whether is is a presidential or parliamentary election
 
                             month_cyr = cyrtranslit.to_cyrillic(month.title(), 'sr')
@@ -592,6 +643,8 @@ class Izbori2DataImporter(object):
                                 docs = []
 
                     else:
+                        total_votes=0
+                        udeo=0
                         for j in xrange(13, len(row), 2):
                             # Set generic values
                             doc['teritorija'] = territory
@@ -601,7 +654,13 @@ class Izbori2DataImporter(object):
 
                             doc['rezultat'] = {}
                             doc['rezultat']['glasova'] = int(row[j])
-                            doc['rezultat']['udeo'] = float(row[j+1])
+                            if int(row[j]) != 0:
+                                total_votes += int(row[j])
+                                udeo = (float(int(row[j])) / total_votes) * 100
+                                print udeo
+                            else:
+                                udeo = 0.0
+                            doc['rezultat']['udeo'] = udeo
                             # Set remaining values depending on whether is is a presidential or parliamentary election
                             if election_type == 'predsjednicki':
                                 month_cyr = cyrtranslit.to_cyrillic(month.title(), 'sr')

@@ -453,7 +453,10 @@ class Izbori2DataImporter(object):
                         voters_who_voted_count = int(row[4].strip())
 
                     if int(year) == 2003 and election_type in["predsjednicki","parlamentarni"]:
+                        voters_who_voted_count = int(row[4].strip())
                         total_voter_turn_out = float(row[5].strip())
+
+
                     if int(year) == 2002 and election_type == "predsjednicki" and rnd=="prvi":
                         total_voter_turn_out = float(row[4].strip())
                         voters_who_voted_count = int(row[5].strip())
@@ -472,10 +475,11 @@ class Izbori2DataImporter(object):
                         valid_ballots_count = int(row[11].strip())
                         valid_ballots_percent = float(row[12].strip())
 
+
                     doc['brojUpisanihBiracaUBirackiSpisak'] = registered_voters_count
                     doc['biraciKojiSuGlasali'] = {}
-                    if int(year)!=2003 and election_type!="predsjednicki":
-                        doc['biraciKojiSuGlasali']['broj'] = voters_who_voted_count
+
+                    doc['biraciKojiSuGlasali']['broj'] = voters_who_voted_count
 
                     if int(year) in [2002, 2003] and election_type in ["predsjednicki", "parlamentarni"]:
                         doc['odzivBiraca']=total_voter_turn_out

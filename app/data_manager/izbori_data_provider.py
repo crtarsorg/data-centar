@@ -5,9 +5,8 @@ from random import randint
 from flask import jsonify, request
 class IzboriDataProvider():
 
-    def get_votes_grouped_by_territory(self, data_source, election_type_slug, year, instanca, territory_slug=None, round_slug=None):
+    def get_votes_grouped_by_territory(self, data_source, election_type_slug, year, instanca, territory_slug=None, round_slug=None,range_of_documents=None):
         collection = 'izbori' if data_source == 1 else 'izbori2'
-
         match = {
             'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
             'godina': year
@@ -71,14 +70,17 @@ class IzboriDataProvider():
             project['vazeciGlasackiListici'] = '$_id.vazeciGlasackiListici'
 
         pipeline = [
-            {'$match': match},
-            {'$sort': sort},
-            {'$group': group},
+                {'$match': match},
+                {'$sort': sort},
+                {'$limit':100},
+                {'$group': group},
+                {'$project': project},
 
-            {'$project': project}
         ]
-
-        rsp = mongo.db[collection].aggregate(pipeline, allowDiskUse=True)
+        if range_of_documents is not None:
+            rsp = mongo.db[collection].aggregate(pipeline, allowDiskUse=True)
+        else:
+            rsp = mongo.db[collection].aggregate(pipeline, allowDiskUse=True)
 
         return rsp['result']
 
@@ -199,7 +201,7 @@ class IzboriDataProvider():
 
             }
 
-    def get_top_indicators_by_type(self, data_source,election_type_slug, godina, instanca):
+    def get_top_indicators_by_type(self, data_source,election_type_slug, godina, instanca,round_slug=None):
         collection = 'izbori' if data_source == 1 else 'izbori2'
 
         match = {
@@ -208,10 +210,15 @@ class IzboriDataProvider():
             'instanca':instanca
 
         }
+
         if election_type_slug == 'predsjednicki':
+            if round_slug is not None:
+                round_val = cyrtranslit.to_cyrillic(round_slug.title(), 'sr')
+                match['krug'] = round_val
             group = {
                 '_id': {
-                    'kandidat': '$kandidat'
+                    'kandidat': '$kandidat',
+                    'kandidatSlug': '$kandidatSlug'
                 },
                 'glasova': {"$sum": "$rezultat.glasova"},
                 'udeo': {"$sum": "$rezultat.udeo"},
@@ -244,14 +251,14 @@ class IzboriDataProvider():
         ]
         pipeline_total = [
             {"$match": match},
+            {"$match": match},
             {"$group": group_total}
         ]
-        rsp_total = mongo.db[collection].aggregate(pipeline_total)
+        rsp_total = mongo.db[collection].aggregate(pipeline_total,allowDiskUse=True)
         rsp = mongo.db[collection].aggregate(pipeline)
         total_votes = rsp_total['result'][0]["total"]
 
         for candidate in rsp['result']:
-
             candidate["udeo"] = (float(candidate["glasova"]) / total_votes) * 100
         return rsp['result']
 
@@ -297,16 +304,15 @@ class IzboriDataProvider():
         percentage=0;
         for rezultat in rsp['result']:
             total_voters+=rezultat['biraciKojiSuGlasali']
-            total_registered+=rezultat['brojUpisanihBiracaUBirackiSpisak']
+
+            if rezultat['brojUpisanihBiracaUBirackiSpisak']!=0:
+                total_registered+=rezultat['brojUpisanihBiracaUBirackiSpisak']
             percentage=(float(total_voters) / total_registered) * 100
         return {'percentage':percentage, 'total_voters': total_voters}
 
 
 
     def get_political_parties(self,kandidat_name=None):
-
-
-
         data = []
         #year 2000
         data.append({
@@ -949,6 +955,14 @@ class IzboriDataProvider():
             "name": 'Двери за живот Србије',
             "color": "#4F4633"
         })
+
+        #presidential canditates
+        data.append({
+            'slug': "dr-vojislav-seselj-srs",
+            "name": 'др Војислав Шешељ (СРС)',
+            "color": "#4F4633"
+        })
+
         if kandidat_name is not None:
             jsondata={}
             selected_color=""

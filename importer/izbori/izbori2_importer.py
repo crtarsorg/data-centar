@@ -61,7 +61,7 @@ class Izbori2DataImporter(object):
 
                     doc['brojPrimljeniGlasackiListica'] = ballots_received_count
                     doc['brojNeupotrebljenihGlasackiListica']=unused_ballots_count
-                    doc['brojBiracaUpisanihUBirackiSpisak'] = number_of_voters_registered
+                    doc['brojUpisanihBiracaUBirackiSpisak'] = number_of_voters_registered
                     doc['nevazeciGlasackiListici']= invalid_ballots_count
                     doc['biraciKojiSuGlasali'] = {}
                     doc['biraciKojiSuGlasali']['broj'] = voters_who_voted_count
@@ -172,7 +172,7 @@ class Izbori2DataImporter(object):
 
                     doc['brojPrimljeniGlasackiListica'] = ballots_received_count
                     doc['brojNeupotrebljenihGlasackiListica']=unused_ballots_count
-                    doc['brojBiracaUpisanihUBirackiSpisak'] = number_of_voters_registered
+                    doc['brojUpisanihBiracaUBirackiSpisak'] = number_of_voters_registered
                     doc['nevazeciGlasackiListici']= invalid_ballots_count
                     doc['biraciKojiSuGlasali'] = {}
                     doc['biraciKojiSuGlasali']['broj'] = voters_who_voted_count
@@ -419,10 +419,12 @@ class Izbori2DataImporter(object):
                         print row_count
 
                     else:
+                        print row_count
                         territory = row[0].strip()
                         territory_slug = slugify(cyrtranslit.to_latin(territory, 'sr'), to_lower=True)
                         polling_station_num = int(row[1].strip()) if row[1].strip() is not '' else row[1].strip()
                         polling_station_address = row[2].strip()
+
                         registered_voters_count = int(row[3].strip())
 
                     if int(year) == 2012 and election_type == "predsjednicki":
@@ -457,10 +459,9 @@ class Izbori2DataImporter(object):
                         total_voter_turn_out = float(row[5].strip())
 
 
-                    if int(year) == 2002 and election_type == "predsjednicki" and rnd=="prvi":
-                        total_voter_turn_out = float(row[4].strip())
-                        voters_who_voted_count = int(row[5].strip())
-                    if int(year) == 2002 and election_type == "predsjednicki" and rnd=="drugi":
+
+                    if int(year) == 2002 and election_type == "predsjednicki":
+                        print row_count
                         voters_who_voted_count = int(row[4].strip())
                         total_voter_turn_out = float(row[5].strip())
 
@@ -521,7 +522,7 @@ class Izbori2DataImporter(object):
                         doc['brojBirackogMesta'] = polling_station_num
                         doc['adresaBirackogMesta'] = polling_station_address
 
-                    if int(year)==2003 and election_type in ["predsjednicki","parlamentarni"]:
+                    if int(year)==2003 and election_type in ["parlamentarni"]:
                         total_votes=0
                         udeo=0
                         for j in xrange(6, len(row)):
@@ -574,9 +575,10 @@ class Izbori2DataImporter(object):
 
                             doc['rezultat']['glasova'] = int(row[j])
                             if int(row[j]) != 0:
+                                print int(row[j])
                                 total_votes += int(row[j])
                                 udeo = (float(int(row[j])) / total_votes) * 100
-                                print udeo
+
                             else:
                                 udeo = 0.0
                             doc['rezultat']['udeo'] = udeo
@@ -603,6 +605,51 @@ class Izbori2DataImporter(object):
                             if len(docs) % 1000 == 0:
                                 db[collection].insert(docs)
                                 docs = []
+                    elif int(year) == 2003 and election_type == "predsjednicki":
+                        total_votes=0
+                        udeo=0
+                        for j in xrange(6, len(row)):
+                            doc['teritorija'] = territory
+                            doc['teritorijaSlug'] = territory_slug
+                            doc['izbori'] = cyrtranslit.to_cyrillic(election_type.title(), 'sr')
+                            doc['godina'] = int(year)
+
+                            doc['rezultat'] = {}
+
+
+                            doc['rezultat']['glasova'] = int(row[j])
+                            if int(row[j]) != 0:
+                                print int(row[j])
+                                total_votes += int(row[j])
+                                udeo = (float(int(row[j])) / total_votes) * 100
+
+                            else:
+                                udeo = 0.0
+                            doc['rezultat']['udeo'] = udeo
+                            # Set remaining values depending on whether is is a presidential or parliamentary election
+
+                            month_cyr = cyrtranslit.to_cyrillic(month.title(), 'sr')
+                            rnd_cyr = cyrtranslit.to_cyrillic(rnd.title(), 'sr')
+
+                            doc['mesec'] = month_cyr
+                            doc['krug'] = rnd_cyr
+                            doc['kandidat'] = candidates_or_parties[str(j)].title()
+                            doc['kandidatSlug'] = slugify(cyrtranslit.to_latin(candidates_or_parties[str(j)], 'sr'),
+                                                              to_lower=True)
+
+                            '''
+                            if 'parentTerritory' in doc:
+                                print '%s - %s - %s - %s' % (row_count+1, doc['instanca'], doc['teritorija'], doc['parentTerritory'])
+                            else:
+                                print '%s - %s - %s' % (row_count + 1, doc['instanca'], doc['teritorija'])
+                            '''
+
+                            docs.append(doc.copy())
+
+                            if len(docs) % 1000 == 0:
+                                db[collection].insert(docs)
+                                docs = []
+
                     elif int(year) == 2004 and election_type == "predsjednicki":
                         total_votes=0
                         udeo=0

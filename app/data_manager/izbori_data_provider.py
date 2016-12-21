@@ -22,6 +22,10 @@ class IzboriDataProvider():
 
         if territory_slug is not None:
             match['teritorijaSlug'] = territory_slug
+
+        sort = {
+            "rezultat.glasova": -1
+        }
         group = {
             '_id': {
                 'teritorija': '$teritorija',
@@ -34,9 +38,7 @@ class IzboriDataProvider():
             },
 
         }
-        sort = {
-            "rezultat.glasova": -1
-        }
+
         if data_source == 2:
             group['_id']['parentTeritorija'] = '$parentTeritorija'
             group['_id']['parentTeritorijaSlug'] = '$parentTeritorijaSlug'
@@ -72,15 +74,12 @@ class IzboriDataProvider():
         pipeline = [
                 {'$match': match},
                 {'$sort': sort},
-                {'$limit':100},
                 {'$group': group},
                 {'$project': project},
 
         ]
-        if range_of_documents is not None:
-            rsp = mongo.db[collection].aggregate(pipeline, allowDiskUse=True)
-        else:
-            rsp = mongo.db[collection].aggregate(pipeline, allowDiskUse=True)
+
+        rsp = mongo.db[collection].aggregate(pipeline, allowDiskUse=True)
 
         return rsp['result']
 
@@ -388,7 +387,7 @@ class IzboriDataProvider():
             "color": "#412F74"
         })
         data.append({
-            'slug': "",
+            'slug': "aleksandar-vucic-sns-sdps-ns-spo-ps",
             "name": "АЛЕКСАНДАР ВУЧИЋ - СНС, СДПС, НС, СПО, ПС",
             "color": "#05a6f0"
         })
@@ -413,7 +412,7 @@ class IzboriDataProvider():
             "color": "#852C62"
         })
         data.append({
-            'slug': "",
+            'slug': "savez-vojvodanskih-madara-istvan-pastor",
             "name": "САВЕЗ ВОЈВОЂАНСКИХ МАЂАРА - ИШТВАН ПАСТОР",
             "color": "#852C62"
         })
@@ -485,12 +484,12 @@ class IzboriDataProvider():
             "color": "#852C62"
         })
         data.append({
-            'slug': "",
+            'slug': "dosta-je-bilo-sasa-radulovic",
             "name": "ДОСТА ЈЕ БИЛО – САША РАДУЛОВИЋ",
             "color": "#852C62"
         })
         data.append({
-            'slug': "",
+            'slug': "partija-za-demokratsko-delovanje-ardita-sinani",
             "name": "ПАРТИЈА ЗА ДЕМОКРАТСКО ДЕЛОВАЊЕ – АРДИТА СИНАНИ PARTIA PËR VEPRIM DEMOKRATIK – ARDITA SINANI",
             "color": "#852C62"
         })
@@ -505,7 +504,7 @@ class IzboriDataProvider():
             "color": "#852C62"
         })
         data.append({
-            'slug': "",
+            'slug': "aleksandar-vucic-srbija-pobeduje",
             "name": "АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ",
             "color": "#05a6f0"
         })
@@ -520,7 +519,7 @@ class IzboriDataProvider():
             "color": "#81bc06"
         })
         data.append({
-            'slug': "",
+            'slug': "dr-vojislav-seselj-srpska-radikalna-stranka",
             "name": "Др ВОЈИСЛАВ ШЕШЕЉ - СРПСКА РАДИКАЛНА СТРАНКА",
             "color": "#852C62"
         })
@@ -560,7 +559,7 @@ class IzboriDataProvider():
             "color": "#852C62"
         })
         data.append({
-            'slug': "",
+            'slug': "tomislav-nikolic",
             "name": "Томислав Николић",
             "color": "#2A808D"
         })
@@ -756,7 +755,7 @@ class IzboriDataProvider():
             "color": "#ffffff"
         })
         data.append({
-            'slug': "",
+            'slug': "za-evropsku-srbiju-boris-tadic",
             "name": "ЗА ЕВРОПСКУ СРБИЈУ - БОРИС ТАДИЋ",
             "color": "#141A64"
         })
@@ -776,9 +775,9 @@ class IzboriDataProvider():
             "color": "#141A64"
         })
         data.append({
-            'slug': "",
+            'slug': "sda-sandzaka-dr-sulejman-ugljanin",
             "name": "СДА САНЏАКА - ДР СУЛЕЈМАН УГЉАНИН",
-            "color": "#141A64"
+            "color": "red"
         })
         data.append({
             'slug': "ds",
@@ -955,12 +954,41 @@ class IzboriDataProvider():
             "name": 'Двери за живот Србије',
             "color": "#4F4633"
         })
-
+        data.append({
+            'slug': "dveri-za-zivot-srbije",
+            "name": 'Двери за живот Србије',
+            "color": "#4F4633"
+        })
+        data.append({
+            'slug': "ivica-dacic-sps-js-dragan-markovic-palma",
+            "name": 'ИВИЦА ДАЧИЋ - СПС, ЈС - Драган Марковић Палма',
+            "color": "#4F4633"
+        })
         #presidential canditates
         data.append({
-            'slug': "dr-vojislav-seselj-srs",
-            "name": 'др Војислав Шешељ (СРС)',
+            'slug': "demokratska-stranka-srbije-nova-srbija-dr-vojislav-kostunica",
+            "name": 'Демократска странка Србије - Нова Србија - др Војислав Коштуница',
             "color": "#4F4633"
+        })
+        data.append({
+            'slug': "vojislav-kostunica-dss",
+            "name": 'Војислав Коштуница (ДСС)',
+            "color": "#AC873D"
+        })
+        data.append({
+            'slug': "dr-miroljub-labus-gg",
+            "name": 'др Мирољуб Лабус (ГГ)',
+            "color": "#AC873D"
+        })
+        data.append({
+            'slug': "tomislav-nikolic",
+            "name": 'Tomislav Nikolić',
+            "color": "#AC873D"
+        })
+        data.append({
+            'slug': "borislav-pelevic-ssj",
+            "name": 'Борислав Пелевић (ССЈ)',
+            "color": "#009D13"
         })
 
         if kandidat_name is not None:
@@ -975,7 +1003,6 @@ class IzboriDataProvider():
             print "not none"
             return data
 
-
     def get_winners_for_each_territory(self, data_source,election_type_slug,year,instanca):
         collection = 'izbori' if data_source == 1 else 'izbori2'
         match = {
@@ -987,6 +1014,9 @@ class IzboriDataProvider():
             '_id': {
                 'teritorija': '$teritorija',
                 'teritorijaSlug': '$teritorijaSlug',
+                'brojUpisanihBiracaUBirackiSpisak':'$brojUpisanihBiracaUBirackiSpisak',
+                'biraciKojiSuGlasali':'$biraciKojiSuGlasali.broj'
+
             },
             'rezultat': {
                 '$push':
@@ -1001,6 +1031,9 @@ class IzboriDataProvider():
             '_id': 0,
             'teritorija': '$_id.teritorija',
             'teritorijaSlug': '$_id.teritorijaSlug',
+            'brojUpisanihBiracaUBirackiSpisak': "$_id.brojUpisanihBiracaUBirackiSpisak",
+            'biraciKojiSuGlasali': "$_id.biraciKojiSuGlasali",
+            "percentage": {"$multiply": [{"$divide": [100, '$_id.brojUpisanihBiracaUBirackiSpisak']}, "$_id.biraciKojiSuGlasali"]},
             'rezultat': 1,
         }
 
@@ -1012,6 +1045,8 @@ class IzboriDataProvider():
             {'$project': project}
         ]
         rsp = mongo.db[collection].aggregate(pipeline, allowDiskUse=True)
+
+
         return rsp['result']
 
     def get_results_by_territory(self, data_source, election_type_slug, year,territory_slug,instanca):

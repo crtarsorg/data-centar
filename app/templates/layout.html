@@ -66,11 +66,14 @@
         
     </style>
     <script type="text/javascript">
+
         template_vars = {
             api_sum: "{{ url_for('api.sum', lang_code=g.current_lang) }}",
-            api_averages: "{{ url_for('api.averages', lang_code=g.current_lang) }}"
+            api_averages: "{{ url_for('api.averages', lang_code=g.current_lang) }}",
+
             // etc
         }
+
         $(document).ready(function(){
 {#            console.log({{ g.current_lang }});#}
             $(".language-switch").click(function(){

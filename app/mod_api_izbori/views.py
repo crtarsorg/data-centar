@@ -16,9 +16,8 @@ def index():
     return 'Izbori API'
 
 
-@mod_api_izbori.route("/<int:data_source>/<string:election_type>/godina/<int:year>/teritorija/instanca/<int:territory_level>", methods=['GET'])
+@mod_api_izbori.route("/<int:data_source>/<string:election_type>/godina/<int:year>/teritorija/instanca/<int:territory_level>", methods=['GET', 'POST'])
 def parliamentary_votes_grouped_by_territory(data_source, election_type, year, territory_level):
-
     rsp = izbori_data_provider.get_votes_grouped_by_territory(data_source, election_type, year, territory_level)
     return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')
 
@@ -81,9 +80,9 @@ def top_indicators(data_source,election_type_slug,godina, instanca,round_slug):
         rsp = izbori_data_provider.get_top_indicators_by_type(data_source, election_type_slug, godina, instanca,round_slug)
         return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')
 
-@mod_api_izbori.route("/datasource/<int:datasource>/<string:election_type_slug>/godina/<int:godina>/", methods=['GET'])
-def total_voters_turnout(datasource,election_type_slug,godina):
-        rsp = izbori_data_provider.get_total_voters_turnout(datasource,election_type_slug, godina)
+@mod_api_izbori.route("/datasource/<int:datasource>/<string:election_type_slug>/godina/<int:godina>/instanca/<int:instanca>", methods=['GET'])
+def total_voters_turnout(datasource,election_type_slug,godina,instanca):
+        rsp = izbori_data_provider.get_total_voters_turnout(datasource,election_type_slug, godina,instanca)
         return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')
 
 @mod_api_izbori.route("/parties", methods=['GET'])
@@ -106,6 +105,13 @@ def winners_per_territory(data_source,election_type_slug,godina,instanca):
 def results_by_territory_by_candidate(data_source,election_type_slug,godina,territory_slug, candidate_slug,instanca):
     rsp = izbori_data_provider.get_results_by_territory_by_candidate(data_source,election_type_slug,godina,territory_slug,candidate_slug,instanca)
     return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')
+
+
+@mod_api_izbori.route("/<int:data_source>/<string:election_type_slug>/instanca/<int:instanca>", methods=['GET'])
+def total_voters_turnout_for_all(data_source,election_type_slug,instanca):
+    rsp = izbori_data_provider.get_total_voters_turnout_for_all(data_source,election_type_slug,instanca)
+    return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')
+
 
 
 

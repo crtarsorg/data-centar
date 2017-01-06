@@ -1,4 +1,957 @@
 {% extends "layout.html" %} {% block body %}
+    <style>
+  .btn-apply-filter1{
+    color: white;
+    background-color: #0794A0;
+    }
+
+</style>
+<script>
+
+$(function(ready){
+    var teritoryBudget=[
+            "Čačak",
+            "Inđija",
+            "Kraljevo",
+            "Loznica",
+            "Novi Beograd",
+            "Pripolje",
+            "Sombor",
+            "Valjevo",
+            "Vranje",
+            "Zvezdara"
+    ]
+    var option_budget_teritory = '<option selected disabled>Opština</option>';
+    for (var i=0;i<teritoryBudget.length;i++){
+       option_budget_teritory += '<option value="'+ teritoryBudget[i] + '">' + teritoryBudget[i] + '</option>';
+    }
+
+    var election_year=[
+        "2003",
+        "2008",
+        "2012",
+        "2014"
+    ]
+    var option_years='<option selected disabled>Year</option>';
+    for (var i=0;i<election_year.length;i++){
+       option_years += '<option value="'+ election_year[i] + '">' + election_year[i] + '</option>';
+    }
+
+    $('#query-param-selection-year-elections').append(option_years);
+    var presidential_years=[
+        "2002",
+        "2003",
+        "2004",
+        "2008",
+        "2012",
+    ]
+    var option_pres_years='<option selected disabled>Year</option>';
+    for (var i=0;i<presidential_years.length;i++){
+           option_pres_years += '<option value="'+ presidential_years[i] + '">' + presidential_years[i] + '</option>';
+        }
+
+    var option_budget_years='<option selected disabled>Year</option>';
+    option_budget_years += '<option value="2015">2015</option>';
+
+    $('.basic-filter-row .elections').hide();
+     $('.button-election').hide();
+    $('.button-election-presidential').hide();
+
+       $('#query-param-selection-source').change(function() {
+        $('#query-param-selection-year').html('');
+        var option = $(this).find('option:selected').text();
+        $('#query-param-data-source').html(option.toUpperCase());
+        if(option=="Parlamentarni" || option=="Predsednicki"){
+            $('.advancedCondition').attr('disabled','disabled');
+        }
+        if (option == "Parlamentarni") {
+            $('#query-param-data-type').html('');
+            $('#query-param-data-type').text(' Izbori'.toUpperCase());
+        }
+        if (option == "Parlamentarni") {
+            $('.button-election').show();
+            $('.button-budget').hide();
+            $('.button-election-presidential').hide();
+
+            $('.basic-filter-row .budget').hide();
+            $('.basic-filter-row .elections').show();
+            $('#query-param-selection-year').html('');
+
+        }else if (option=="Predsednicki"){
+            $('.button-election').hide();
+            $('.button-budget').hide();
+            $('.button-election-presidential').show();
+
+            $('.basic-filter-row .budget').hide();
+            $('.basic-filter-row .elections').show();
+            $('#query-param-selection-year').html('');
+        }else {
+               $('.advancedCondition').removeAttr('disabled','disabled');
+            $('.button-election').hide();
+            $('.button-budget').show();
+            $('.basic-filter-row .budget').show();
+            $('.basic-filter-row .elections').hide();
+        }
+        if (option == "Parlamentarni") {
+            $('#query-param-selection-year').append(option_years);
+        }
+        else if (option == "Predsednicki") {
+            $('#query-param-selection-year').append(option_pres_years);
+        } else {
+            $('#query-param-selection-year').append('<option selected disabled>Year</option><option value="2015">2015</option>');
+        }
+
+    });
+      $('#filter-parlamentarni-basic').click(function () {
+            $('#mainVis').hide();
+            $('#mainVis_parlamentarni').show();
+            var selected_municipality = $('#query-param-selection-municipality-elections').val();
+            var selected_year = $('#query-param-selection-year').val();
+            var dataset = $('#query-param-selection-source').val();
+
+            on_click_type(selected_year,selected_municipality,dataset);
+
+              if($(this).hasClass('btn-apply-filter1')) {
+                    $(this).removeClass('btn-apply-filter1');
+                    parlamentary_and_presidential(selected_year, dataset);
+                  $('.btn-apply-filter1').on('click', function () {
+                    parlamentary_and_presidential(selected_year, dataset);
+
+                })
+
+              }else{
+                  $(this).addClass('btn-apply-filter1');
+                 }
+
+
+        });
+    $('#filter-presidential-basic').click(function () {
+            $('#mainVis').hide();
+            $('#mainVis_parlamentarni').show();
+            var selected_municipality = $('#query-param-selection-municipality-elections').val();
+            var selected_year = $('#query-param-selection-year').val();
+            var dataset = $('#query-param-selection-source').val();
+
+            on_click_type(selected_year,selected_municipality,dataset);
+
+              if($(this).hasClass('btn-apply-filter1')) {
+                    $(this).removeClass('btn-apply-filter1');
+                    parlamentary_and_presidential(selected_year, dataset);
+                  $('.btn-apply-filter1').on('click', function () {
+                    parlamentary_and_presidential(selected_year, dataset);
+
+                })
+
+              }else{
+                  $(this).addClass('btn-apply-filter1');
+                 }
+
+
+        });
+    function on_click_type(selected_year,selected_municipality,dataset){
+
+            var url="http://datacentar.io/api/izbori/2/parlamentarni/godina/" + selected_year + "/teritorija/" + selected_municipality + "/instanca/3";
+            if (dataset=="parlamentarni") {
+
+                $.ajax({
+                    method: "GET",
+                    url: url,
+                    dataType: "json",
+                    success: function (response1) {
+
+                        $('#tableResults_parlamentarni').html('');
+                        var table = $('#tableResults_parlamentarni').DataTable();
+                        table.destroy();
+                        table.draw();
+                        $('#tableResults_parlamentarni').DataTable({
+                            bDestroy: true,
+                            data: response1,
+                            scrollY: 300,
+                            bFilter: false,
+                            stripeClasses: ['oddRow', 'evenRow'],
+                            buttons: ['copy', 'csv', 'excel'],
+
+                            "language": {
+                                "info": "Stranica _PAGE_ od _PAGES_ (_TOTAL_ unosa)"
+                            },
+                            dom: 'Bfrtip',
+
+                        });
+
+                        $('.oddRow').css('display', 'none');
+                        $('#tableResults_parlamentarni').append('<thead><tr><th>Opstina</th><th>Glasali</th><th>Upisanih</th><th>Izborna Lista</th><th>Glasova</th></tr></thead>');
+                        $('#tableResults_parlamentarni').append('<tbody><tr role="row" class="evenRow"><td class="sorting_1">' + response1['teritorija'] + '</td><td>' + response1['biraciKojiSuGlasali']['broj'] + '</td><td>' + response1['brojUpisanihBiracaUBirackiSpisak'] + '</td><td>' + response1['rezultat'][0]['izbornaLista'] + '</td><td>' + response1['rezultat'][0]['rezultat']['glasova'] + '</td></tr></tbody>');
+
+                    }
+                })
+            } else {
+                $.ajax({
+                    method: "GET",
+                    url: "http://datacentar.io/api/izbori/2/predsjednicki/godina/" + selected_year + "/krug/drugi/teritorija/"+selected_municipality,
+                    dataType: "json",
+                    success: function (response1) {
+
+                        $('#tableResults_parlamentarni').html('');
+                        var table = $('#tableResults_parlamentarni').DataTable();
+                        table.destroy();
+                        table.draw();
+                        $('#tableResults_parlamentarni').DataTable({
+                            bDestroy: true,
+                            data: response1,
+                            scrollY: 300,
+                            bFilter: false,
+                            stripeClasses: ['oddRow', 'evenRow'],
+
+                            columns: [
+                                {"sTitle": "teritorija", data: 'teritorija'},
+                                { "sTitle": "Glasali",data:'biraciKojiSuGlasali.broj'},
+                                { "sTitle": "Upisanih",data:"brojUpisanihBiracaUBirackiSpisak"},
+                                {"sTitle": "Kandidat", data: 'rezultat.0.kandidat'},
+                                {"sTitle": "Glasova", data: 'rezultat.0.rezultat.glasova'},
+
+                            ],
+                            "language": {
+                                "info": "Stranica _PAGE_ od _PAGES_ (_TOTAL_ unosa)"
+                            },
+                            dom: 'Bfrtip',
+                             buttons: [
+                                {
+                                    className:"btnDownload",
+                                    extend: 'collection',
+                                    text: 'Export',
+                                     buttons: [
+                                        'copyHtml5',
+                                        'excelHtml5',
+                                        'csvHtml5',
+                                        'pdfHtml5'
+                                    ]
+                                }
+                            ]
+
+                        });
+
+                    }
+                })
+
+            }
+
+
+    }
+
+
+
+$('#query-param-selection-municipality-elections').change(function() {
+    var option = $(this).find('option:selected').text();
+    $('#query-param-municipality').html(option.toUpperCase());
+})
+    $('#query-param-selection-municipality').change(function() {
+        var option = $(this).find('option:selected').text();
+        $('#query-param-municipality').html(option.toUpperCase());
+
+        // Apply filters (if basic filtering is checked as enabled)
+        if($('.basic-filter-row').hasClass('apply-filter-row')) {
+            applyBasicFilters();
+        }
+    });
+
+    $('#query-param-selection-year').change(function() {
+        var option = $(this).find('option:selected').text();
+        $('#query-param-year').html(option.toUpperCase());
+
+        // Apply filters (if basic filtering is checked as enabled)
+        if($('.basic-filter-row').hasClass('apply-filter-row')) {
+            applyBasicFilters();
+        }
+    });
+
+    $( ".advancedCondition" ).click(function() {
+        if($(".advanced").hasClass("hidden")) {
+            $(".advanced").removeClass("hidden");
+            addAdvancedFilterRow();
+        }
+    });
+
+    defaultSearchResult();
+
+});
+
+function defaultSearchResult(){
+
+    // Default query, grabs all the data.
+    var query = {
+        "tipPodataka": [
+            "rashodi",
+            "prihodi"
+        ],
+        "godine": [
+            2015
+        ],
+        "opstine": [],
+        "klasifikacija": {
+            "broj": [],
+            "pocinjeSa": ""
+        },
+        "filteri": {}
+    };
+
+    // If they exist, get and use filters in the URL parameters to refine the default query.
+    var dataSourceType = utils.getURLParameter('type');
+    if(dataSourceType != null){
+        if(dataSourceType === "EXPENDITURES"){
+            query["tipPodataka"] = ['rashodi'];
+        }else if(dataSourceType === "REVENUES"){
+            query["tipPodataka"] = ['prihodi'];
+        }
+    }
+
+    var year = utils.getURLParameter('year');
+    if(year != null){
+        query["godine"] = [parseInt(year)];
+    }
+
+    var municipality = utils.getURLParameter('municipality');
+    if(municipality != null){
+        // TODO: This is unacceptable, need to fix this by already passing these values as slugs in the URL.
+        if (municipality === "%C4%8CA%C4%8CAK"){
+            municipality = "CHACHAK";
+        }else if (municipality === "IN%C4%90IJA") {
+            municipality = "INDJIJA";
+        }else if (municipality === "LOZNICA") {
+            municipality = "LOZNITSA";
+        }
+
+        query["opstine"] = [$.slugify(municipality.replace(/%20/g,'-'))];
+    }
+
+    // Fetch data.
+    fethData(query);
+
+}
+
+function applyBasicFilters(btn){
+
+    if($(btn) != undefined){
+        if (!$(btn).hasClass('btn-apply-filter')) {
+            $(btn).addClass('btn-apply-filter');
+            $(btn).closest('.basic-filter-row').addClass('apply-filter-row');
+        } else {
+            $(btn).removeClass('btn-apply-filter');
+            $(btn).closest('.basic-filter-row').removeClass('apply-filter-row');
+        }
+    }
+
+    buildQueryAndFetchData();
+}
+
+function applyAdvancedFilters(btn){
+
+    if (!$(btn).hasClass('btn-apply-filter')) {
+        $(btn).addClass('btn-apply-filter');
+        $(btn).closest('.advanced-filter-row').addClass('apply-filter-row');
+    } else {
+        $(btn).removeClass('btn-apply-filter');
+        $(btn).closest('.advanced-filter-row').removeClass('apply-filter-row');
+    }
+
+    buildQueryAndFetchData();
+}
+function applyBasicFiltersElection(btn){
+
+    if (!$(btn).hasClass('btn-apply-filter')) {
+        $(btn).addClass('btn-apply-filter');
+        $(btn).closest('.advanced-filter-row').addClass('apply-filter-row');
+    } else {
+        $(btn).removeClass('btn-apply-filter');
+        $(btn).closest('.advanced-filter-row').removeClass('apply-filter-row');
+    }
+
+    buildQueryAndFetchDataElection();
+}
+
+function buildQueryAndFetchDataElection(){
+    // Get basic filter parameters.
+    // By default, no filters. Just grab all.
+    var yearArray = [];
+    var municipalityArray = [];
+
+    // If basic filter is enabled, get those filter parameters
+    if($('.basic-filter-row').hasClass('apply-filter-row')){
+        yearArray = (($('#query-param-selection-year')[0].selectedIndex > 0) ? [parseInt($('#query-param-selection-year').find(":selected").text())] : []);
+        municipalityArray = (($('#query-param-selection-municipality')[0].selectedIndex > 0) ? [$('#query-param-selection-municipality').find(":selected").val()] : []);
+    }
+
+    // Prepare filter object
+    var query = {
+        "tipPodataka": [
+            "rashodi",
+            "prihodi"
+        ],
+        "godine": yearArray,
+        "opstine": municipalityArray,
+        "klasifikacija": {
+            "broj": [],
+            "pocinjeSa": ""
+        },
+        "filteri": {
+            "ukupno": {},
+            "sopstveniPrihodi": {},
+            "prihodiBudzeta": {},
+            "donacije": {},
+            "ostali": {}
+        }
+    };
+
+    // Get advanced filter parameters
+    $('#advanced-filter-container').children('div .apply-filter-row').each(function () {
+        var currentBudgetItem = undefined;
+        var currentOperand = undefined;
+        var currentValue = undefined;
+
+        $(this).children('div').each(function () {
+            if($(this).hasClass('advanced-filter-selection-budget-item')){
+                currentBudgetItem = $(this).children().find(":selected").val();
+
+            }else if($(this).hasClass('advanced-filter-selection-operand')){
+                currentOperand = $(this).children().find(":selected").val();
+
+            }else if($(this).hasClass('advanced-filter-selection-value')){
+                currentValue = $(this).children().val();
+                query['filteri'][currentBudgetItem][currentOperand] = parseInt(currentValue);
+            }
+        });
+    });
+
+    fethData(query);
+}
+
+function buildQueryAndFetchData(){
+    // Get basic filter parameters.
+    // By default, no filters. Just grab all.
+    var yearArray = [];
+    var municipalityArray = [];
+
+    // If basic filter is enabled, get those filter parameters
+    if($('.basic-filter-row').hasClass('apply-filter-row')){
+        yearArray = (($('#query-param-selection-year')[0].selectedIndex > 0) ? [parseInt($('#query-param-selection-year').find(":selected").text())] : []);
+        municipalityArray = (($('#query-param-selection-municipality')[0].selectedIndex > 0) ? [$('#query-param-selection-municipality').find(":selected").val()] : []);
+    }
+
+    // Prepare filter object
+    var query = {
+        "tipPodataka": [
+            "rashodi",
+            "prihodi"
+        ],
+        "godine": yearArray,
+        "opstine": municipalityArray,
+        "klasifikacija": {
+            "broj": [],
+            "pocinjeSa": ""
+        },
+        "filteri": {
+            "ukupno": {},
+            "sopstveniPrihodi": {},
+            "prihodiBudzeta": {},
+            "donacije": {},
+            "ostali": {}
+        }
+    };
+
+    // Get advanced filter parameters
+    $('#advanced-filter-container').children('div .apply-filter-row').each(function () {
+        var currentBudgetItem = undefined;
+        var currentOperand = undefined;
+        var currentValue = undefined;
+
+        $(this).children('div').each(function () {
+            if($(this).hasClass('advanced-filter-selection-budget-item')){
+                currentBudgetItem = $(this).children().find(":selected").val();
+
+            }else if($(this).hasClass('advanced-filter-selection-operand')){
+                currentOperand = $(this).children().find(":selected").val();
+
+            }else if($(this).hasClass('advanced-filter-selection-value')){
+                currentValue = $(this).children().val();
+                query['filteri'][currentBudgetItem][currentOperand] = parseInt(currentValue);
+            }
+        });
+    });
+
+    fethData(query);
+}
+
+function removeAdvancedFilterRow(btn){
+    $(btn).closest(".advanced-filter-row").remove();
+    buildQueryAndFetchData();
+}
+
+function fethData(query){
+    $.ajax({
+        type: "POST",
+        url: template_vars.api_sum,
+        contentType: 'application/json',
+        data: JSON.stringify(query),
+        success: function(rsp){
+            console.log(rsp);
+            buildResultTable(rsp);
+            searchApiCall(rsp[0]);
+            //console.log(query)
+            //sideVis(rsp);
+        }
+    });
+}
+
+function buildResultTable (response) {
+
+
+    /*
+        {"opstina":"Novi Beograd","ukupno":1000000,"godina":2015,"sopstveniPrihodi":0,"prihodiBudzeta":1000000,"klasifikacijaBroj":"515",
+        "donacije":0,"ostali":0,"tipPodataka":"Rashodi"}
+     */
+
+    $('#tableResults').DataTable( {
+
+        data: response,
+        bDestroy: true,
+        scrollY: 300,
+        bFilter: false,
+        stripeClasses: [ 'oddRow', 'evenRow' ],
+        buttons: [ 'copy', 'csv', 'excel' ],
+        columns: [
+
+            { "sTitle": "Opština" , data: 'opstina' },
+            { "sTitle": "Konto" , data: 'klasifikacijaBroj' },
+            { "sTitle": "Ukupno" , data: 'ukupno' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+            // { "sTitle": "Godina" , data: 'godina' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+            { "sTitle": "Sopstveni Prihodi" , data: 'sopstveniPrihodi' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+            { "sTitle": "Prihodi Budžeta" , data: 'prihodiBudzeta' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+
+            // { "sTitle": "Donacije" , data: 'donacije' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+            { "sTitle": "Ostali" , data: 'ostali' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )},
+            { "sTitle": "Tip " , data: 'tipPodataka' ,  render: $.fn.dataTable.render.number( ',', '.', 0, '' )}
+        ],
+        "language": {
+            "info": "Stranica _PAGE_ od _PAGES_ (_TOTAL_ unosa)"
+          }
+          , dom: 'Bfrtip',
+           buttons: [
+                {
+                    className:"btnDownload",
+                    extend: 'collection',
+                    text: 'Export',
+                     buttons: [
+                        'copyHtml5',
+                        'excelHtml5',
+                        'csvHtml5',
+                        'pdfHtml5'
+                    ]
+                }
+            ]
+
+    } );
+
+}
+
+function addAdvancedFilterRow(){
+    var filterRow = '<div class="advanced-filter-row">' +
+        '<div class="advanced-filter-selection-budget-item col-xs-12 col-sm-3">' +
+            '<select class="form-control border-primary search-control">' +
+                '<option selected disabled>Budget Item</option>' +
+                '<option value="ukupno">Ukupno</option>' +
+                '<option value="sopstveniPrihodi">Sopstveni Prihodi</option>' +
+                '<option value="prihodiBudzeta">Prihodi Budzeta</option>' +
+                '<option value="donacije">Donacije</option>' +
+                '<option value="ostali">Ostali</option>' +
+            '</select>' +
+        '</div>' +
+        '<div class="advanced-filter-selection-operand col-xs-12 col-sm-3">' +
+            '<select class="form-control border-primary search-control">' +
+                '<option selected disabled>Operand</option>' +
+                '<option value="veceIliJednako"> is >= </option>' +
+                '<option value="manjeIliJednako"> is <= </option>' +
+            '</select>' +
+        '</div>' +
+        '<div class="advanced-filter-selection-value col-xs-12 col-sm-3">' +
+            '<input type="text" class="form-control border-primary search-control"/>' +
+        '</div>' +
+        '<div class="col-xs-4 col-sm-2 col-md-1 text-center">' +
+            '<button type="button" class="form-control border-primary pull-left" style="width: 50%;" onClick="javascript:applyAdvancedFilters(this)">&#x2713;</button>' +
+            '<button type="button" class="removeCondition form-control border-secondary pull-left" style="width: 50%;" onClick="javascript:removeAdvancedFilterRow(this)">&#x2715;</button>' +
+        '</div>' +
+        '<div class="col-xs-4 col-sm-1 col-md-2 pull-right">' +
+            '<button type="button" class="addCondition form-control border-primary button-full" onClick="javascript:addAdvancedFilterRow()">Add</button>' +
+        '</div>' +
+        '<br><br>' +
+    '</div>';
+
+    $('#advanced-filter-container').append(filterRow);
+}
+
+var params = {
+        "tipPodataka": ["rashodi", "prihodi"],
+        "klasifikacijaBroj": [
+            710000,
+            712000,
+            713000,
+            730000,
+            733000,
+            410000,
+            422000,
+            460000,
+            450000
+        ],
+        opstine:[]
+    }
+
+var params1 =
+{
+    "tipPodataka": [
+        "rashodi",
+        "prihodi"
+    ],
+    "godine": [
+        2015
+    ],
+    "opstine": [
+        "prijepolje",
+        "valjevo",
+        "vranje",
+        "zvezdara"
+    ],
+    "klasifikacija": {
+        "broj": [
+
+        ],
+        "pocinjeSa": ""
+    },
+    "filteri": {
+        "ostali": {
+
+        }
+    }
+}
+
+
+	function searchApiCall (entry) {
+
+        //get three random municipalities
+        var tempOpstine = params1.opstine ;
+
+        var munc = entry.opstina.toLowerCase();
+
+         if (munc === "čačak"){
+            munc = "chachak";
+        }else if (munc === "inđija") {
+            munc = "indjija";
+        }else if (munc === "loznica") {
+            munc = "loznitsa";
+        }
+
+        if(tempOpstine.indexOf(munc)==-1 )
+            tempOpstine.push(munc);
+
+        if(params.opstine.indexOf(munc)==-1 )
+            params.opstine.push(munc);
+
+        params1.opstine = tempOpstine;
+        params1.klasifikacija.broj.push( munc )
+
+	    var result1, result2;
+        console.log(template_vars.api_averages);
+	    $.when(
+
+	        $.ajax({
+	            method: "POST",
+	            url: template_vars.api_averages,
+	            data: JSON.stringify(params),
+	            contentType: "application/json;charset=utf-8",
+	            dataType: "json",
+	            success: function(returnhtml){
+	                result1 = returnhtml;
+	            }
+
+	        })
+	        ,
+	        $.ajax({
+	            method: "POST",
+	            url: template_vars.api_sum,
+	            data: JSON.stringify(params1),
+	            contentType: "application/json;charset=utf-8",
+	            dataType: "json",
+	            success: function(returnhtml){
+	                result2 = returnhtml;
+	            }
+
+	        })
+
+	    ).then(function() {
+
+            if(result1[0] != undefined)
+	           sideVis(result2, result1, result1[0].conto)
+	        //mainVis(result2);
+            //visu(result1, result2)
+	    });
+
+    }
+
+
+/*===========================
+=            vis            =
+===========================*/
+
+//mainVis
+
+function mainVis(data) {
+
+
+	var opstina = "Zvezdara";
+	var kontoBroj = 611;
+
+	data = data.filter(function(la){
+		return la.opstina == opstina;
+		}).map(function(po){
+			po.y =po.ukupno;
+			po.name = po.klasifikacijaBroj;
+			if(+po.klasifikacijaBroj == kontoBroj)
+				{
+					po.sliced = true;
+					po.selected = true;
+				}
+			return po;
+		})
+
+
+
+	var $containerMain = $('#mainVis'),
+        chart
+       /* origChartWidth = 400,
+        origChartHeight = 200,
+        chartWidth = origChartWidth,
+        chartHeight = origChartHeight*/;
+
+        // Build the chart
+        $containerMain.highcharts({
+            chart: {
+            	backgroundColor: "#7DC1D1",
+    			/*width: chartWidth,
+            	height: chartHeight,*/
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Prikaz '+" budžeta opštine " + opstina
+            },
+            legend:{
+            	title:{
+            		// text:'Nekakav tekst'
+            	},
+            	tooltip:"nekakav tekst"
+
+            },
+            tooltip: {
+            	headerFormat:'<span style="font-size: 10px">Konto: {point.key}</span><br/>',
+                pointFormat: ' {series.name}: <b>{point.y} din</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                name: 'Iznos',
+                colorByPoint: true,
+                data: data
+            }]
+        });
+
+
+}
+
+
+
+
+
+function sideVis(arg1, arg2, konto) {
+	// 2-3 contos with max value + selected one
+
+	// zasad random conta
+
+    var konto = + konto;
+	var data = [];
+	var kategorije = [] ;
+
+	//console.log(arg1);
+
+	arg1.filter(function(la){
+		return +la.klasifikacijaBroj == konto
+		})
+		.forEach(function(po){
+			var tempOb = {};
+			tempOb.data = [ 0.8 * po.ukupno, Math.floor(Math.random()  * po.ukupno), po.ukupno];
+			tempOb.name = po.opstina;
+
+			data.push(tempOb);
+			kategorije.push(po.opstina)
+		})
+
+
+	var $container = $('#sideVisTop'),
+        chart,
+        origChartWidth = 400,
+        origChartHeight = 200,
+        chartWidth = origChartWidth,
+        chartHeight = origChartHeight;
+
+    $container.highcharts({
+    	chart:{
+    		backgroundColor: "#7DC1D1",
+    		width: chartWidth,
+            height: chartHeight
+    		},
+    	colors:["#0794a0","#a1d6db","#45afb8"],
+        title: {
+            text: 'Chart based on hypothetical time data  ',
+            x: -20 //center
+        },
+       /* subtitle: {
+            text: 'Source: WorldClimate.com',
+            x: -20
+        },*/
+        xAxis: {
+            categories: ['2013', '2014', '2015']
+        },
+        yAxis: {
+            title: {
+                text: 'Iznos'
+            },
+            plotLines: [{
+                value: 0,
+                width: 0.5,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: ' rsd '
+        },
+        legend: {
+            /*layout: 'vertical',*/
+
+            verticalAlign: 'bottom',
+            borderWidth: 0
+        },
+        series: data
+    });
+
+
+
+	var data = [];
+	var kategorije = [] ;
+	arg1.filter(function(la){
+		return +la.klasifikacijaBroj == konto
+		})
+		.forEach(function(po){
+			var tempAr = [po.opstina, po.ukupno];
+			data.push(tempAr);
+			kategorije.push(po.opstina)
+		})
+
+
+//Average for whole data set
+
+
+var $container1 = $('#sideVisMiddle'),
+        chart,
+        origChartWidth = 400,
+        origChartHeight = 200,
+        chartWidth = origChartWidth,
+        chartHeight = origChartHeight;
+
+
+    $container1 .highcharts({
+        chart: {
+        	backgroundColor: "#7DC1D1",
+    		width: chartWidth,
+            height: chartHeight,
+            type: 'bar'
+        },
+        title: {
+            text: 'Uporedni prikaz, konto : ' + konto
+        },
+
+        xAxis: {
+            categories: kategorije,
+            title: {
+                text: "Opštine"
+            }
+        },
+        yAxis: {
+
+            title: {
+               /* text: 'Population (millions)',
+                align: 'high'*/
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' din'
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                },
+                color: '#0794a0'
+            }
+        },
+      /*  legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -40,
+            y: 80,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        },*/
+        credits: {
+            enabled: false
+        },
+        series:[{
+        	 name: 'Iznos',
+        	 data : data
+        }]
+    });
+
+
+
+
+
+
+
+///end on load
+}
+
+
+
+//sideVisTop
+//sideVisMiddle
+//sideVisBottom
+
+
+
+
+/*=====  End of vis  ======*/
+</script>
 <style>
 	#searchLink{
 		cursor: hand;
@@ -22,10 +975,9 @@
     }
 
     table td{ text-align: center;  }
-
     .oddRow{background-color: #A1D6DB;}
     .evenRow{background-color: #83C9CF;}
-    
+
     .dt-buttons.btn-group{float: right;}
     .btnDownload, .btnDownload:hover{
         border: 2px solid white;
@@ -38,7 +990,7 @@
 
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/s/bs/jqc-1.11.3,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.10,b-1.1.0,b-colvis-1.1.0,b-html5-1.1.0,b-print-1.1.0,cr-1.3.0,fh-3.1.0,kt-2.1.0,sc-1.4.0,se-1.1.0/datatables.min.css"/>
- 
+
 <script type="text/javascript" src="https://cdn.datatables.net/s/bs/jqc-1.11.3,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.10,b-1.1.0,b-colvis-1.1.0,b-html5-1.1.0,b-print-1.1.0,cr-1.3.0,fh-3.1.0,kt-2.1.0,sc-1.4.0,se-1.1.0/datatables.min.js"></script>
 
 
@@ -52,31 +1004,35 @@
 <script src="{{ url_for('static', filename='js/speakingurl.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/jquery.slugify.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/pagescripts/searchpage.js') }}"></script>
-
+<script src="{{ url_for('static', filename='js/pagescripts/filterelections.js') }}"></script>
 
 <header class="intro primary-color">
     <!-- <div class="intro-body container"> -->
         <div class="intro-content container padding-lg">
             <p id="searchLink" class="text-center lead text-underline">
-                {{ _('Show me data about ') }}[<span id="query-param-data-source">{{ source }}</span><span id="query-param-data-type">{{ type }}</span>] {{ _(' for ') }} [<span id="query-param-municipality">{{ municipality }}</span>] {{ _(' in ') }} [<span id="query-param-year">{{ year }}</span>].
+                {{ _('Show me data about ') }}[<span id="query-param-data-source">{{ source }}</span><span id="query-param-data-type"> {{ type }} </span>] {{ _(' for ') }} [<span id="query-param-municipality">{{ municipality }}</span>] {{ _(' in ') }} [<span id="query-param-year">{{ year }}</span>].
             </p>
         </div>
     <!-- </div> -->
 </header>
+
 <!-- Search params Section -->
 <div class="container">
 	<section id="searchParamsS" class="padding-md">
 	    <!-- <div class="row"> -->
 	        <div class="">
+
 	            <form action="" id="searchForm" class="form-horizontal" role="form">
 	                <div class="basic-filter-row" style="padding-bottom: 40px;">
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" id="query-param-selection-source">
 	                        	<option selected disabled>{{ _('Dataset') }}</option>
 	                            <option value="budget">{{ _('Budget') }}</option>
+                                <option value="parlamentarni">{{ _('Parlamentarni') }}</option>
+                                 <option value="predsednicki">{{ _('Predsednicki') }}</option>
 	                        </select>
 	                    </div>
-	                    <div class="col-xs-12 col-sm-3">
+	                    <div class="col-xs-12 col-sm-3 budget">
 	                        <select class="form-control border-primary search-control" id="query-param-selection-municipality">
 	                        	<option selected disabled>Opština</option>
 		                        <option value="chachak">Čačak</option>
@@ -89,17 +1045,33 @@
 							    <option value="valjevo">Valjevo</option>
 							    <option value="vranje">Vranje</option>
 							    <option value="zvezdara">Zvezdara</option>
-
 	                        </select>
+
 	                    </div>
+                         <div class="col-xs-12 col-sm-3 elections">
+                             <select class="form-control border-primary search-control" id="query-param-selection-municipality-elections">
+                                <option selected disabled>Opština</option>
+                                 {% for item in dataslug %}
+                                     <option value="{{ item['slug'] }}">{{ item['teritorija'] }}</option>
+                                 {% endfor %}
+                             </select>
+                         </div>
 	                    <div class="col-xs-12 col-sm-3">
 	                        <select class="form-control border-primary search-control" id="query-param-selection-year">
 	                        	<option selected disabled>{{ _('Year') }}</option>
 	                            <option value="">2015</option>
 	                        </select>
 	                    </div>
-	                    <div class="col-xs-2 col-sm-1">
-	                        <button type="button"  class="form-control border-primary text-center" onClick="javascript:applyBasicFilters(this)">&#x2713;</button>
+	                    <div class="col-xs-2 col-sm-1 button-budget">
+	                        <button id="filter-budget-basic" type="button"  class="form-control border-primary text-center" onClick="javascript:applyBasicFilters(this)">&#x2713;</button>
+	                    </div>
+                        <div class="col-xs-2 col-sm-1 button-election">
+	                        <button type="button"  class="form-control border-primary text-center " id="filter-parlamentarni-basic">&#x2713;</button>
+
+	                    </div>
+                     <div class="col-xs-2 col-sm-1 button-election-presidential">
+	                        <button type="button"  class="form-control border-primary text-center " id="filter-presidential-basic">&#x2713;</button>
+
 	                    </div>
 	                    <div class="col-xs-4 col-sm-2 pull-right">
 	                        <button type="button"  class=" advancedCondition form-control border-primary button-full">{{ _('Advanced') }}</button>
@@ -111,8 +1083,12 @@
                     <div id="advanced-filter-container">
 
                     </div>
+
 	            </form>
+
+
 	        </div>
+
 	    <!-- </div> -->
 	</section>
 </div>
@@ -132,18 +1108,28 @@
                </select> -->
             </div>
             <div class="clear border-white ">
+
             	<div id="mainVis">
-                    <table id="tableResults" class="  table-bordered" ></table>   
+                    <table id="tableResults" class="  table-bordered" ></table>
+                </div>
+
+
+                <div id="mainVis_parlamentarni">
+                    <table id="tableResults_parlamentarni" class="  table-bordered" >
+                    </table>
+                </div>
+                <div id="mainVis_presidential" style="display:none">
+                    <table id="tableResults_presidential" class="  table-bordered" ></table>
                 </div>
             </div>
-            
+
         </div>
         {#
         <div class="col-xs-12 col-md-4 margin-4p text-uppercase">
            <!--  <h2>Visualizations</h2> -->
             <div class="row">
                 <div class="">
-                   <div id="sideVisTop"></div>
+                   <div id="sideVisTop"></div>t
                 </div>
             </div>
             <div class="row">
@@ -178,7 +1164,105 @@
             </div>
         </div>
     </div>
+
 </section>
 
+<script>
 
+$(document).ready(function(){
+$('#filter-budget-basic').on('click',function(){
+    $('#mainVis_parlamentarni').hide();
+    $('#mainVis').show();
+})
+    {% if source=="Election" %}
+        $('#mainVis_parlamentarni').show();
+        $('#mainVis').hide();
+        {% else %}
+        $('#mainVis_parlamentarni').hide();
+        $('#mainVis').show();
+    {%  endif %}
+
+    {% if type=="budget" %}
+        parlamentary_and_presidential(2012,"Parlamentarni");
+        {% else %}
+        parlamentary_and_presidential("{{ year }}", "{{ type }}");
+    {% endif %}
+
+
+
+})
+
+function parlamentary_and_presidential(selected_year,select_type){
+            var url;
+            if(selected_year!="ALL YEARS" && select_type=="Parlamentarni" || select_type=="parlamentarni"){
+
+                url="http://datacentar.io/api/izbori/2/parlamentarni/godina/"+selected_year+"/teritorija/instanca/3";
+
+            }else if (selected_year!="ALL YEARS" && select_type=="Predsednicki" || select_type=="predsednicki") {
+
+                url="http://datacentar.io/api/izbori/2/predsjednicki/godina/"+selected_year+"/krug/drugi/teritorija";
+
+            }
+             else{
+                url="http://datacentar.io/api/izbori/2/predsjednicki/godina/2012/krug/drugi/teritorija";
+
+            }
+            var columns=[];
+            if (select_type=="Parlamentarni" || select_type=="parlamentarni") {
+                 columns = [
+                    {"sTitle": "Opština", data: 'teritorija'},
+                     { "sTitle": "Glasali",data:'biraciKojiSuGlasali.broj'},
+                    { "sTitle": "Upisanih",data:"brojUpisanihBiracaUBirackiSpisak"},
+                    {"sTitle": "Izborna lista", data: 'rezultat.0.izbornaLista'},
+                    {"sTitle": "Glasova", data: 'rezultat.0.rezultat.glasova'},
+                ]
+            }else{
+                 columns=[
+                    { "sTitle": "Opština" , data:'teritorija'},
+                    { "sTitle": "Glasali",data:'biraciKojiSuGlasali.broj'},
+                    { "sTitle": "Upisanih",data:"brojUpisanihBiracaUBirackiSpisak"},
+                    { "sTitle": "Kandidat",data:'rezultat.0.kandidat'},
+                    { "sTitle": "Glasova",data:'rezultat.0.rezultat.glasova'},
+                ]
+            }
+
+
+
+     $.ajax({
+	            method: "GET",
+                url:url,
+
+	            dataType: "json",
+                    success: function(response1){
+
+                    $('#tableResults_parlamentarni').DataTable( {
+                            bDestroy: true,
+                            data: response1,
+                            scrollY: 300,
+                            bFilter: false,
+                            stripeClasses: [ 'oddRow', 'evenRow' ],
+                            buttons: [ 'copy', 'csv', 'excel' ],
+                            columns:columns,
+                            "language": {
+                                "info": "Stranica _PAGE_ od _PAGES_ (_TOTAL_ unosa)"
+                              },
+                               dom: 'Bfrtip',
+                               buttons: [
+                                    {
+                                        className:"btnDownload",
+                                        extend: 'collection',
+                                        text: 'Export',
+                                         buttons: [
+                                            'copyHtml5',
+                                            'excelHtml5',
+                                            'csvHtml5',
+                                            'pdfHtml5'
+                                        ]
+                                    }
+                                ]
+                        });
+	                }
+                })
+}
+</script>
 {% endblock %}

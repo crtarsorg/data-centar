@@ -29,7 +29,9 @@ function generateRandomQuery(){
     // Eventually, this logic will have to be expanded for datasources that are not budges (.e.g. procurements) and different years.
     var budgetType = utils.getRandomBudgetType().toUpperCase();
     var municipality = utils.getRandomMunicipality().toUpperCase();
-
+    var elections=utils.getRandomElectionType().toUpperCase();
+    var years_parlamentarni =utils.getRandomYearsParlamentarni();
+    var years_presidential =utils.getRandomYearsPresidential();
     //var text = "" +
     //    "[<span id='query-param-data-source'>BUDGET</span> " +
     //    "<span id='query-param-budget-type'>" + budgetType + "</span>] " +
@@ -39,6 +41,11 @@ function generateRandomQuery(){
     $("#query-param-budget-type").html(budgetType);
 
     $("#query-param-municipality").html(municipality);
+
+     $("#query-param-election-type").html(elections);
+
+    $("#query-param-election-year-parl").html(years_parlamentarni);
+    $("#query-param-election-year-pres").html(years_presidential);
     //$("#searchWithParamsText").html(text);
 }
 
@@ -48,7 +55,16 @@ function loadSearchPageWithRandomQuery(getUrl){
             '&municipality=' + $('#query-param-municipality').html() +
             '&year=' + parseInt($('#query-param-year').html())
 }
-
+function loadSearchPageWithRandomQueryParlamentarni(getUrl){
+     window.location = getUrl + '?source=' + $('#query-param-data-source-elections').html() +
+            '&type=' + $('#query-param-election-parlamentarni').html() +
+            '&year=' + parseInt($('#query-param-election-year-parl').html())
+}
+function loadSearchPageWithRandomQueryPresidential(getUrl){
+     window.location = getUrl + '?source=' + $('#query-param-data-source-elections').html() +
+            '&type=' + $('#query-param-election-presidential').html() +
+            '&year=' + parseInt($('#query-param-election-year-pres').html())
+}
 
 $(function() {
     $("#anotherFavQuery").click(function() {

@@ -24,6 +24,15 @@ polyline {
     stroke-width: 2px;
     fill: none;
 }
+ .highcharts-credits{
+        display:none !important;
+    }
+
+
+    #searchWithParams1,#searchWithParams2{
+        font-size:24px;
+    }
+
 </style>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -41,11 +50,19 @@ $( document ).ready(function() {
     <header class="landing">
         <div class="intro primary-color">
             <div class="white-content container padding-lg">
+                {% if g.current_lang == "sr" %}
+             <h2 class="text-center">{{ _('Dobro došli u Data Centar') }}</h2>
+                <p class="text-center lead margin-2p">
+                    {{ _('DataCentar.io je platforma koja pomaže da pronađete, oslobodite i koristite javne podatke u otvorenom formatu.') }}
+                    <br /><b>{{ _('Počeli smo malim korakom 2015. godine otvaranjem nekoliko budžeta lokalnih samouprava. U 2016. godini smo otvorili predsedniške i parlamentarne izborne podatke.') }}</b>
+                </p>
+                {% else %}
                 <h2 class="text-center">{{ _('Welcome to Data Centar') }}</h2>
                 <p class="text-center lead margin-2p">
                     {{ _('Data Centar is an open platform in Serbia that helps you find, liberate and make use of public data.') }}
-                    <br /><b>{{ _('We start small to grow responsibly:</b> from municipal budgets in Serbia, to whatever our audience wants us to liberate next. Check the video below to find out more.') }}
+                    <br /><b>{{ _('We started small to grow responsibly: from few municipal budgets in Serbia, to election data. Check the video below to find out more.') }}<</b>
                 </p>
+                {% endif %}
             </div>
         </div>
         <div class="container">
@@ -59,6 +76,19 @@ $( document ).ready(function() {
                             [<span id='query-param-data-source'>BUDGET</span> <span id='query-param-budget-type'></span>]
                             {{ _('for') }} [<span id='query-param-municipality'></span>]
                             {{ _('in') }} [<span id='query-param-year'>2015</span>].
+                        </a>
+
+                    </div>
+                       <div class="welcome-text margin-9p text-underline">
+                        <a href="javascript:loadSearchPageWithRandomQueryParlamentarni('{{ url_for('search.index', lang_code=g.current_lang) }}')" id="searchWithParams1">{{ _('Show me data about ') }}
+                            [<span id='query-param-data-source-elections'>Election</span> <span id='query-param-election-parlamentarni'>Parlamentarni</span>]
+                            {{ _('for') }} {{ _('year') }} [<span id='query-param-election-year-parl'></span>]
+                        </a>
+                    </div>
+                    <div class="welcome-text margin-9p text-underline">
+                        <a href="javascript:loadSearchPageWithRandomQueryPresidential('{{ url_for('search.index', lang_code=g.current_lang) }}')" id="searchWithParams2">{{ _('Show me data about ') }}
+                            [<span id='query-param-data-source-elections-pres'>Election</span> <span id='query-param-election-presidential'>Predsednicki</span>]
+                            {{ _('for') }} {{ _('year') }} [<span id='query-param-election-year-pres'></span>]
                         </a>
                     </div>
                     <div class="row welcome-buttons margin-9p">
@@ -81,6 +111,7 @@ $( document ).ready(function() {
         </div>
     </header>
 </section>
+
 <!-- What's avalible Section -->
 <section id="avalibleS" class="container-fluid secondary-color content-section text-center white-content margin-4p">
     <div class="container">
@@ -90,7 +121,78 @@ $( document ).ready(function() {
             <div class="infographics margin-auto margin-2p">
                 {% if g.current_lang == "sr" %}
                     <div class="col-md-4">
-                        <iframe class="highcharts-iframe" src="//cloud.highcharts.com/embed/azamuq" style="border: 0; width: 100%; height: 500px"></iframe>
+                    <script src="https://code.highcharts.com/highcharts.js"></script>
+                        <div id="container" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
+                        <div style="height:100px;width:100%;background:white;"></div>
+                        <script>
+                                $.ajax({
+                                url: 'http://datacentar.io/api/izbori/1/parlamentarni/godina/2016/instanca/3/krug/None',
+                                success: function(point) {
+                                    console.log(point);
+                                    Highcharts.chart('container', {
+                                      colors: ['rgb(7, 148, 160)', 'RED', '#00CCFF'],
+                                    chart: {
+                                        type: 'column',
+                                        backgroundColor: null
+                                    },
+                                    title: {
+                                        text: 'Parlamentarni Izbori'
+                                    },
+                                    subtitle: {
+                                        text: '2016'
+                                    },
+                                    xAxis: {
+                                        type: 'category',
+                                        labels: {
+                                            rotation: -45,
+                                            style: {
+                                                fontSize: '9px',
+                                                color:"black !important",
+                                                fontWeight:"bold"
+                                            }
+                                        }
+                                    },
+                                    yAxis: {
+                                        min: 0,
+                                        title: {
+                                            text: 'Udeo'
+                                        }
+                                    },
+                                    legend: {
+                                        enabled: false
+                                    },
+                                     tooltip: {
+                                         pointFormat: '<b>{point.y:.1f} %</b>'
+                                             },
+                                    series: [{
+                                        name: 'Udeo',
+                                        data: [
+                                            [point[0]['izbornaLista'], point[0]['udeo']],
+                                           [point[1]['izbornaLista'], point[1]['udeo']],
+                                             [point[2]['izbornaLista'], point[2]['udeo']],
+                                                 [point[3]['izbornaLista'], point[3]['udeo']],
+                                                [point[4]['izbornaLista'], point[4]['udeo']],
+                                        ],
+                                        dataLabels: {
+                                            enabled: true,
+                                            rotation: -90,
+                                            color: '#FFFFFF',
+                                            align: 'right',
+                                            format: '{point.y:.1f}', // one decimal
+                                            y: 10, // 10 pixels down from the top
+                                            style: {
+                                                fontSize: '13px',
+                                                fontFamily: 'Verdana, sans-serif'
+                                            }
+                                        }
+                                    }]
+                                });
+                                    setTimeout(requestData, 1000);
+                                },
+                                cache: false
+                            });
+
+                        </script>
                     </div>
                     <div class="col-md-4">
                         <iframe class="highcharts-iframe" src="//cloud.highcharts.com/embed/ilogas" style="border: 0; width: 100%; height: 500px"></iframe>
@@ -100,7 +202,78 @@ $( document ).ready(function() {
                     </div>
                 {% else %}
                     <div class="col-md-4">
-                        <iframe class='highcharts-iframe' src='//cloud.highcharts.com/embed/ijejoc' style='border: 0; width: 100%; height: 500px'></iframe>
+                                <script src="https://code.highcharts.com/highcharts.js"></script>
+                        <div id="container" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
+                        <div style="height:100px;width:100%;background:white;"></div>
+                        <script>
+                                $.ajax({
+                                url: 'http://datacentar.io/api/izbori/1/parlamentarni/godina/2016/instanca/3/krug/None',
+                                success: function(point) {
+                                    console.log(point);
+                                    Highcharts.chart('container', {
+                                      colors: ['rgb(7, 148, 160)', 'RED', '#00CCFF'],
+                                    chart: {
+                                        type: 'column',
+                                        backgroundColor: null
+                                    },
+                                    title: {
+                                        text: 'Parlamentary Elections'
+                                    },
+                                    subtitle: {
+                                        text: '2016'
+                                    },
+                                    xAxis: {
+                                        type: 'category',
+                                        labels: {
+                                            rotation: -45,
+                                            style: {
+                                                fontSize: '9px',
+                                                color:"black !important",
+                                                fontWeight:"bold"
+                                            }
+                                        }
+                                    },
+                                    yAxis: {
+                                        min: 0,
+                                        title: {
+                                            text: 'Percentage'
+                                        }
+                                    },
+                                    legend: {
+                                        enabled: false
+                                    },
+                                     tooltip: {
+                                         pointFormat: '<b>{point.y:.1f} %</b>'
+                                             },
+                                    series: [{
+                                        name: 'Udeo',
+                                        data: [
+                                            [point[0]['izbornaLista'], point[0]['udeo']],
+                                           [point[1]['izbornaLista'], point[1]['udeo']],
+                                             [point[2]['izbornaLista'], point[2]['udeo']],
+                                                 [point[3]['izbornaLista'], point[3]['udeo']],
+                                                [point[4]['izbornaLista'], point[4]['udeo']],
+                                        ],
+                                        dataLabels: {
+                                            enabled: true,
+                                            rotation: -90,
+                                            color: '#FFFFFF',
+                                            align: 'right',
+                                            format: '{point.y:.1f}', // one decimal
+                                            y: 10, // 10 pixels down from the top
+                                            style: {
+                                                fontSize: '13px',
+                                                fontFamily: 'Verdana, sans-serif'
+                                            }
+                                        }
+                                    }]
+                                });
+                                    setTimeout(requestData, 1000);
+                                },
+                                cache: false
+                            });
+
+                        </script>
                     </div>
                     <div class="col-md-4">
                         <iframe class='highcharts-iframe' src='//cloud.highcharts.com/embed/omejob' style='border: 0; width: 100%; height: 500px'></iframe>
@@ -110,14 +283,12 @@ $( document ).ready(function() {
                     </div>
                 {% endif %}
 
-
-
-
-
-
             </div>
             <div id="vis1"></div>
         </div>
         <!-- </div> -->
 </section>
 {% endblock %}
+<style>
+
+</style>

@@ -262,11 +262,12 @@ class IzboriDataProvider():
         return rsp['result']
 
     #the function will return data only for parlamentaty elections and for the years 2014, 2016, instanca 4
-    def get_total_voters_turnout(self,data_source, election_type_slug, godina):
+    def get_total_voters_turnout(self,data_source, election_type_slug, godina,instanca):
         collection = 'izbori' if data_source == 1 else 'izbori2'
         match = {
             'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
             'godina': godina,
+            'instanca':instanca
 
         }
         group = {
@@ -382,7 +383,7 @@ class IzboriDataProvider():
             "color": "#6B9A33"
         })
         data.append({
-            'slug': "",
+            'slug': "partija-za-demokratsko-delovanje-riza-halimi",
             "name": "ПАРТИЈА ЗА ДЕМОКРАТСКО ДЕЛОВАЊЕ - РИЗА ХАЛИМИ",
             "color": "#412F74"
         })
@@ -396,11 +397,7 @@ class IzboriDataProvider():
             "name": "АЛЕКСАНДАР ВУЧИЋ – БУДУЋНОСТ У КОЈУ ВЕРУЈЕМО (Српска напредна странка Сцијалдемократска партија Србије, Нова Србија, Српски покрет обнове, Покрет социјалиста)",
             "color": "#05a6f0"
         })
-        data.append({
-            'slug': "",
-            "name": "ИВИЦА ДАЧИЋ - СПС, ПУПС, ЈС",
-            "color": "#81bc06"
-        })
+
         data.append({
             'slug': "",
             "name": "ДЕМОКРАТСКА СТРАНКА СРБИЈЕ - ВОЈИСЛАВ КОШТИНИЦА",
@@ -777,7 +774,7 @@ class IzboriDataProvider():
         data.append({
             'slug': "sda-sandzaka-dr-sulejman-ugljanin",
             "name": "СДА САНЏАКА - ДР СУЛЕЈМАН УГЉАНИН",
-            "color": "red"
+            "color": "green"
         })
         data.append({
             'slug': "ds",
@@ -991,6 +988,18 @@ class IzboriDataProvider():
             "color": "#009D13"
         })
 
+        data.append({
+            'slug': "demokratska-stranka-srbije-vojislav-kostinica",
+            "name": 'ДЕМОКРАТСКА СТРАНКА СРБИЈЕ - ВОЈИСЛАВ КОШТИНИЦА',
+            "color": "#009D13"
+        })
+        data.append({
+            'slug': "ivica-dacic-sps-pups-js",
+            "name": 'ИВИЦА ДАЧИЋ - СПС, ПУПС, ЈС',
+            "color": "blue"
+        })
+
+
         if kandidat_name is not None:
             jsondata={}
             selected_color=""
@@ -1148,6 +1157,13 @@ class IzboriDataProvider():
                 'instanca': instanca,
                 'izbornaListaSlug': candidate_slug
             }
+            match1= {
+                'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
+                'godina': year,
+                'teritorijaSlug': territory_slug,
+                'instanca': instanca,
+
+            }
             group = {
                 '_id': {
                     'teritorija': '$teritorija',
@@ -1177,10 +1193,19 @@ class IzboriDataProvider():
             {'$group':group},
             {'$project': project}
         ]
+        sort = {
+            "rezultat.glasova": 1
+        }
+        pipeline1 = [
+            {'$match': match1},
+            {'$sort':sort},
+            {'$group': group},
+            {'$project': project}
+        ]
 
         rsp = mongo.db[collection].aggregate(pipeline)
-        return rsp['result'][0]
-
+        rsp1 = mongo.db[collection].aggregate(pipeline1)
+        return {'array1':rsp['result'][0],'array2':rsp1['result']}
 
 
 

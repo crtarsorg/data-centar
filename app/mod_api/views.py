@@ -46,8 +46,5 @@ def aggregated_classifications():
     json_resp = DataProvider().retrieve_aggregated_classification_info_for_municipalities(json.loads(request.data))
     return Response(response=json_util.dumps(json_resp), status=200, mimetype="application/json")
 
-@mod_api.route('/spisak-opstina-za-klasifikacija-broj', methods=['POST']) # List of municipalities for given class. number
-def list_of_municipalities():
-    query_params = json.loads(request.data)
-    json_resp = DataProvider().calculate_sum_of_expenditure_types(query_params)
-    return Response(response=json_util.dumps(json_resp), status=200, mimetype="application/json")
+
+

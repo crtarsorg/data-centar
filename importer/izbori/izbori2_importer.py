@@ -104,7 +104,7 @@ class Izbori2DataImporter(object):
                         doc['rezultat']['glasova'] = int(row[j])
                         if int(row[j]) != 0:
                             total_votes += int(row[j])
-                            udeo = (float(int(row[j])) / total_votes) * 100
+                            udeo = (float(int(row[j])) / voters_who_voted_count) * 100
 
                         else:
                             udeo = 0.0
@@ -215,7 +215,7 @@ class Izbori2DataImporter(object):
                         doc['rezultat']['glasova'] = int(row[j])
                         if int(row[j]) != 0:
                             total_votes += int(row[j])
-                            udeo = (float(int(row[j])) / total_votes) * 100
+                            udeo = (float(int(row[j])) / voters_who_voted_count) * 100
 
                         else:
                             udeo = 0.0
@@ -340,7 +340,7 @@ class Izbori2DataImporter(object):
                         doc['rezultat']['glasova'] = int(row[j])
                         if int(row[j]) != 0:
                             total_votes += int(row[j])
-                            udeo = (float(int(row[j])) / total_votes) * 100
+                            udeo = (float(int(row[j])) / voters_who_voted_count) * 100
 
                         else:
                             udeo = 0.0
@@ -537,12 +537,12 @@ class Izbori2DataImporter(object):
 
                             if int(row[j]) != 0:
                                 total_votes += int(row[j])
-                                udeo = (float(int(row[j])) / total_votes) * 100
+                                udeo = (float(int(row[j])) / voters_who_voted_count) * 100
 
                             else:
                                 udeo = 0.0
 
-                            doc['rezultat']['udeo'] =float(udeo)
+                            doc['rezultat']['udeo'] =udeo
 
 
                             doc['izbornaLista'] = candidates_or_parties[str(j)]
@@ -577,7 +577,7 @@ class Izbori2DataImporter(object):
                             if int(row[j]) != 0:
                                 print int(row[j])
                                 total_votes += int(row[j])
-                                udeo = (float(int(row[j])) / total_votes) * 100
+                                udeo = (float(int(row[j])) / voters_who_voted_count) * 100
 
                             else:
                                 udeo = 0.0
@@ -621,7 +621,7 @@ class Izbori2DataImporter(object):
                             if int(row[j]) != 0:
                                 print int(row[j])
                                 total_votes += int(row[j])
-                                udeo = (float(int(row[j])) / total_votes) * 100
+                                udeo = (float(int(row[j])) / voters_who_voted_count) * 100
 
                             else:
                                 udeo = 0.0
@@ -664,7 +664,7 @@ class Izbori2DataImporter(object):
                             doc['rezultat']['glasova'] = int(row[j])
                             if int(row[j]) != 0:
                                 total_votes += int(row[j])
-                                udeo = (float(int(row[j])) / total_votes) * 100
+                                udeo = (float(int(row[j])) / voters_who_voted_count) * 100
                                 print udeo
                             else:
                                 udeo = 0.0
@@ -707,7 +707,7 @@ class Izbori2DataImporter(object):
                             doc['rezultat']['glasova'] = int(row[j])
                             if int(row[j]) != 0:
                                 total_votes += int(row[j])
-                                udeo = (float(int(row[j])) / total_votes) * 100
+                                udeo = (float(int(row[j])) / voters_who_voted_count) * 100
                                 print udeo
                             else:
                                 udeo = 0.0

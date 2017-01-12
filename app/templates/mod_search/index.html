@@ -4,11 +4,28 @@
     color: white;
     background-color: #0794A0;
     }
+  table.dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_desc, table.dataTable thead>tr>th.sorting, table.dataTable thead>tr>td.sorting_asc, table.dataTable thead>tr>td.sorting_desc, table.dataTable thead>tr>td.sorting{
+      height:35px;
+      padding-left:20px;
+  }
+  #tableResults_parlamentarni_wrapper .dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_desc, table.dataTable thead>tr>th.sorting, table.dataTable thead>tr>td.sorting_asc, table.dataTable thead>tr>td.sorting_desc, table.dataTable thead>tr>td.sorting{
+      height:10px !important;
+      padding-left:20px;
+      padding-top:10px !important;
+  }
 
+    .loading-image{
+        z-index: 1;
+        margin-left:490px !important;
+        margin-top:150px !important;
+        position: absolute;
+    }
 </style>
+
 <script>
 
 $(function(ready){
+
     var teritoryBudget=[
             "Čačak",
             "Inđija",
@@ -104,25 +121,32 @@ $(function(ready){
         }
 
     });
+    var a=0;
       $('#filter-parlamentarni-basic').click(function () {
+
+            $('#tableResults_parlamentarni_wrapper thead').hide();
+            $('#tableResults_parlamentarni th').css('padding','10px !important');
+            $('#loading-data').addClass('loading-image');
+            $('#loading-data').show();
             $('#mainVis').hide();
             $('#mainVis_parlamentarni').show();
             var selected_municipality = $('#query-param-selection-municipality-elections').val();
             var selected_year = $('#query-param-selection-year').val();
             var dataset = $('#query-param-selection-source').val();
-
             on_click_type(selected_year,selected_municipality,dataset);
 
               if($(this).hasClass('btn-apply-filter1')) {
+                        a=1;
+                            $('#tableResults_parlamentarni_wrapper thead').show();
                     $(this).removeClass('btn-apply-filter1');
                     parlamentary_and_presidential(selected_year, dataset);
-                  $('.btn-apply-filter1').on('click', function () {
+                    $('.btn-apply-filter1').on('click', function () {
                     parlamentary_and_presidential(selected_year, dataset);
 
                 })
-
               }else{
                   $(this).addClass('btn-apply-filter1');
+                    a=0;
                  }
 
 
@@ -135,36 +159,37 @@ $(function(ready){
             var dataset = $('#query-param-selection-source').val();
 
             on_click_type(selected_year,selected_municipality,dataset);
-
+            $('#loading-data').addClass('loading-image');
+            $('#loading-data').show();
               if($(this).hasClass('btn-apply-filter1')) {
+                       a=1;
                     $(this).removeClass('btn-apply-filter1');
                     parlamentary_and_presidential(selected_year, dataset);
                   $('.btn-apply-filter1').on('click', function () {
                     parlamentary_and_presidential(selected_year, dataset);
-
                 })
 
               }else{
                   $(this).addClass('btn-apply-filter1');
+                       a=0;
                  }
 
 
         });
     function on_click_type(selected_year,selected_municipality,dataset){
 
-            var url="http://datacentar.io/api/izbori/2/parlamentarni/godina/" + selected_year + "/teritorija/" + selected_municipality + "/instanca/3";
+            var url="http://datacentar.io/api/izbori/2/parlamentarni/godina/" + selected_year + "/teritorija/" + selected_municipality + "/instanca/3/krug/None";
             if (dataset=="parlamentarni") {
-
                 $.ajax({
                     method: "GET",
                     url: url,
                     dataType: "json",
                     success: function (response1) {
-
                         $('#tableResults_parlamentarni').html('');
                         var table = $('#tableResults_parlamentarni').DataTable();
                         table.destroy();
                         table.draw();
+
                         $('#tableResults_parlamentarni').DataTable({
                             bDestroy: true,
                             data: response1,
@@ -183,29 +208,37 @@ $(function(ready){
                         $('.oddRow').css('display', 'none');
                         $('#tableResults_parlamentarni').append('<thead><tr><th>Opstina</th><th>Glasali</th><th>Upisanih</th><th>Izborna Lista</th><th>Glasova</th></tr></thead>');
                         $('#tableResults_parlamentarni').append('<tbody><tr role="row" class="evenRow"><td class="sorting_1">' + response1['teritorija'] + '</td><td>' + response1['biraciKojiSuGlasali']['broj'] + '</td><td>' + response1['brojUpisanihBiracaUBirackiSpisak'] + '</td><td>' + response1['rezultat'][0]['izbornaLista'] + '</td><td>' + response1['rezultat'][0]['rezultat']['glasova'] + '</td></tr></tbody>');
+                        if ( $('#tableResults_parlamentarni').length >=1 ) {
+                            $('#loading-data').removeClass('loading-image');
+                            $('#loading-data').hide();
+                        }
+                        if(a==1){
+                            $('#loading-data').addClass('loading-image');
+                            $('#loading-data').show();
+                        }
 
                     }
                 })
+
             } else {
                 $.ajax({
                     method: "GET",
                     url: "http://datacentar.io/api/izbori/2/predsjednicki/godina/" + selected_year + "/krug/drugi/teritorija/"+selected_municipality,
                     dataType: "json",
                     success: function (response1) {
-
                         $('#tableResults_parlamentarni').html('');
                         var table = $('#tableResults_parlamentarni').DataTable();
                         table.destroy();
                         table.draw();
+
                         $('#tableResults_parlamentarni').DataTable({
                             bDestroy: true,
                             data: response1,
                             scrollY: 300,
                             bFilter: false,
                             stripeClasses: ['oddRow', 'evenRow'],
-
                             columns: [
-                                {"sTitle": "teritorija", data: 'teritorija'},
+                                {"sTitle": "Opština", data: 'teritorija'},
                                 { "sTitle": "Glasali",data:'biraciKojiSuGlasali.broj'},
                                 { "sTitle": "Upisanih",data:"brojUpisanihBiracaUBirackiSpisak"},
                                 {"sTitle": "Kandidat", data: 'rezultat.0.kandidat'},
@@ -231,6 +264,15 @@ $(function(ready){
                             ]
 
                         });
+
+                         $('.oddRow').css('display', 'none');
+
+                        console.log(response1);
+                        $('#tableResults_parlamentarni').append('<tbody><tr role="row" class="evenRow"><td class="sorting_1">' + response1[0]['teritorija'] + '</td><td>' + response1[0]['biraciKojiSuGlasali']['broj'] + '</td><td>' + response1[0]['brojUpisanihBiracaUBirackiSpisak'] + '</td><td>' + response1[0]['rezultat'][0]['kandidat'] + '</td><td>' + response1[0]['rezultat'][0]['rezultat']['glasova'] + '</td></tr></tbody>');
+                         $('#loading-data').removeClass('loading-image');
+                            $('#loading-data').hide();
+
+
 
                     }
                 })
@@ -1020,6 +1062,7 @@ var $container1 = $('#sideVisMiddle'),
 
 <!-- Search params Section -->
 <div class="container">
+
 	<section id="searchParamsS" class="padding-md">
 	    <!-- <div class="row"> -->
 	        <div class="">
@@ -1102,6 +1145,7 @@ var $container1 = $('#sideVisMiddle'),
         <div class="col-xs-12"> <!--col-md-8-->
            <div class="col-xs-12 text-uppercase"> <!--col-md-8-->
            	 {# <h2>Showing <span id="dEntriesNumber">X</span>  results from <span id="dSetNumber">Y</span> Datasets</h2> #}
+
              <h2>Results</h2>
            </div>
             <div class="col-xs-12 col-sm-6 col-md-4 pull-down margin-4p">
@@ -1109,9 +1153,13 @@ var $container1 = $('#sideVisMiddle'),
                    <option value="">Download table</option>
                </select> -->
             </div>
-            <div class="clear border-white ">
+            <div class="clear border-white" style="min-height:300px;">
 
-            	<div id="mainVis">
+                {% if type=="Parlamentarni" or type=="Predsednicki" %}
+                <img id="loading-data" src= {{ url_for('static', filename = 'images/progress-circle.gif') }} width="50" height="50" alt="previous" title="Previous" border="0" style="margin:0 auto;display:inherit;margin-top:150px;">
+                {% endif %}
+                <img style="display:none" id="loading-data" src= {{ url_for('static', filename = 'images/progress-circle.gif') }} width="50" height="50" alt="previous" title="Previous" border="0" style="margin:0 auto;display:inherit;margin-top:150px;">
+                <div id="mainVis">
                     <table id="tableResults" class="  table-bordered" ></table>
                 </div>
 
@@ -1236,7 +1284,7 @@ function parlamentary_and_presidential(selected_year,select_type){
 
 	            dataType: "json",
                     success: function(response1){
-
+                    $('#loading-data').hide();
                     $('#tableResults_parlamentarni').DataTable( {
                             bDestroy: true,
                             data: response1,

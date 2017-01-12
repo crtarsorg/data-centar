@@ -123,7 +123,7 @@ $( document ).ready(function() {
                     <div class="col-md-4">
                     <script src="https://code.highcharts.com/highcharts.js"></script>
                         <div id="container" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
-                        <div style="height:100px;width:100%;background:white;"></div>
+
                         <script>
                                 $.ajax({
                                 url: 'http://datacentar.io/api/izbori/1/parlamentarni/godina/2016/instanca/3/krug/None',
@@ -195,16 +195,16 @@ $( document ).ready(function() {
                         </script>
                     </div>
                     <div class="col-md-4">
-                        <iframe class="highcharts-iframe" src="//cloud.highcharts.com/embed/ilogas" style="border: 0; width: 100%; height: 500px"></iframe>
+                        <iframe class="highcharts-iframe" src="//cloud.highcharts.com/embed/ilogas" style="border: 0; width: 100%; height: 400px;overflow:hidden"></iframe>
                     </div>
                     <div class="col-md-4">
-                        <iframe class="highcharts-iframe" src="//cloud.highcharts.com/embed/ymocew" style="border: 0; width: 100%; height: 500px"></iframe>
+                        <iframe class="highcharts-iframe" src="//cloud.highcharts.com/embed/ymocew" style="border: 0; width: 100%; height: 400px;overflow:hidden"></iframe>
                     </div>
                 {% else %}
                     <div class="col-md-4">
                                 <script src="https://code.highcharts.com/highcharts.js"></script>
                         <div id="container" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
-                        <div style="height:100px;width:100%;background:white;"></div>
+
                         <script>
                                 $.ajax({
                                 url: 'http://datacentar.io/api/izbori/1/parlamentarni/godina/2016/instanca/3/krug/None',
@@ -275,11 +275,11 @@ $( document ).ready(function() {
 
                         </script>
                     </div>
-                    <div class="col-md-4">
-                        <iframe class='highcharts-iframe' src='//cloud.highcharts.com/embed/omejob' style='border: 0; width: 100%; height: 500px'></iframe>
+                    <div class="col-md-4 first-iframe">
+                        <iframe class='highcharts-iframe' src='//cloud.highcharts.com/embed/omejob' style='border: 0; width: 100%; height: 400px;overflow:hidden'></iframe>
                     </div>
                     <div class="col-md-4">
-                        <iframe class='highcharts-iframe' src='//cloud.highcharts.com/embed/alucyz' style='border: 0; width: 100%; height: 500px'></iframe>
+                        <iframe class='highcharts-iframe' src='//cloud.highcharts.com/embed/alucyz' style='border: 0; width: 100%; height: 400px;overflow:hidden'></iframe>
                     </div>
                 {% endif %}
 
@@ -289,6 +289,3 @@ $( document ).ready(function() {
         <!-- </div> -->
 </section>
 {% endblock %}
-<style>
-
-</style>

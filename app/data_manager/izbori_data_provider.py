@@ -15,6 +15,8 @@ class IzboriDataProvider():
         # For now, we only support territorial levels for parliament elections
         if election_type_slug != 'predsjednicki' and instanca is not None:
             match['instanca'] = instanca
+        if election_type_slug == 'predsjednicki':
+            match['instanca'] = 3
 
         if round_slug is not None:
             round_val = cyrtranslit.to_cyrillic(round_slug.title(), 'sr')
@@ -87,7 +89,7 @@ class IzboriDataProvider():
         collection = 'izbori' if data_source == 1 else 'izbori2'
         match = {
             'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
-            'godina': year
+            'godina': year,
         }
         if round_slug is not None:
             round_val = cyrtranslit.to_cyrillic(round_slug.title(), 'sr')
@@ -202,12 +204,10 @@ class IzboriDataProvider():
 
     def get_top_indicators_by_type(self, data_source,election_type_slug, godina, instanca,round_slug=None):
         collection = 'izbori' if data_source == 1 else 'izbori2'
-
         match = {
             'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
             'godina': godina,
-            'instanca':instanca
-
+            'instanca':instanca,
         }
 
         if election_type_slug == 'predsjednicki':
@@ -273,7 +273,6 @@ class IzboriDataProvider():
         group = {
             '_id': {
                 'teritorija': '$teritorija',
-
             },
         }
         group['_id']['parentTeritorija'] = '$parentTeritorija'
@@ -286,12 +285,15 @@ class IzboriDataProvider():
         group['_id']['brojNeupoTrebljenihGlasackihListica'] = '$brojNeupoTrebljenihGlasackihListica'
         group['_id']['brojGlasackihListicaUKutiji'] = '$brojGlasackihListicaUKutiji'
         group['_id']['vazeciGlasackiListici'] = '$vazeciGlasackiListici'
+        group['_id']['nevazeciGlasackiListici'] = '$nevazeciGlasackiListici'
         project = {
-            '_id': 0,
-            'teritorija': '$_id.teritorija',
-            'brojUpisanihBiracaUBirackiSpisak': '$_id.brojUpisanihBiracaUBirackiSpisak',
-            'biraciKojiSuGlasali': '$_id.biraciKojiSuGlasali.broj',
-        }
+                '_id': 0,
+                'teritorija': '$_id.teritorija',
+                'brojUpisanihBiracaUBirackiSpisak': '$_id.brojUpisanihBiracaUBirackiSpisak',
+                'biraciKojiSuGlasali': '$_id.biraciKojiSuGlasali.broj',
+                'vazeciGlasackiListici': '$_id.vazeciGlasackiListici.broj',
+                'nevazeciGlasackiListici': '$_id.nevazeciGlasackiListici'
+            }
 
         pipeline = [
             {'$match': match},
@@ -301,16 +303,22 @@ class IzboriDataProvider():
         rsp = mongo.db[collection].aggregate(pipeline)
         total_voters=0
         total_registered=0
-        percentage=0;
+        percentage=0
+        valid_ballots_count=0
+        invalid_balots=0
         for rezultat in rsp['result']:
             total_voters+=rezultat['biraciKojiSuGlasali']
+            if godina in [2008] and election_type_slug in['parlamentarni']:
+                valid_ballots_count+=rezultat['vazeciGlasackiListici']
+                invalid_balots += rezultat['nevazeciGlasackiListici']
 
             if rezultat['brojUpisanihBiracaUBirackiSpisak']!=0:
                 total_registered+=rezultat['brojUpisanihBiracaUBirackiSpisak']
             percentage=(float(total_voters) / total_registered) * 100
-        return {'percentage':percentage, 'total_voters': total_voters}
-
-
+        if godina in [2008] and election_type_slug in ['parlamentarni']:
+            return {'percentage': percentage, 'total_voters': total_voters, 'valid_balots': valid_ballots_count,'invalid_balots': invalid_balots}
+        else:
+            return {'percentage': percentage, 'total_voters': total_voters}
 
     def get_political_parties(self,kandidat_name=None):
         data = []
@@ -390,7 +398,7 @@ class IzboriDataProvider():
         data.append({
             'slug': "aleksandar-vucic-sns-sdps-ns-spo-ps",
             "name": "АЛЕКСАНДАР ВУЧИЋ - СНС, СДПС, НС, СПО, ПС",
-            "color": "#05a6f0"
+            "color": "#00441b"
         })
         data.append({
             'slug': "",
@@ -406,34 +414,34 @@ class IzboriDataProvider():
         data.append({
             'slug': "",
             "name": "ЧЕДОМИР ЈОВАНОВИЋ - ЛДП, БДЗС, СДУ",
-            "color": "#852C62"
+            "color": "#313695"
         })
         data.append({
             'slug': "savez-vojvodanskih-madara-istvan-pastor",
             "name": "САВЕЗ ВОЈВОЂАНСКИХ МАЂАРА - ИШТВАН ПАСТОР",
-            "color": "#852C62"
+            "color": "#7fbc41"
         })
 
         data.append({
             'slug': "ujedinjeni-regioni-srbije-mladan-dinkic",
             "name": "УЈЕДИЊЕНИ РЕГИОНИ СРБИЈЕ - МЛАЂАН ДИНКИЋ",
-            "color": "#852C62"
+            "color": "#74add1"
         })
         data.append({
             'slug': "",
             "name": "СА ДЕМОКРАТСКОМ СТРАНКОМ ЗА ДЕМОКРАТСКУ СРБИЈУ",
-            "color": "#852C62"
+            "color": "#5aae61"
         })
         data.append({
             'slug': "",
             "name": "ДВЕРИ - БОШКО ОБРАДОВИЋ",
-            "color": "#852C62"
+            "color": "#4575b4"
         })
 
         data.append({
             'slug': "",
             "name": "БОРИС ТАДИЋ - НДС, ЛСВ, ЗЗС, ВМДК, ЗЗВ, ДЛР",
-            "color": "#852C62"
+            "color": "#a6dba0"
         })
         data.append({
             'slug': "",
@@ -551,15 +559,16 @@ class IzboriDataProvider():
             "color": "#852C62"
         })
         data.append({
-            'slug': "",
+            'slug': "milutin-mrkonjic",
             "name": "Милутин Мркоњић",
-            "color": "#852C62"
+            "color": "#99d8c9"
         })
         data.append({
-            'slug': "tomislav-nikolic",
-            "name": "Томислав Николић",
-            "color": "#2A808D"
+            'slug': "marijan-risti-cevic",
+            "name": "Маријан Ристи-чевић",
+            "color": "#2ca25f"
         })
+
         data.append({
             'slug': "",
             "name": "Југослав Добричанин",
@@ -737,7 +746,7 @@ class IzboriDataProvider():
             "color": "#852C62"
         })
         data.append({
-            'slug': "",
+            'slug': "boris-tadic",
             "name": "Борис Тадић",
             "color": "#78BAC2"
         })
@@ -754,22 +763,22 @@ class IzboriDataProvider():
         data.append({
             'slug': "za-evropsku-srbiju-boris-tadic",
             "name": "ЗА ЕВРОПСКУ СРБИЈУ - БОРИС ТАДИЋ",
-            "color": "#141A64"
+            "color": "#006837"
         })
         data.append({
             'slug': "srpska-radikalna-stranka-dr-vojislav-seselj",
             "name": "Српска радикална странка - др Војислав Шешељ",
-            "color": "#90CAF9"
+            "color": "#ffffbf"
         })
         data.append({
             'slug': "srs",
             "name": "СРС",
-            "color": "#003B20"
+            "color": "#003c30"
         })
         data.append({
             'slug': "dss",
             "name": "ДСС",
-            "color": "#141A64"
+            "color": "#01665e"
         })
         data.append({
             'slug': "sda-sandzaka-dr-sulejman-ugljanin",
@@ -779,47 +788,47 @@ class IzboriDataProvider():
         data.append({
             'slug': "ds",
             "name": "ДС",
-            "color": "#141A64"
+            "color": "#35978f"
         })
         data.append({
             'slug': "spo-ns",
             "name": "СПО - НС",
-            "color": "#141A69"
+            "color": "#c7eae5"
         })
         data.append({
             'slug': "da",
             "name": "ДА",
-            "color": "#313975"
+            "color": "#8c510a"
         })
         data.append({
             'slug': "sps",
             "name": "СПС",
-            "color": "#297B48"
+            "color": "#dfc27d"
         })
         data.append({
             'slug': "g17-plus",
             "name": "Г17 плус",
-            "color": "#AAA939"
+            "color": "#80cdc1"
         })
         data.append({
             'slug': "zajedno-za-toleranciju",
             "name": "Заједно за толеранцију",
-            "color": "#AA9239"
+            "color": "#bf812d"
         })
         data.append({
             'slug': "za-narodno-jedinstvo",
             "name": "За народно јединство",
-            "color": "#00A75B"
+            "color": "#543005"
         })
         data.append({
             'slug': "otpor",
             "name": "Отпор",
-            "color": "#FFC841"
+            "color": "#003c30"
         })
         data.append({
-            'slug': "",
+            'slug': "demokratska-stranka-srbije-nova-srbija-vojislav-kostunica",
             "name": "Демократска странка Србије - Нова Србија - Војислав Коштуница",
-            "color": "#2D4571"
+            "color": "#66bd63"
         })
         data.append({
             'slug': "",
@@ -829,47 +838,43 @@ class IzboriDataProvider():
         data.append({
             'slug': "samostalna-srbija",
             "name": "Самостална Србија",
-            "color": "#ACD270"
+            "color": "#01665e"
         })
         data.append({
             'slug': "sns",
             "name": "СНС",
-            "color": "#27784D"
+            "color": "#35978f"
         })
         data.append({
             'slug': "liberali-srbije",
             "name": "Либерали Србије",
-            "color": "#27784D"
+            "color": "#80cdc1"
         })
-        data.append({
-            'slug':'pokrenimo-srbiju-tomislav-nikolic',
-            "name": "Покренимо Србију - Томислав Николић",
-            "color": "#27784D"
-        })
+
         data.append({
             'slug': 'odbrana-i-pravda',
             "name": "Одбрана и правда",
-            "color": "#141A64"
+            "color": "#dfc27d"
         })
         data.append({
             'slug': 'privredna-snaga-srbije-i-dijaspora',
             "name": "Привредна снага Србије и дијаспора",
-            "color": "#6E8999"
+            "color": "#bf812d"
         })
         data.append({
             'slug': 'reformisti',
             "name": "Реформисти",
-            "color": "#CA4400"
+            "color": "#c7eae5"
         })
         data.append({
             'slug': "izbor-za-bolji-zivot-boris-tadic",
             "name": "Избор за бољи живот - Борис Тадић",
-            "color": "#6E8999"
+            "color": "#4575b4"
         })
         data.append({
             'slug': "laburist-partija-srbije",
             "name": "Лабурист. партија Србије",
-            "color": "#2D4571"
+            "color": "#8c510a"
         })
         data.append({
             'slug': "jul",
@@ -884,38 +889,34 @@ class IzboriDataProvider():
         data.append({
             'slug': "pokret-radnika-i-seljaka",
             "name": "Покрет радника и сељака",
-            "color": "#76746F"
+            "color": "#f46d43"
         })
         data.append({
             'slug': "komunisticka-partija-josip-broz",
             "name": "Комунистичка партија - Јосип Броз",
-            "color": "#C7B588"
+            "color": "#d73027"
         })
         data.append({
             'slug': "ivica-dacic-socijalisticka-partija-srbije-sps-partija-ujedinjenih-penzionera-srbije-pups-jedinstvena-srbija-js",
             "name": 'Ивица Дачић - "Социјалистичка партија Србије (СПС), Партија уједињених пензионера Србије (ПУПС), Јединствена Србија (ЈС)"',
-            "color": "#06320C"
+            "color": "#74add1"
         })
         data.append({
             'slug': "savez-vojodanskih-madara-istvan-pastor",
             "name": 'Савез војођанских Мађара - Иштван Пастор',
-            "color": "#009D13"
+            "color": "#fdae61"
         })
         data.append({
             'slug': "stranka-demokratske-akcije-sandzaka-dr-sulejman-ugljanin",
             "name": 'Странка демократске акције Санџака - др Сулејман Угљанин',
-            "color": "#FFC841"
+            "color": "#a50026"
         })
         data.append({
             'slug': "demokratska-stranka-srbije-vojislav-kostunica",
             "name": 'Демократска странка Србије - Војислав Коштуница',
-            "color": "#CA4400"
+            "color": "#abd9e9"
         })
-        data.append({
-            'slug': "koalicija-albanaca-presevske-doline",
-            "name": 'Коалиција Албанаца Прешевске долине',
-            "color": "#00A75B"
-        })
+
         data.append({
             'slug': "reformisticka-stranka-prof-dr-milan-visnjic",
             "name": 'Реформистичка странка - проф. др Милан Вишњић',
@@ -949,7 +950,7 @@ class IzboriDataProvider():
         data.append({
             'slug': "dveri-za-zivot-srbije",
             "name": 'Двери за живот Србије',
-            "color": "#4F4633"
+            "color": "#fee090"
         })
         data.append({
             'slug': "dveri-za-zivot-srbije",
@@ -970,34 +971,145 @@ class IzboriDataProvider():
         data.append({
             'slug': "vojislav-kostunica-dss",
             "name": 'Војислав Коштуница (ДСС)',
-            "color": "#AC873D"
-        })
-        data.append({
-            'slug': "dr-miroljub-labus-gg",
-            "name": 'др Мирољуб Лабус (ГГ)',
-            "color": "#AC873D"
+            "color": "#35978f"
         })
         data.append({
             'slug': "tomislav-nikolic",
-            "name": 'Tomislav Nikolić',
-            "color": "#AC873D"
-        })
-        data.append({
-            'slug': "borislav-pelevic-ssj",
-            "name": 'Борислав Пелевић (ССЈ)',
-            "color": "#009D13"
+            "name": 'Томислав Николић',
+            "color": "#006837"
         })
 
         data.append({
             'slug': "demokratska-stranka-srbije-vojislav-kostinica",
             "name": 'ДЕМОКРАТСКА СТРАНКА СРБИЈЕ - ВОЈИСЛАВ КОШТИНИЦА',
-            "color": "#009D13"
+            "color": "#d9f0d3"
         })
         data.append({
             'slug': "ivica-dacic-sps-pups-js",
             "name": 'ИВИЦА ДАЧИЋ - СПС, ПУПС, ЈС',
-            "color": "blue"
+            "color": "#1b7837"
         })
+
+        #2002 presidential
+        data.append({
+            'slug': "dr-vojislav-seselj-srs",
+            "name": 'др Војислав Шешељ (СРС)',
+            "color": "#003c30"
+        })
+        data.append({
+            'slug': "dr-miroljub-labus-gg",
+            "name": 'др Мирољуб Лабус (ГГ)',
+            "color": "#01665e"
+        })
+        data.append({
+            'slug': "velimir-bata-zivojinovic-sps",
+            "name": 'Велимир-Бата Живојиновић (СПС)',
+            "color": "#80cdc1"
+        })
+        data.append({
+            'slug': "borislav-pelevic-ssj",
+            "name": 'Борислав Пелевић (ССЈ)',
+            "color": "#c7eae5"
+        })
+
+        data.append({
+            'slug': "prof-borislav-pelevic-ssj",
+            "name": 'проф. Борислав Пелевић (ССЈ)',
+            "color": "#c7eae5"
+        })
+        data.append({
+            'slug': "nebojsa-pavkovic-gg",
+            "name": 'Небојша Павковић (ГГ)',
+            "color": "#f6e8c3"
+        })
+        data.append({
+            'slug': "prof-dr-branislav-bane-ivkovic-gg",
+            "name": 'проф. др Бранислав-Бане Ивковић (ГГ)',
+            "color": "#dfc27d"
+        })
+        data.append({
+            'slug': "dr-tomislav-lalosevic-gg",
+            "name": 'др Томислав Лалошевић (ГГ)',
+            "color": "#bf812d"
+        })
+        data.append({
+            'slug': "dr-vuk-obradovic-sd",
+            "name": 'др Вук Обрадовић (СД)',
+            "color": "#8c510a"
+        })
+        data.append({
+            'slug': "dr-dragan-radenovic-gg",
+            "name": 'др Драган Раденовић (ГГ)',
+            "color": "#543005"
+        })
+        #2003 presidential
+        data.append({
+            'slug': "tomislav-nikolic-srs",
+            "name": 'Томислав Николић (СРС)',
+            "color": "#253494"
+        })
+        data.append({
+            'slug': "prof-dr-dragoljub-micunovic-dos",
+            "name": 'Проф. др Драгољуб Мићуновић (ДОС)',
+            "color": "#2c7fb8"
+        })
+        data.append({
+            'slug': "velimir-ilic-ns",
+            "name": 'Велимир Илић (НС)',
+            "color": "#41b6c4"
+        })
+        data.append({
+            'slug': "marijan-risticevic-nss",
+            "name": 'Маријан Ристичевић (НСС)',
+            "color": "#7fcdbb"
+        })
+        data.append({
+            'slug': "dragan-s-tomic-sns",
+            "name": 'Драган С. Томић (СНС)',
+            "color": "#c7e9b4"
+        })
+        data.append({
+            'slug': "radoslav-avlijas-dso",
+            "name": 'Радослав Авлијаш (ДСО)',
+            "color": "#ffffcc"
+        })
+        data.append({
+            'slug': "socijalisticka-partija-srbije-partija-ujedinjenih-penzionera-srbije-jedinstvena-srbija",
+            "name": 'Социјалистичка партија Србије - Партија уједињених пензионера Србије - Јединствена Србија',
+            "color": "#a6d96a"
+        })
+        data.append({
+            'slug': "liberalno-demokratska-partija-cedomir-jovanovic",
+            "name": 'ЛИБЕРАЛНО ДЕМОКРАТСКА ПАРТИЈА - ЧЕДОМИР ЈОВАНОВИЋ',
+            "color": "#d9ef8b"
+        })
+        data.append({
+            'slug': "madarska-koalicija-istvan-pastor",
+            "name": 'МАЂАРСКА КОАЛИЦИЈА - ИШТВАН ПАСТОР',
+            "color": "#ffffbf"
+        })
+        data.append({
+            'slug': "bosnjacka-lista-za-evropski-sandzak-dr-sulejman-ugljanin",
+            "name": 'БОШЊАЧКА ЛИСТА ЗА ЕВРОПСКИ САНЏАК - ДР СУЛЕЈМАН УГЉАНИН',
+            "color": "#fdae61"
+        })
+        data.append({
+            'slug': "pokret-snaga-srbije-bogoljub-karic",
+            "name": 'Покрет СНАГА СРБИЈЕ - Богољуб Карић',
+            "color": "#f46d43"
+        })
+
+        data.append({
+            'slug': "koalicija-albanaca-presevske-doline",
+            "name": 'КОАЛИЦИЈА АЛБАНАЦА ПРЕШЕВСКЕ ДОЛИНЕ',
+            "color": "#f46d43"
+        })
+        data.append({
+            'slug': "pokrenimo-srbiju-tomislav-nikolic",
+            "name": 'Покренимо Србију - Томислав Николић',
+            "color": "#313695"
+        })
+
 
 
         if kandidat_name is not None:
@@ -1012,13 +1124,18 @@ class IzboriDataProvider():
             print "not none"
             return data
 
-    def get_winners_for_each_territory(self, data_source,election_type_slug,year,instanca):
+    def get_winners_for_each_territory(self, data_source,election_type_slug,year,instanca,krug):
         collection = 'izbori' if data_source == 1 else 'izbori2'
         match = {
             'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
             'godina': year,
-            'instanca':instanca
+            'instanca':instanca,
+
         }
+        if election_type_slug == 'predsjednicki' and krug is not None:
+            round_val = cyrtranslit.to_cyrillic(krug.title(), 'sr')
+            match['krug'] = round_val
+
         group = {
             '_id': {
                 'teritorija': '$teritorija',
@@ -1058,7 +1175,7 @@ class IzboriDataProvider():
 
         return rsp['result']
 
-    def get_results_by_territory(self, data_source, election_type_slug, year,territory_slug,instanca):
+    def get_results_by_territory(self, data_source, election_type_slug, year,territory_slug,instanca,krug):
         collection = 'izbori' if data_source == 1 else 'izbori2'
 
         match = {
@@ -1068,6 +1185,9 @@ class IzboriDataProvider():
             'instanca':instanca
 
         }
+        if election_type_slug == 'predsjednicki' and krug is not None:
+            round_val = cyrtranslit.to_cyrillic(krug.title(), 'sr')
+            match['krug'] = round_val
 
         # For now, we only support territorial levels for parliament elections
         group = {
@@ -1095,7 +1215,9 @@ class IzboriDataProvider():
             group['_id']['brojPrimljenihGlasackihListica'] = '$brojPrimljenihGlasackihListica'
             group['_id']['brojNeupoTrebljenihGlasackihListica'] = '$brojNeupoTrebljenihGlasackihListica'
             group['_id']['brojGlasackihListicaUKutiji'] = '$brojGlasackihListicaUKutiji'
-            group['_id']['vazeciGlasackiListici'] = '$vazeciGlasackiListici'
+            if year not in [2003, 2012, 2014] and election_type_slug not in ['parlamentarni'] or year not in [2002] and election_type_slug not in ['predsjednicki']:
+                group['_id']['vazeciGlasackiListici'] = '$vazeciGlasackiListici'
+                group['_id']['nevazeciGlasackiListici'] = '$nevazeciGlasackiListici'
 
         project = {
             '_id': 0,
@@ -1115,7 +1237,10 @@ class IzboriDataProvider():
             project['brojPrimljenihGlasackihListica'] = '$_id.brojPrimljenihGlasackihListica'
             project['brojNeupoTrebljenihGlasackihListica'] = '$_id.brojNeupoTrebljenihGlasackihListica'
             project['brojGlasackihListicaUKutiji'] = '$_id.brojGlasackihListicaUKutiji'
-            project['vazeciGlasackiListici'] = '$_id.vazeciGlasackiListici'
+            if year not in [2003,2012,2014] and  election_type_slug not in['parlamentarni'] or year not in [2002] and election_type_slug not in ['predsjednicki']:
+                project['vazeciGlasackiListici'] = '$_id.vazeciGlasackiListici'
+                project['nevazeciGlasackiListici'] = '$_id.nevazeciGlasackiListici'
+
 
         pipeline = [
             {'$match': match},
@@ -1130,7 +1255,7 @@ class IzboriDataProvider():
         return rsp['result'][0]
 
 
-    def get_results_by_territory_by_candidate(self,data_source,election_type_slug,year,territory_slug,candidate_slug,instanca):
+    def get_results_by_territory_by_candidate(self,data_source,election_type_slug,year,territory_slug,candidate_slug,instanca,krug):
         collection = 'izbori' if data_source == 1 else 'izbori2'
         if election_type_slug == 'predsjednicki':
             match = {
@@ -1138,15 +1263,26 @@ class IzboriDataProvider():
                 'godina': year,
                 'teritorijaSlug': territory_slug,
                 'instanca': instanca,
-                'kandidatSlug':candidate_slug
+                'kandidatSlug':candidate_slug,
+
+            }
+            match1 = {
+                'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
+                'godina': year,
+                'teritorijaSlug': territory_slug,
+                'instanca': instanca,
+
             }
             group = {
                 '_id': {
                     'teritorija': '$teritorija',
                     'teritorijaSlug': '$teritorijaSlug',
                     'teritorija': '$teritorija',
-                    'izbornaLista': '$izbornaLista',
-                    'izbornaListaSlug': '$izbornaListaSlug',
+                    'kandidat': '$kandidat',
+                    'kandidatSlug': '$kandidatSlug',
+                    'brojUpisanihBiracaUBirackiSpisak': '$brojUpisanihBiracaUBirackiSpisak',
+                    'biraciKojiSuGlasali': '$biraciKojiSuGlasali',
+                    'rezultat': '$rezultat'
                 },
             }
         else:
@@ -1176,17 +1312,31 @@ class IzboriDataProvider():
                     'rezultat': '$rezultat'
                 },
             }
+        if election_type_slug == 'predsjednicki' and krug is not None:
+            round_val = cyrtranslit.to_cyrillic(krug.title(), 'sr')
+            match['krug'] = round_val
+        if election_type_slug == 'predsjednicki':
+            project = {
+                    '_id': 0,
+                    'teritorija': '$_id.teritorija',
+                    'teritorijaSlug': '$_id.teritorijaSlug',
+                    'kandidatSlug':'$_id.kandidatSlug',
+                    'kandidat': '$_id.kandidat',
+                    'brojUpisanihBiracaUBirackiSpisak':'$_id.brojUpisanihBiracaUBirackiSpisak',
+                    'biraciKojiSuGlasali':'$_id.biraciKojiSuGlasali',
+                    'rezultat': '$_id.rezultat',
 
-        project = {
+                }
+        else:
+            project = {
                 '_id': 0,
                 'teritorija': '$_id.teritorija',
                 'teritorijaSlug': '$_id.teritorijaSlug',
-                'izbornaListaSlug':'$_id.izbornaListaSlug',
+                'izbornaListaSlug': '$_id.izbornaListaSlug',
                 'izbornaLista': '$_id.izbornaLista',
-                'brojUpisanihBiracaUBirackiSpisak':'$_id.brojUpisanihBiracaUBirackiSpisak',
-                'biraciKojiSuGlasali':'$_id.biraciKojiSuGlasali',
+                'brojUpisanihBiracaUBirackiSpisak': '$_id.brojUpisanihBiracaUBirackiSpisak',
+                'biraciKojiSuGlasali': '$_id.biraciKojiSuGlasali',
                 'rezultat': '$_id.rezultat',
-
             }
         pipeline = [
             {'$match': match},

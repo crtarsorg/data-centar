@@ -1,5 +1,6 @@
 #!/bin/sh
 source ./venv/bin/activate
+
 python import-izbori.py --election parlamentarni --year 2003 --granular
 python import-izbori.py --election parlamentarni --year 2007 --granular
 python import-izbori.py --election parlamentarni --year 2008 --granular

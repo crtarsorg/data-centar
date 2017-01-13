@@ -128,7 +128,7 @@ class IzboriDataProvider():
             {'$project': self.get_poject_pipeline_operation_for_votes_grouped_by_party_or_candidate(election_type_slug)}
         ]
 
-        rsp = mongo.db[collection].aggregate(pipeline)
+        rsp = mongo.db[collection].aggregate(pipeline,allowDiskUse=True)
 
         if party_or_candidate_slug is not None:
             return rsp['result'][0]

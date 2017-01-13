@@ -832,4 +832,60 @@
             </div>
         </div>
     </section>
+        <section id="api-list-mun" class="container margin-4p">
+        <div class="row">
+            <div class="col-xs-12 col-md-8 float-none">
+                <div class="panel panel-default border-primary">
+                    <div class="panel-heading text-center">
+                        <h3 class="panel-title white-content">{{ _('Parlamentary and Presidential Elections') }}</h3>
+                    </div>
+                    <div class="panel-body primary-content-color">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#list-mun-how" aria-controls="list-mun-how"
+                                                                      role="tab" data-toggle="tab">{{ _('How?') }}</a></li>
+
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="list-mun-how">
+                                <div class="form-group text-center">
+                                    <!--<h5>OPIS:</h5>-->
+                                    <span>{{ _('DESCRIPTION: Use this POST request to download data.') }}</span>
+                                </div>
+
+                                <div class="text-center">
+                                    <!--<h5>URL POST ZAHTEVA:</h5>-->
+                                    <h2>Parlamentarni Izbori</h2>
+                                    <span><b>GET</b> election results grouped by territories:</span><br/>
+
+                                    <span style="word-break:break-all">{{ _('<b>POST REQUEST URL:</b>  ')}} <br/>http://datacentar.io/api/izbori/datasource/parlamentarni/godina/int:godina/teritorija/instanca/int:territory_admin_level</span><br/><br/>
+
+                                    <span>{{ _('<b>EXAMPLE POST REQUEST URL</b>: http://datacentar.io/api/izbori/2/parlamentarni/godina/2003/teritorija/instanca/2') }}</span>
+
+                                    <br/><br/>
+                                    <span><b>GET</b> election results for a given territory:</span><br/>
+                                    <span>{{ _('<b>EXAMPLE POST REQUEST URL</b>:') }}</span><br/>
+                                    <span style="word-break:break-all"></spam>http://datacentar.io/api/izbori/int:data_source_id/parlamentarni/godina/int:godina/teritorija/instanca/int:territory_admin_level/string:territory_slug</span>
+
+                                                                        <br/><br/>
+                                    <h2>Predsednički</h2>
+                                    <span><b>GET</b>  election results grouped by parties:</span><br/>
+                                    <span>{{ _('<b>EXAMPLE POST REQUEST URL</b>:') }}</span><br/>
+                                    <span style="word-break:break-all"></spam>http://datacentar.io/api/izbori/int:data_source_id/predsjednicki/godina/int:godina/krug/string:krug/teritorija</span><br/><br/>
+                                    <span>{{ _('<b>EXAMPLE POST REQUEST URL</b>: http://datacentar.io/api/izbori/2/predsjednicki/godina/2003/krug/prvi/teritorija') }}</span><br/>
+                                    <span><b>Short description: Krug can be prvi or drugi<b/></span>
+                                </div>
+                                <br>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

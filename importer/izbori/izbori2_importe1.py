@@ -16,103 +16,6 @@ class Izbori2DataImporter(object):
     def get_political_parties(self, kandidat_name=None):
         data = []
         # year 2000
-        # parlamentarni 2003
-        data.append({
-            'slug': "srs",
-            "name": "СРС",
-            "color": "#a6cee3"
-        })
-        data.append({
-            'slug': "dss",
-            "name": "ДСС",
-            "color": "#1f78b4"
-        })
-        data.append({
-            'slug': "ds",
-            "name": "ДС",
-            "color": "#b2df8a"
-        })
-        data.append({
-            'slug': "g17-plus",
-            "name": "Г17 плус",
-            "color": "#33a02c"
-        })
-        data.append({
-            'slug': "spo-ns",
-            "name": "СПО - НС",
-            "color": "#fb9a99"
-        })
-        data.append({
-            'slug': "sps",
-            "name": "СПС",
-            "color": "#e31a1c"
-        })
-
-        data.append({
-            'slug': "zajedno-za-toleranciju",
-            "name": "Заједно за толеранцију",
-            "color": "#fdbf6f"
-        })
-        data.append({
-            'slug': "da",
-            "name": "ДА",
-            "color": "#ff7f00"
-        })
-        data.append({
-            'slug': "za-narodno-jedinstvo",
-            "name": "За народно јединство",
-            "color": "#cab2d6"
-        })
-        data.append({
-            'slug': "otpor",
-            "name": "Отпор",
-            "color": "#6a3d9a"
-        })
-        data.append({
-            'slug': "samostalna-srbija",
-            "name": "Самостална Србија",
-            "color": "#ffff99"
-        })
-        data.append({
-            'slug': "sns",
-            "name": "СНС",
-            "color": "#b15928"
-        })
-        data.append({
-            'slug': "liberali-srbije",
-            "name": "Либерали Србије",
-            "color": "#8dd3c7"
-        })
-        data.append({
-            'slug': 'reformisti',
-            "name": "Реформисти",
-            "color": "#ffffb3"
-        })
-        data.append({
-            'slug': 'odbrana-i-pravda',
-            "name": "Одбрана и правда",
-            "color": "#bebada"
-        })
-        data.append({
-            'slug': 'privredna-snaga-srbije-i-dijaspora',
-            "name": "Привредна снага Србије и дијаспора",
-            "color": "#fb8072"
-        })
-        data.append({
-            'slug': "laburist-partija-srbije",
-            "name": "Лабурист. партија Србије",
-            "color": "#80b1d3"
-        })
-        data.append({
-            'slug': "jul",
-            "name": " ЈУЛ",
-            "color": "#fdb462"
-        })
-        data.append({
-            'slug': "savez-srba-vojvodine",
-            "name": " Савез Срба Војводине",
-            "color": "#b3de69"
-        })
         data.append({
             'slug': "demokratska-opozicija-srbije",
             "name": "Демократска опозиција Србије",
@@ -165,9 +68,9 @@ class Izbori2DataImporter(object):
             "color": "#2E4372"
         })
         data.append({
-            'slug': "dosta-je-bilo-sasa-radulovic",
+            'slug': "",
             "name": "ДОСТА ЈЕ БИЛО - САША РАДУЛОВИЋ",
-            "color": "#d9d9d9"
+            "color": "#29526D"
         })
 
         data.append({
@@ -183,12 +86,12 @@ class Izbori2DataImporter(object):
         data.append({
             'slug': "partija-za-demokratsko-delovanje-riza-halimi",
             "name": "ПАРТИЈА ЗА ДЕМОКРАТСКО ДЕЛОВАЊЕ - РИЗА ХАЛИМИ",
-            "color": "#bc80bd"
+            "color": "#412F74"
         })
         data.append({
             'slug': "aleksandar-vucic-sns-sdps-ns-spo-ps",
             "name": "АЛЕКСАНДАР ВУЧИЋ - СНС, СДПС, НС, СПО, ПС",
-            "color": "#8dd3c7"
+            "color": "#00441b"
         })
         data.append({
             'slug': "",
@@ -202,9 +105,9 @@ class Izbori2DataImporter(object):
             "color": "#852C62"
         })
         data.append({
-            'slug': "cedomir-jovanovic-ldp-bdzs-sdu",
+            'slug': "",
             "name": "ЧЕДОМИР ЈОВАНОВИЋ - ЛДП, БДЗС, СДУ",
-            "color": "#b3de69"
+            "color": "#313695"
         })
         data.append({
             'slug': "savez-vojvodanskih-madara-istvan-pastor",
@@ -215,23 +118,23 @@ class Izbori2DataImporter(object):
         data.append({
             'slug': "ujedinjeni-regioni-srbije-mladan-dinkic",
             "name": "УЈЕДИЊЕНИ РЕГИОНИ СРБИЈЕ - МЛАЂАН ДИНКИЋ",
-            "color": "#fccde5"
+            "color": "#74add1"
         })
         data.append({
-            'slug': "sa-demokratskom-strankom-za-demokratsku-srbiju",
+            'slug': "",
             "name": "СА ДЕМОКРАТСКОМ СТРАНКОМ ЗА ДЕМОКРАТСКУ СРБИЈУ",
-            "color": "#bebada"
+            "color": "#5aae61"
         })
         data.append({
-            'slug': "dveri-bosko-obradovic",
+            'slug': "",
             "name": "ДВЕРИ - БОШКО ОБРАДОВИЋ",
-            "color": "#fdb462"
+            "color": "#4575b4"
         })
 
         data.append({
-            'slug': "boris-tadic-nds-lsv-zzs-vmdk-zzv-dlr",
+            'slug': "",
             "name": "БОРИС ТАДИЋ - НДС, ЛСВ, ЗЗС, ВМДК, ЗЗВ, ДЛР",
-            "color": "#fb8072"
+            "color": "#a6dba0"
         })
         data.append({
             'slug': "",
@@ -553,24 +456,72 @@ class Izbori2DataImporter(object):
         data.append({
             'slug': "za-evropsku-srbiju-boris-tadic",
             "name": "ЗА ЕВРОПСКУ СРБИЈУ - БОРИС ТАДИЋ",
-            "color": "#a6cee3"
+            "color": "#006837"
         })
         data.append({
             'slug': "srpska-radikalna-stranka-dr-vojislav-seselj",
             "name": "Српска радикална странка - др Војислав Шешељ",
-            "color": "#1f78b4"
+            "color": "#ffffbf"
         })
-
+        data.append({
+            'slug': "srs",
+            "name": "СРС",
+            "color": "#003c30"
+        })
+        data.append({
+            'slug': "dss",
+            "name": "ДСС",
+            "color": "#01665e"
+        })
         data.append({
             'slug': "sda-sandzaka-dr-sulejman-ugljanin",
             "name": "СДА САНЏАКА - ДР СУЛЕЈМАН УГЉАНИН",
             "color": "green"
         })
-
+        data.append({
+            'slug': "ds",
+            "name": "ДС",
+            "color": "#35978f"
+        })
+        data.append({
+            'slug': "spo-ns",
+            "name": "СПО - НС",
+            "color": "#c7eae5"
+        })
+        data.append({
+            'slug': "da",
+            "name": "ДА",
+            "color": "#8c510a"
+        })
+        data.append({
+            'slug': "sps",
+            "name": "СПС",
+            "color": "#dfc27d"
+        })
+        data.append({
+            'slug': "g17-plus",
+            "name": "Г17 плус",
+            "color": "#80cdc1"
+        })
+        data.append({
+            'slug': "zajedno-za-toleranciju",
+            "name": "Заједно за толеранцију",
+            "color": "#bf812d"
+        })
+        data.append({
+            'slug': "za-narodno-jedinstvo",
+            "name": "За народно јединство",
+            "color": "#543005"
+        })
+        data.append({
+            'slug': "otpor",
+            "name": "Отпор",
+            "color": "#003c30"
+        })
         data.append({
             'slug': "demokratska-stranka-srbije-nova-srbija-vojislav-kostunica",
             "name": "Демократска странка Србије - Нова Србија - Војислав Коштуница",
-            "color": "#b2df8a"
+            "color": "#66bd63"
         })
         data.append({
             'slug': "",
@@ -578,9 +529,55 @@ class Izbori2DataImporter(object):
             "color": "#2D882D"
         })
         data.append({
+            'slug': "samostalna-srbija",
+            "name": "Самостална Србија",
+            "color": "#01665e"
+        })
+        data.append({
+            'slug': "sns",
+            "name": "СНС",
+            "color": "#35978f"
+        })
+        data.append({
+            'slug': "liberali-srbije",
+            "name": "Либерали Србије",
+            "color": "#80cdc1"
+        })
+
+        data.append({
+            'slug': 'odbrana-i-pravda',
+            "name": "Одбрана и правда",
+            "color": "#dfc27d"
+        })
+        data.append({
+            'slug': 'privredna-snaga-srbije-i-dijaspora',
+            "name": "Привредна снага Србије и дијаспора",
+            "color": "#bf812d"
+        })
+        data.append({
+            'slug': 'reformisti',
+            "name": "Реформисти",
+            "color": "#c7eae5"
+        })
+        data.append({
             'slug': "izbor-za-bolji-zivot-boris-tadic",
             "name": "Избор за бољи живот - Борис Тадић",
             "color": "#4575b4"
+        })
+        data.append({
+            'slug': "laburist-partija-srbije",
+            "name": "Лабурист. партија Србије",
+            "color": "#8c510a"
+        })
+        data.append({
+            'slug': "jul",
+            "name": " ЈУЛ",
+            "color": "#ACD270"
+        })
+        data.append({
+            'slug': "savez-srba-vojvodine",
+            "name": " Савез Срба Војводине",
+            "color": "#4C691D"
         })
         data.append({
             'slug': "pokret-radnika-i-seljaka",
@@ -678,13 +675,14 @@ class Izbori2DataImporter(object):
         data.append({
             'slug': "demokratska-stranka-srbije-vojislav-kostinica",
             "name": 'ДЕМОКРАТСКА СТРАНКА СРБИЈЕ - ВОЈИСЛАВ КОШТИНИЦА',
-            "color": "#80b1d3"
+            "color": "#d9f0d3"
         })
         data.append({
             'slug': "ivica-dacic-sps-pups-js",
             "name": 'ИВИЦА ДАЧИЋ - СПС, ПУПС, ЈС',
-            "color": "#1f78b4"
+            "color": "#1b7837"
         })
+
         # 2002 presidential
         data.append({
             'slug': "dr-vojislav-seselj-srs",
@@ -771,12 +769,12 @@ class Izbori2DataImporter(object):
         data.append({
             'slug': "socijalisticka-partija-srbije-partija-ujedinjenih-penzionera-srbije-jedinstvena-srbija",
             "name": 'Социјалистичка партија Србије - Партија уједињених пензионера Србије - Јединствена Србија',
-            "color": "#33a02c"
+            "color": "#a6d96a"
         })
         data.append({
             'slug': "liberalno-demokratska-partija-cedomir-jovanovic",
             "name": 'ЛИБЕРАЛНО ДЕМОКРАТСКА ПАРТИЈА - ЧЕДОМИР ЈОВАНОВИЋ',
-            "color": "#fb9a99"
+            "color": "#d9ef8b"
         })
         data.append({
             'slug': "madarska-koalicija-istvan-pastor",
@@ -786,18 +784,18 @@ class Izbori2DataImporter(object):
         data.append({
             'slug': "bosnjacka-lista-za-evropski-sandzak-dr-sulejman-ugljanin",
             "name": 'БОШЊАЧКА ЛИСТА ЗА ЕВРОПСКИ САНЏАК - ДР СУЛЕЈМАН УГЉАНИН',
-            "color": "#fdbf6f"
+            "color": "#fdae61"
         })
         data.append({
             'slug': "pokret-snaga-srbije-bogoljub-karic",
             "name": 'Покрет СНАГА СРБИЈЕ - Богољуб Карић',
-            "color": "#ff7f00"
+            "color": "#f46d43"
         })
 
         data.append({
             'slug': "koalicija-albanaca-presevske-doline",
             "name": 'КОАЛИЦИЈА АЛБАНАЦА ПРЕШЕВСКЕ ДОЛИНЕ',
-            "color": "#cab2d6"
+            "color": "#f46d43"
         })
         data.append({
             'slug': "pokrenimo-srbiju-tomislav-nikolic",

@@ -6,6 +6,7 @@ from flask import jsonify, request
 class IzboriDataProvider():
 
     def get_votes_grouped_by_territory(self, data_source, election_type_slug, year, instanca, territory_slug=None, round_slug=None,range_of_documents=None):
+
         collection = 'izbori' if data_source == 1 else 'izbori2'
         match = {
             'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
@@ -60,7 +61,6 @@ class IzboriDataProvider():
             'rezultat': 1,
 
         }
-
         if data_source == 2:
             project['parentTeritorija'] = '$_id.parentTeritorija'
             project['parentTeritorijaSlug'] = '$_id.parentTeritorijaSlug'
@@ -72,7 +72,6 @@ class IzboriDataProvider():
             project['brojNeupoTrebljenihGlasackihListica'] = '$_id.brojNeupoTrebljenihGlasackihListica'
             project['brojGlasackihListicaUKutiji'] = '$_id.brojGlasackihListicaUKutiji'
             project['vazeciGlasackiListici'] = '$_id.vazeciGlasackiListici'
-
         pipeline = [
                 {'$match': match},
                 {'$sort': sort},
@@ -80,10 +79,93 @@ class IzboriDataProvider():
                 {'$project': project},
 
         ]
-
         rsp = mongo.db[collection].aggregate(pipeline, allowDiskUse=True)
-
         return rsp['result']
+
+    def get_votes_grouped_by_territory_landingpage(self, data_source):
+
+        collection = 'izbori' if data_source == 1 else 'izbori2'
+        election_type_slug_par="parlamentarni"
+        election_type_slug_pres="predsjednicki"
+        match_par_2012 = {
+            'izbori': cyrtranslit.to_cyrillic(election_type_slug_par.title(), 'sr'),
+            'godina': 2012,
+            'instanca':3
+        }
+        match_par_2014 = {
+            'izbori': cyrtranslit.to_cyrillic(election_type_slug_par.title(), 'sr'),
+            'godina': 2014,
+            'instanca': 3
+        }
+        krug="drugi"
+        round_val = cyrtranslit.to_cyrillic(krug.title(), 'sr')
+        match_pres_2012 = {
+            'izbori': cyrtranslit.to_cyrillic(election_type_slug_pres.title(), 'sr'),
+            'godina': 2012,
+            'krug':round_val,
+            'instanca': 3
+        }
+        sort = {
+            "rezultat.glasova": -1
+        }
+        group_parl = {
+            '_id': {
+                'teritorija': '$teritorija',
+                'teritorijaSlug': '$teritorijaSlug',
+            },
+            'rezultat': {
+                '$push': self.get_push_pipeline_operation_for_votes_grouped_by_territory_group_by_result('parlamentarni'),
+            },
+        }
+        group_pres = {
+            '_id': {
+                'teritorija': '$teritorija',
+                'teritorijaSlug': '$teritorijaSlug',
+            },
+            'rezultat': {
+
+                '$push': self.get_push_pipeline_operation_for_votes_grouped_by_territory_group_by_result('predsjednicki'),
+            }
+        }
+        project = {
+            '_id': 0,
+            'teritorija': '$_id.teritorija',
+            'teritorijaSlug': '$_id.teritorijaSlug',
+            'rezultat': 1,
+        }
+        pipeline_par_2012 = [
+            {'$match': match_par_2012},
+            {'$sort': sort},
+            {'$group': group_parl},
+            {'$project': project},
+
+        ]
+        pipeline_par_2014= [
+            {'$match': match_par_2014},
+            {'$sort': sort},
+            {'$group': group_parl},
+            {'$project': project},
+            ]
+        pipeline_pres_2012 = [
+            {'$match': match_pres_2012},
+            {'$sort': sort},
+            {'$group': group_pres},
+            {'$project': project},
+        ]
+        rsp_par_2012 = mongo.db[collection].aggregate(pipeline_par_2012, allowDiskUse=True)
+        rsp_par_2014 = mongo.db[collection].aggregate(pipeline_par_2014, allowDiskUse=True)
+        rsp_pres_2012 = mongo.db[collection].aggregate(pipeline_pres_2012, allowDiskUse=True)
+        array_par_2012 =[]
+        array_par_2014 = []
+        array_pres_2012 = []
+        for a in rsp_par_2012['result']:
+            array_par_2012.append({'rezultat':a['rezultat'][0],'teritorija':a['teritorija'],'teritorijaSlug':a['teritorijaSlug']})
+
+        for a in rsp_par_2014['result']:
+            array_par_2014.append({'rezultat': a['rezultat'][0], 'teritorija': a['teritorija'],'teritorijaSlug': a['teritorijaSlug']})
+        for a in rsp_pres_2012['result']:
+            array_pres_2012.append({'rezultat': a['rezultat'][0], 'teritorija': a['teritorija'],'teritorijaSlug': a['teritorijaSlug']})
+        return {'map_par_2012':array_par_2012,'map_par_2014':array_par_2014,'map_pres_2012':array_pres_2012}
 
     def get_votes_grouped_by_party_or_candidate(self, data_source, election_type_slug, year, party_or_candidate_slug=None, round_slug=None):
         collection = 'izbori' if data_source == 1 else 'izbori2'
@@ -141,13 +223,15 @@ class IzboriDataProvider():
             return {
                 'kandidat': '$kandidat',
                 'kandidatSlug': '$kandidatSlug',
+                'boja':'$boja',
                 'rezultat': '$rezultat'
             }
         else:
             return {
                 'izbornaLista': '$izbornaLista',
                 'izbornaListaSlug': '$izbornaListaSlug',
-                'rezultat': '$rezultat'
+                'boja': '$boja',
+                'rezultat': '$rezultat',
 
             }
 
@@ -190,6 +274,7 @@ class IzboriDataProvider():
                 "kandidat": "$_id.kandidat",
                 "glasova": "$glasova",
                 "udeo": "$udeo",
+                'boja':'$_id.boja'
 
             }
         else:
@@ -199,15 +284,17 @@ class IzboriDataProvider():
                 'izbornaLista': '$_id.izbornaLista',
                 "glasova": "$glasova",
                 "udeo": "$udeo",
+                'boja': '$_id.boja'
 
             }
 
     def get_top_indicators_by_type(self, data_source,election_type_slug, godina, instanca,round_slug=None):
+        inityear = request.args.get('inityear')
         collection = 'izbori' if data_source == 1 else 'izbori2'
         match = {
             'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
             'godina': godina,
-            'instanca':instanca,
+            'instanca': instanca,
         }
 
         if election_type_slug == 'predsjednicki':
@@ -217,22 +304,25 @@ class IzboriDataProvider():
             group = {
                 '_id': {
                     'kandidat': '$kandidat',
-                    'kandidatSlug': '$kandidatSlug'
+                    'kandidatSlug': '$kandidatSlug',
+                    'boja':'$boja'
                 },
                 'glasova': {"$sum": "$rezultat.glasova"},
                 'udeo': {"$sum": "$rezultat.udeo"},
-
             }
         else:
             group = {
                 '_id': {
                     'izbornaLista': '$izbornaLista',
-                    'izbornaListaSlug': '$izbornaListaSlug'
+                    'izbornaListaSlug': '$izbornaListaSlug',
+                    'boja': '$boja'
                 },
                 'glasova': {"$sum": "$rezultat.glasova"},
                 'udeo': {"$sum": "$rezultat.udeo"},
 
             }
+
+
         group_total = {
             "_id": None,
             "total": {
@@ -253,13 +343,212 @@ class IzboriDataProvider():
             {"$match": match},
             {"$group": group_total}
         ]
-        rsp_total = mongo.db[collection].aggregate(pipeline_total,allowDiskUse=True)
+        rsp_total = mongo.db[collection].aggregate(pipeline_total, allowDiskUse=True)
         rsp = mongo.db[collection].aggregate(pipeline)
         total_votes = rsp_total['result'][0]["total"]
 
+        group_turnout = {
+            '_id': {
+                'teritorija': '$teritorija',
+            },
+        }
+        group_turnout['_id']['parentTeritorija'] = '$parentTeritorija'
+        group_turnout['_id']['parentTeritorijaSlug'] = '$parentTeritorijaSlug'
+        group_turnout['_id']['adresaBirackogMesta'] = '$adresaBirackogMesta'
+        group_turnout['_id']['koordinateBirackomMestu'] = '$koordinateBirackomMestu'
+        group_turnout['_id']['brojUpisanihBiracaUBirackiSpisak'] = '$brojUpisanihBiracaUBirackiSpisak'
+        group_turnout['_id']['biraciKojiSuGlasali'] = '$biraciKojiSuGlasali'
+        group_turnout['_id']['brojPrimljenihGlasackihListica'] = '$brojPrimljenihGlasackihListica'
+        group_turnout['_id']['brojNeupoTrebljenihGlasackihListica'] = '$brojNeupoTrebljenihGlasackihListica'
+        group_turnout['_id']['brojGlasackihListicaUKutiji'] = '$brojGlasackihListicaUKutiji'
+        group_turnout['_id']['vazeciGlasackiListici'] = '$vazeciGlasackiListici'
+        group_turnout['_id']['nevazeciGlasackiListici'] = '$nevazeciGlasackiListici'
+
+        project_turnout = {
+            '_id': 0,
+            'teritorija': '$_id.teritorija',
+            'brojUpisanihBiracaUBirackiSpisak': '$_id.brojUpisanihBiracaUBirackiSpisak',
+            'biraciKojiSuGlasali': '$_id.biraciKojiSuGlasali.broj',
+            'vazeciGlasackiListici': '$_id.vazeciGlasackiListici.broj',
+            'nevazeciGlasackiListici': '$_id.nevazeciGlasackiListici'
+        }
+
+        pipeline_turnout = [
+            {'$match': match},
+            {'$group': group_turnout},
+            {'$project': project_turnout}
+        ]
+
+        if election_type_slug == 'predsjednicki' and round_slug is not None:
+            round_val = cyrtranslit.to_cyrillic(round_slug.title(), 'sr')
+            match['krug'] = round_val
+
+        group_winners = {
+            '_id': {
+                'teritorija': '$teritorija',
+                'teritorijaSlug': '$teritorijaSlug',
+                'brojUpisanihBiracaUBirackiSpisak': '$brojUpisanihBiracaUBirackiSpisak',
+                'biraciKojiSuGlasali': '$biraciKojiSuGlasali.broj'
+
+            },
+            'rezultat': {
+                '$push':
+                    self.get_push_pipeline_operation_for_votes_grouped_by_territory_group_by_result(
+                        election_type_slug)
+            },
+        }
+        sort_winners = {
+            "rezultat.glasova": -1
+        }
+        project_winners= {
+            '_id': 0,
+            'teritorija': '$_id.teritorija',
+            'teritorijaSlug': '$_id.teritorijaSlug',
+            'brojUpisanihBiracaUBirackiSpisak': "$_id.brojUpisanihBiracaUBirackiSpisak",
+            'biraciKojiSuGlasali': "$_id.biraciKojiSuGlasali",
+            "percentage": {
+                "$multiply": [{"$divide": [100, '$_id.brojUpisanihBiracaUBirackiSpisak']}, "$_id.biraciKojiSuGlasali"]},
+            'rezultat': 1,
+        }
+
+        pipeline_winners = [
+            {'$match': match},
+            {'$sort': sort_winners},
+            {'$group': group_winners},
+            {'$project': project_winners}
+        ]
+        rsp_winners = mongo.db[collection].aggregate(pipeline_winners, allowDiskUse=True)
+        rsp_turnout = mongo.db[collection].aggregate(pipeline_turnout)
+        total_voters = 0
+        total_registered = 0
+        percentage = 0
+        valid_ballots_count = 0
+        invalid_balots = 0
+        for rezultat in rsp_turnout['result']:
+            total_voters += rezultat['biraciKojiSuGlasali']
+            if godina in [2008] and election_type_slug in ['parlamentarni']:
+                valid_ballots_count += rezultat['vazeciGlasackiListici']
+                invalid_balots += rezultat['nevazeciGlasackiListici']
+
+            if rezultat['brojUpisanihBiracaUBirackiSpisak'] != 0:
+                total_registered += rezultat['brojUpisanihBiracaUBirackiSpisak']
+            percentage = (float(total_voters) / total_registered) * 100
+
+
         for candidate in rsp['result']:
             candidate["udeo"] = (float(candidate["glasova"]) / total_votes) * 100
-        return rsp['result']
+
+        if godina in [2008] and election_type_slug in ['parlamentarni']:
+            return {'percentage': percentage, 'total_voters': total_voters, 'valid_balots': valid_ballots_count,'invalid_balots': invalid_balots,'candidates':rsp['result'],'winners':rsp_winners['result']}
+        else:
+            return {'percentage': percentage, 'total_voters': total_voters,'candidates':rsp['result'],'winners':rsp_winners['result']}
+
+
+    def get_top_indicators_by_type_landingpage(self, data_source):
+        collection = 'izbori' if data_source == 1 else 'izbori2'
+        election_type_slug_par="parlamentarni"
+        election_type_slug_pres = "predsjednicki"
+        match2012_par = {
+            'izbori': cyrtranslit.to_cyrillic(election_type_slug_par.title(), 'sr'),
+            'godina': 2012,
+            'instanca': 4,
+        }
+        match2014_par = {
+            'izbori': cyrtranslit.to_cyrillic(election_type_slug_par.title(), 'sr'),
+            'godina': 2014,
+            'instanca': 4,
+        }
+        krug="drugi"
+        round_val = cyrtranslit.to_cyrillic(krug.title(), 'sr')
+        match2012_pres = {
+            'izbori': cyrtranslit.to_cyrillic(election_type_slug_pres.title(), 'sr'),
+            'godina': 2012,
+            'krug':round_val,
+            'instanca': 1,
+        }
+
+        group_pres= {
+            '_id': {
+                'kandidat': '$kandidat',
+                'kandidatSlug': '$kandidatSlug',
+                'boja': '$boja'
+            },
+            'glasova': {"$sum": "$rezultat.glasova"},
+            'udeo': {"$sum": "$rezultat.udeo"},
+
+        }
+
+        group_parl = {
+            '_id': {
+                'izbornaLista': '$izbornaLista',
+                'izbornaListaSlug': '$izbornaListaSlug',
+                'boja': '$boja'
+            },
+            'glasova': {"$sum": "$rezultat.glasova"},
+            'udeo': {"$sum": "$rezultat.udeo"},
+
+        }
+
+        sort = {
+            "glasova": -1
+        }
+        pipeline_par_2012 = [
+            {'$match': match2012_par},
+            {'$group': group_parl},
+            {'$sort': sort},
+            {'$project': self.get_push_pipeline_operation_for_top_indicators("parlamentarni")}
+        ]
+        pipeline_par_2014 = [
+            {'$match': match2014_par},
+            {'$group': group_parl},
+            {'$sort': sort},
+            {'$project': self.get_push_pipeline_operation_for_top_indicators("parlamentarni")}
+        ]
+        pipeline_pres_2012 = [
+            {'$match': match2012_pres},
+            {'$group': group_pres},
+            {'$sort': sort},
+            {'$project': self.get_push_pipeline_operation_for_top_indicators("predsjednicki")}
+        ]
+        group_total = {
+            "_id": None,
+            "total": {
+                "$sum": "$rezultat.glasova"
+            }
+        }
+
+        rsp_parl_2012 = mongo.db[collection].aggregate(pipeline_par_2012)
+        rsp_parl_2014 = mongo.db[collection].aggregate(pipeline_par_2014)
+        rsp_pres_2012 = mongo.db[collection].aggregate(pipeline_pres_2012)
+
+        pipeline_total_par_2012 = [
+            {"$match": match2012_par},
+            {"$group": group_total}
+        ]
+        pipeline_total_par_2014 = [
+            {"$match": match2014_par},
+            {"$group": group_total}
+        ]
+        pipeline_total_pres_2012 = [
+            {"$match": match2012_pres},
+            {"$group": group_total}
+        ]
+
+        rsp_total_par_2012 = mongo.db[collection].aggregate(pipeline_total_par_2012, allowDiskUse=True)
+        rsp_total_par_2014 = mongo.db[collection].aggregate(pipeline_total_par_2014, allowDiskUse=True)
+        rsp_total_pres_2012 = mongo.db[collection].aggregate(pipeline_total_pres_2012, allowDiskUse=True)
+        total_votes_par_2012 = rsp_total_par_2012['result'][0]["total"]
+        total_votes_par_2014 = rsp_total_par_2014['result'][0]["total"]
+        total_votes_pres_2012 = rsp_total_pres_2012['result'][0]["total"]
+
+        for candidate in rsp_parl_2012['result']:
+            candidate["udeo"] = (float(candidate["glasova"]) / total_votes_par_2012) * 100
+        for candidate in rsp_parl_2014['result']:
+            candidate["udeo"] = (float(candidate["glasova"]) / total_votes_par_2014) * 100
+        for candidate in rsp_pres_2012['result']:
+            candidate["udeo"] = (float(candidate["glasova"]) / total_votes_pres_2012) * 100
+        return {"par_2012":rsp_parl_2012['result'],"par_2014":rsp_parl_2014['result'],'pres_2012':rsp_pres_2012['result']}
+
 
     #the function will return data only for parlamentaty elections and for the years 2014, 2016, instanca 4
     def get_total_voters_turnout(self,data_source, election_type_slug, godina,instanca):
@@ -300,6 +589,7 @@ class IzboriDataProvider():
             {'$group': group},
             {'$project':project}
         ]
+
         rsp = mongo.db[collection].aggregate(pipeline)
         total_voters=0
         total_registered=0
@@ -770,61 +1060,14 @@ class IzboriDataProvider():
             "name": "Српска радикална странка - др Војислав Шешељ",
             "color": "#ffffbf"
         })
-        data.append({
-            'slug': "srs",
-            "name": "СРС",
-            "color": "#003c30"
-        })
-        data.append({
-            'slug': "dss",
-            "name": "ДСС",
-            "color": "#01665e"
-        })
+
+
         data.append({
             'slug': "sda-sandzaka-dr-sulejman-ugljanin",
             "name": "СДА САНЏАКА - ДР СУЛЕЈМАН УГЉАНИН",
             "color": "green"
         })
-        data.append({
-            'slug': "ds",
-            "name": "ДС",
-            "color": "#35978f"
-        })
-        data.append({
-            'slug': "spo-ns",
-            "name": "СПО - НС",
-            "color": "#c7eae5"
-        })
-        data.append({
-            'slug': "da",
-            "name": "ДА",
-            "color": "#8c510a"
-        })
-        data.append({
-            'slug': "sps",
-            "name": "СПС",
-            "color": "#dfc27d"
-        })
-        data.append({
-            'slug': "g17-plus",
-            "name": "Г17 плус",
-            "color": "#80cdc1"
-        })
-        data.append({
-            'slug': "zajedno-za-toleranciju",
-            "name": "Заједно за толеранцију",
-            "color": "#bf812d"
-        })
-        data.append({
-            'slug': "za-narodno-jedinstvo",
-            "name": "За народно јединство",
-            "color": "#543005"
-        })
-        data.append({
-            'slug': "otpor",
-            "name": "Отпор",
-            "color": "#003c30"
-        })
+
         data.append({
             'slug': "demokratska-stranka-srbije-nova-srbija-vojislav-kostunica",
             "name": "Демократска странка Србије - Нова Србија - Војислав Коштуница",
@@ -836,55 +1079,9 @@ class IzboriDataProvider():
             "color": "#2D882D"
         })
         data.append({
-            'slug': "samostalna-srbija",
-            "name": "Самостална Србија",
-            "color": "#01665e"
-        })
-        data.append({
-            'slug': "sns",
-            "name": "СНС",
-            "color": "#35978f"
-        })
-        data.append({
-            'slug': "liberali-srbije",
-            "name": "Либерали Србије",
-            "color": "#80cdc1"
-        })
-
-        data.append({
-            'slug': 'odbrana-i-pravda',
-            "name": "Одбрана и правда",
-            "color": "#dfc27d"
-        })
-        data.append({
-            'slug': 'privredna-snaga-srbije-i-dijaspora',
-            "name": "Привредна снага Србије и дијаспора",
-            "color": "#bf812d"
-        })
-        data.append({
-            'slug': 'reformisti',
-            "name": "Реформисти",
-            "color": "#c7eae5"
-        })
-        data.append({
             'slug': "izbor-za-bolji-zivot-boris-tadic",
             "name": "Избор за бољи живот - Борис Тадић",
             "color": "#4575b4"
-        })
-        data.append({
-            'slug': "laburist-partija-srbije",
-            "name": "Лабурист. партија Србије",
-            "color": "#8c510a"
-        })
-        data.append({
-            'slug': "jul",
-            "name": " ЈУЛ",
-            "color": "#ACD270"
-        })
-        data.append({
-            'slug': "savez-srba-vojvodine",
-            "name": " Савез Срба Војводине",
-            "color": "#4C691D"
         })
         data.append({
             'slug': "pokret-radnika-i-seljaka",
@@ -1109,9 +1306,103 @@ class IzboriDataProvider():
             "name": 'Покренимо Србију - Томислав Николић',
             "color": "#313695"
         })
+        #parlamentarni 2003
+        data.append({
+            'slug': "srs",
+            "name": "СРС",
+            "color": "#a6cee3"
+        })
+        data.append({
+            'slug': "dss",
+            "name": "ДСС",
+            "color": "#1f78b4"
+        })
+        data.append({
+            'slug': "ds",
+            "name": "ДС",
+            "color": "#b2df8a"
+        })
+        data.append({
+            'slug': "g17-plus",
+            "name": "Г17 плус",
+            "color": "#33a02c"
+        })
+        data.append({
+            'slug': "spo-ns",
+            "name": "СПО - НС",
+            "color": "#fb9a99"
+        })
+        data.append({
+            'slug': "sps",
+            "name": "СПС",
+            "color": "#e31a1c"
+        })
 
-
-
+        data.append({
+            'slug': "zajedno-za-toleranciju",
+            "name": "Заједно за толеранцију",
+            "color": "#fdbf6f"
+        })
+        data.append({
+            'slug': "da",
+            "name": "ДА",
+            "color": "#ff7f00"
+        })
+        data.append({
+            'slug': "za-narodno-jedinstvo",
+            "name": "За народно јединство",
+            "color": "#cab2d6"
+        })
+        data.append({
+            'slug': "otpor",
+            "name": "Отпор",
+            "color": "#6a3d9a"
+        })
+        data.append({
+            'slug': "samostalna-srbija",
+            "name": "Самостална Србија",
+            "color": "#ffff99"
+        })
+        data.append({
+            'slug': "sns",
+            "name": "СНС",
+            "color": "#b15928"
+        })
+        data.append({
+            'slug': "liberali-srbije",
+            "name": "Либерали Србије",
+            "color": "#8dd3c7"
+        })
+        data.append({
+            'slug': 'reformisti',
+            "name": "Реформисти",
+            "color": "#ffffb3"
+        })
+        data.append({
+            'slug': 'odbrana-i-pravda',
+            "name": "Одбрана и правда",
+            "color": "#bebada"
+        })
+        data.append({
+            'slug': 'privredna-snaga-srbije-i-dijaspora',
+            "name": "Привредна снага Србије и дијаспора",
+            "color": "#fb8072"
+        })
+        data.append({
+            'slug': "laburist-partija-srbije",
+            "name": "Лабурист. партија Србије",
+            "color": "#80b1d3"
+        })
+        data.append({
+            'slug': "jul",
+            "name": " ЈУЛ",
+            "color": "#fdb462"
+        })
+        data.append({
+            'slug': "savez-srba-vojvodine",
+            "name": " Савез Срба Војводине",
+            "color": "#b3de69"
+        })
         if kandidat_name is not None:
             jsondata={}
             selected_color=""

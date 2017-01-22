@@ -21,12 +21,21 @@ def parliamentary_votes_grouped_by_territory(data_source, election_type, year, t
     rsp = izbori_data_provider.get_votes_grouped_by_territory(data_source, election_type, year, territory_level)
     return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')
 
+@mod_api_izbori.route("/map/landingpage/<int:datasource>", methods=['GET', 'POST'])
+def parliamentary_votes_grouped_by_territory_landingpage(datasource):
+    rsp = izbori_data_provider.get_votes_grouped_by_territory_landingpage(datasource)
+    return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')
+
 @mod_api_izbori.route("/<int:data_source>/<string:election_type>/godina/<int:year>/teritorija/<string:teritorija_slug>/instanca/<int:territory_level>/krug/<string:krug>", methods=['GET'])
 def results_by_territory(data_source, election_type, year,teritorija_slug, territory_level,krug):
 
     rsp = izbori_data_provider.get_results_by_territory(data_source, election_type, year, teritorija_slug, territory_level,krug)
     return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')
 
+@mod_api_izbori.route("/landingpage/<int:data_source>/<string:election_type>/teritorija/<string:teritorija_slug>/instanca/<int:territory_level>/krug/<string:krug>", methods=['GET'])
+def results_by_territory_landing_page(data_source, election_type,teritorija_slug, territory_level,krug):
+    rsp = izbori_data_provider.get_results_by_territory_landingpage(data_source, election_type, teritorija_slug, territory_level,krug)
+    return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')
 
 
 @mod_api_izbori.route("/<int:data_source>/<string:election_type>/godina/<int:year>/teritorija/instanca/<int:territory_level>/<string:territory_slug>", methods=['GET'])
@@ -83,6 +92,11 @@ def top_indicators(data_source,election_type_slug,godina, instanca,round_slug):
 @mod_api_izbori.route("/datasource/<int:datasource>/<string:election_type_slug>/godina/<int:godina>/instanca/<int:instanca>", methods=['GET'])
 def total_voters_turnout(datasource,election_type_slug,godina,instanca):
         rsp = izbori_data_provider.get_total_voters_turnout(datasource,election_type_slug, godina,instanca)
+        return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')
+
+@mod_api_izbori.route("/landingpage/<int:datasource>", methods=['GET'])
+def top_indicators_by_type_landingpage(datasource):
+        rsp = izbori_data_provider.get_top_indicators_by_type_landingpage(datasource)
         return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')
 
 @mod_api_izbori.route("/parties", methods=['GET'])

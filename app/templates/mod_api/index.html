@@ -5,11 +5,9 @@
             $("#btn-post-sum-req").click(function () {
                 postSumRequest();
             });
-
             $("#btn-post-activities-req").click(function () {
                 postClassificationsReq();
             });
-
             $("#btn-post-municipalities-req").click(function () {
                 postRequestForMunicipalities();
             });
@@ -17,11 +15,8 @@
             $("#btn-post-list-mun-req").click(function () {
                 postRequestListMunicipalities();
             });
-
             initFiltersDisplay();
-
             $("#data_type").change(function(){
-
             });
             var prihodiJson = null;
             var rashodiJson = null;
@@ -70,32 +65,26 @@
 
         });
 
-
         function postSumRequest() {
-
             var data = get_request_form_data('sum-req-form');
             executePost(data, '{{ url_for('api.sum', lang_code=g.current_lang) }}', "sum-req-rsp-box", "sum-req-body-box");
 
         }
 
         function postRequestForMunicipalities() {
-
             var data = getFormData('municipalities-req-form');
             executePost(data, '{{ url_for('api.aggregated_classifications', lang_code=g.current_lang) }}', "municipalities-req-rsp-box", "municipalities-req-body-box");
         }
-
         function postRequestListMunicipalities() {
             var data = getFormData('list-mun-req-form');
             executePost(data, '{{ url_for('api.list_of_municipalities', lang_code=g.current_lang) }}', "list-mun-req-rsp-box", "list-mun-req-body-box");
 
         }
-
         function postClassificationsReq() {
             var municipalities = [];
             $('#class_municipalities :selected').each(function (i, selected) {
                 municipalities[i] = $(selected).val();
             });
-
             var data = {
                 "tipPodataka": [$('#class_data_type').val()],
                 "godine": [parseInt($('#class_years').val())],

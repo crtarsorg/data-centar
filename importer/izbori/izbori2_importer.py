@@ -732,6 +732,7 @@ class Izbori2DataImporter(object):
         file_path = self.get_data_file_path(election_type, year, None, None)
 
         row_count = 0
+        print row_count
         docs = []
         candidates_or_parties = {}
         parent_territory = ''
@@ -747,9 +748,10 @@ class Izbori2DataImporter(object):
                     for i in range(12, len(row)):
                         candidates_or_parties[str(i)] = row[i].replace('\n', '')
                 else:
+                    print row
                     territory = row[2].strip()
                     territory_slug = slugify(cyrtranslit.to_latin(territory, 'sr'), to_lower=True)
-                    polling_station_num = int(row[3].strip())
+                    polling_station_num = int(row[3].strip()) if row[3].strip() is not '' else row[3].strip()
                     polling_station_address = row[4].strip()
                     ballots_received_count = int(row[5].strip())
                     unused_ballots_count = int(row[6].strip())

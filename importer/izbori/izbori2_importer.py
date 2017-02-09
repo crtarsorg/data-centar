@@ -404,6 +404,104 @@ class Izbori2DataImporter(object):
             "color": "#bc80bd"
         })
         #end of parlamentarni 2014
+        #parlamentarni 2016
+        data.append({
+            'slug': "aleksandar-vucic-srbija-pobeduje",
+            "name": "АЛЕКСАНДАР ВУЧИЋ - СРБИЈА ПОБЕЂУЈЕ",
+            "color": "#a6cee3"
+        })
+        data.append({
+            'slug': "dosta-je-bilo-sasa-radulovic",
+            "name": "ДОСТА ЈЕ БИЛО – САША РАДУЛОВИЋ",
+            "color": "#1f78b4"
+        })
+
+        data.append({
+            'slug': "dr-vojislav-seselj-srpska-radikalna-stranka",
+            "name": "Др ВОЈИСЛАВ ШЕШЕЉ - СРПСКА РАДИКАЛНА СТРАНКА",
+            "color": "#b2df8a"
+        })
+        data.append({
+            'slug': "ivica-dacic-socijalisticka-partija-srbije-sps-jedinstvena-srbija-js-dragan-markovic-palma",
+            "name": 'ИВИЦА ДАЧИЋ -\"Социјалистичка партија Србије (СПС), Јединствена Србија (ЈС) - Драган Марковић Палма\"',
+            "color": "#33a02c"
+        })
+        data.append({
+            'slug': "za-pravednu-srbiju-demokratska-stranka-nova-dshv-zzs",
+            "name": 'ЗА ПРАВЕДНУ СРБИЈУ - ДЕМОКРАТСКА СТРАНКА (НОВА, ДСХВ, ЗЗС)',
+            "color": "#fb9a99"
+        })
+        data.append({
+            'slug': "dveri-demokratska-stranka-srbije-sanda-raskovic-ivic-bosko-obradovic",
+            "name": 'ДВЕРИ - ДЕМОКРАТСКА СТРАНКА СРБИЈЕ - САНДА РАШКОВИЋ ИВИЋ - БОШКО ОБРАДОВИЋ',
+            "color": "#e31a1c"
+        })
+        data.append({
+            'slug': "boris-tadic-cedomir-jovanovic-savez-za-bolju-srbiju-liberalno-demokratska-partija-liga-socijaldemokrata-vojvodine-socijaldemokratska-stranka",
+            "name": 'БОРИС ТАДИЋ, ЧЕДОМИР ЈОВАНОВИЋ - САВЕЗ ЗА БОЉУ СРБИЈУ - Либерално демократска партија, Лига социјалдемократа Војводине, Социјалдемократска странка',
+            "color": "#fdbf6f"
+        })
+        data.append({
+            'slug': "borko-stefanovic-srbija-za-sve-nas",
+            "name": 'Борко Стефановић – Србија за све нас',
+            "color": "#ff7f00"
+        })
+        data.append({
+            'slug': "za-slobodnu-srbiju-zavetnici-milica-durdevic",
+            "name": 'За слободну Србију – ЗАВЕТНИЦИ – Милица Ђурђевић',
+            "color": "#6a3d9a"
+        })
+        data.append({
+            'slug': "u-inat-slozno-za-srbiju-narodni-savez",
+            "name": 'У ИНАТ – СЛОЖНО ЗА СРБИЈУ – НАРОДНИ САВЕЗ',
+            "color": "#8dd3c7"
+        })
+        data.append({
+            'slug': "grupa-gradana-za-preporod-srbije-prof-dr-slobodan-komazec",
+            "name": 'Група грађана ЗА ПРЕПОРОД СРБИЈЕ – ПРОФ. ДР СЛОБОДАН КОМАЗЕЦ',
+            "color": "#bebada"
+        })
+        data.append({
+            'slug': "dijalog-mladi-sa-stavom-stanko-debeljakovic",
+            "name": 'ДИЈАЛОГ – МЛАДИ СА СТАВОМ – СТАНКО ДЕБЕЉАКОВИЋ',
+            "color": "#fb8072"
+        })
+        data.append({
+            'slug': "srpsko-ruski-pokret-slobodan-dimitrijevic",
+            "name": 'СРПСКО РУСКИ ПОКРЕТ – СЛОБОДАН ДИМИТРИЈЕВИЋ',
+            "color": "#bc80bd"
+        })
+        data.append({
+            'slug': "ruska-stranka-slobodan-nikolic",
+            "name": 'РУСКА СТРАНКА - СЛОБОДАН НИКОЛИЋ',
+            "color": "#80b1d3"
+        })
+        data.append({
+            'slug': "vajdasagi-magyar-szovetseg-pasztor-istvan-savez-vojvodanskih-madara-istvan-pastor",
+            "name": 'Vajdasági Magyar Szövetség-Pásztor István - Савез војвођанских Мађара-Иштван Пастор',
+            "color": "#fdb462"
+        })
+        data.append({
+            'slug': "muamer-zukorlic-muamer-zukorlic-bosnjacka-demokratska-zajednica-sandzaka-bosnjacka-demokratska-zajednica-sandzaka",
+            "name": 'МУАМЕР ЗУКОРЛИЋ / MUAMER ZUKORLIĆ - БОШЊАЧКА ДЕМОКРАТСКА ЗАЈЕДНИЦА САНЏАКА / BOŠNJAČKA DEMOKRATSKA ZAJEDNICA SANDŽAKA',
+            "color": "#b3de69"
+        })
+        data.append({
+            'slug': "republikanska-stranka-republikanus-part-nikola-sandulovic",
+            "name": 'Републиканска странка – Republikánus párt – Никола Сандуловић',
+            "color": "#1f78b4"
+        })
+        data.append({
+            'slug': "sda-sandzaka-dr-sulejman-ugljanin-sda-sandzaka-dr-sulejman-ugljanin",
+            "name": 'SDA Sandžaka – Dr. Sulejman Ugljanin СДА Санџака – Др Сулејман Угљанин',
+            "color": "#33a02c"
+        })
+        data.append({
+            'slug': "partija-za-demokratsko-delovanje-ardita-sinani-partia-per-veprim-demokratik-ardita-sinani",
+            "name": 'ПАРТИЈА ЗА ДЕМОКРАТСКО ДЕЛОВАЊЕ – АРДИТА СИНАНИ PARTIA PËR VEPRIM DEMOKRATIK – ARDITA SINANI',
+            "color": "#e31a1c"
+        })
+        #end of paralmentarni 2016
         #presidential 2002
         data.append({
             'slug': "vuk-draskovic-spo",
@@ -427,8 +525,8 @@ class Izbori2DataImporter(object):
         })
         data.append({
             'slug': "dr-miroljub-labus-gg",
-            "name": "др Мирољуб Лабус      (ГГ) ",
-            "color": "#fb9a99"
+            "name": "др Мирољуб Лабус      (ГГ)",
+            "color": "#ff7f00"
         })
         data.append({
             'slug': "dr-tomislav-lalosevic-gg",
@@ -470,8 +568,8 @@ class Izbori2DataImporter(object):
         })
         data.append({
             'slug': "velimir-ilic-ns",
-            "name": 'Велимир Илић (НС)',
-            "color": "#41b6c4"
+            "name": 'Велимир    Илић    (НС)',
+            "color": "#e31a1c"
         })
         data.append({
             'slug': "prof-dr-dragoljub-micunovic-dos",
@@ -498,7 +596,7 @@ class Izbori2DataImporter(object):
         data.append({
             'slug': "tomislav-nikolic",
             "name": 'Томислав Николић',
-            "color": "#a6cee3"
+            "color": "#1f78b4"
         })
         data.append({
             'slug': "jugoslav-dobri-canin",
@@ -592,11 +690,7 @@ class Izbori2DataImporter(object):
             "name": 'Иштван Пастор',
             "color": "#8dd3c7"
         })
-        data.append({
-            'slug': "tomislav-nikolic",
-            "name": 'Томислав Николић',
-            "color": "#bebada"
-        })
+
         #end of presidential 2012
         data.append({
             'slug': "bosnjacka-lista-za-evropski-sandzak-dr-sulejman-ugljanin",
@@ -872,7 +966,6 @@ class Izbori2DataImporter(object):
         year = 2016
         self.prep_import(election_type, year, None, None)
         file_path = self.get_data_file_path(election_type, year, None, None)
-
         row_count = 0
         docs = []
         candidates_or_parties = {}
@@ -888,11 +981,8 @@ class Izbori2DataImporter(object):
                 if row_count == 0:
                     for i in xrange(10, len(row)):
                         candidates_or_parties[str(i)] = row[i].replace('\n', '').strip()
-
-
                 elif row_count == 1:
                     pass
-
                 else:
                     territory = row[0].strip()
                     territory_slug = slugify(cyrtranslit.to_latin(territory, 'sr'), to_lower=True)
@@ -1013,11 +1103,12 @@ class Izbori2DataImporter(object):
                     pass
 
                 else:
-
+                    print row_count
                     territory = row[0].strip()
                     territory_slug = slugify(cyrtranslit.to_latin(territory, 'sr'), to_lower=True)
                     polling_station_num = int(row[1].strip()) if row[1].strip() is not '' else row[1].strip()
                     polling_station_address = row[2].strip()
+                    print int(row[3].strip())
                     number_of_voters_registered = int(row[3].strip())
                     ballots_received_count = int(row[4].strip())
                     unused_ballots_count = int(row[5].strip())
@@ -1068,8 +1159,7 @@ class Izbori2DataImporter(object):
                     total_votes = 0
                     udeo = 0
                     for j in range(10, len(row)):
-
-
+                        print row_count
                         doc['rezultat'] = {}
                         doc['rezultat']['glasova'] = int(row[j])
 

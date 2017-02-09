@@ -97,12 +97,23 @@ class IzboriDataProvider():
             'godina': 2014,
             'instanca': 3
         }
+        match_par_2016 = {
+            'izbori': cyrtranslit.to_cyrillic(election_type_slug_par.title(), 'sr'),
+            'godina': 2016,
+            'instanca': 3
+        }
         krug="drugi"
         round_val = cyrtranslit.to_cyrillic(krug.title(), 'sr')
         match_pres_2012 = {
             'izbori': cyrtranslit.to_cyrillic(election_type_slug_pres.title(), 'sr'),
             'godina': 2012,
             'krug':round_val,
+            'instanca': 3
+        }
+        match_pres_2008 = {
+            'izbori': cyrtranslit.to_cyrillic(election_type_slug_pres.title(), 'sr'),
+            'godina': 2008,
+            'krug': round_val,
             'instanca': 3
         }
         sort = {
@@ -140,6 +151,13 @@ class IzboriDataProvider():
             {'$project': project},
 
         ]
+        pipeline_par_2016 = [
+            {'$match': match_par_2016},
+            {'$sort': sort},
+            {'$group': group_parl},
+            {'$project': project},
+
+        ]
         pipeline_par_2014= [
             {'$match': match_par_2014},
             {'$sort': sort},
@@ -152,20 +170,35 @@ class IzboriDataProvider():
             {'$group': group_pres},
             {'$project': project},
         ]
+        pipeline_pres_2008 = [
+            {'$match': match_pres_2008},
+            {'$sort': sort},
+            {'$group': group_pres},
+            {'$project': project},
+        ]
         rsp_par_2012 = mongo.db[collection].aggregate(pipeline_par_2012, allowDiskUse=True)
         rsp_par_2014 = mongo.db[collection].aggregate(pipeline_par_2014, allowDiskUse=True)
+        rsp_par_2016 = mongo.db[collection].aggregate(pipeline_par_2016, allowDiskUse=True)
         rsp_pres_2012 = mongo.db[collection].aggregate(pipeline_pres_2012, allowDiskUse=True)
+        rsp_pres_2008 = mongo.db[collection].aggregate(pipeline_pres_2008, allowDiskUse=True)
         array_par_2012 =[]
         array_par_2014 = []
+        array_par_2016 = []
         array_pres_2012 = []
+        array_pres_2008 = []
+
         for a in rsp_par_2012['result']:
             array_par_2012.append({'rezultat':a['rezultat'][0],'teritorija':a['teritorija'],'teritorijaSlug':a['teritorijaSlug']})
 
         for a in rsp_par_2014['result']:
             array_par_2014.append({'rezultat': a['rezultat'][0], 'teritorija': a['teritorija'],'teritorijaSlug': a['teritorijaSlug']})
+        for a in rsp_par_2016['result']:
+            array_par_2016.append({'rezultat': a['rezultat'][0], 'teritorija': a['teritorija'],'teritorijaSlug': a['teritorijaSlug']})
         for a in rsp_pres_2012['result']:
             array_pres_2012.append({'rezultat': a['rezultat'][0], 'teritorija': a['teritorija'],'teritorijaSlug': a['teritorijaSlug']})
-        return {'map_par_2012':array_par_2012,'map_par_2014':array_par_2014,'map_pres_2012':array_pres_2012}
+        for a in rsp_pres_2008['result']:
+            array_pres_2008.append({'rezultat': a['rezultat'][0], 'teritorija': a['teritorija'], 'teritorijaSlug': a['teritorijaSlug']})
+        return {'map_par_2012':array_par_2012,'map_par_2014':array_par_2014,'map_par_2016':array_par_2016,'map_pres_2012':array_pres_2012,'map_pres_2008':array_pres_2008}
 
     def get_votes_grouped_by_party_or_candidate(self, data_source, election_type_slug, year, party_or_candidate_slug=None, round_slug=None):
         collection = 'izbori' if data_source == 1 else 'izbori2'
@@ -296,11 +329,22 @@ class IzboriDataProvider():
             'godina': godina,
             'instanca': instanca,
         }
-
+        if godina==2008 and election_type_slug=="predsjednicki":
+            match_turnout = {
+                'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
+                'godina': godina,
+                'instanca': 1,
+            }
+        else:
+            match_turnout = {
+                'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
+                'godina': godina,
+                'instanca': 3,
+            }
         if election_type_slug == 'predsjednicki':
             if round_slug is not None:
                 round_val = cyrtranslit.to_cyrillic(round_slug.title(), 'sr')
-                match['krug'] = round_val
+                match_turnout['krug'] = round_val
             group = {
                 '_id': {
                     'kandidat': '$kandidat',
@@ -332,12 +376,21 @@ class IzboriDataProvider():
         sort = {
             "glasova": -1
         }
-        pipeline = [
-            {'$match': match},
-            {'$group': group},
-            {'$sort': sort},
-            {'$project': self.get_push_pipeline_operation_for_top_indicators(election_type_slug)}
-        ]
+        if election_type_slug=="parlamentarni":
+            pipeline = [
+                {'$match': match},
+                {'$group': group},
+                {'$sort': sort},
+                {'$project': self.get_push_pipeline_operation_for_top_indicators(election_type_slug)}
+            ]
+        else:
+            pipeline = [
+                {'$match': match_turnout},
+                {'$group': group},
+                {'$sort': sort},
+                {'$project': self.get_push_pipeline_operation_for_top_indicators(election_type_slug)}
+            ]
+
         pipeline_total = [
             {"$match": match},
             {"$match": match},
@@ -374,7 +427,7 @@ class IzboriDataProvider():
         }
 
         pipeline_turnout = [
-            {'$match': match},
+            {'$match': match_turnout},
             {'$group': group_turnout},
             {'$project': project_turnout}
         ]
@@ -425,10 +478,8 @@ class IzboriDataProvider():
         valid_ballots_count = 0
         invalid_balots = 0
         for rezultat in rsp_turnout['result']:
+            print rezultat['biraciKojiSuGlasali']
             total_voters += rezultat['biraciKojiSuGlasali']
-            if godina in [2008] and election_type_slug in ['parlamentarni']:
-                valid_ballots_count += rezultat['vazeciGlasackiListici']
-                invalid_balots += rezultat['nevazeciGlasackiListici']
 
             if rezultat['brojUpisanihBiracaUBirackiSpisak'] != 0:
                 total_registered += rezultat['brojUpisanihBiracaUBirackiSpisak']
@@ -438,10 +489,7 @@ class IzboriDataProvider():
         for candidate in rsp['result']:
             candidate["udeo"] = (float(candidate["glasova"]) / total_votes) * 100
 
-        if godina in [2008] and election_type_slug in ['parlamentarni']:
-            return {'percentage': percentage, 'total_voters': total_voters, 'valid_balots': valid_ballots_count,'invalid_balots': invalid_balots,'candidates':rsp['result'],'winners':rsp_winners['result']}
-        else:
-            return {'percentage': percentage, 'total_voters': total_voters,'candidates':rsp['result'],'winners':rsp_winners['result']}
+        return {'percentage': percentage, 'total_voters': total_voters,'candidates':rsp['result'],'winners':rsp_winners['result']}
 
 
     def get_top_indicators_by_type_landingpage(self, data_source):
@@ -458,6 +506,11 @@ class IzboriDataProvider():
             'godina': 2014,
             'instanca': 4,
         }
+        match2016_par = {
+            'izbori': cyrtranslit.to_cyrillic(election_type_slug_par.title(), 'sr'),
+            'godina': 2016,
+            'instanca': 4,
+        }
         krug="drugi"
         round_val = cyrtranslit.to_cyrillic(krug.title(), 'sr')
         match2012_pres = {
@@ -466,7 +519,12 @@ class IzboriDataProvider():
             'krug':round_val,
             'instanca': 1,
         }
-
+        match2008_pres = {
+            'izbori': cyrtranslit.to_cyrillic(election_type_slug_pres.title(), 'sr'),
+            'godina': 2008,
+            'krug': round_val,
+            'instanca': 1,
+        }
         group_pres= {
             '_id': {
                 'kandidat': '$kandidat',
@@ -504,8 +562,20 @@ class IzboriDataProvider():
             {'$sort': sort},
             {'$project': self.get_push_pipeline_operation_for_top_indicators("parlamentarni")}
         ]
+        pipeline_par_2016= [
+            {'$match': match2016_par},
+            {'$group': group_parl},
+            {'$sort': sort},
+            {'$project': self.get_push_pipeline_operation_for_top_indicators("parlamentarni")}
+        ]
         pipeline_pres_2012 = [
             {'$match': match2012_pres},
+            {'$group': group_pres},
+            {'$sort': sort},
+            {'$project': self.get_push_pipeline_operation_for_top_indicators("predsjednicki")}
+        ]
+        pipeline_pres_2008 = [
+            {'$match': match2008_pres},
             {'$group': group_pres},
             {'$sort': sort},
             {'$project': self.get_push_pipeline_operation_for_top_indicators("predsjednicki")}
@@ -519,8 +589,9 @@ class IzboriDataProvider():
 
         rsp_parl_2012 = mongo.db[collection].aggregate(pipeline_par_2012)
         rsp_parl_2014 = mongo.db[collection].aggregate(pipeline_par_2014)
+        rsp_parl_2016 = mongo.db[collection].aggregate(pipeline_par_2016)
         rsp_pres_2012 = mongo.db[collection].aggregate(pipeline_pres_2012)
-
+        rsp_pres_2008 = mongo.db[collection].aggregate(pipeline_pres_2008)
         pipeline_total_par_2012 = [
             {"$match": match2012_par},
             {"$group": group_total}
@@ -529,25 +600,41 @@ class IzboriDataProvider():
             {"$match": match2014_par},
             {"$group": group_total}
         ]
+        pipeline_total_par_2016 = [
+            {"$match": match2014_par},
+            {"$group": group_total}
+        ]
         pipeline_total_pres_2012 = [
             {"$match": match2012_pres},
+            {"$group": group_total}
+        ]
+        pipeline_total_pres_2008 = [
+            {"$match": match2008_pres},
             {"$group": group_total}
         ]
 
         rsp_total_par_2012 = mongo.db[collection].aggregate(pipeline_total_par_2012, allowDiskUse=True)
         rsp_total_par_2014 = mongo.db[collection].aggregate(pipeline_total_par_2014, allowDiskUse=True)
+        rsp_total_par_2016 = mongo.db[collection].aggregate(pipeline_total_par_2016, allowDiskUse=True)
         rsp_total_pres_2012 = mongo.db[collection].aggregate(pipeline_total_pres_2012, allowDiskUse=True)
+        rsp_total_pres_2008= mongo.db[collection].aggregate(pipeline_total_pres_2008, allowDiskUse=True)
         total_votes_par_2012 = rsp_total_par_2012['result'][0]["total"]
         total_votes_par_2014 = rsp_total_par_2014['result'][0]["total"]
+        total_votes_par_2016 = rsp_total_par_2016['result'][0]["total"]
         total_votes_pres_2012 = rsp_total_pres_2012['result'][0]["total"]
+        total_votes_pres_2008 = rsp_total_pres_2008['result'][0]["total"]
 
         for candidate in rsp_parl_2012['result']:
             candidate["udeo"] = (float(candidate["glasova"]) / total_votes_par_2012) * 100
         for candidate in rsp_parl_2014['result']:
             candidate["udeo"] = (float(candidate["glasova"]) / total_votes_par_2014) * 100
+        for candidate in rsp_parl_2016['result']:
+            candidate["udeo"] = (float(candidate["glasova"]) / total_votes_par_2016) * 100
         for candidate in rsp_pres_2012['result']:
             candidate["udeo"] = (float(candidate["glasova"]) / total_votes_pres_2012) * 100
-        return {"par_2012":rsp_parl_2012['result'],"par_2014":rsp_parl_2014['result'],'pres_2012':rsp_pres_2012['result']}
+        for candidate in rsp_pres_2008['result']:
+            candidate["udeo"] = (float(candidate["glasova"]) / total_votes_pres_2008) * 100
+        return {"par_2012":rsp_parl_2012['result'],"par_2014":rsp_parl_2014['result'],"par_2016":rsp_parl_2016['result'],'pres_2012':rsp_pres_2012['result'],'pres_2008':rsp_pres_2008['result']}
 
 
     #the function will return data only for parlamentaty elections and for the years 2014, 2016, instanca 4

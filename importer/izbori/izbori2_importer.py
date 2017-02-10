@@ -117,6 +117,32 @@ class Izbori2DataImporter(object):
         #end of year 2003 parlamentarni
 
         #year 2007 parlamentarni
+        data.append({
+            'slug': "ЛДП",
+            "name": "ldp",
+            "color": "#a6cee3"
+        })
+        data.append({
+            'slug': "ПУПС-СДП",
+            "name": "pups-sdp",
+            "color": "#8dd3c7"
+        })
+        data.append({
+            'slug': "СВМ",
+            "name": "svm",
+            "color": "#fb8072"
+        })
+        data.append({
+            'slug': "ПСС",
+            "name": "pss",
+            "color": "#80b1d3"
+        })
+        data.append({
+            'slug': "КЛС",
+            "name": "kls",
+            "color": "#33a02c"
+        })
+
         #end of year 2007 parlamentarni
 
         #year 2008 parlamentarni

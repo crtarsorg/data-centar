@@ -1249,14 +1249,11 @@ class Izbori2DataImporter(object):
                 if row_count == 0:
 
                     if int(year) == 2004 and election_type == "predsjednicki":
-
                         for i in xrange(11, len(row)):
                             candidates_or_parties[str(i)] = row[i].replace('\n', '').strip()
-
                     if int(year) == 2008 and election_type == "predsjednicki":
                         for i in xrange(8, len(row)):
                             candidates_or_parties[str(i)] = row[i].replace('\n', '').strip()
-
                     if int(year) == 2003 and election_type in ["predsjednicki", "parlamentarni"]:
                         for i in xrange(6, len(row)):
                             candidates_or_parties[str(i)] = row[i].replace('\n', '').strip()
@@ -1268,14 +1265,14 @@ class Izbori2DataImporter(object):
                             candidates_or_parties[str(i)] = row[i].replace('\n', '').strip()
 
                 elif row_count == 1:
-                    print "1"
                     pass
 
                 else:
                     if int(year)==2004 and election_type=="predsjednicki":
+                        print row_count
                         territory = row[1].strip()
                         territory_slug = slugify(cyrtranslit.to_latin(territory, 'sr'), to_lower=True)
-                        polling_station_num = int(row[2].strip())
+                        polling_station_num = int(row[2].strip()) if row[2].strip() is not '' else row[2].strip()
                         polling_station_address = row[3].strip()
                         ballots_received_count = int(row[4].strip())
                         unused_ballots_count = int(row[5].strip())

@@ -306,6 +306,7 @@ class IzboriDataProvider():
                 "kandidatSlug": "$_id.kandidatSlug",
                 "kandidat": "$_id.kandidat",
                 "glasova": "$glasova",
+                "biraciKojiSuGlasali": "$_id.biraciKojiSuGlasali",
                 "udeo": "$udeo",
                 'boja':'$_id.boja'
 
@@ -316,6 +317,7 @@ class IzboriDataProvider():
                 "izbornaListaSlug": "$_id.izbornaListaSlug",
                 'izbornaLista': '$_id.izbornaLista',
                 "glasova": "$glasova",
+                "biraciKojiSuGlasali": "$_id.biraciKojiSuGlasali",
                 "udeo": "$udeo",
                 'boja': '$_id.boja'
 
@@ -329,11 +331,24 @@ class IzboriDataProvider():
             'godina': godina,
             'instanca': instanca,
         }
-        if godina==2008 and election_type_slug=="predsjednicki":
+        if godina==2004 and election_type_slug=="predsjednicki":
+            match_candidates = {
+                'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
+                'godina': godina,
+                'instanca': 3,
+            }
+        else:
+               match_candidates = {
+                'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
+                'godina': godina,
+                'instanca': 1,
+            }
+
+        if godina==2004 and election_type_slug=="predsjednicki":
             match_turnout = {
                 'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
                 'godina': godina,
-                'teritorija':'РЕПУБЛИКА СРБИЈА'
+                'instanca': 3
             }
         else:
             match_turnout = {
@@ -378,7 +393,7 @@ class IzboriDataProvider():
         }
         if election_type_slug=="parlamentarni":
             pipeline = [
-                {'$match': match},
+                {'$match': match_candidates},
                 {'$group': group},
                 {'$sort': sort},
                 {'$project': self.get_push_pipeline_operation_for_top_indicators(election_type_slug)}
@@ -475,15 +490,23 @@ class IzboriDataProvider():
         total_voters = 0
         total_registered = 0
         percentage = 0
+        registered=0;
         valid_ballots_count = 0
         invalid_balots = 0
-        total_voters = rsp_turnout['result'][0]['biraciKojiSuGlasali']
-        registered=rsp_turnout['result'][0]['brojUpisanihBiracaUBirackiSpisak']
-        if registered!= 0:
-            percentage = (float(total_voters) /registered) * 100
 
+        if godina==2004 and election_type_slug=="predsjednicki":
+            for rezultat in rsp_turnout['result']:
+                total_voters+=rezultat['biraciKojiSuGlasali']
+                registered+=rezultat['brojUpisanihBiracaUBirackiSpisak']
+                percentage = (float(total_voters) / registered) * 100
+        else:
+            total_voters = rsp_turnout['result'][0]['biraciKojiSuGlasali']
+            registered = rsp_turnout['result'][0]['brojUpisanihBiracaUBirackiSpisak']
+            if registered!= 0:
+                percentage = (float(total_voters) /registered) * 100
+        print rsp['result']
         for candidate in rsp['result']:
-            candidate["udeo"] = (float(candidate["glasova"]) / total_votes) * 100
+            candidate["udeo"] = (float(candidate["glasova"]) / total_voters) * 100
 
         return {'percentage': percentage, 'total_voters': total_voters,'candidates':rsp['result'],'winners':rsp_winners['result']}
 
@@ -495,17 +518,17 @@ class IzboriDataProvider():
         match2012_par = {
             'izbori': cyrtranslit.to_cyrillic(election_type_slug_par.title(), 'sr'),
             'godina': 2012,
-            'instanca': 4,
+            'instanca': 1,
         }
         match2014_par = {
             'izbori': cyrtranslit.to_cyrillic(election_type_slug_par.title(), 'sr'),
             'godina': 2014,
-            'instanca': 4,
+            'instanca': 1,
         }
         match2016_par = {
             'izbori': cyrtranslit.to_cyrillic(election_type_slug_par.title(), 'sr'),
             'godina': 2016,
-            'instanca': 4,
+            'instanca': 1,
         }
         krug="drugi"
         round_val = cyrtranslit.to_cyrillic(krug.title(), 'sr')
@@ -525,6 +548,7 @@ class IzboriDataProvider():
             '_id': {
                 'kandidat': '$kandidat',
                 'kandidatSlug': '$kandidatSlug',
+                'biraciKojiSuGlasali': '$biraciKojiSuGlasali',
                 'boja': '$boja'
             },
             'glasova': {"$sum": "$rezultat.glasova"},
@@ -536,6 +560,7 @@ class IzboriDataProvider():
             '_id': {
                 'izbornaLista': '$izbornaLista',
                 'izbornaListaSlug': '$izbornaListaSlug',
+                'biraciKojiSuGlasali': '$biraciKojiSuGlasali',
                 'boja': '$boja'
             },
             'glasova': {"$sum": "$rezultat.glasova"},
@@ -588,48 +613,19 @@ class IzboriDataProvider():
         rsp_parl_2016 = mongo.db[collection].aggregate(pipeline_par_2016)
         rsp_pres_2012 = mongo.db[collection].aggregate(pipeline_pres_2012)
         rsp_pres_2008 = mongo.db[collection].aggregate(pipeline_pres_2008)
-        pipeline_total_par_2012 = [
-            {"$match": match2012_par},
-            {"$group": group_total}
-        ]
-        pipeline_total_par_2014 = [
-            {"$match": match2014_par},
-            {"$group": group_total}
-        ]
-        pipeline_total_par_2016 = [
-            {"$match": match2014_par},
-            {"$group": group_total}
-        ]
-        pipeline_total_pres_2012 = [
-            {"$match": match2012_pres},
-            {"$group": group_total}
-        ]
-        pipeline_total_pres_2008 = [
-            {"$match": match2008_pres},
-            {"$group": group_total}
-        ]
+        print rsp_parl_2012['result']
 
-        rsp_total_par_2012 = mongo.db[collection].aggregate(pipeline_total_par_2012, allowDiskUse=True)
-        rsp_total_par_2014 = mongo.db[collection].aggregate(pipeline_total_par_2014, allowDiskUse=True)
-        rsp_total_par_2016 = mongo.db[collection].aggregate(pipeline_total_par_2016, allowDiskUse=True)
-        rsp_total_pres_2012 = mongo.db[collection].aggregate(pipeline_total_pres_2012, allowDiskUse=True)
-        rsp_total_pres_2008= mongo.db[collection].aggregate(pipeline_total_pres_2008, allowDiskUse=True)
-        total_votes_par_2012 = rsp_total_par_2012['result'][0]["total"]
-        total_votes_par_2014 = rsp_total_par_2014['result'][0]["total"]
-        total_votes_par_2016 = rsp_total_par_2016['result'][0]["total"]
-        total_votes_pres_2012 = rsp_total_pres_2012['result'][0]["total"]
-        total_votes_pres_2008 = rsp_total_pres_2008['result'][0]["total"]
 
         for candidate in rsp_parl_2012['result']:
-            candidate["udeo"] = (float(candidate["glasova"]) / total_votes_par_2012) * 100
+            candidate["udeo"] = (float(candidate["glasova"]) / candidate["biraciKojiSuGlasali"]['broj']) * 100
         for candidate in rsp_parl_2014['result']:
-            candidate["udeo"] = (float(candidate["glasova"]) / total_votes_par_2014) * 100
+            candidate["udeo"] = (float(candidate["glasova"]) / candidate["biraciKojiSuGlasali"]['broj']) * 100
         for candidate in rsp_parl_2016['result']:
-            candidate["udeo"] = (float(candidate["glasova"]) / total_votes_par_2016) * 100
+            candidate["udeo"] = (float(candidate["glasova"]) /  candidate["biraciKojiSuGlasali"]['broj']) * 100
         for candidate in rsp_pres_2012['result']:
-            candidate["udeo"] = (float(candidate["glasova"]) / total_votes_pres_2012) * 100
+            candidate["udeo"] = (float(candidate["glasova"]) /  candidate["biraciKojiSuGlasali"]['broj']) * 100
         for candidate in rsp_pres_2008['result']:
-            candidate["udeo"] = (float(candidate["glasova"]) / total_votes_pres_2008) * 100
+            candidate["udeo"] = (float(candidate["glasova"]) / candidate["biraciKojiSuGlasali"]['broj']) * 100
         return {"par_2012":rsp_parl_2012['result'],"par_2014":rsp_parl_2014['result'],"par_2016":rsp_parl_2016['result'],'pres_2012':rsp_pres_2012['result'],'pres_2008':rsp_pres_2008['result']}
 
 

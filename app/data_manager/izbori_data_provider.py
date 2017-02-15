@@ -333,13 +333,13 @@ class IzboriDataProvider():
             match_turnout = {
                 'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
                 'godina': godina,
-                'instanca': 1,
+                'teritorija':'РЕПУБЛИКА СРБИЈА'
             }
         else:
             match_turnout = {
                 'izbori': cyrtranslit.to_cyrillic(election_type_slug.title(), 'sr'),
                 'godina': godina,
-                'instanca': 3,
+                'instanca':1
             }
         if election_type_slug == 'predsjednicki':
             if round_slug is not None:
@@ -477,14 +477,10 @@ class IzboriDataProvider():
         percentage = 0
         valid_ballots_count = 0
         invalid_balots = 0
-        for rezultat in rsp_turnout['result']:
-            print rezultat['biraciKojiSuGlasali']
-            total_voters += rezultat['biraciKojiSuGlasali']
-
-            if rezultat['brojUpisanihBiracaUBirackiSpisak'] != 0:
-                total_registered += rezultat['brojUpisanihBiracaUBirackiSpisak']
-            percentage = (float(total_voters) / total_registered) * 100
-
+        total_voters = rsp_turnout['result'][0]['biraciKojiSuGlasali']
+        registered=rsp_turnout['result'][0]['brojUpisanihBiracaUBirackiSpisak']
+        if registered!= 0:
+            percentage = (float(total_voters) /registered) * 100
 
         for candidate in rsp['result']:
             candidate["udeo"] = (float(candidate["glasova"]) / total_votes) * 100

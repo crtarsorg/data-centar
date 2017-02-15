@@ -1482,7 +1482,7 @@ class Izbori2DataImporter(object):
                                 db[collection].insert(docs)
                                 docs = []
                     elif int(year) == 2003 and election_type == "predsjednicki":
-
+                        print row_count
                         total_votes=0
                         udeo=0
                         for j in xrange(6, len(row)):

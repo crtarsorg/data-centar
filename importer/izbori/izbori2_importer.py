@@ -741,7 +741,7 @@ class Izbori2DataImporter(object):
 
             return data
 
-    def import_data(self, election_type, year, month=None, rnd=None):
+    def import_data(self, election_type, year, month=None, rnd=None,status=None):
         if election_type == 'parlamentarni' and int(year) == 2016:
             self.import_data_parliament_2016()
         elif election_type == 'parlamentarni' and int(year) == 2008:
@@ -749,7 +749,7 @@ class Izbori2DataImporter(object):
         elif election_type == 'parlamentarni' and int(year) == 2007:
             self.import_data_parliament_2007()
         else:
-            self.import_data_rest(election_type, year, month, rnd)
+            self.import_data_rest(election_type, year, month, rnd, status)
 
     def import_data_parliament_2007(self):
         election_type = 'parlamentarni'
@@ -1228,11 +1228,11 @@ class Izbori2DataImporter(object):
         if len(docs) > 0:
             db[collection].insert(docs)
 
-    def import_data_rest(self, election_type, year, month=None, rnd=None):
+    def import_data_rest(self, election_type, year, month=None, rnd=None,status=None):
+        print status
+        self.prep_import(election_type, year, month, rnd, status)
 
-        self.prep_import(election_type, year, month, rnd)
-
-        file_path = self.get_data_file_path(election_type, year, month, rnd)
+        file_path = self.get_data_file_path(election_type, year, month, rnd, status)
 
         row_count = 0
         docs = []
@@ -1455,9 +1455,10 @@ class Izbori2DataImporter(object):
 
                             month_cyr = cyrtranslit.to_cyrillic(month.title(), 'sr')
                             rnd_cyr = cyrtranslit.to_cyrillic(rnd.title(), 'sr')
-
+                            status_cyr = cyrtranslit.to_cyrillic(status.title(), 'sr')
                             doc['mesec'] = month_cyr
                             doc['krug'] = rnd_cyr
+                            doc['status'] = status_cyr
                             doc['kandidat'] = candidates_or_parties[str(j)].title()
                             ime = candidates_or_parties[str(j)]
                             boja = self.get_political_parties(ime)
@@ -1660,9 +1661,10 @@ class Izbori2DataImporter(object):
                             if election_type == 'predsjednicki':
                                 month_cyr = cyrtranslit.to_cyrillic(month.title(), 'sr')
                                 rnd_cyr = cyrtranslit.to_cyrillic(rnd.title(), 'sr')
-
+                                rnd_status= cyrtranslit.to_cyrillic(status.title(), 'sr')
                                 doc['mesec'] = month_cyr
                                 doc['krug'] = rnd_cyr
+                                doc['status'] = rnd_status
                                 doc['kandidat'] = candidates_or_parties[str(j)].title()
                                 ime = candidates_or_parties[str(j)]
                                 boja = self.get_political_parties(ime)
@@ -1707,17 +1709,17 @@ class Izbori2DataImporter(object):
             db[collection].insert(docs)
 
 
-    def prep_import(self, election_type, year, month=None, rnd=None):
+    def prep_import(self, election_type, year, month=None, rnd=None, status=None):
         if election_type == 'predsjednicki':
-            print '\nRemoving previously imported data for %s %s %s %s...' % (election_type, year, month, rnd)
+            print '\nRemoving previously imported data for %s %s %s %s %s...' % (election_type, year, month, rnd, status)
             db[collection].remove({
                 'izbori': cyrtranslit.to_cyrillic(election_type.title(), 'sr'),
                 'godina': int(year),
                 'mesec': cyrtranslit.to_cyrillic(month.title(), 'sr'),
-                'krug': cyrtranslit.to_cyrillic(rnd.title(), 'sr')
+                'krug': cyrtranslit.to_cyrillic(rnd.title(), 'sr'),
+                'status': cyrtranslit.to_cyrillic(status.title(), 'sr'),
             })
-
-            print 'Importing data for %s %s %s %s...' % (election_type, year, month, rnd)
+            print 'Importing data for %s %s %s %s %s...' % (election_type, year, month, rnd, status)
 
         else:
             print '\nRemoving previously imported data for %s %s...' % (election_type, year)
@@ -1728,8 +1730,8 @@ class Izbori2DataImporter(object):
 
             print 'Importing data for %s %s...' % (election_type, year)
 
-    def get_data_file_path(self, election_type, year, month=None, rnd=None):
+    def get_data_file_path(self, election_type, year, month=None, rnd=None, status=None):
         if election_type == 'predsjednicki':
-            return "data/izbori2/%s/%s-%s-%s.csv" % (election_type, year, month, rnd)
+            return "data/izbori2/%s/%s-%s-%s-%s.csv" % (election_type, year, month, rnd, status)
         else:
             return "data/izbori2/%s/%s.csv" % (election_type, year)

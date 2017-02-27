@@ -84,9 +84,9 @@ def presidential_votes_for_candidate(data_source, election_type, year, round_slu
     rsp = izbori_data_provider.get_votes_grouped_by_party_or_candidate(data_source, election_type, year, candidate_slug, round_slug)
     return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')
 
-@mod_api_izbori.route("/<int:data_source>/<string:election_type_slug>/godina/<int:godina>/instanca/<int:instanca>/krug/<string:round_slug>", methods=['GET'])
-def top_indicators(data_source,election_type_slug,godina, instanca,round_slug):
-        rsp = izbori_data_provider.get_top_indicators_by_type(data_source, election_type_slug, godina, instanca,round_slug)
+@mod_api_izbori.route("/<int:data_source>/<string:election_type_slug>/godina/<int:godina>/instanca/<int:instanca>/krug/<string:round_slug>/status/<string:status>", methods=['GET'])
+def top_indicators(data_source,election_type_slug,godina, instanca,round_slug,status):
+        rsp = izbori_data_provider.get_top_indicators_by_type(data_source, election_type_slug, godina, instanca,round_slug,status)
         return Response(response=json_util.dumps(rsp), status=200, mimetype='application/json')
 
 @mod_api_izbori.route("/datasource/<int:datasource>/<string:election_type_slug>/godina/<int:godina>/instanca/<int:instanca>", methods=['GET'])

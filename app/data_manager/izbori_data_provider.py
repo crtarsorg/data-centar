@@ -323,7 +323,7 @@ class IzboriDataProvider():
 
             }
 
-    def get_top_indicators_by_type(self, data_source,election_type_slug, godina, instanca,round_slug=None):
+    def get_top_indicators_by_type(self, data_source,election_type_slug, godina, instanca,round_slug=None,status=None):
         inityear = request.args.get('inityear')
         collection = 'izbori' if data_source == 1 else 'izbori2'
         match = {
@@ -357,9 +357,11 @@ class IzboriDataProvider():
                 'instanca':1
             }
         if election_type_slug == 'predsjednicki':
-            if round_slug is not None:
+            if round_slug is not None and status is not None:
                 round_val = cyrtranslit.to_cyrillic(round_slug.title(), 'sr')
+                status_val = cyrtranslit.to_cyrillic(status.title(), 'sr')
                 match_turnout['krug'] = round_val
+                match_turnout['status'] = status_val
             group = {
                 '_id': {
                     'kandidat': '$kandidat',
@@ -369,6 +371,7 @@ class IzboriDataProvider():
                 'glasova': {"$sum": "$rezultat.glasova"},
                 'udeo': {"$sum": "$rezultat.udeo"},
             }
+
         else:
             group = {
                 '_id': {
@@ -449,7 +452,9 @@ class IzboriDataProvider():
 
         if election_type_slug == 'predsjednicki' and round_slug is not None:
             round_val = cyrtranslit.to_cyrillic(round_slug.title(), 'sr')
+            status_val = cyrtranslit.to_cyrillic(status.title(), 'sr')
             match['krug'] = round_val
+            match['status'] = status_val
 
         group_winners = {
             '_id': {

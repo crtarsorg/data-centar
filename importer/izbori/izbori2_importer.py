@@ -1229,7 +1229,6 @@ class Izbori2DataImporter(object):
             db[collection].insert(docs)
 
     def import_data_rest(self, election_type, year, month=None, rnd=None,status=None):
-        print status
         self.prep_import(election_type, year, month, rnd, status)
 
         file_path = self.get_data_file_path(election_type, year, month, rnd, status)
@@ -1456,9 +1455,10 @@ class Izbori2DataImporter(object):
                             month_cyr = cyrtranslit.to_cyrillic(month.title(), 'sr')
                             rnd_cyr = cyrtranslit.to_cyrillic(rnd.title(), 'sr')
                             status_cyr = cyrtranslit.to_cyrillic(status.title(), 'sr')
+                            doc['status'] = status_cyr
                             doc['mesec'] = month_cyr
                             doc['krug'] = rnd_cyr
-                            doc['status'] = status_cyr
+
                             doc['kandidat'] = candidates_or_parties[str(j)].title()
                             ime = candidates_or_parties[str(j)]
                             boja = self.get_political_parties(ime)
@@ -1511,6 +1511,8 @@ class Izbori2DataImporter(object):
 
                             doc['mesec'] = month_cyr
                             doc['krug'] = rnd_cyr
+                            status_cyr = cyrtranslit.to_cyrillic(status.title(), 'sr')
+                            doc['status'] = status_cyr
                             doc['kandidat'] = candidates_or_parties[str(j)].title()
                             ime = candidates_or_parties[str(j)]
                             boja = self.get_political_parties(ime)
@@ -1562,6 +1564,8 @@ class Izbori2DataImporter(object):
 
                             doc['mesec'] = month_cyr
                             doc['krug'] = rnd_cyr
+                            status_cyr = cyrtranslit.to_cyrillic(status.title(), 'sr')
+                            doc['status'] = status_cyr
                             doc['kandidat'] = candidates_or_parties[str(j)].title()
                             ime = candidates_or_parties[str(j)]
                             boja = self.get_political_parties(ime)
@@ -1612,6 +1616,8 @@ class Izbori2DataImporter(object):
 
                             doc['mesec'] = month_cyr
                             doc['krug'] = rnd_cyr
+                            status_cyr = cyrtranslit.to_cyrillic(status.title(), 'sr')
+                            doc['status'] = status_cyr
                             doc['kandidat'] = candidates_or_parties[str(j)].title()
                             ime = candidates_or_parties[str(j)]
                             boja = self.get_political_parties(ime)

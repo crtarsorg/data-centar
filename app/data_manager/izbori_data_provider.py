@@ -455,21 +455,38 @@ class IzboriDataProvider():
             status_val = cyrtranslit.to_cyrillic(status.title(), 'sr')
             match['krug'] = round_val
             match['status'] = status_val
+        if godina==2016:
+            group_winners = {
+                '_id': {
+                    'teritorija': '$teritorija',
+                    'teritorijaSlug': '$teritorijaSlug',
+                    'coordinates': '$coordinates',
+                    'brojUpisanihBiracaUBirackiSpisak': '$brojUpisanihBiracaUBirackiSpisak',
+                    'biraciKojiSuGlasali': '$biraciKojiSuGlasali.broj'
 
-        group_winners = {
-            '_id': {
-                'teritorija': '$teritorija',
-                'teritorijaSlug': '$teritorijaSlug',
-                'brojUpisanihBiracaUBirackiSpisak': '$brojUpisanihBiracaUBirackiSpisak',
-                'biraciKojiSuGlasali': '$biraciKojiSuGlasali.broj'
+                },
+                'rezultat': {
+                    '$push':
+                        self.get_push_pipeline_operation_for_votes_grouped_by_territory_group_by_result(
+                            election_type_slug)
+                },
+            }
+        else:
+            group_winners = {
+                '_id': {
+                    'teritorija': '$teritorija',
+                    'teritorijaSlug': '$teritorijaSlug',
+                    'brojUpisanihBiracaUBirackiSpisak': '$brojUpisanihBiracaUBirackiSpisak',
+                    'biraciKojiSuGlasali': '$biraciKojiSuGlasali.broj'
 
-            },
-            'rezultat': {
-                '$push':
-                    self.get_push_pipeline_operation_for_votes_grouped_by_territory_group_by_result(
-                        election_type_slug)
-            },
-        }
+                },
+                'rezultat': {
+                    '$push':
+                        self.get_push_pipeline_operation_for_votes_grouped_by_territory_group_by_result(
+                            election_type_slug)
+                },
+            }
+
         sort_winners = {
             "rezultat.glasova": -1
         }
@@ -477,6 +494,7 @@ class IzboriDataProvider():
             '_id': 0,
             'teritorija': '$_id.teritorija',
             'teritorijaSlug': '$_id.teritorijaSlug',
+            'coordinates': '$_id.coordinates',
             'brojUpisanihBiracaUBirackiSpisak': "$_id.brojUpisanihBiracaUBirackiSpisak",
             'biraciKojiSuGlasali': "$_id.biraciKojiSuGlasali",
             "percentage": {
@@ -506,10 +524,11 @@ class IzboriDataProvider():
                 percentage = (float(total_voters) / registered) * 100
         else:
             total_voters = rsp_turnout['result'][0]['biraciKojiSuGlasali']
+            print total_voters
             registered = rsp_turnout['result'][0]['brojUpisanihBiracaUBirackiSpisak']
             if registered!= 0:
                 percentage = (float(total_voters) /registered) * 100
-        print rsp['result']
+
         for candidate in rsp['result']:
             candidate["udeo"] = (float(candidate["glasova"]) / total_voters) * 100
 

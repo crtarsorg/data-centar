@@ -121,12 +121,12 @@ $( document ).ready(function() {
             <div class="infographics margin-auto margin-2p">
                 {% if g.current_lang == "sr" %}
                     <div class="col-md-4">
-                    <script src="https://code.highcharts.com/highcharts.js"></script>
+
                         <div id="container" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
 
                         <script>
                                 $.ajax({
-                                url: 'http://datacentar.io/api/izbori/1/parlamentarni/godina/2016/instanca/3/krug/None',
+                                url: 'http://datacentar.io/api/izbori/2/parlamentarni/godina/2016/instanca/3/krug/none/status/none',
                                 success: function(point) {
                                     console.log(point);
                                     Highcharts.chart('container', {
@@ -167,11 +167,11 @@ $( document ).ready(function() {
                                     series: [{
                                         name: 'Udeo',
                                         data: [
-                                            [point[0]['izbornaLista'], point[0]['udeo']],
-                                           [point[1]['izbornaLista'], point[1]['udeo']],
-                                             [point[2]['izbornaLista'], point[2]['udeo']],
-                                                 [point[3]['izbornaLista'], point[3]['udeo']],
-                                                [point[4]['izbornaLista'], point[4]['udeo']],
+                                            [point['candidates'][0]['izbornaLista'], point[0]['udeo']],
+                                           [point['candidates'][1]['izbornaLista'], point[1]['udeo']],
+                                             [point['candidates'][2]['izbornaLista'], point[2]['udeo']],
+                                                 [point['candidates'][3]['izbornaLista'], point[3]['udeo']],
+                                                [point['candidates'][4]['izbornaLista'], point[4]['udeo']],
                                         ],
                                         dataLabels: {
                                             enabled: true,
@@ -207,9 +207,9 @@ $( document ).ready(function() {
 
                         <script>
                                 $.ajax({
-                                url: 'http://datacentar.io/api/izbori/1/parlamentarni/godina/2016/instanca/3/krug/None',
+                                url: 'http://datacentar.io/api/izbori/2/parlamentarni/godina/2016/instanca/3/krug/none/status/none',
                                 success: function(point) {
-                                    console.log(point);
+
                                     Highcharts.chart('container', {
                                       colors: ['rgb(7, 148, 160)', 'RED', '#00CCFF'],
                                     chart: {
@@ -248,11 +248,11 @@ $( document ).ready(function() {
                                     series: [{
                                         name: 'Udeo',
                                         data: [
-                                            [point[0]['izbornaLista'], point[0]['udeo']],
-                                           [point[1]['izbornaLista'], point[1]['udeo']],
-                                             [point[2]['izbornaLista'], point[2]['udeo']],
-                                                 [point[3]['izbornaLista'], point[3]['udeo']],
-                                                [point[4]['izbornaLista'], point[4]['udeo']],
+                                            [point['candidates'][0]['izbornaLista'], point[0]['udeo']],
+                                           [point['candidates'][1]['izbornaLista'], point[1]['udeo']],
+                                             [point['candidates'][2]['izbornaLista'], point[2]['udeo']],
+                                                 [point['candidates'][3]['izbornaLista'], point[3]['udeo']],
+                                                [point['candidates'][4]['izbornaLista'], point[4]['udeo']],
                                         ],
                                         dataLabels: {
                                             enabled: true,

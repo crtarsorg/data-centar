@@ -167,11 +167,11 @@ $( document ).ready(function() {
                                     series: [{
                                         name: 'Udeo',
                                         data: [
-                                            [point['candidates'][0]['izbornaLista'], point[0]['udeo']],
-                                           [point['candidates'][1]['izbornaLista'], point[1]['udeo']],
-                                             [point['candidates'][2]['izbornaLista'], point[2]['udeo']],
-                                                 [point['candidates'][3]['izbornaLista'], point[3]['udeo']],
-                                                [point['candidates'][4]['izbornaLista'], point[4]['udeo']],
+                                            [point['candidates'][0]['izbornaLista'], point['candidates'][0]['udeo']],
+                                           [point['candidates'][1]['izbornaLista'], point['candidates'][1]['udeo']],
+                                             [point['candidates'][2]['izbornaLista'], point['candidates'][2]['udeo']],
+                                                 [point['candidates'][3]['izbornaLista'], point['candidates'][3]['udeo']],
+                                                [point['candidates'][4]['izbornaLista'], point['candidates'][4]['udeo']],
                                         ],
                                         dataLabels: {
                                             enabled: true,
@@ -207,7 +207,7 @@ $( document ).ready(function() {
 
                         <script>
                                 $.ajax({
-                                url: 'http://datacentar.io/api/izbori/2/parlamentarni/godina/2016/instanca/3/krug/none/status/none',
+                                url: 'http://0.0.0.0:5007/api/izbori/2/parlamentarni/godina/2016/instanca/3/krug/none/status/none',
                                 success: function(point) {
 
                                     Highcharts.chart('container', {
@@ -248,11 +248,11 @@ $( document ).ready(function() {
                                     series: [{
                                         name: 'Udeo',
                                         data: [
-                                            [point['candidates'][0]['izbornaLista'], point[0]['udeo']],
-                                           [point['candidates'][1]['izbornaLista'], point[1]['udeo']],
-                                             [point['candidates'][2]['izbornaLista'], point[2]['udeo']],
-                                                 [point['candidates'][3]['izbornaLista'], point[3]['udeo']],
-                                                [point['candidates'][4]['izbornaLista'], point[4]['udeo']],
+                                            [point['candidates'][0]['izbornaLista'], point['candidates'][0]['udeo']],
+                                           [point['candidates'][1]['izbornaLista'], point['candidates'][1]['udeo']],
+                                             [point['candidates'][2]['izbornaLista'], point['candidates'][2]['udeo']],
+                                                 [point['candidates'][3]['izbornaLista'], point['candidates'][3]['udeo']],
+                                                [point['candidates'][4]['izbornaLista'], point['candidates'][4]['udeo']],
                                         ],
                                         dataLabels: {
                                             enabled: true,

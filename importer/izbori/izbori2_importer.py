@@ -15,6 +15,63 @@ collection = 'izbori2'
 class Izbori2DataImporter(object):
     def get_political_parties(self, kandidat_name=None):
         data = []
+        #year 2017 presidential
+        data.append({
+            'slug': "aleksandar-vucic",
+            "name": "Александар Вучић",
+            "color": "#a6cee3"
+        })
+        data.append({
+            'slug': "sasa-jankovic",
+            "name": "Саша Јанковић",
+            "color": "#1f78b4"
+        })
+        data.append({
+            'slug': "luka-maksimovic",
+            "name": "Лука Максимовић",
+            "color": "#b2df8a"
+        })
+        data.append({
+            'slug': "vuk-jeremic",
+            "name": "Вук Јеремић",
+            "color": "#33a02c"
+        })
+        data.append({
+            'slug': "dr-vojislav-seselj",
+            "name": "др Војислав Шешељ",
+            "color": "#fb9a99"
+        })
+        data.append({
+            'slug': "bosko-obradovic",
+            "name": "Бошко Обрадовић",
+            "color": "#e31a1c"
+        })
+        data.append({
+            'slug': "sasa-radulovic",
+            "name": "Саша Радуловић",
+            "color": "#fdbf6f"
+        })
+        data.append({
+            'slug': "milan-stamatovic",
+            "name": "Милан Стаматовић",
+            "color": "#ff7f00"
+        })
+        data.append({
+            'slug': "nenad-canak",
+            "name": "Ненад Чанак",
+            "color": "#cab2d6"
+        })
+        data.append({
+            'slug': "prof-dr-aleksandar-popovic",
+            "name": "проф. др Александар Поповић",
+            "color": "#6a3d9a"
+        })
+        data.append({
+            'slug': "miroslav-parovic",
+            "name": "Мирослав Паровић",
+            "color": "#b15928"
+        })
+        #end of year 2017 presidential
         # year 2000
         # parlamentarni 2003
         data.append({
@@ -744,6 +801,8 @@ class Izbori2DataImporter(object):
     def import_data(self, election_type, year, month=None, rnd=None,status=None):
         if election_type == 'parlamentarni' and int(year) == 2016:
             self.import_data_parliament_2016()
+        elif election_type == 'predsjednicki' and int(year) == 2017:
+            self.import_data_presidential_2017(election_type,year,month,rnd,status)
         elif election_type == 'parlamentarni' and int(year) == 2008:
             self.import_data_parliament_2008()
         elif election_type == 'parlamentarni' and int(year) == 2007:
@@ -1056,9 +1115,7 @@ class Izbori2DataImporter(object):
                     elif polling_station_num is '':
                         doc['instanca'] = 3
                         doc['parentTeritorija'] = parent_territory
-                        doc['parentTeritorijaSlug'] = slugify(cyrtranslit.to_latin(parent_territory, 'sr'),
-                                                              to_lower=True)
-
+                        doc['parentTeritorijaSlug'] = slugify(cyrtranslit.to_latin(parent_territory, 'sr'),to_lower=True)
                     elif polling_station_num is not '':
                         doc['instanca'] = 4
                         doc['parentTeritorija'] = parent_territory
@@ -1107,6 +1164,132 @@ class Izbori2DataImporter(object):
         if len(docs) > 0:
             db[collection].insert(docs)
 
+    def import_data_presidential_2017(self, election_type, year, month=None, rnd=None,status=None):
+        election_type = 'predsjednicki'
+        year = 2017
+        self.prep_import(election_type, year, month, rnd,status)
+        file_path = self.get_data_file_path(election_type, year, month, rnd, status)
+
+        row_count = 0
+        docs = []
+        candidates_or_parties = {}
+        parent_territory = ''
+
+        with open(file_path, 'rb') as f:
+            reader = csv.reader(f)
+
+            for row in tqdm(reader):
+                doc = {}
+
+                # Get all the candidates/parties
+                if row_count == 0:
+                    for i in xrange(11, len(row)):
+                        candidates_or_parties[str(i)] = row[i].replace('\n', '').strip()
+                elif row_count == 1:
+                    pass
+                else:
+
+                    territory = row[0].strip()
+                    territory_slug = slugify(cyrtranslit.to_latin(territory, 'sr'), to_lower=True)
+                    polling_station_num = int(row[1].strip()) if row[1].strip() is not '' else row[1].strip()
+                    polling_station_address = row[2].strip()
+                    coordinates = row[3].strip()
+
+                    number_of_voters_registered = int(row[4].strip())
+                    ballots_received_count = int(row[5].strip())
+                    unused_ballots_count = int(row[6].strip())
+                    ballots_in_ballot_box_count = int(row[7].strip())
+                    voters_who_voted_count = int(row[8].strip())
+                    invalid_ballots_count = int(row[9].strip())
+                    valid_ballots_count = int(row[10].strip())
+
+
+                    doc['coordinates']= coordinates
+                    doc['brojPrimljeniGlasackiListica'] = ballots_received_count
+                    doc['brojNeupotrebljenihGlasackiListica'] = unused_ballots_count
+                    doc['brojUpisanihBiracaUBirackiSpisak'] = number_of_voters_registered
+                    doc['nevazeciGlasackiListici'] = invalid_ballots_count
+                    doc['biraciKojiSuGlasali'] = {}
+                    doc['biraciKojiSuGlasali']['broj'] = voters_who_voted_count
+                    # doc['biraciKojiSuGlasali']['udeo'] = voters_who_voted_percent
+                    doc['brojGlasackihListicaUKutiji'] = {}
+                    doc['brojGlasackihListicaUKutiji']['broj'] = ballots_in_ballot_box_count
+                    doc['vazeciGlasackiListici'] = {}
+                    doc['vazeciGlasackiListici']['broj'] = valid_ballots_count
+
+                    doc['izbori'] = cyrtranslit.to_cyrillic(election_type.title(), 'sr')
+                    doc['godina'] = int(year)
+
+                    month_cyr = cyrtranslit.to_cyrillic(month.title(), 'sr')
+                    rnd_cyr = cyrtranslit.to_cyrillic(rnd.title(), 'sr')
+
+                    doc['mesec'] = month_cyr
+                    doc['krug'] = rnd_cyr
+                    status_cyr = cyrtranslit.to_cyrillic(status.title(), 'sr')
+                    doc['status'] = status_cyr
+                    # Some rows consist of territory grouping.
+                    # We need to track those.
+                    if cyrtranslit.to_latin(territory, 'sr').isupper():
+                        doc['instanca'] = 1
+
+                    elif 'okrug' in territory_slug \
+                            or territory_slug in ['grad-beograd', 'inostranstvo'] \
+                            or territory_slug == 'zavodi-za-izvrsenje-zavodskih-sankcija' and polling_station_num is '':
+                        doc['instanca'] = 2
+                        parent_territory = territory
+
+                    elif polling_station_num is '':
+                        doc['instanca'] = 3
+                        doc['parentTeritorija'] = parent_territory
+                        doc['parentTeritorijaSlug'] = slugify(cyrtranslit.to_latin(parent_territory, 'sr'),to_lower=True)
+                    elif polling_station_num is not '':
+                        doc['instanca'] = 4
+                        doc['parentTeritorija'] = parent_territory
+                        doc['parentTeritorijaSlug'] = slugify(cyrtranslit.to_latin(parent_territory, 'sr'),
+                                                              to_lower=True)
+                        doc['brojBirackogMesta'] = polling_station_num
+                        doc['adresaBirackogMesta'] = polling_station_address
+                    total_votes = 0
+                    udeo = 0
+
+                    for j in range(11, len(row)):
+                        doc['rezultat'] = {}
+
+                        print int(row[j])
+                        doc['rezultat']['glasova'] = int(row[j])
+                        if int(row[j]) != 0:
+                            total_votes += int(row[j])
+                            udeo = (float(int(row[j])) / voters_who_voted_count) * 100
+
+                        else:
+                            udeo = 0.0
+                        doc['rezultat']['udeo'] = udeo
+                        doc['teritorija'] = territory
+                        doc['teritorijaSlug'] = territory_slug
+                        doc['izbori'] = cyrtranslit.to_cyrillic(election_type.title(), 'sr')
+                        doc['godina'] = int(year)
+
+                        doc['kandidat'] = candidates_or_parties[str(j)]
+                        ime = candidates_or_parties[str(j)]
+                        boja = self.get_political_parties(ime)
+                        if not boja:
+                            print ""
+                        else:
+                            doc['boja'] = boja['color']
+                        doc['kandidatSlug'] = slugify(cyrtranslit.to_latin(candidates_or_parties[str(j)], 'sr'),
+                                                          to_lower=True)
+                        # print "%s - %s - %s" % (row_count + 1, doc['rezultat']['glasova'], doc['izbornaLista'])
+                        docs.append(doc.copy())
+
+                        if len(docs) % 1000 == 0:
+                            db[collection].insert(docs)
+                            docs = []
+
+                row_count += 1
+
+        # Insert remaining documents
+        if len(docs) > 0:
+            db[collection].insert(docs)
 
     def import_data_rest(self, election_type, year, month=None, rnd=None,status=None):
         self.prep_import(election_type, year, month, rnd, status)
@@ -1166,7 +1349,6 @@ class Izbori2DataImporter(object):
                         territory_slug = slugify(cyrtranslit.to_latin(territory, 'sr'), to_lower=True)
                         polling_station_num = int(row[1].strip()) if row[1].strip() is not '' else row[1].strip()
                         polling_station_address = row[2].strip()
-
                         registered_voters_count = int(row[3].strip())
 
                     if int(year) == 2012 and election_type == "predsjednicki":
@@ -1597,6 +1779,7 @@ class Izbori2DataImporter(object):
 
     def prep_import(self, election_type, year, month=None, rnd=None, status=None):
         if election_type == 'predsjednicki':
+            print year
             print '\nRemoving previously imported data for %s %s %s %s %s...' % (election_type, year, month, rnd, status)
             db[collection].remove({
                 'izbori': cyrtranslit.to_cyrillic(election_type.title(), 'sr'),
